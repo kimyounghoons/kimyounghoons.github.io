@@ -1,15 +1,7 @@
 [
   
     {
-      "title"    : "First Note...444",
-      "category" : "",
-      "tags"     : "fist note",
-      "url"      : "http://localhost:4000/android/first-note/",
-      "date"     : "2018-10-10 00:00:00 -0400"
-    } ,
-  
-    {
-      "title"    : "Sample Post",
+      "title"    : "Sample Post 2",
       "category" : "",
       "tags"     : "sample post",
       "url"      : "http://localhost:4000/intro/sample-post/",

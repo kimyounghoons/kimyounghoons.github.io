@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Sample Post
+title: Sample Post 2
 description: "Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more."
 modified: 2016-12-02
 tags: [sample post]
@@ -27,7 +27,7 @@ Below is just about everything you'll need to style in the theme. Check the sour
 
 ### Body text
 
-Lorem ipsum dolor sit amet, test link adipiscing elit. **This is strong**. Nullam dignissim convallis est. Quisque aliquam.
+Lorem ipsum dolor sit amet, test link adipiscing elit. **This is strong**. Nullam-- dignissim convallis est. Quisque aliquam.
 
 ![Smithsonian Image]({{ site.url }}/images/3953273590_704e3899d5_m.jpg)
 {: .image-right}
