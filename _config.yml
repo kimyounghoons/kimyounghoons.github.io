@@ -1,5 +1,5 @@
-title:            Blog Title
-description:      Describe your website here.
+title:            영훈 블로그
+description:      개발 블로그
 
 # put your disqus here
 disqus_shortname:
@@ -20,30 +20,30 @@ url: https://kimyounghoons.github.io
 menu:
   - title: 'Home'
     url: '/'
-  - title: 'Fork'
-    url: 'http://github.com/aron-bordin/neo-hpstr-jekyll-theme'
-  - title: 'Install'
-    url: 'http://github.com/aron-bordin/neo-hpstr-jekyll-theme#installation'
+  # - title: 'Fork'
+  #   url: 'http://github.com/aron-bordin/neo-hpstr-jekyll-theme'
+  # - title: 'Install'
+  #   url: 'http://github.com/aron-bordin/neo-hpstr-jekyll-theme#installation'
   - title: 'Tags'
     url: '/tags'
   - title: 'Categories'
     url: '/categories'
     type: 'categories'
-  - title: 'Favorites'
-    url: '#'
-    submenu:
-      - title: 'Code Highlighter'
-        url: '/intro/code-highlighting-post/'
-      - title: 'Sample Post'
-        url: '/intro/sample-post/'
+  # - title: 'Favorites'
+  #   url: '#'
+  #   submenu:
+  #     - title: 'Code Highlighter'
+  #       url: '/intro/code-highlighting-post/'
+  #     - title: 'Sample Post'
+  #       url: '/intro/sample-post/'
 
 # Owner/author information
 owner:
-  name:           Your name
+  name:           kimyounghoon
   site:           https://kimyounghoons.github.io
   avatar:         images/avatar.jpg
   bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
-  email:          you@email.com
+  email:          kimyh8496@gmail.com
   # Twitter nick for use in Twitter cards and follow button.
   twitter: aron_bordin # if no twitter in this config, the twitter follow button will be removed
   # GitHub nick for use in follow button in author block.

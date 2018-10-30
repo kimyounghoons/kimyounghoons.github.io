@@ -1,7 +1,23 @@
 [
   
     {
-      "title"    : "Sample Post123456789",
+      "title"    : "How to use Blog",
+      "category" : "",
+      "tags"     : "blog",
+      "url"      : "http://localhost:4000/blog/blog-post/",
+      "date"     : "2018-10-30 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Android Studio",
+      "category" : "",
+      "tags"     : "android",
+      "url"      : "http://localhost:4000/android/android-post/",
+      "date"     : "2018-10-11 00:00:00 -0400"
+    } ,
+  
+    {
+      "title"    : "Android!!!",
       "category" : "",
       "tags"     : "sample post",
       "url"      : "http://localhost:4000/intro/sample-post/",
