@@ -5,8 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>다중 매니페스트 파일 병합 &#8211; 영훈 블로그</title>
-<meta name="description" content="다중 매니페스트 파일 병합">
+<title>selector drawable &#8211; 영훈 블로그</title>
+<meta name="description" content="selector drawable">
 <meta name="keywords" content="android">
 
 <!-- Twitter Cards -->
@@ -17,8 +17,8 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="다중 매니페스트 파일 병합">
-<meta property="og:description" content="다중 매니페스트 파일 병합">
+<meta property="og:title" content="selector drawable">
+<meta property="og:description" content="selector drawable">
 <meta property="og:url" content="http://localhost:4000/android/android-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
@@ -137,9 +137,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>다중 매니페스트 파일 병합</h1>
+      <h1>selector drawable</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00-04:00">October 30, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-10-31T00:00:00-04:00">October 31, 2018</time></span></h2>
       
 
       
@@ -203,34 +203,35 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">다중 매니페스트 파일 병합</h1>
-      <h2 id="toolsreplaceattr">tools:replace=”attr,…”</h2>
+      <h1 class="post-title entry-title">selector drawable</h1>
+      <h2 id="selector">selector</h2>
 
-<p>android:allowBackup 을 false 로 변경 시킬 때 아래와 같은 에러가 나왔다.</p>
+<p>image selector
+image_selector.xml 파일 만들기</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">Manifest</span> <span class="nt">merger</span> <span class="nt">failed</span> <span class="o">:</span> <span class="nt">Attribute</span> <span class="nt">application</span><span class="k">@allowBackup</span> <span class="n">value</span><span class="err">=</span><span class="p">(</span><span class="n">false</span><span class="p">)</span> <span class="n">from</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">26</span><span class="p">:</span><span class="m">9-36</span>
-	<span class="n">is</span> <span class="n">also</span> <span class="n">present</span> <span class="n">at</span> <span class="p">[</span><span class="n">com</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">danylovolokh</span><span class="p">:</span><span class="n">hashtag-helper</span><span class="p">:</span><span class="m">1.1.0</span><span class="p">]</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">12</span><span class="p">:</span><span class="m">9-35</span> <span class="n">value</span><span class="err">=</span><span class="p">(</span><span class="n">true</span><span class="p">).</span>
-	<span class="n">Suggestion</span><span class="p">:</span> <span class="n">add</span> <span class="s2">'tools:replace="android:allowBackup"'</span> <span class="n">to</span> <span class="err">&lt;</span><span class="n">application</span><span class="err">&gt;</span> <span class="n">element</span> <span class="n">at</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">24</span><span class="p">:</span><span class="m">5-208</span><span class="p">:</span><span class="m">19</span> <span class="n">to</span> <span class="n">override</span><span class="p">.</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">drawable</span><span class="o">=</span><span class="s2">"@drawable/image_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:drawable</span><span class="o">=</span><span class="s2">"@drawable/image_default"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
 
-<p>문제는 manifest 병합 문제..
-hashtag 라이브러리에서도 allowBackup 속성이 설정 되어있어서 문제가 되었다.</p>
+<p>사용 : android:src=”@drawable/image_selector”</p>
 
-<p>해결 방법은 다음과 같이 tools:replace=”android:allowBackup” 을 설정 해주면 해당 manifest android:allowBackup 속성이 우선순위가 높아진다.</p>
+<p>text selector</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"> <span class="o">&lt;</span><span class="nt">application</span>
-        <span class="nt">android</span><span class="nd">:name</span><span class="o">=</span><span class="s1">".name"</span>
-        <span class="nt">android</span><span class="nd">:allowBackup</span><span class="o">=</span><span class="s1">"false"</span>
-        <span class="nt">android</span><span class="nd">:icon</span><span class="o">=</span><span class="s1">"${appIcon}"</span>
-        <span class="nt">android</span><span class="nd">:label</span><span class="o">=</span><span class="s1">"@string/app_name"</span>
-        <span class="nt">android</span><span class="nd">:supportsRtl</span><span class="o">=</span><span class="s1">"false"</span>
-        <span class="nt">android</span><span class="nd">:theme</span><span class="o">=</span><span class="s1">"@style/AppTheme"</span>
-        <span class="nt">tools</span><span class="nd">:replace</span><span class="o">=</span><span class="s1">"supportsRtl,allowBackup"</span><span class="o">&gt;</span></code></pre></figure>
+<p>text_selector.xml 파일 만들기</p>
 
-<p>다른곳에서 allowBackup 설정이 true 가 되어 있어도 해당 manifest 가 우선순위가 높기 때문에 false 가 적용 된다.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/color_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/color_default"</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
+
+<p>사용 : android:textColor=”@drawable/text_selector”</p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="http://localhost:4000/tags#android" title="Pages tagged android" class="tag"><span class="term">android</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-10-30">October 30, 2018</time></span></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-10-31">October 31, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
@@ -278,7 +279,7 @@ hashtag 라이브러리에서도 allowBackup 속성이 설정 되어있어서 �
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
       <h3><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" title="Visual Studio Code app 환경변수 설정">Visual Studio Code app 환경변수 설정</a></h3>
@@ -293,8 +294,8 @@ hashtag 라이브러리에서도 allowBackup 속성이 설정 되어있어서 �
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-post/" title="Android Studio">Android Studio</a></h4>
-        <span>Published on October 11, 2018</span>
+        <h4><a href="http://localhost:4000/android/android-post/" title="다중 매니페스트 파일 병합">다중 매니페스트 파일 병합</a></h4>
+        <span>Published on October 30, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
