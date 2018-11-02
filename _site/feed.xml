@@ -4,13 +4,62 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2018-10-31T00:57:18-04:00</updated>
+<updated>2018-11-02T00:18:11-04:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[app build 문제]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-post/" />
+  <id>http://localhost:4000/android/android-post</id>
+  <updated>2018-11-01T00:00:00-00:00</updated>
+  <published>2018-11-01T00:00:00-04:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;div class=&quot;errBlock&quot;&gt;    
+Error while executing: am start -n &quot;com.mngs.kimyounghoon.mngs/com.mngs.kimyounghoon.mngs.MainActivity&quot; -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
+Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.mngs.kimyounghoon.mngs/.MainActivity }
+Error type 3
+Error: Activity class {com.mngs.kimyounghoon.mngs/com.mngs.kimyounghoon.mngs.MainActivity} does not exist.
+
+Error while Launching activity
+&lt;/div&gt;
+
+&lt;p&gt;핸드폰에 어플은 지웠는데 계속 저 문구가 뜨거나 이전 버전 삭제하고 새로 설치 하시겠습니까 팝업도 떠서 ok 눌러도 새로 설치가 안됨…&lt;/p&gt;
+
+&lt;p&gt;adb uninstall -r &lt;패키지명&gt;
+adb uninstall &lt;패키지명&gt;&lt;/패키지명&gt;&lt;/패키지명&gt;&lt;/p&gt;
+
+&lt;p&gt;지우려고 시도해도 삭제가 안되고 계속 에러가 뜸..&lt;/p&gt;
+
+&lt;p&gt;어플은 다운 그레이드 시켜서 설치 할수 없다는 문구도 뜸..&lt;/p&gt;
+
+&lt;p&gt;adb uninstall -r -d &lt;패키지명&gt;
+시도 해도 안됨...&lt;/패키지명&gt;&lt;/p&gt;
+
+&lt;p&gt;그러다가 보안 폴더에 앱을 넣었던 기억이.. 갑자기 생각남 아 … 설마 했는데 안에 들어있네..&lt;/p&gt;
+
+&lt;p&gt;보안 폴더에 있는 어플은 따로 관리 되서 adb로는 지울 수 없게 되어있는 듯함..&lt;/p&gt;
+
+&lt;p&gt;보안 폴더 지우고 새로 build 해보니 잘 됨..&lt;/p&gt;
+
+&lt;p&gt;다음부터는 uninstall 안되면 보안폴더부터 보게 될거 같음..&lt;/p&gt;
+
+&lt;p&gt;삽질이었지만 보안폴더의 보안은 좋았던걸로 하고 끝..&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-post/&quot;&gt;app build 문제&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 01, 2018.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>

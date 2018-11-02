@@ -5,8 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>selector drawable &#8211; 영훈 블로그</title>
-<meta name="description" content="selector drawable">
+<title>app build 문제 &#8211; 영훈 블로그</title>
+<meta name="description" content="app build 문제">
 <meta name="keywords" content="android">
 
 <!-- Twitter Cards -->
@@ -17,8 +17,8 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="selector drawable">
-<meta property="og:description" content="selector drawable">
+<meta property="og:title" content="app build 문제">
+<meta property="og:description" content="app build 문제">
 <meta property="og:url" content="http://localhost:4000/android/android-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
@@ -137,9 +137,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>selector drawable</h1>
+      <h1>app build 문제</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-10-31T00:00:00-04:00">October 31, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-11-01T00:00:00-04:00">November 01, 2018</time></span></h2>
       
 
       
@@ -203,35 +203,41 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">selector drawable</h1>
-      <h2 id="selector">selector</h2>
+      <h1 class="post-title entry-title">app build 문제</h1>
+      <div class="errBlock">    
+Error while executing: am start -n "com.mngs.kimyounghoon.mngs/com.mngs.kimyounghoon.mngs.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
+Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.mngs.kimyounghoon.mngs/.MainActivity }
+Error type 3
+Error: Activity class {com.mngs.kimyounghoon.mngs/com.mngs.kimyounghoon.mngs.MainActivity} does not exist.
 
-<p>image selector
-image_selector.xml 파일 만들기</p>
+Error while Launching activity
+</div>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">drawable</span><span class="o">=</span><span class="s2">"@drawable/image_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:drawable</span><span class="o">=</span><span class="s2">"@drawable/image_default"</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
+<p>핸드폰에 어플은 지웠는데 계속 저 문구가 뜨거나 이전 버전 삭제하고 새로 설치 하시겠습니까 팝업도 떠서 ok 눌러도 새로 설치가 안됨…</p>
 
-<p>사용 : android:src=”@drawable/image_selector”</p>
+<p>adb uninstall -r <패키지명>
+adb uninstall <패키지명></패키지명></패키지명></p>
 
-<p>text selector</p>
+<p>지우려고 시도해도 삭제가 안되고 계속 에러가 뜸..</p>
 
-<p>text_selector.xml 파일 만들기</p>
+<p>어플은 다운 그레이드 시켜서 설치 할수 없다는 문구도 뜸..</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/color_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/color_default"</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
+<p>adb uninstall -r -d <패키지명>
+시도 해도 안됨...</패키지명></p>
 
-<p>사용 : android:textColor=”@drawable/text_selector”</p>
+<p>그러다가 보안 폴더에 앱을 넣었던 기억이.. 갑자기 생각남 아 … 설마 했는데 안에 들어있네..</p>
+
+<p>보안 폴더에 있는 어플은 따로 관리 되서 adb로는 지울 수 없게 되어있는 듯함..</p>
+
+<p>보안 폴더 지우고 새로 build 해보니 잘 됨..</p>
+
+<p>다음부터는 uninstall 안되면 보안폴더부터 보게 될거 같음..</p>
+
+<p>삽질이었지만 보안폴더의 보안은 좋았던걸로 하고 끝..</p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="http://localhost:4000/tags#android" title="Pages tagged android" class="tag"><span class="term">android</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-10-31">October 31, 2018</time></span></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-01">November 01, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
@@ -279,22 +285,22 @@ image_selector.xml 파일 만들기</p>
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" title="Visual Studio Code app 환경변수 설정">Visual Studio Code app 환경변수 설정</a></h3>
-      <p>Visual Studio Code app 환경변수 설정  <a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-post/" title="selector drawable">selector drawable</a></h3>
+      <p>selector drawable <a href="http://localhost:4000/android/android-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/blog/blog-post/" title="How to use Blog">How to use Blog</a></h4>
+        <h4><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" title="Visual Studio Code app 환경변수 설정">Visual Studio Code app 환경변수 설정</a></h4>
         <span>Published on October 30, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-post/" title="다중 매니페스트 파일 병합">다중 매니페스트 파일 병합</a></h4>
+        <h4><a href="http://localhost:4000/blog/blog-post/" title="How to use Blog">How to use Blog</a></h4>
         <span>Published on October 30, 2018</span>
       </div><!-- /.list-item -->
     

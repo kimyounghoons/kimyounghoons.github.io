@@ -71,3 +71,13 @@
 	.vi { color: #f8f8f2 } /* Name.Variable.Instance */
 	.il { color: #ae81ff } /* Literal.Number.Integer.Long */
 }
+
+.errBlock {
+	color: #ff0000;
+	background-color: #1e0010 ;
+	width: 100%;
+	height: auto;
+	display: inline-block;
+	margin: 10px;
+	padding: 20px;
+	}
