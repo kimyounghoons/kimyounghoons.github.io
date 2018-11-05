@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "drawerlayout navigationView 클릭 먹통",
+      "category" : "",
+      "tags"     : "android",
+      "url"      : "http://localhost:4000/android/drawerlayout-post/",
+      "date"     : "2018-11-02 00:00:00 -0400"
+    } ,
+  
+    {
       "title"    : "app build 문제",
       "category" : "",
       "tags"     : "android",

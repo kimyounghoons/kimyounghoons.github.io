@@ -4,13 +4,77 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2018-11-02T00:18:11-04:00</updated>
+<updated>2018-11-04T19:21:29-05:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[drawerlayout navigationView 클릭 먹통]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/drawerlayout-post/" />
+  <id>http://localhost:4000/android/drawerlayout-post</id>
+  <updated>2018-11-02T00:00:00-00:00</updated>
+  <published>2018-11-02T00:00:00-04:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;딤처리 된 팝업을 추가 할 일이 생겨 아래의 구조로 작성함&lt;/p&gt;
+
+&lt;p&gt;DrawerLayout 사용하는 layout 에서의 구조&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+        &lt;span class=&quot;err&quot;&gt;메인&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;뷰&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ConstraintLayout&amp;gt;
+
+    &amp;lt;NavigationView&amp;gt;  
+    &amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;NavigationView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
+        &lt;span class=&quot;err&quot;&gt;딤처리&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;팝업&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ConstraintLayout&amp;gt;
+&amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;이런식으로 구성 했다.&lt;/p&gt;
+
+&lt;p&gt;근데 딤처리 팝업 뜨고 나서만 NavigationView 에 있는 뷰들이 클릭을 먹지 않음…&lt;/p&gt;
+
+&lt;p&gt;딤처리 팝업을 확인 누르면 VISIBLE -&amp;gt; GONE 상태로 변경되서 상관이 없어야 할텐데 클릭이 되지 않는 문제..&lt;/p&gt;
+
+&lt;p&gt;처음에는 문제 초점을 딤처리 팝업에서의 setClickable 에 뒀다.&lt;/p&gt;
+
+&lt;p&gt;하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
+        &lt;span class=&quot;err&quot;&gt;메인&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;뷰&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ConstraintLayout&amp;gt;
+
+    &amp;lt;ConstraintLayout&amp;gt;  
+        딤처리 팝업
+    &amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;NavigationView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/NavigationView&amp;gt;
+
+&amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;그렇게 처리하니 이슈가 사라짐!!&lt;/p&gt;
+&lt;div class=&quot;redText&quot;&gt;
+기억하자 NavigationView의 위치는 맨 마지막에 와야함!!
+&lt;/div&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/drawerlayout-post/&quot;&gt;drawerlayout navigationView 클릭 먹통&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 02, 2018.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
