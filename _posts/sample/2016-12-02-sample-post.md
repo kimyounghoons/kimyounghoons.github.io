@@ -3,8 +3,8 @@ layout: post
 title: Android!!!
 description: "Just about everything you'll need to style in the theme: headings, paragraphs, blockquotes, tables, code blocks, and more."
 modified: 2016-12-02
-tags: [sample post]
-categories: [intro]
+tags: [sample]
+categories: [sample]
 image:
     feature: feature.jpg
     credit: dargadgetz

@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Post with a Background Image &#8211; 영훈 블로그</title>
-<meta name="description" content="Sample post with a background image CSS override.">
-<meta name="keywords" content="sample post">
+<title>A Post with Images &#8211; 영훈 블로그</title>
+<meta name="description" content="Examples and code for displaying images in posts.">
+<meta name="keywords" content="sample">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Post with a Background Image">
-<meta property="og:description" content="Sample post with a background image CSS override.">
-<meta property="og:url" content="http://localhost:4000/image/background-image/">
+<meta property="og:title" content="A Post with Images">
+<meta property="og:description" content="Examples and code for displaying images in posts.">
+<meta property="og:url" content="http://localhost:4000/sample/sample-post-images/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/image/background-image/">
+<link rel="canonical" href="http://localhost:4000/sample/sample-post-images/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -64,10 +64,6 @@
 
 
 
-
-<style type="text/css">body {background-image:url(http://localhost:4000/images/triangular.png);}</style>
-
-
 </head>
 
 <body id="post" >
@@ -100,12 +96,6 @@
               
                 
                   <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
-              
-                
-                  <li class="sub-item"><a href="http://localhost:4000/categories/#image">image</a></li>
-              
-                
-                  <li class="sub-item"><a href="http://localhost:4000/categories/#intro">intro</a></li>
               
                 
                   <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
@@ -141,9 +131,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Post with a Background Image</h1>
+      <h1>A Post with Images</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2016-11-29T00:00:00-05:00">November 29, 2016</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2016-11-26T00:00:00-05:00">November 26, 2016</time></span></h2>
       
 
       
@@ -180,12 +170,6 @@
                 <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
             
               
-                <li><a href="http://localhost:4000/categories/#image">image</a></li>
-            
-              
-                <li><a href="http://localhost:4000/categories/#intro">intro</a></li>
-            
-              
                 <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
             
               
@@ -207,27 +191,114 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">Post with a Background Image</h1>
-      <p>Here be a sample post with a custom background image. To utilize this “feature” just add the following YAML to a post’s front matter.</p>
+      <h1 class="post-title entry-title">A Post with Images</h1>
+      <p>Here are some examples of what a post with images might look like. If you want to display two or three images next to each other responsively use <code class="highlighter-rouge">figure</code> with the appropriate <code class="highlighter-rouge">class</code>. Each instance of <code class="highlighter-rouge">figure</code> is auto-numbered and displayed in the caption.</p>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">image</span><span class="pi">:</span>
-  <span class="na">background</span><span class="pi">:</span> <span class="s">filename.png</span></code></pre></figure>
+<h2 id="figures-for-images-or-video">Figures (for images or video)</h2>
 
-<p>This little bit of YAML makes the assumption that your background image asset is in the <code class="highlighter-rouge">/images</code> folder. If you place it somewhere else or are hotlinking from the web, just include the full http(s):// URL. Either way you should have a background image that is tiled.</p>
+<h3 id="one-up">One Up</h3>
 
-<p>If you want to set a background image for the entire site just add <code class="highlighter-rouge">background: filename.png</code> to your <code class="highlighter-rouge">_config.yml</code> and BOOM — background images on every page!</p>
+<figure>
+	<a href="http://farm9.staticflickr.com/8426/7758832526_cc8f681e48_b.jpg"><img src="http://farm9.staticflickr.com/8426/7758832526_cc8f681e48_c.jpg" alt="" /></a>
+	<figcaption><a href="http://www.flickr.com/photos/80901381@N04/7758832526/" title="Morning Fog Emerging From Trees by A Guy Taking Pictures, on Flickr">Morning Fog Emerging From Trees by A Guy Taking Pictures, on Flickr</a>.</figcaption>
+</figure>
 
-<div xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/" about="http://subtlepatterns.com" class="notice">Background images from <span property="dct:title">Subtle Patterns</span> (<a rel="cc:attributionURL" property="cc:attributionName" href="http://subtlepatterns.com">Subtle Patterns</a>) / <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></div>
+<h3 id="one-center">One Center</h3>
+
+<figure class="half center">
+	<a href="http://farm9.staticflickr.com/8426/7758832526_cc8f681e48_b.jpg"><img src="http://farm9.staticflickr.com/8426/7758832526_cc8f681e48_c.jpg" alt="" /></a>
+	<figcaption><a href="http://www.flickr.com/photos/80901381@N04/7758832526/" title="Morning Fog Emerging From Trees by A Guy Taking Pictures, on Flickr">Morning Fog Emerging From Trees by A Guy Taking Pictures, on Flickr</a>.</figcaption>
+</figure>
+
+<h3 id="two-up">Two Up</h3>
+
+<p>Apply the <code class="highlighter-rouge">half</code> class like so to display two images side by side that share the same caption.</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;figure</span> <span class="na">class=</span><span class="s">"half"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/images/image-filename-1.jpg"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"/images/image-filename-2.jpg"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;figcaption&gt;</span>Caption describing these two images.<span class="nt">&lt;/figcaption&gt;</span>
+<span class="nt">&lt;/figure&gt;</span></code></pre></figure>
+
+<p>And you’ll get something that looks like this:</p>
+
+<figure class="half">
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<img src="http://placehold.it/600x300.jpg" alt="" />
+	<img src="http://placehold.it/600x300.jpg" alt="" />
+	<figcaption>Two images.</figcaption>
+</figure>
+
+<h3 id="three-up">Three Up</h3>
+
+<p>Apply the <code class="highlighter-rouge">third</code> class like so to display three images side by side that share the same caption.</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;figure</span> <span class="na">class=</span><span class="s">"third"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://placehold.it/1200x600.jpg"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"http://placehold.it/600x300.jpg"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://placehold.it/1200x600.jpg"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"http://placehold.it/600x300.jpg"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/a&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://placehold.it/1200x600.jpg"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"http://placehold.it/600x300.jpg"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/a&gt;</span>
+	<span class="nt">&lt;figcaption&gt;</span>Caption describing these three images.<span class="nt">&lt;/figcaption&gt;</span>
+<span class="nt">&lt;/figure&gt;</span></code></pre></figure>
+
+<p>And you’ll get something that looks like this:</p>
+
+<figure class="third">
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<a href="http://placehold.it/1200x600.jpg"><img src="http://placehold.it/600x300.jpg" alt="" /></a>
+	<figcaption>Three images.</figcaption>
+</figure>
+
+<h3 id="alternative-way">Alternative way</h3>
+
+<p>Another way to achieve the same result is to include <code class="highlighter-rouge">gallery</code> Liquid template. In this case you
+don’t have to write any HTML tags – just copy a small block of code, adjust the parameters (see below)
+and fill the block with any number of links to images. You can mix relative and external links.</p>
+
+<p>Here is the block you might want to use:</p>
+
+<figure class="highlight"><pre><code class="language-jinja" data-lang="jinja"><span class="cp">{%</span> <span class="nv">capture</span> <span class="nv">images</span> <span class="cp">%}</span>
+	/images/abstract-10.jpg
+	/images/abstract-11.jpg
+	http://upload.wikimedia.org/wikipedia/en/2/24/Lenna.png
+<span class="cp">{%</span> <span class="nv">endcapture</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">include</span> <span class="nv">gallery</span> <span class="nv">images</span><span class="err">=</span><span class="nv">images</span> <span class="nv">caption</span><span class="err">=</span><span class="s2">"Test images"</span> <span class="nv">cols</span><span class="err">=</span><span class="nv">3</span> <span class="cp">%}</span></code></pre></figure>
+
+<p>Parameters:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">caption</code>: Sets the caption under the gallery (see <code class="highlighter-rouge">figcaption</code> HTML tag above);</li>
+  <li><code class="highlighter-rouge">cols</code>: Sets the number of columns of the gallery.
+Available values: [1..3].</li>
+</ul>
+
+<p>It will look something like this:</p>
+
+<figure class="third">
+    
+    <a href="/images/abstract-10.jpg"><img src="/images/abstract-10.jpg" alt="" /></a>
+    
+    <a href="/images/abstract-11.jpg"><img src="/images/abstract-11.jpg" alt="" /></a>
+    
+    <a href="http://upload.wikimedia.org/wikipedia/en/2/24/Lenna.png"><img src="http://upload.wikimedia.org/wikipedia/en/2/24/Lenna.png" alt="" /></a>
+    
+    <figcaption>Test images</figcaption>
+</figure>
+
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#sample post" title="Pages tagged sample post" class="tag"><span class="term">sample post</span></a></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#sample" title="Pages tagged sample" class="tag"><span class="term">sample</span></a></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/image/background-image/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/image/background-image/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/image/background-image/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/sample/sample-post-images/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/sample/sample-post-images/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/sample/sample-post-images/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -268,23 +339,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/intro/sample-link-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/drawerlayout-post/" title="drawerlayout navigationView 클릭 먹통">drawerlayout navigationView 클릭 먹통</a></h3>
-      <p>drawerlayout navigationView 클릭 먹통 <a href="http://localhost:4000/android/drawerlayout-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/actionbar_menu-post/" title="ActionBar Menu in Fragment">ActionBar Menu in Fragment</a></h3>
+      <p>ActionBar Menu in Fragment <a href="http://localhost:4000/android/actionbar_menu-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-post/" title="app build 문제">app build 문제</a></h4>
-        <span>Published on November 01, 2018</span>
+        <h4><a href="http://localhost:4000/android/wirelessbuild-post/" title="wireless build">wireless build</a></h4>
+        <span>Published on November 05, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-post/" title="selector drawable">selector drawable</a></h4>
-        <span>Published on October 31, 2018</span>
+        <h4><a href="http://localhost:4000/android/drawerlayout-post/" title="drawerlayout navigationView 클릭 먹통">drawerlayout navigationView 클릭 먹통</a></h4>
+        <span>Published on November 02, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

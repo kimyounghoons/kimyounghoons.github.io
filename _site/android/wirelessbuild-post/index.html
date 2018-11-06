@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>A Post with a Video &#8211; 영훈 블로그</title>
-<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta name="keywords" content="sample post, video">
+<title>wireless build &#8211; 영훈 블로그</title>
+<meta name="description" content="wireless build">
+<meta name="keywords" content="android">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Post with a Video">
-<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta property="og:url" content="http://localhost:4000/intro/video-post/">
+<meta property="og:title" content="wireless build">
+<meta property="og:description" content="wireless build">
+<meta property="og:url" content="http://localhost:4000/android/wirelessbuild-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/intro/video-post/">
+<link rel="canonical" href="http://localhost:4000/android/wirelessbuild-post/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -98,12 +98,6 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
               
                 
-                  <li class="sub-item"><a href="http://localhost:4000/categories/#image">image</a></li>
-              
-                
-                  <li class="sub-item"><a href="http://localhost:4000/categories/#intro">intro</a></li>
-              
-                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
               
                 
@@ -137,9 +131,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>A Post with a Video</h1>
+      <h1>wireless build</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2016-11-27T00:00:00-05:00">November 27, 2016</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-11-05T00:00:00-05:00">November 05, 2018</time></span></h2>
       
 
       
@@ -176,12 +170,6 @@
                 <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
             
               
-                <li><a href="http://localhost:4000/categories/#image">image</a></li>
-            
-              
-                <li><a href="http://localhost:4000/categories/#intro">intro</a></li>
-            
-              
                 <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
             
               
@@ -203,27 +191,38 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">A Post with a Video</h1>
-      <iframe width="560" height="315" src="//www.youtube.com/embed/SU3kYxJmWuQ" frameborder="0" allowfullscreen></iframe>
+      <h1 class="post-title entry-title">wireless build</h1>
+      <h2 id="무선으로-빌드-하는-방법">무선으로 빌드 하는 방법</h2>
 
-<p>Video embeds are responsive and scale with the width of the main content block with the help of <a href="http://fitvidsjs.com/">FitVids</a>.</p>
+<p>처음에는 usb 연결이 필요하다.</p>
 
-<p>Adding YouTube video embeds causes errors when building your Jekyll site. To fix wrap the html within <code class="highlighter-rouge">{::nomarkdown}</code> tags. Example below:</p>
+<p>터미널에서 
+adb tcpip 5555 치면</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html">{::nomarkdown}
-<span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">"560"</span> <span class="na">height=</span><span class="s">"315"</span> <span class="na">src=</span><span class="s">"//www.youtube.com/embed/SU3kYxJmWuQ"</span> <span class="na">frameborder=</span><span class="s">"0"</span> <span class="na">allowfullscreen</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-{:/nomarkdown}</code></pre></figure>
+<p>restarting in TCP mode port : 5555</p>
 
+<p>5555포트가 열린거임</p>
+
+<p>adb connect 주소:5555 라고 치면</p>
+
+<p>connected to 주소:5555 라고 나온다.</p>
+
+<p>그럼 연결 성공</p>
+
+<p>usb를 빼고</p>
+
+<p>adb devices 로 연결된 디바이스를 확인할 수 있다.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#sample post" title="Pages tagged sample post" class="tag"><span class="term">sample post</span></a><a href="http://localhost:4000/tags#video" title="Pages tagged video" class="tag"><span class="term">video</span></a></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#android" title="Pages tagged android" class="tag"><span class="term">android</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-05">November 05, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/intro/video-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/intro/video-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/intro/video-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/wirelessbuild-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/wirelessbuild-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/wirelessbuild-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -264,23 +263,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/sample/intro/sample-post-images/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/drawerlayout-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/drawerlayout-post/" title="drawerlayout navigationView 클릭 먹통">drawerlayout navigationView 클릭 먹통</a></h3>
-      <p>drawerlayout navigationView 클릭 먹통 <a href="http://localhost:4000/android/drawerlayout-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/actionbar_menu-post/" title="ActionBar Menu in Fragment">ActionBar Menu in Fragment</a></h3>
+      <p>ActionBar Menu in Fragment <a href="http://localhost:4000/android/actionbar_menu-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-post/" title="app build 문제">app build 문제</a></h4>
-        <span>Published on November 01, 2018</span>
+        <h4><a href="http://localhost:4000/android/drawerlayout-post/" title="drawerlayout navigationView 클릭 먹통">drawerlayout navigationView 클릭 먹통</a></h4>
+        <span>Published on November 02, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-post/" title="selector drawable">selector drawable</a></h4>
-        <span>Published on October 31, 2018</span>
+        <h4><a href="http://localhost:4000/android/android-post/" title="app build 문제">app build 문제</a></h4>
+        <span>Published on November 01, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

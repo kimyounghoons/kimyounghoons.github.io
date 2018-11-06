@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>drawerlayout navigationView 클릭 먹통 &#8211; 영훈 블로그</title>
-<meta name="description" content="drawerlayout navigationView 클릭 먹통">
-<meta name="keywords" content="android">
+<title>Post with a Background Image &#8211; 영훈 블로그</title>
+<meta name="description" content="Sample post with a background image CSS override.">
+<meta name="keywords" content="sample">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="drawerlayout navigationView 클릭 먹통">
-<meta property="og:description" content="drawerlayout navigationView 클릭 먹통">
-<meta property="og:url" content="http://localhost:4000/android/drawerlayout-post/">
+<meta property="og:title" content="Post with a Background Image">
+<meta property="og:description" content="Sample post with a background image CSS override.">
+<meta property="og:url" content="http://localhost:4000/sample/background-image/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/drawerlayout-post/">
+<link rel="canonical" href="http://localhost:4000/sample/background-image/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -62,6 +62,10 @@
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
 
 
+
+
+
+<style type="text/css">body {background-image:url(http://localhost:4000/images/triangular.png);}</style>
 
 
 </head>
@@ -131,9 +135,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>drawerlayout navigationView 클릭 먹통</h1>
+      <h1>Post with a Background Image</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-11-02T00:00:00-04:00">November 02, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2016-11-29T00:00:00-05:00">November 29, 2016</time></span></h2>
       
 
       
@@ -191,63 +195,27 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">drawerlayout navigationView 클릭 먹통</h1>
-      <p>딤처리 된 팝업을 추가 할 일이 생겨 아래의 구조로 작성함</p>
+      <h1 class="post-title entry-title">Post with a Background Image</h1>
+      <p>Here be a sample post with a custom background image. To utilize this “feature” just add the following YAML to a post’s front matter.</p>
 
-<p>DrawerLayout 사용하는 layout 에서의 구조</p>
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">image</span><span class="pi">:</span>
+  <span class="na">background</span><span class="pi">:</span> <span class="s">filename.png</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span> 
-        <span class="err">메인</span> <span class="err">뷰</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+<p>This little bit of YAML makes the assumption that your background image asset is in the <code class="highlighter-rouge">/images</code> folder. If you place it somewhere else or are hotlinking from the web, just include the full http(s):// URL. Either way you should have a background image that is tiled.</p>
 
-    &lt;NavigationView&gt;  
-    &lt;/</span><span class="no">NavigationView</span><span class="o">&gt;</span>
+<p>If you want to set a background image for the entire site just add <code class="highlighter-rouge">background: filename.png</code> to your <code class="highlighter-rouge">_config.yml</code> and BOOM — background images on every page!</p>
 
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
-        <span class="err">딤처리</span> <span class="err">팝업</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
-&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
-
-<p>이런식으로 구성 했다.</p>
-
-<p>근데 딤처리 팝업 뜨고 나서만 NavigationView 에 있는 뷰들이 클릭을 먹지 않음…</p>
-
-<p>딤처리 팝업을 확인 누르면 VISIBLE -&gt; GONE 상태로 변경되서 상관이 없어야 할텐데 클릭이 되지 않는 문제..</p>
-
-<p>처음에는 문제 초점을 딤처리 팝업에서의 setClickable 에 뒀다.</p>
-
-<p>하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
-        <span class="err">메인</span> <span class="err">뷰</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
-
-    &lt;ConstraintLayout&gt;  
-        딤처리 팝업
-    &lt;/</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>
-
-    <span class="o">&lt;</span><span class="no">NavigationView</span><span class="o">&gt;</span>  
-    <span class="o">&lt;</span><span class="sr">/NavigationView&gt;
-
-&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
-
-<p>그렇게 처리하니 이슈가 사라짐!!</p>
-<div class="redText">
-기억하자 NavigationView의 위치는 맨 마지막에 와야함!!
-</div>
+<div xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/" about="http://subtlepatterns.com" class="notice">Background images from <span property="dct:title">Subtle Patterns</span> (<a rel="cc:attributionURL" property="cc:attributionName" href="http://subtlepatterns.com">Subtle Patterns</a>) / <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></div>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#android" title="Pages tagged android" class="tag"><span class="term">android</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-02">November 02, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#sample" title="Pages tagged sample" class="tag"><span class="term">sample</span></a></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/drawerlayout-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/drawerlayout-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/drawerlayout-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/sample/background-image/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/sample/background-image/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/sample/background-image/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -288,7 +256,7 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/sample/sample-link-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
       <h3><a href="http://localhost:4000/android/actionbar_menu-post/" title="ActionBar Menu in Fragment">ActionBar Menu in Fragment</a></h3>
@@ -303,8 +271,8 @@
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-post/" title="app build 문제">app build 문제</a></h4>
-        <span>Published on November 01, 2018</span>
+        <h4><a href="http://localhost:4000/android/drawerlayout-post/" title="drawerlayout navigationView 클릭 먹통">drawerlayout navigationView 클릭 먹통</a></h4>
+        <span>Published on November 02, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
