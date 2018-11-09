@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Post with a Background Image &#8211; 영훈 블로그</title>
-<meta name="description" content="Sample post with a background image CSS override.">
-<meta name="keywords" content="sample">
+<title>view setAlpha in OnTouchListener &#8211; 영훈 블로그</title>
+<meta name="description" content="view setAlpha in OnTouchListener">
+<meta name="keywords" content="android">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Post with a Background Image">
-<meta property="og:description" content="Sample post with a background image CSS override.">
-<meta property="og:url" content="http://localhost:4000/sample/background-image/">
+<meta property="og:title" content="view setAlpha in OnTouchListener">
+<meta property="og:description" content="view setAlpha in OnTouchListener">
+<meta property="og:url" content="http://localhost:4000/android/android-touch-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/sample/background-image/">
+<link rel="canonical" href="http://localhost:4000/android/android-touch-post/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -62,10 +62,6 @@
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
 
 
-
-
-
-<style type="text/css">body {background-image:url(http://localhost:4000/images/triangular.png);}</style>
 
 
 </head>
@@ -138,9 +134,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Post with a Background Image</h1>
+      <h1>view setAlpha in OnTouchListener</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2016-11-29T00:00:00-05:00">November 29, 2016</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-11-09T00:00:00-05:00">November 09, 2018</time></span></h2>
       
 
       
@@ -201,27 +197,43 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">Post with a Background Image</h1>
-      <p>Here be a sample post with a custom background image. To utilize this “feature” just add the following YAML to a post’s front matter.</p>
+      <h1 class="post-title entry-title">view setAlpha in OnTouchListener</h1>
+      <p>view pressed 상태 되었을 때 알파 50% 먹이기</p>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">image</span><span class="pi">:</span>
-  <span class="na">background</span><span class="pi">:</span> <span class="s">filename.png</span></code></pre></figure>
+<p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
 
-<p>This little bit of YAML makes the assumption that your background image asset is in the <code class="highlighter-rouge">/images</code> folder. If you place it somewhere else or are hotlinking from the web, just include the full http(s):// URL. Either way you should have a background image that is tiled.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="vi">@Override</span>
+    <span class="kp">public</span> <span class="n">boolean</span> <span class="n">onTouch</span><span class="p">(</span><span class="no">View</span> <span class="n">v</span><span class="p">,</span> <span class="no">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
 
-<p>If you want to set a background image for the entire site just add <code class="highlighter-rouge">background: filename.png</code> to your <code class="highlighter-rouge">_config.yml</code> and BOOM — background images on every page!</p>
+        <span class="n">switch</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="nf">getAction</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_DOWN</span><span class="p">:</span>
+                <span class="n">v</span><span class="p">.</span><span class="nf">setAlpha</span><span class="p">((</span><span class="n">float</span><span class="p">)</span> <span class="mf">0.5</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_UP</span><span class="p">:</span>
+            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_CANCEL</span><span class="p">:</span>
+                <span class="n">v</span><span class="p">.</span><span class="nf">setAlpha</span><span class="p">((</span><span class="n">float</span><span class="p">)</span> <span class="mi">1</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></figure>
 
-<div xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/" about="http://subtlepatterns.com" class="notice">Background images from <span property="dct:title">Subtle Patterns</span> (<a rel="cc:attributionURL" property="cc:attributionName" href="http://subtlepatterns.com">Subtle Patterns</a>) / <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></div>
+<p>ACTION_DOWN 상태에서는 Pressed 상태 
+ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
+ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
+에서 각각 Action을 가진다.</p>
+
+<p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#sample" title="Pages tagged sample" class="tag"><span class="term">sample</span></a></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#android" title="Pages tagged android" class="tag"><span class="term">android</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-09">November 09, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/sample/background-image/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/sample/background-image/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/sample/background-image/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-touch-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-touch-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-touch-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -262,23 +274,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/sample/sample-link-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/kotlin/kotlin-when-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-touch-post/" title="view setAlpha in OnTouchListener">view setAlpha in OnTouchListener</a></h3>
-      <p>view setAlpha in OnTouchListener <a href="http://localhost:4000/android/android-touch-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/kotlin/kotlin-when-post/" title="how to use `when` in kotlin">how to use `when` in kotlin</a></h3>
+      <p>how to use `when` in kotlin <a href="http://localhost:4000/kotlin/kotlin-when-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/kotlin/kotlin-when-post/" title="how to use `when` in kotlin">how to use `when` in kotlin</a></h4>
-        <span>Published on November 08, 2018</span>
+        <h4><a href="http://localhost:4000/android/shape-post/" title="Shape">Shape</a></h4>
+        <span>Published on November 07, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/shape-post/" title="Shape">Shape</a></h4>
-        <span>Published on November 07, 2018</span>
+        <h4><a href="http://localhost:4000/android/actionbar_menu-post/" title="ActionBar Menu in Fragment">ActionBar Menu in Fragment</a></h4>
+        <span>Published on November 06, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
