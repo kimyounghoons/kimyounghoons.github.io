@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Shape &#8211; 영훈 블로그</title>
-<meta name="description" content="Shape in xml">
-<meta name="keywords" content="shape">
+<title>how to use `when` in kotlin &#8211; 영훈 블로그</title>
+<meta name="description" content="how to use `when` in kotlin">
+<meta name="keywords" content="kotlin">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shape">
-<meta property="og:description" content="Shape in xml">
-<meta property="og:url" content="http://localhost:4000/android/shape-post/">
+<meta property="og:title" content="how to use `when` in kotlin">
+<meta property="og:description" content="how to use `when` in kotlin">
+<meta property="og:url" content="http://localhost:4000/kotlin/kotlin-when-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/shape-post/">
+<link rel="canonical" href="http://localhost:4000/kotlin/kotlin-when-post/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -134,9 +134,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Shape</h1>
+      <h1>how to use `when` in kotlin</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-11-07T00:00:00-05:00">November 07, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-11-08T00:00:00-05:00">November 08, 2018</time></span></h2>
       
 
       
@@ -197,45 +197,71 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">Shape</h1>
-      <p>꼭지점 두루뭉실한 사각형 만들기</p>
+      <h1 class="post-title entry-title">how to use `when` in kotlin</h1>
+      <p>우선 자바 소스</p>
 
-<p>drawable/파일명.xml 만들어 준다.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="vi">@Override</span>
+    <span class="kp">public</span> <span class="n">boolean</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="no">MenuItem</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">switch</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">getItemId</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span><span class="p">:</span>
+                <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
+                <span class="k">return</span> <span class="kp">true</span><span class="p">;</span>
+            <span class="ss">default: 
+                </span><span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">shape</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
+<p>아래는 코틀린</p>
 
-    <span class="o">&lt;</span><span class="n">solid</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/white"</span><span class="o">/&gt;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">)</span> <span class="p">{</span>
+        <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
+            <span class="kp">true</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="kp">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
 
-    <span class="o">&lt;</span><span class="n">stroke</span> <span class="n">android</span><span class="ss">:width</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/gray"</span><span class="o">/&gt;</span>
+<p>코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.</p>
 
-    <span class="o">&lt;</span><span class="n">padding</span> <span class="n">android</span><span class="ss">:bottom</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:left</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:right</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:top</span><span class="o">=</span><span class="s2">"10dp"</span><span class="o">/&gt;</span>
+<p>when은 switch랑 비슷한것 같은데 뭐가 차이가 날까 ~ 궁금해서 구글링 해서 찾아보니~</p>
 
-    <span class="o">&lt;</span><span class="n">corners</span> <span class="n">android</span><span class="ss">:radius</span><span class="o">=</span><span class="s2">"7dp"</span><span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/shape&gt;</span></code></pre></figure>
+<p>2가지가 있었다.</p>
 
-<p>solid 안에 컬러는 도형의 내부 색상</p>
+<p>1.Auto-casting</p>
 
-<p>stroke 바깥 선 색상과 두께</p>
+<p>2.when without arguments</p>
 
-<p>padding 은 도형 안쪽 여백</p>
+<p>1번 예를 한번 보면</p>
 
-<p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">when</span><span class="p">(</span><span class="n">view</span><span class="p">){</span>
+    <span class="n">is</span> <span class="no">TextView</span> <span class="o">-&gt;</span> <span class="n">toast</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="nf">text</span><span class="p">)</span>
+    <span class="k">else</span> <span class="o">-&gt;</span> 
+<span class="p">}</span></code></pre></figure>
+
+<p>is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.</p>
+
+<p>2번 예를 한번 보면</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">val</span> <span class="n">str</span> <span class="o">=</span> <span class="k">when</span><span class="p">{</span>
+    <span class="n">x</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="o">-&gt;</span> <span class="s2">"cheap"</span>
+    <span class="n">s</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="s2">"money"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"Welcome"</span>
+    <span class="k">else</span> <span class="o">-&gt;</span> <span class="s2">""</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#shape" title="Pages tagged shape" class="tag"><span class="term">shape</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-07">November 07, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#kotlin" title="Pages tagged kotlin" class="tag"><span class="term">kotlin</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-08">November 08, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/shape-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/shape-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/shape-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/kotlin/kotlin-when-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/kotlin/kotlin-when-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/kotlin/kotlin-when-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -276,11 +302,11 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/actionbar_menu-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/shape-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/kotlin/kotlin-when-post/" title="how to use `when` in kotlin">how to use `when` in kotlin</a></h3>
-      <p>how to use `when` in kotlin <a href="http://localhost:4000/kotlin/kotlin-when-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/shape-post/" title="Shape">Shape</a></h3>
+      <p>Shape in xml <a href="http://localhost:4000/android/shape-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
