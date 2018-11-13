@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Shape &#8211; 영훈 블로그</title>
-<meta name="description" content="Shape in xml">
-<meta name="keywords" content="shape">
+<title>index in firestore &#8211; 영훈 블로그</title>
+<meta name="description" content="파이어스토어 색인을 이용한 복합쿼리">
+<meta name="keywords" content="firestore">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shape">
-<meta property="og:description" content="Shape in xml">
-<meta property="og:url" content="http://localhost:4000/android/shape-post/">
+<meta property="og:title" content="index in firestore">
+<meta property="og:description" content="파이어스토어 색인을 이용한 복합쿼리">
+<meta property="og:url" content="http://localhost:4000/android/android-firestore-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/shape-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-firestore-post/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -134,9 +134,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Shape</h1>
+      <h1>index in firestore</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-11-07T00:00:00-05:00">November 07, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00-05:00">November 12, 2018</time></span></h2>
       
 
       
@@ -197,45 +197,31 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">Shape</h1>
-      <p>꼭지점 두루뭉실한 사각형 만들기</p>
+      <h1 class="post-title entry-title">index in firestore</h1>
+      <h1 id="파이어스토어-색인을-이용한-복합쿼리">파이어스토어 색인을 이용한 복합쿼리</h1>
 
-<p>drawable/파일명.xml 만들어 준다.</p>
+<p>기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
+하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">shape</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
+<figure>
+	<img src="/images/2018-11-12-index_in_firestore.png" alt="" />
+	<figcaption>FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.</figcaption>
+</figure>
 
-    <span class="o">&lt;</span><span class="n">solid</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/white"</span><span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">stroke</span> <span class="n">android</span><span class="ss">:width</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/gray"</span><span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">padding</span> <span class="n">android</span><span class="ss">:bottom</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:left</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:right</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:top</span><span class="o">=</span><span class="s2">"10dp"</span><span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">corners</span> <span class="n">android</span><span class="ss">:radius</span><span class="o">=</span><span class="s2">"7dp"</span><span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/shape&gt;</span></code></pre></figure>
-
-<p>solid 안에 컬러는 도형의 내부 색상</p>
-
-<p>stroke 바깥 선 색상과 두께</p>
-
-<p>padding 은 도형 안쪽 여백</p>
-
-<p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
+<p>처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
+letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
+추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#shape" title="Pages tagged shape" class="tag"><span class="term">shape</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-07">November 07, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#firestore" title="Pages tagged firestore" class="tag"><span class="term">firestore</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-12">November 12, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/shape-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/shape-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/shape-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-firestore-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-firestore-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-firestore-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -276,23 +262,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/actionbar_menu-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-touch-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-firestore-post/" title="index in firestore">index in firestore</a></h3>
-      <p>파이어스토어 색인을 이용한 복합쿼리 <a href="http://localhost:4000/android/android-firestore-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-touch-post/" title="view setAlpha in OnTouchListener">view setAlpha in OnTouchListener</a></h3>
+      <p>view setAlpha in OnTouchListener <a href="http://localhost:4000/android/android-touch-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-touch-post/" title="view setAlpha in OnTouchListener">view setAlpha in OnTouchListener</a></h4>
-        <span>Published on November 09, 2018</span>
+        <h4><a href="http://localhost:4000/kotlin/kotlin-when-post/" title="how to use `when` in kotlin">how to use `when` in kotlin</a></h4>
+        <span>Published on November 08, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/kotlin/kotlin-when-post/" title="how to use `when` in kotlin">how to use `when` in kotlin</a></h4>
-        <span>Published on November 08, 2018</span>
+        <h4><a href="http://localhost:4000/android/shape-post/" title="Shape">Shape</a></h4>
+        <span>Published on November 07, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

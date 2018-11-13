@@ -4,13 +4,45 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2018-11-09T04:02:43-05:00</updated>
+<updated>2018-11-12T19:47:58-05:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[index in firestore]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-firestore-post/" />
+  <id>http://localhost:4000/android/android-firestore-post</id>
+  <updated>2018-11-12T00:00:00-00:00</updated>
+  <published>2018-11-12T00:00:00-05:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h1 id=&quot;파이어스토어-색인을-이용한-복합쿼리&quot;&gt;파이어스토어 색인을 이용한 복합쿼리&lt;/h1&gt;
+
+&lt;p&gt;기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
+하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2018-11-12-index_in_firestore.png&quot; alt=&quot;&quot; /&gt;
+	&lt;figcaption&gt;FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
+letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
+추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-firestore-post/&quot;&gt;index in firestore&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 12, 2018.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>

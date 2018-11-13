@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "index in firestore",
+      "category" : "",
+      "tags"     : "firestore",
+      "url"      : "http://localhost:4000/android/android-firestore-post/",
+      "date"     : "2018-11-12 00:00:00 -0500"
+    } ,
+  
+    {
       "title"    : "view setAlpha in OnTouchListener",
       "category" : "",
       "tags"     : "android",
