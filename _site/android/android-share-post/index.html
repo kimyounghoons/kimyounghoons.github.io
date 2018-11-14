@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Dark Post &#8211; 영훈 블로그</title>
-<meta name="description" content="Sample Dark post">
-<meta name="keywords" content="sample">
+<title>share Intent &#8211; 영훈 블로그</title>
+<meta name="description" content="안드로이드 외부 공유">
+<meta name="keywords" content="share">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dark Post">
-<meta property="og:description" content="Sample Dark post">
-<meta property="og:url" content="http://localhost:4000/dark-post/">
+<meta property="og:title" content="share Intent">
+<meta property="og:description" content="안드로이드 외부 공유">
+<meta property="og:url" content="http://localhost:4000/android/android-share-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/dark-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-share-post/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -134,15 +134,17 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Dark Post</h1>
+      <h1>share Intent</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2016-11-30T00:00:00-05:00">November 30, 2016</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00-05:00">November 13, 2018</time></span></h2>
       
 
       
-          <p class="entry-reading-time">
-            &nbsp;
-          </p><!-- /.entry-reading-time -->
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
       
     </div><!-- /.header-title-wrap -->
   </div><!-- /.header-title -->
@@ -192,25 +194,41 @@
 
 
 <div id="main" role="main">
-  <article class="hentry hentry-dark">
+  <article class="hentry">
     <div class="entry-content">
-      
-      <h1 class="post-title entry-title">Dark Post</h1>
-      <p>This is a sample post to show the dark post theme. To use this dark theme, just add:</p>
+        
+      <h1 class="post-title entry-title">share Intent</h1>
+      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">    <span class="na">layout</span><span class="pi">:</span> <span class="s">dark-post</span></code></pre></figure>
+<p>외부공유 소스</p>
 
-<p>on your post. This theme adds a dark background with a white panel to show your content.</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">title</span><span class="p">);</span>
+<span class="no">String</span> <span class="n">plainContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">plain_content</span><span class="p">);</span>
+<span class="no">String</span> <span class="n">htmlContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">html_content</span><span class="p">);</span>
+
+<span class="no">Intent</span> <span class="n">shareIntent</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">ACTION_SEND</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">setType</span><span class="p">(</span><span class="s2">"text/plain"</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_SUBJECT</span><span class="p">,</span> <span class="n">title</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_TEXT</span><span class="p">,</span> <span class="n">plainContent</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_HTML_TEXT</span><span class="p">,</span> <span class="n">htmlContent</span><span class="p">);</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">startActivity</span><span class="p">(</span><span class="no">Intent</span><span class="p">.</span><span class="nf">createChooser</span><span class="p">(</span><span class="n">shareIntent</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">share_text</span><span class="p">)));</span></code></pre></figure>
+
+<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
+앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
+Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
+HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
+G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#sample" title="Pages tagged sample" class="tag"><span class="term">sample</span></a></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#share" title="Pages tagged share" class="tag"><span class="term">share</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-13">November 13, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/dark-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/dark-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/dark-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-share-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-share-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-share-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -251,23 +269,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/sample/background-image/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-firestore-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-share-post/" title="share Intent">share Intent</a></h3>
-      <p>안드로이드 외부 공유 <a href="http://localhost:4000/android/android-share-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-firestore-post/" title="index in firestore">index in firestore</a></h3>
+      <p>파이어스토어 색인을 이용한 복합쿼리 <a href="http://localhost:4000/android/android-firestore-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-firestore-post/" title="index in firestore">index in firestore</a></h4>
-        <span>Published on November 12, 2018</span>
+        <h4><a href="http://localhost:4000/android/android-touch-post/" title="view setAlpha in OnTouchListener">view setAlpha in OnTouchListener</a></h4>
+        <span>Published on November 09, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-touch-post/" title="view setAlpha in OnTouchListener">view setAlpha in OnTouchListener</a></h4>
-        <span>Published on November 09, 2018</span>
+        <h4><a href="http://localhost:4000/kotlin/kotlin-when-post/" title="how to use `when` in kotlin">how to use `when` in kotlin</a></h4>
+        <span>Published on November 08, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
