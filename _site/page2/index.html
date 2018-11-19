@@ -197,6 +197,56 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-07T00:00:00-05:00"><a href="http://localhost:4000/android/shape-post/">November 07, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/shape-post/" rel="bookmark" title="Shape" itemprop="url">Shape</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>꼭지점 두루뭉실한 사각형 만들기</p>
+
+<p>drawable/파일명.xml 만들어 준다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">shape</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">solid</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/white"</span><span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">stroke</span> <span class="n">android</span><span class="ss">:width</span><span class="o">=</span><span class="s2">"1dp"</span>
+        <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/gray"</span><span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">padding</span> <span class="n">android</span><span class="ss">:bottom</span><span class="o">=</span><span class="s2">"10dp"</span>
+        <span class="n">android</span><span class="ss">:left</span><span class="o">=</span><span class="s2">"10dp"</span>
+        <span class="n">android</span><span class="ss">:right</span><span class="o">=</span><span class="s2">"10dp"</span>
+        <span class="n">android</span><span class="ss">:top</span><span class="o">=</span><span class="s2">"10dp"</span><span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">corners</span> <span class="n">android</span><span class="ss">:radius</span><span class="o">=</span><span class="s2">"7dp"</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/shape&gt;</span></code></pre></figure>
+
+<p>solid 안에 컬러는 도형의 내부 색상</p>
+
+<p>stroke 바깥 선 색상과 두께</p>
+
+<p>padding 은 도형 안쪽 여백</p>
+
+<p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00-05:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -417,53 +467,6 @@ adb uninstall <패키지명></패키지명></패키지명></p>
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-10-31T00:00:00-04:00"><a href="http://localhost:4000/android/android-post/">October 31, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-post/" rel="bookmark" title="selector drawable" itemprop="url">selector drawable</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="selector">selector</h2>
-
-<p>image selector
-image_selector.xml 파일 만들기</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">drawable</span><span class="o">=</span><span class="s2">"@drawable/image_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:drawable</span><span class="o">=</span><span class="s2">"@drawable/image_default"</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
-
-<p>사용 : android:src=”@drawable/image_selector”</p>
-
-<p>text selector</p>
-
-<p>text_selector.xml 파일 만들기</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/color_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/color_default"</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
-
-<p>사용 : android:textColor=”@drawable/text_selector”</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -499,12 +502,19 @@ image_selector.xml 파일 만들기</p>
         <li><a href="http://localhost:4000/page3/">3</a></li>
       
     
+      
+        
+        
+        
+        <li><a href="http://localhost:4000/page4/">4</a></li>
+      
+    
 
     
     
 
     
-      <li><a href="http://localhost:4000/page4/">4</a></li>
+      <li><a href="http://localhost:4000/page5/">5</a></li>
     
 
     
