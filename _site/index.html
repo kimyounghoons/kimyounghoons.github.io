@@ -98,6 +98,9 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
               
                 
@@ -171,6 +174,9 @@
                 <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
             
               
+                <li><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
             
               
@@ -193,6 +199,76 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-20T00:00:00-05:00"><a href="http://localhost:4000/firebase/firebase-push/">November 20, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/firebase/firebase-push/" rel="bookmark" title="Firebase Push Test in Postman" itemprop="url">Firebase Push Test in Postman</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="포스트맨에서-파이어베이스-푸시-테스트">포스트맨에서 파이어베이스 푸시 테스트!!</h1>
+
+<p>POST 형식 url : https://fcm.googleapis.com/fcm/send</p>
+
+<h3 id="headers">Headers</h3>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th style="text-align: left">KEY</th>
+      <th style="text-align: center">VALUE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Authorization</td>
+      <td style="text-align: center">key= server key</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Content-Type</td>
+      <td style="text-align: center">application/json</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="body-raw-applicationjson">Body raw (application/json)</h3>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">{</span>
+    <span class="s2">"to"</span><span class="ss">:"받을 사람 firebase token key"</span><span class="p">,</span>
+    <span class="s2">"notification"</span><span class="p">:{</span>
+      <span class="s2">"title"</span><span class="ss">:"제목"</span><span class="p">,</span>
+      <span class="s2">"body"</span><span class="ss">:"바디"</span>
+      <span class="o">...</span>
+    <span class="p">},</span>
+    <span class="s2">"data"</span> <span class="p">:</span> <span class="p">{</span>
+      <span class="s2">"letterId"</span> <span class="p">:</span> <span class="s2">"CUXbq8XrXOBOw8bWfMkz"</span>
+      <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>보내면 push 가 성공적으로 200 떨어진다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -364,82 +440,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 에서 각각 Action을 가진다.</p>
 
 <p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-08T00:00:00-05:00"><a href="http://localhost:4000/kotlin/kotlin-when-post/">November 08, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/kotlin/kotlin-when-post/" rel="bookmark" title="how to use `when` in kotlin" itemprop="url">how to use `when` in kotlin</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>우선 자바 소스</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">boolean</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="no">MenuItem</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">switch</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">getItemId</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span><span class="p">:</span>
-                <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
-                <span class="k">return</span> <span class="kp">true</span><span class="p">;</span>
-            <span class="ss">default: 
-                </span><span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
-
-<p>아래는 코틀린</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">)</span> <span class="p">{</span>
-        <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span> <span class="o">-&gt;</span> <span class="p">{</span>
-            <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
-            <span class="kp">true</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="o">-&gt;</span> <span class="p">{</span>
-            <span class="kp">false</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
-
-<p>코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.</p>
-
-<p>when은 switch랑 비슷한것 같은데 뭐가 차이가 날까 ~ 궁금해서 구글링 해서 찾아보니~</p>
-
-<p>2가지가 있었다.</p>
-
-<p>1.Auto-casting</p>
-
-<p>2.when without arguments</p>
-
-<p>1번 예를 한번 보면</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">when</span><span class="p">(</span><span class="n">view</span><span class="p">){</span>
-    <span class="n">is</span> <span class="no">TextView</span> <span class="o">-&gt;</span> <span class="n">toast</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="nf">text</span><span class="p">)</span>
-    <span class="k">else</span> <span class="o">-&gt;</span> 
-<span class="p">}</span></code></pre></figure>
-
-<p>is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.</p>
-
-<p>2번 예를 한번 보면</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">val</span> <span class="n">str</span> <span class="o">=</span> <span class="k">when</span><span class="p">{</span>
-    <span class="n">x</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="o">-&gt;</span> <span class="s2">"cheap"</span>
-    <span class="n">s</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="s2">"money"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"Welcome"</span>
-    <span class="k">else</span> <span class="o">-&gt;</span> <span class="s2">""</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
 
       
   </div><!-- /.entry-content -->
