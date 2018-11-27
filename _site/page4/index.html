@@ -107,6 +107,9 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#notification">notification</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#sample">sample</a></li>
               
             </ul>
@@ -183,6 +186,9 @@
                 <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
             
               
+                <li><a href="http://localhost:4000/categories/#notification">notification</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#sample">sample</a></li>
             
           </ul>
@@ -199,6 +205,52 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00-04:00"><a href="http://localhost:4000/android/android-post/">October 30, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-post/" rel="bookmark" title="다중 매니페스트 파일 병합" itemprop="url">다중 매니페스트 파일 병합</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h2 id="toolsreplaceattr">tools:replace=”attr,…”</h2>
+
+<p>android:allowBackup 을 false 로 변경 시킬 때 아래와 같은 에러가 나왔다.</p>
+
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">Manifest</span> <span class="nt">merger</span> <span class="nt">failed</span> <span class="o">:</span> <span class="nt">Attribute</span> <span class="nt">application</span><span class="k">@allowBackup</span> <span class="n">value</span><span class="err">=</span><span class="p">(</span><span class="n">false</span><span class="p">)</span> <span class="n">from</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">26</span><span class="p">:</span><span class="m">9-36</span>
+	<span class="n">is</span> <span class="n">also</span> <span class="n">present</span> <span class="n">at</span> <span class="p">[</span><span class="n">com</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">danylovolokh</span><span class="p">:</span><span class="n">hashtag-helper</span><span class="p">:</span><span class="m">1.1.0</span><span class="p">]</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">12</span><span class="p">:</span><span class="m">9-35</span> <span class="n">value</span><span class="err">=</span><span class="p">(</span><span class="n">true</span><span class="p">).</span>
+	<span class="n">Suggestion</span><span class="p">:</span> <span class="n">add</span> <span class="s2">'tools:replace="android:allowBackup"'</span> <span class="n">to</span> <span class="err">&lt;</span><span class="n">application</span><span class="err">&gt;</span> <span class="n">element</span> <span class="n">at</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">24</span><span class="p">:</span><span class="m">5-208</span><span class="p">:</span><span class="m">19</span> <span class="n">to</span> <span class="n">override</span><span class="p">.</span></code></pre></figure>
+
+<p>문제는 manifest 병합 문제..
+hashtag 라이브러리에서도 allowBackup 속성이 설정 되어있어서 문제가 되었다.</p>
+
+<p>해결 방법은 다음과 같이 tools:replace=”android:allowBackup” 을 설정 해주면 해당 manifest android:allowBackup 속성이 우선순위가 높아진다.</p>
+
+<figure class="highlight"><pre><code class="language-css" data-lang="css"> <span class="o">&lt;</span><span class="nt">application</span>
+        <span class="nt">android</span><span class="nd">:name</span><span class="o">=</span><span class="s1">".name"</span>
+        <span class="nt">android</span><span class="nd">:allowBackup</span><span class="o">=</span><span class="s1">"false"</span>
+        <span class="nt">android</span><span class="nd">:icon</span><span class="o">=</span><span class="s1">"${appIcon}"</span>
+        <span class="nt">android</span><span class="nd">:label</span><span class="o">=</span><span class="s1">"@string/app_name"</span>
+        <span class="nt">android</span><span class="nd">:supportsRtl</span><span class="o">=</span><span class="s1">"false"</span>
+        <span class="nt">android</span><span class="nd">:theme</span><span class="o">=</span><span class="s1">"@style/AppTheme"</span>
+        <span class="nt">tools</span><span class="nd">:replace</span><span class="o">=</span><span class="s1">"supportsRtl,allowBackup"</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>다른곳에서 allowBackup 설정이 true 가 되어 있어도 해당 manifest 가 우선순위가 높기 때문에 false 가 적용 된다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -502,30 +554,6 @@
 <p>If you want to set a background image for the entire site just add <code class="highlighter-rouge">background: filename.png</code> to your <code class="highlighter-rouge">_config.yml</code> and BOOM — background images on every page!</p>
 
 <div xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/" about="http://subtlepatterns.com" class="notice">Background images from <span property="dct:title">Subtle Patterns</span> (<a rel="cc:attributionURL" property="cc:attributionName" href="http://subtlepatterns.com">Subtle Patterns</a>) / <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></div>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-11-28T00:00:00-05:00"><a href="http://localhost:4000/sample/sample-link-post/">November 28, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/sample/sample-link-post/" class="permalink" rel="bookmark" title="Sample Link Post"><i class="fa fa-bookmark"></i></a> <a href="http://aronbordin.com">Sample Link Post</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>This theme supports <strong>link posts</strong>, made famous by John Gruber. To use, just add <code class="highlighter-rouge">link: http://url-you-want-linked</code> to the post’s YAML front matter and you’re done.</p>
 
       
   </div><!-- /.entry-content -->

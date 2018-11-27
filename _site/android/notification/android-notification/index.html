@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>블로그에 오신 걸 환영합니다. &#8211; 영훈 블로그</title>
-<meta name="description" content="Describe this nonsense.">
-<meta name="keywords" content="Jekyll, theme, themes, responsive, blog, modern">
+<title>Notification &#8211; 영훈 블로그</title>
+<meta name="description" content="안드로이드 푸시 팝업">
+<meta name="keywords" content="notification">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="블로그에 오신 걸 환영합니다.">
-<meta property="og:description" content="Describe this nonsense.">
-<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:title" content="Notification">
+<meta property="og:description" content="안드로이드 푸시 팝업">
+<meta property="og:url" content="http://localhost:4000/android/notification/android-notification/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/">
+<link rel="canonical" href="http://localhost:4000/android/notification/android-notification/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -66,7 +66,7 @@
 
 </head>
 
-<body id="post-index">
+<body id="post" >
 
 <!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
 
@@ -140,15 +140,17 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>블로그에 오신 걸 환영합니다.</h1>
+      <h1>Notification</h1>
       
-        <h2><span class="entry-date"><time>&nbsp;</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-11-27T00:00:00-05:00">November 27, 2018</time></span></h2>
       
 
       
-          <p class="entry-reading-time">
-            &nbsp;
-          </p><!-- /.entry-reading-time -->
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
       
     </div><!-- /.header-title-wrap -->
   </div><!-- /.header-title -->
@@ -204,25 +206,10 @@
 
 
 <div id="main" role="main">
-  
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-27T00:00:00-05:00"><a href="http://localhost:4000/android/notification/android-notification/">November 27, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
+  <article class="hentry">
+    <div class="entry-content">
         
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/notification/android-notification/" rel="bookmark" title="Notification" itemprop="url">Notification</a></h1>
-    
-  </header>
-  <div class="entry-content">
+      <h1 class="post-title entry-title">Notification</h1>
       <h1 id="안드로이드-푸시-팝업">안드로이드 푸시 팝업</h1>
 
 <p>순서</p>
@@ -320,267 +307,78 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
 
 <p>Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.</p>
 
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-20T00:00:00-05:00"><a href="http://localhost:4000/firebase/firebase-push/">November 20, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://localhost:4000/tags#notification" title="Pages tagged notification" class="tag"><span class="term">notification</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-27">November 27, 2018</time></span></span>
         
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/firebase/firebase-push/" rel="bookmark" title="Firebase Push Test in Postman" itemprop="url">Firebase Push Test in Postman</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="포스트맨에서-파이어베이스-푸시-테스트">포스트맨에서 파이어베이스 푸시 테스트!!</h1>
-
-<p>POST 형식 url : https://fcm.googleapis.com/fcm/send</p>
-
-<h3 id="headers">Headers</h3>
-
-<table rules="groups">
-  <thead>
-    <tr>
-      <th style="text-align: left">KEY</th>
-      <th style="text-align: center">VALUE</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">Authorization</td>
-      <td style="text-align: center">key= server key</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Content-Type</td>
-      <td style="text-align: center">application/json</td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="body-raw-applicationjson">Body raw (application/json)</h3>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">{</span>
-    <span class="s2">"to"</span><span class="ss">:"받을 사람 firebase token key"</span><span class="p">,</span>
-    <span class="s2">"notification"</span><span class="p">:{</span>
-      <span class="s2">"title"</span><span class="ss">:"제목"</span><span class="p">,</span>
-      <span class="s2">"body"</span><span class="ss">:"바디"</span>
-      <span class="o">...</span>
-    <span class="p">},</span>
-    <span class="s2">"data"</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">"letterId"</span> <span class="p">:</span> <span class="s2">"CUXbq8XrXOBOw8bWfMkz"</span>
-      <span class="o">...</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>보내면 push 가 성공적으로 200 떨어진다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-19T00:00:00-05:00"><a href="http://localhost:4000/android/android-buildtypestring-post/">November 19, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-buildtypestring-post/" rel="bookmark" title="Build Type String" itemprop="url">Build Type String</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="빌드-타입-별-스트링-관리">빌드 타입 별 스트링 관리</h1>
-
-<p>페이스북 소셜 연동 시 다음과 같은 facebook 앱 아이디 정보가 필요하다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">meta</span><span class="o">-</span><span class="n">data</span>
-    <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"com.facebook.sdk.ApplicationId"</span>
-    <span class="n">android</span><span class="ss">:value</span><span class="o">=</span><span class="s2">"@string/facebook_app_id"</span> <span class="o">/&gt;</span></code></pre></figure>
-
-<p>페이스북 소셜 연동 시 live , dev , stage 세가지로 나눠서 작업을 하고 있는데 facebook_app_id 가 각각 build Type 별로 다르기 때문에 type이 바뀔 때 마다 동적으로 변경 되어야 하는 문제가 생겼다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="n">buildTypes</span> <span class="p">{</span>
-        <span class="n">release</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-        <span class="n">staging</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-        <span class="n">dev</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
-
-<p>buildType 별로 facebook_app_id , fb_login_protocol_scheme 각각 string 정보에 설정한 값이 들어가게 된다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00-05:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
-
-<p>외부공유 소스</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">title</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">plainContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">plain_content</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">htmlContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">html_content</span><span class="p">);</span>
-
-<span class="no">Intent</span> <span class="n">shareIntent</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">ACTION_SEND</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">setType</span><span class="p">(</span><span class="s2">"text/plain"</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_SUBJECT</span><span class="p">,</span> <span class="n">title</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_TEXT</span><span class="p">,</span> <span class="n">plainContent</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_HTML_TEXT</span><span class="p">,</span> <span class="n">htmlContent</span><span class="p">);</span>
-<span class="n">context</span><span class="p">.</span><span class="nf">startActivity</span><span class="p">(</span><span class="no">Intent</span><span class="p">.</span><span class="nf">createChooser</span><span class="p">(</span><span class="n">shareIntent</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">share_text</span><span class="p">)));</span></code></pre></figure>
-
-<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
-앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
-Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
-HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
-G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00-05:00"><a href="http://localhost:4000/android/android-firestore-post/">November 12, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-firestore-post/" rel="bookmark" title="index in firestore" itemprop="url">index in firestore</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="파이어스토어-색인을-이용한-복합쿼리">파이어스토어 색인을 이용한 복합쿼리</h1>
-
-<p>기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
-하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.</p>
-
-<figure>
-	<img src="/images/2018-11-12-index_in_firestore.png" alt="" />
-	<figcaption>FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.</figcaption>
-</figure>
-
-<p>처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
-letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
-추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-
-
-<div class="pagination">
-  <ul class="inline-list">
-    
-    
-
-    
-    
-      <li><strong class="current-page">1</strong></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page2/">2</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page3/">3</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page4/">4</a></li>
-      
-    
-
-    
-    
-      <li>…</li>
-    
-
-    
-      <li><a href="http://localhost:4000/page5/">5</a></li>
-    
-
-    
-    
-      <li><a href="http://localhost:4000/page2/" class="btn">Next</a></li>
-    
+        <span class="author vcard"><span class="fn">kimyounghoon</span></span>
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/notification/android-notification/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/notification/android-notification/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/notification/android-notification/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
+</div><!-- /.social-share -->
+
+      </footer>
+    </div><!-- /.entry-content -->
+    <div class="read-more">
+  <div class="read-more-header">
+    <a href="https://kimyounghoons.github.io" class="read-more-btn">About the Author</a>
+  </div><!-- /.read-more-header -->
+  <div class="read-more-content author-info">
+    <h3>kimyounghoon</h3>
+    <div class="author-container">
+      <img class="author-img" src="http://localhost:4000/images/avatar.jpg" alt="kimyounghoon" />
+      <div class="author-bio">Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice.</div>
+    </div>
+    <div class="author-share">
+      <ul class="list-inline social-buttons">
+        
+          <li><a href="https://github.com/aron-bordin" target="_blank"><i class="fa fa-github fa-fw"></i></a></li>
+        
+          <li><a href="https://br.linkedin.com/in/aronbordin" target="_blank"><i class="fa fa-linkedin fa-fw"></i></a></li>
+        
+          <li><a href="https://www.youtube.com/channel/UCfnSek-9HPWOx5e2pH7VFgg" target="_blank"><i class="fa fa-youtube fa-fw"></i></a></li>
+        
+      </ul>
+      
+        <a aria-label="Follow @aron-bordin on GitHub" data-style="mega" href="https://github.com/aron-bordin" class="github-button">Follow @aron-bordin</a>
+      
+      <br>
+      
+        <a href="https://twitter.com/aron_bordin" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @aron_bordin</a>
+      
+    </div>
+  </div>
 </div>
 
-
+    
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/firebase/firebase-push/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/firebase/firebase-push/" title="Firebase Push Test in Postman">Firebase Push Test in Postman</a></h3>
+      <p>파이어베이스 푸시 <a href="http://localhost:4000/firebase/firebase-push/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/android-buildtypestring-post/" title="Build Type String">Build Type String</a></h4>
+        <span>Published on November 19, 2018</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/android-share-post/" title="share Intent">share Intent</a></h4>
+        <span>Published on November 13, 2018</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
 </div><!-- /#main -->
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -588,6 +386,7 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
 <script type="text/javascript" src="http://localhost:4000/assets/js/scripts.min.js"></script>
 <script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 <script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
 
 
 
