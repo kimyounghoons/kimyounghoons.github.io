@@ -1,22 +1,6 @@
 [
   
     {
-      "title"    : "privacypolicy",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "http://localhost:4000/applicationinfo/app-privacy-policy/",
-      "date"     : "2018-11-28 00:00:00 -0500"
-    } ,
-  
-    {
-      "title"    : "Agreement",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "http://localhost:4000/applicationinfo/app-agreement/",
-      "date"     : "2018-11-27 00:00:00 -0500"
-    } ,
-  
-    {
       "title"    : "Notification",
       "category" : "",
       "tags"     : "notification",
@@ -198,6 +182,22 @@
       "tags"     : "sample",
       "url"      : "http://localhost:4000/sample/sample-post-images/",
       "date"     : "2016-11-26 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "TellMe 개인정보 취급방침",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "http://localhost:4000/applicationinfo/app-privacy-policy/",
+      "date"     : "2010-11-28 00:00:00 -0500"
+    } ,
+  
+    {
+      "title"    : "TellMe 이용약관",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "http://localhost:4000/applicationinfo/app-agreement/",
+      "date"     : "2010-11-27 00:00:00 -0500"
     } 
   
 ]
