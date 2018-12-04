@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>ActionBar Menu in Fragment &#8211; 영훈 블로그</title>
-<meta name="description" content="ActionBar Menu in Fragment">
-<meta name="keywords" content="android">
+<title>Locale &#8211; 영훈 블로그</title>
+<meta name="description" content="안드로이드 언어 및 지역">
+<meta name="keywords" content="lanuage, country">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ActionBar Menu in Fragment">
-<meta property="og:description" content="ActionBar Menu in Fragment">
-<meta property="og:url" content="http://localhost:4000/android/actionbar_menu-post/">
+<meta property="og:title" content="Locale">
+<meta property="og:description" content="안드로이드 언어 및 지역">
+<meta property="og:url" content="http://localhost:4000/android/android-locale/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/actionbar_menu-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-locale/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -143,9 +143,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>ActionBar Menu in Fragment</h1>
+      <h1>Locale</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00-05:00">November 06, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-12-04T00:00:00-05:00">December 04, 2018</time></span></h2>
       
 
       
@@ -215,55 +215,45 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">ActionBar Menu in Fragment</h1>
-      <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
+      <h1 class="post-title entry-title">Locale</h1>
+      <p>문제점 : 다국어 지원 앱
+다국어 지원을 위한 라이브러리를 사용해서 앱을 실행할 때 다국어 지원 관련 셋팅을 하게 된다.
+간체,번체의 경우 language 와 country 두가지 모두 사용해서 구분을 하게 된다.
+하지만 지역별로 이벤트를 설정 할 경우 locale 지역 정보를 가져올때 시스템에 설정된 지역 정보가 아닌 앱에서 설정된 지역을 가져오기때문에 문제</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">menu</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
-    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/menu_answer_letter"</span>
-        <span class="n">android</span><span class="ss">:title</span><span class="o">=</span><span class="s2">"@string/answer"</span>
-        <span class="n">app</span><span class="ss">:showAsAction</span><span class="o">=</span><span class="s2">"always"</span><span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/menu&gt;</span></code></pre></figure>
+<p>해결 : Application Class 에서 다국어 관련 Locale 을 셋팅 하기 전 country 정보를 미리 SharedPreference 에 저장해 놓고 필요한 경우 가져 온다. 시스템 언어를 변경 할 경우 onConfigurationChanged 가 불리게 되어서 여기서 다시 지역 정보를 갱신 시켜 주어야 한다.</p>
 
-<p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="no">Application</span> <span class="no">Class</span>
 
-<p>Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.</p>
+    <span class="vi">@Override</span>
+    <span class="kp">public</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">();</span>
+        <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">edit</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="no">Locale</span><span class="p">.</span><span class="nf">getDefault</span><span class="p">().</span><span class="nf">getCountry</span><span class="p">())</span>
+        <span class="p">.</span><span class="nf">apply</span><span class="p">();</span>
+        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="n">getApplicationContext</span><span class="p">(),</span> <span class="no">SUPPORTED_LOCALES</span><span class="p">);</span>
+    <span class="p">}</span>
 
-<p>위치는 OnCreateView 안에 넣어주면 됨.</p>
-
-<p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreateOptionsMenu</span><span class="p">(</span><span class="ss">menu: </span><span class="no">Menu</span><span class="p">?,</span> <span class="ss">inflater: </span><span class="no">MenuInflater</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">inflater</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">menu</span><span class="p">.</span><span class="nf">menu_detail_letter</span><span class="p">,</span> <span class="n">menu</span><span class="p">)</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onCreateOptionsMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">,</span> <span class="n">inflater</span><span class="p">)</span>
+      <span class="vi">@Override</span>
+    <span class="kp">public</span> <span class="n">void</span> <span class="n">onConfigurationChanged</span><span class="p">(</span><span class="no">Configuration</span> <span class="n">newConfig</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">(</span><span class="n">newConfig</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span> <span class="sr">//</span><span class="err">첫번째가</span> <span class="err">변경된</span> <span class="no">Locale</span> <span class="err">정보를</span> <span class="err">가진다</span><span class="o">.</span>
+            <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">edit</span><span class="p">().</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">getCountry</span><span class="p">()).</span><span class="nf">apply</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">();</span>
     <span class="p">}</span></code></pre></figure>
 
-<p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">){</span>
-       <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_answer_letter</span> <span class="o">-&gt;</span><span class="p">{</span>
-           <span class="n">locateListener?</span><span class="p">.</span><span class="nf">openAnswer</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
-           <span class="kp">true</span>
-       <span class="p">}</span>
-        <span class="k">else</span> <span class="o">-&gt;</span><span class="p">{</span>
-            <span class="kp">false</span>
-        <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
-
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#android" title="Pages tagged android" class="tag"><span class="term">android</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-06">November 06, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#lanuage" title="Pages tagged lanuage" class="tag"><span class="term">lanuage</span></a><a href="http://localhost:4000/tags#country" title="Pages tagged country" class="tag"><span class="term">country</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-12-04">December 04, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/actionbar_menu-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/actionbar_menu-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/actionbar_menu-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-locale/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-locale/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-locale/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -304,23 +294,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/wirelessbuild-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/notification/android-notification/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-locale/" title="Locale">Locale</a></h3>
-      <p>안드로이드 언어 및 지역 <a href="http://localhost:4000/android/android-locale/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/notification/android-notification/" title="Notification">Notification</a></h3>
+      <p>안드로이드 푸시 팝업 <a href="http://localhost:4000/android/notification/android-notification/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/notification/android-notification/" title="Notification">Notification</a></h4>
-        <span>Published on November 27, 2018</span>
+        <h4><a href="http://localhost:4000/firebase/firebase-push/" title="Firebase Push Test in Postman">Firebase Push Test in Postman</a></h4>
+        <span>Published on November 20, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/firebase/firebase-push/" title="Firebase Push Test in Postman">Firebase Push Test in Postman</a></h4>
-        <span>Published on November 20, 2018</span>
+        <h4><a href="http://localhost:4000/android/android-buildtypestring-post/" title="Build Type String">Build Type String</a></h4>
+        <span>Published on November 19, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

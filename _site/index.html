@@ -215,6 +215,56 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-12-04T00:00:00-05:00"><a href="http://localhost:4000/android/android-locale/">December 04, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-locale/" rel="bookmark" title="Locale" itemprop="url">Locale</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>문제점 : 다국어 지원 앱
+다국어 지원을 위한 라이브러리를 사용해서 앱을 실행할 때 다국어 지원 관련 셋팅을 하게 된다.
+간체,번체의 경우 language 와 country 두가지 모두 사용해서 구분을 하게 된다.
+하지만 지역별로 이벤트를 설정 할 경우 locale 지역 정보를 가져올때 시스템에 설정된 지역 정보가 아닌 앱에서 설정된 지역을 가져오기때문에 문제</p>
+
+<p>해결 : Application Class 에서 다국어 관련 Locale 을 셋팅 하기 전 country 정보를 미리 SharedPreference 에 저장해 놓고 필요한 경우 가져 온다. 시스템 언어를 변경 할 경우 onConfigurationChanged 가 불리게 되어서 여기서 다시 지역 정보를 갱신 시켜 주어야 한다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="no">Application</span> <span class="no">Class</span>
+
+    <span class="vi">@Override</span>
+    <span class="kp">public</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">();</span>
+        <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">edit</span><span class="p">()</span>
+        <span class="p">.</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="no">Locale</span><span class="p">.</span><span class="nf">getDefault</span><span class="p">().</span><span class="nf">getCountry</span><span class="p">())</span>
+        <span class="p">.</span><span class="nf">apply</span><span class="p">();</span>
+        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="n">getApplicationContext</span><span class="p">(),</span> <span class="no">SUPPORTED_LOCALES</span><span class="p">);</span>
+    <span class="p">}</span>
+
+      <span class="vi">@Override</span>
+    <span class="kp">public</span> <span class="n">void</span> <span class="n">onConfigurationChanged</span><span class="p">(</span><span class="no">Configuration</span> <span class="n">newConfig</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">(</span><span class="n">newConfig</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span> <span class="sr">//</span><span class="err">첫번째가</span> <span class="err">변경된</span> <span class="no">Locale</span> <span class="err">정보를</span> <span class="err">가진다</span><span class="o">.</span>
+            <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">edit</span><span class="p">().</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">getCountry</span><span class="p">()).</span><span class="nf">apply</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">();</span>
+    <span class="p">}</span></code></pre></figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-27T00:00:00-05:00"><a href="http://localhost:4000/android/notification/android-notification/">November 27, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -492,42 +542,6 @@ G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는�
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00-05:00"><a href="http://localhost:4000/android/android-firestore-post/">November 12, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-firestore-post/" rel="bookmark" title="index in firestore" itemprop="url">index in firestore</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="파이어스토어-색인을-이용한-복합쿼리">파이어스토어 색인을 이용한 복합쿼리</h1>
-
-<p>기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
-하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.</p>
-
-<figure>
-	<img src="/images/2018-11-12-index_in_firestore.png" alt="" />
-	<figcaption>FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.</figcaption>
-</figure>
-
-<p>처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
-letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
-추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -562,13 +576,6 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
         <li><a href="http://localhost:4000/page3/">3</a></li>
       
     
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page4/">4</a></li>
-      
-    
 
     
     
@@ -576,7 +583,7 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
     
 
     
-      <li><a href="http://localhost:4000/page5/">5</a></li>
+      <li><a href="http://localhost:4000/page6/">6</a></li>
     
 
     

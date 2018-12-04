@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Locale",
+      "category" : "",
+      "tags"     : "lanuage, country",
+      "url"      : "http://localhost:4000/android/android-locale/",
+      "date"     : "2018-12-04 00:00:00 -0500"
+    } ,
+  
+    {
       "title"    : "Notification",
       "category" : "",
       "tags"     : "notification",
