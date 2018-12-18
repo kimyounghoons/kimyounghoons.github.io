@@ -1,0 +1,426 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>ConstraintLayout 사용 &#8211; 영훈 블로그</title>
+<meta name="description" content="ConstraintLayout 사용">
+<meta name="keywords" content="constraintLayout">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@aron_bordin">
+<meta name="twitter:creator" content="@aron_bordin">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConstraintLayout 사용">
+<meta property="og:description" content="ConstraintLayout 사용">
+<meta property="og:url" content="http://localhost:4000/android/constraintlayout-post/">
+<meta property="og:site_name" content="영훈 블로그">
+<meta property="og:image" content="http://localhost:4000/images/images/logo.png">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/android/constraintlayout-post/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.mmenu.all.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.floating-social-share.min.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+
+
+<div class="header-menu header-menu-top">
+    <ul class="header-item-container">
+      <li class="header-item-title header-toggle "><a href="#menu"><h2><i class="fa fa-bars"></i></h2></a></li>
+      <li class="header-item-title">
+        <a href="http://localhost:4000/">
+          
+            <img class="logo" src="http://localhost:4000/images/logo.png" alt="영훈 블로그">
+          
+          <a href="http://localhost:4000/" class="title"> 영훈 블로그</a>
+        </a>
+      </li>
+      
+        
+        
+
+        
+          <li class="header-item "><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+            <ul class="header-submenu">
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#android">android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#notification">notification</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#sample">sample</a></li>
+              
+            </ul>
+          </li>
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+            
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+            
+        
+      
+      <li class="header-item"><a href="http://localhost:4000/search"><h3><i class="fa fa-search"></i></h3></a></li>
+    </ul>
+  </div>
+<div class="entry-header">
+  <div class="header-title">
+    <div class="header-title-wrap">
+      <h1>ConstraintLayout 사용</h1>
+      
+        <h2><span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00-05:00">December 18, 2018</time></span></h2>
+      
+
+      
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
+      
+    </div><!-- /.header-title-wrap -->
+  </div><!-- /.header-title -->
+</div><!-- /.entry-header -->
+
+
+<nav id="menu" style="display: none">
+  <ul>
+    
+      
+        <li><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+          <ul>
+            
+              
+                <li><a href="http://localhost:4000/categories/#android">android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#notification">notification</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#sample">sample</a></li>
+            
+          </ul>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+
+  <a href="https://twitter.com/aron_bordin" class="btn btn-info button-twitter" data-show-count="false" data-size="large"><i class="fa fa-twitter"></i> <span> | Follow @aron_bordin</span></a>
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <div class="entry-content">
+        
+      <h1 class="post-title entry-title">ConstraintLayout 사용</h1>
+      <p>ConstraintLayout 의 강점을 살려보자.</p>
+
+<figure class="half">
+	<img src="/images/2018-12-18-constraintlayout-01.png" alt="" />
+    <img src="/images/2018-12-18-constraintlayout-02.png" alt="" />
+	<figcaption>초록색 링이 꺼졌다 켜졌다 해야할 때 layout 어떻게 배치 할까!?</figcaption>
+</figure>
+
+<p>보통 디자이너 분들은 해당 다운로드 이미지, 공유 이미지,초록색 링 이미지 이렇게 주신다.
+RelativeLayout을 사용하게 되면 만들기가 쉽지 않다. 
+기존에 RelativeLayout을 사용했을 때는 다운로드 이미지, 공유 이미지, 초록색 링이 포함된 다운로드 이미지 , 초록색 링이 포함된 공유 이미지 이렇게 받아서 작업을했다.
+하지만 ConstraintLayout 을 사용했을 때 이런 문제점을 해결할 수 있었다. 물론 RelativeLayout 으로도 아마 가능할수도 있을지 모르지만 쉽게 떠오르지 않았다.</p>
+
+<p>여기서 키워드는 GuideLine 과 ConstraintGroup 이다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">ConstraintLayout</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
+    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+    <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+    <span class="n">android</span><span class="ss">:animateLayoutChanges</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">View</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/bottom_background"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"80dp"</span>
+        <span class="n">android</span><span class="ss">:background</span><span class="o">=</span><span class="s2">"@color/take_bottom_black"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"parent"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"1dp"</span>
+        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintGuide_end</span><span class="o">=</span><span class="s2">"40dp"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.33333"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.666666"</span><span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/share_button"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/down_button"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_save"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_share_guide"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_download_guide"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Group</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/group_quick_guide"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:visibility</span><span class="o">=</span><span class="s2">"gone"</span>
+        <span class="n">app</span><span class="ss">:constraint_referenced_ids</span><span class="o">=</span><span class="s2">"image_share_guide,image_download_guide"</span> <span class="o">/&gt;</span>
+
+<span class="o">&lt;</span><span class="sr">/android.support.constraint.ConstraintLayout&gt;</span></code></pre></figure>
+
+<p>해당 이미지의 Layout 이다.
+가로 세로의 각각 GuideLine 을 설정 한 후 각 뷰는 부모의 뷰에서 몇 dp 만큼 떨어진게 아니라 기준점이 GuideLine 이 되는 것이다.
+쉽게 만들수 있다. 그리고 ConstraintGroup을 만들어서 referenceIds 에 뷰들이 GONE처리 되어야 하는 아이디들을 넣어 주면 된다.
+group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰들이 모두 적용된다.
+매우 편리하다!!ㅎㅎ</p>
+
+      <footer class="entry-meta">
+        <span class="entry-tags"><a href="http://localhost:4000/tags#constraintLayout" title="Pages tagged constraintLayout" class="tag"><span class="term">constraintLayout</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-12-18">December 18, 2018</time></span></span>
+        
+        <span class="author vcard"><span class="fn">kimyounghoon</span></span>
+        <div class="social-share">
+  <ul class="socialcount socialcount-small inline-list">
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/constraintlayout-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/constraintlayout-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/constraintlayout-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+  </ul>
+</div><!-- /.social-share -->
+
+      </footer>
+    </div><!-- /.entry-content -->
+    <div class="read-more">
+  <div class="read-more-header">
+    <a href="https://kimyounghoons.github.io" class="read-more-btn">About the Author</a>
+  </div><!-- /.read-more-header -->
+  <div class="read-more-content author-info">
+    <h3>kimyounghoon</h3>
+    <div class="author-container">
+      <img class="author-img" src="http://localhost:4000/images/avatar.jpg" alt="kimyounghoon" />
+      <div class="author-bio">Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice.</div>
+    </div>
+    <div class="author-share">
+      <ul class="list-inline social-buttons">
+        
+          <li><a href="https://github.com/aron-bordin" target="_blank"><i class="fa fa-github fa-fw"></i></a></li>
+        
+          <li><a href="https://br.linkedin.com/in/aronbordin" target="_blank"><i class="fa fa-linkedin fa-fw"></i></a></li>
+        
+          <li><a href="https://www.youtube.com/channel/UCfnSek-9HPWOx5e2pH7VFgg" target="_blank"><i class="fa fa-youtube fa-fw"></i></a></li>
+        
+      </ul>
+      
+        <a aria-label="Follow @aron-bordin on GitHub" data-style="mega" href="https://github.com/aron-bordin" class="github-button">Follow @aron-bordin</a>
+      
+      <br>
+      
+        <a href="https://twitter.com/aron_bordin" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @aron_bordin</a>
+      
+    </div>
+  </div>
+</div>
+
+    
+    <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/android/android-locale/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/android-locale/" title="Locale">Locale</a></h3>
+      <p>안드로이드 언어 및 지역 <a href="http://localhost:4000/android/android-locale/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/notification/android-notification/" title="Notification">Notification</a></h4>
+        <span>Published on November 27, 2018</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/firebase/firebase-push/" title="Firebase Push Test in Postman">Firebase Push Test in Postman</a></h4>
+        <span>Published on November 20, 2018</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+  </article>
+</div><!-- /#main -->
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script type="text/javascript" src="http://localhost:4000/assets/js/scripts.min.js"></script>
+<script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    sharing();
+</script>
+
+
+
+<div class="footer-wrapper">
+  <footer role="contentinfo">
+    <span>&copy; 2018 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+</body>
+</html>

@@ -215,6 +215,66 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00-05:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/actionbar_menu-post/" rel="bookmark" title="ActionBar Menu in Fragment" itemprop="url">ActionBar Menu in Fragment</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">menu</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
+    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">item</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/menu_answer_letter"</span>
+        <span class="n">android</span><span class="ss">:title</span><span class="o">=</span><span class="s2">"@string/answer"</span>
+        <span class="n">app</span><span class="ss">:showAsAction</span><span class="o">=</span><span class="s2">"always"</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="sr">/menu&gt;</span></code></pre></figure>
+
+<p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
+
+<p>Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.</p>
+
+<p>위치는 OnCreateView 안에 넣어주면 됨.</p>
+
+<p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreateOptionsMenu</span><span class="p">(</span><span class="ss">menu: </span><span class="no">Menu</span><span class="p">?,</span> <span class="ss">inflater: </span><span class="no">MenuInflater</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">inflater</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">menu</span><span class="p">.</span><span class="nf">menu_detail_letter</span><span class="p">,</span> <span class="n">menu</span><span class="p">)</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreateOptionsMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">,</span> <span class="n">inflater</span><span class="p">)</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">){</span>
+       <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_answer_letter</span> <span class="o">-&gt;</span><span class="p">{</span>
+           <span class="n">locateListener?</span><span class="p">.</span><span class="nf">openAnswer</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+           <span class="kp">true</span>
+       <span class="p">}</span>
+        <span class="k">else</span> <span class="o">-&gt;</span><span class="p">{</span>
+            <span class="kp">false</span>
+        <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-05T00:00:00-05:00"><a href="http://localhost:4000/android/wirelessbuild-post/">November 05, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -417,38 +477,6 @@ image_selector.xml 파일 만들기</p>
 <span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
 
 <p>사용 : android:textColor=”@drawable/text_selector”</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00-04:00"><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/">October 30, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" rel="bookmark" title="Visual Studio Code app 환경변수 설정" itemprop="url">Visual Studio Code app 환경변수 설정</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="환경변수-설정">환경변수 설정</h2>
-
-<p>bash_profile 을 열어준다.</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">nano</span> <span class="o">~/</span><span class="nc">.bash_profile</span></code></pre></figure>
-
-<p>bash_profile 에 alias 설정을 해주면 code로 앱을 실행 시킬수 있다.</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">alias</span> <span class="nt">code</span><span class="o">=</span><span class="s1">"open -a /Applications/Visual\ Studio\ Code.app/"</span></code></pre></figure>
 
       
   </div><!-- /.entry-content -->
