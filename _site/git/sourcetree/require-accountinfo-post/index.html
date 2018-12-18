@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>How to use Blog &#8211; 영훈 블로그</title>
-<meta name="description" content="description how to use blog">
-<meta name="keywords" content="blog">
+<title>SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우 &#8211; 영훈 블로그</title>
+<meta name="description" content="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우">
+<meta name="keywords" content="Git, SourceTree">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How to use Blog">
-<meta property="og:description" content="description how to use blog">
-<meta property="og:url" content="http://localhost:4000/blog/blog-post/">
+<meta property="og:title" content="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우">
+<meta property="og:description" content="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우">
+<meta property="og:url" content="http://localhost:4000/git/sourcetree/require-accountinfo-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/blog/blog-post/">
+<link rel="canonical" href="http://localhost:4000/git/sourcetree/require-accountinfo-post/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -149,9 +149,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>How to use Blog</h1>
+      <h1>SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00-04:00">October 30, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00-05:00">December 18, 2018</time></span></h2>
       
 
       
@@ -227,25 +227,24 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">How to use Blog</h1>
-      <p>블로그 사용법</p>
+      <h1 class="post-title entry-title">SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우</h1>
+      <p>Window 사용할때는 이런일 없었는데 맥북 쓰면서 SourceTree 에서 계정 입력 요청이 계속 떠서 구글링 해서 해결 방법을 찾았다.</p>
 
-<h2 id="bundle-exec-jekyll-watch">bundle exec jekyll –watch</h2>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">config</span> <span class="n">credential</span><span class="p">.</span><span class="nf">helper</span> <span class="n">store</span>    </code></pre></figure>
 
-<p>md 파일 업데이트 한뒤 다음을 실행하면 html 파일들이 수정된다.</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">bundle</span> <span class="nt">exec</span> <span class="nt">jekyll</span> <span class="nt">--watch</span></code></pre></figure>
+<p>입력해주면 해결완료!
+그다음부터는 계정 요청을 하지않는다.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#blog" title="Pages tagged blog" class="tag"><span class="term">blog</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-10-30">October 30, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#Git" title="Pages tagged Git" class="tag"><span class="term">Git</span></a><a href="http://localhost:4000/tags#SourceTree" title="Pages tagged SourceTree" class="tag"><span class="term">SourceTree</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2018-12-18">December 18, 2018</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/blog/blog-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/blog/blog-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/blog/blog-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/git/sourcetree/require-accountinfo-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/git/sourcetree/require-accountinfo-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/git/sourcetree/require-accountinfo-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -286,23 +285,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/constraintlayout-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/git/sourcetree/require-accountinfo-post/" title="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우">SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우</a></h3>
-      <p>SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우 <a href="http://localhost:4000/git/sourcetree/require-accountinfo-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/constraintlayout-post/" title="ConstraintLayout 사용">ConstraintLayout 사용</a></h3>
+      <p>ConstraintLayout 사용 <a href="http://localhost:4000/android/constraintlayout-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/constraintlayout-post/" title="ConstraintLayout 사용">ConstraintLayout 사용</a></h4>
-        <span>Published on December 18, 2018</span>
+        <h4><a href="http://localhost:4000/android/android-locale/" title="Locale">Locale</a></h4>
+        <span>Published on December 04, 2018</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-locale/" title="Locale">Locale</a></h4>
-        <span>Published on December 04, 2018</span>
+        <h4><a href="http://localhost:4000/android/notification/android-notification/" title="Notification">Notification</a></h4>
+        <span>Published on November 27, 2018</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

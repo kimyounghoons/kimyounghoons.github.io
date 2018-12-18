@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우",
+      "category" : "",
+      "tags"     : "Git, SourceTree",
+      "url"      : "http://localhost:4000/git/sourcetree/require-accountinfo-post/",
+      "date"     : "2018-12-18 00:00:00 -0500"
+    } ,
+  
+    {
       "title"    : "ConstraintLayout 사용",
       "category" : "",
       "tags"     : "constraintLayout",
