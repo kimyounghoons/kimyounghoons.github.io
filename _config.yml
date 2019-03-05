@@ -1,4 +1,4 @@
-title:            영훈 블로그
+﻿title:            영훈 블로그
 description:      개발 블로그
 
 # put your disqus here
@@ -72,9 +72,6 @@ google_verify:
 bing_verify:
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    America/New_York
-locale:      en_US
-future:      true
 highlighter: rouge
 markdown:    kramdown
 sass:

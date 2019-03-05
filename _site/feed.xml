@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-02-22T05:06:00-05:00</updated>
+<updated>2019-03-06T01:02:34+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
@@ -18,7 +18,7 @@
  <link rel="alternate" type="text/html" href="http://localhost:4000/rxkotlin/single/android-rxkotlin/" />
   <id>http://localhost:4000/rxkotlin/single/android-rxkotlin</id>
   <updated>2019-02-22T00:00:00-00:00</updated>
-  <published>2019-02-23T00:00:00-05:00</published>
+  <published>2019-02-23T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -47,7 +47,7 @@
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/aac/android-lifecycle/" />
   <id>http://localhost:4000/android/aac/android-lifecycle</id>
   <updated>2019-02-22T00:00:00-00:00</updated>
-  <published>2019-02-22T00:00:00-05:00</published>
+  <published>2019-02-22T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -102,7 +102,7 @@ destroy 될때 등록되어 있던 observer를 제거 시켜준다.&lt;/p&gt;
  <link rel="alternate" type="text/html" href="http://localhost:4000/git/sourcetree/require-accountinfo-post/" />
   <id>http://localhost:4000/git/sourcetree/require-accountinfo-post</id>
   <updated>2018-12-18T00:00:00-00:00</updated>
-  <published>2018-12-18T00:00:00-05:00</published>
+  <published>2018-12-18T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -127,7 +127,7 @@ destroy 될때 등록되어 있던 observer를 제거 시켜준다.&lt;/p&gt;
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/constraintlayout-post/" />
   <id>http://localhost:4000/android/constraintlayout-post</id>
   <updated>2018-12-18T00:00:00-00:00</updated>
-  <published>2018-12-18T00:00:00-05:00</published>
+  <published>2018-12-18T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -251,7 +251,7 @@ group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰�
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-locale/" />
   <id>http://localhost:4000/android/android-locale</id>
   <updated>2018-12-04T00:00:00-00:00</updated>
-  <published>2018-12-04T00:00:00-05:00</published>
+  <published>2018-12-04T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -297,7 +297,7 @@ group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰�
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/notification/android-notification/" />
   <id>http://localhost:4000/android/notification/android-notification</id>
   <updated>2018-11-27T00:00:00-00:00</updated>
-  <published>2018-11-27T00:00:00-05:00</published>
+  <published>2018-11-27T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -412,7 +412,7 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음&lt;/p&gt
  <link rel="alternate" type="text/html" href="http://localhost:4000/firebase/firebase-push/" />
   <id>http://localhost:4000/firebase/firebase-push</id>
   <updated>2018-11-20T00:00:00-00:00</updated>
-  <published>2018-11-20T00:00:00-05:00</published>
+  <published>2018-11-20T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -478,7 +478,7 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음&lt;/p&gt
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-buildtypestring-post/" />
   <id>http://localhost:4000/android/android-buildtypestring-post</id>
   <updated>2018-11-19T00:00:00-00:00</updated>
-  <published>2018-11-19T00:00:00-05:00</published>
+  <published>2018-11-19T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -523,7 +523,7 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음&lt;/p&gt
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-share-post/" />
   <id>http://localhost:4000/android/android-share-post</id>
   <updated>2018-11-13T00:00:00-00:00</updated>
-  <published>2018-11-13T00:00:00-05:00</published>
+  <published>2018-11-13T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -562,7 +562,7 @@ G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는�
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-firestore-post/" />
   <id>http://localhost:4000/android/android-firestore-post</id>
   <updated>2018-11-12T00:00:00-00:00</updated>
-  <published>2018-11-12T00:00:00-05:00</published>
+  <published>2018-11-12T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -594,7 +594,7 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-touch-post/" />
   <id>http://localhost:4000/android/android-touch-post</id>
   <updated>2018-11-09T00:00:00-00:00</updated>
-  <published>2018-11-09T00:00:00-05:00</published>
+  <published>2018-11-09T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -638,7 +638,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
  <link rel="alternate" type="text/html" href="http://localhost:4000/kotlin/kotlin-when-post/" />
   <id>http://localhost:4000/kotlin/kotlin-when-post</id>
   <updated>2018-11-08T00:00:00-00:00</updated>
-  <published>2018-11-08T00:00:00-05:00</published>
+  <published>2018-11-08T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -710,7 +710,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/shape-post/" />
   <id>http://localhost:4000/android/shape-post</id>
   <updated>2018-11-07T00:00:00-00:00</updated>
-  <published>2018-11-07T00:00:00-05:00</published>
+  <published>2018-11-07T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -756,7 +756,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/actionbar_menu-post/" />
   <id>http://localhost:4000/android/actionbar_menu-post</id>
   <updated>2018-11-06T00:00:00-00:00</updated>
-  <published>2018-11-06T00:00:00-05:00</published>
+  <published>2018-11-06T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -812,7 +812,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/wirelessbuild-post/" />
   <id>http://localhost:4000/android/wirelessbuild-post</id>
   <updated>2018-11-05T00:00:00-00:00</updated>
-  <published>2018-11-05T00:00:00-05:00</published>
+  <published>2018-11-05T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -851,7 +851,7 @@ adb tcpip 5555 치면&lt;/p&gt;
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/drawerlayout-post/" />
   <id>http://localhost:4000/android/drawerlayout-post</id>
   <updated>2018-11-02T00:00:00-00:00</updated>
-  <published>2018-11-02T00:00:00-04:00</published>
+  <published>2018-11-02T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -915,7 +915,7 @@ adb tcpip 5555 치면&lt;/p&gt;
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-post/" />
   <id>http://localhost:4000/android/android-post</id>
   <updated>2018-11-01T00:00:00-00:00</updated>
-  <published>2018-11-01T00:00:00-04:00</published>
+  <published>2018-11-01T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -964,7 +964,7 @@ adb uninstall &lt;패키지명&gt;&lt;/패키지명&gt;&lt;/패키지명&gt;&lt;
  <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-post/" />
   <id>http://localhost:4000/android/android-post</id>
   <updated>2018-10-31T00:00:00-00:00</updated>
-  <published>2018-10-31T00:00:00-04:00</published>
+  <published>2018-10-31T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -1007,7 +1007,7 @@ image_selector.xml 파일 만들기&lt;/p&gt;
  <link rel="alternate" type="text/html" href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" />
   <id>http://localhost:4000/mac/맥 사용-post</id>
   <updated>2018-10-30T00:00:00-00:00</updated>
-  <published>2018-10-30T00:00:00-04:00</published>
+  <published>2018-10-30T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
@@ -1035,7 +1035,7 @@ image_selector.xml 파일 만들기&lt;/p&gt;
  <link rel="alternate" type="text/html" href="http://localhost:4000/blog/blog-post/" />
   <id>http://localhost:4000/blog/blog-post</id>
   <updated>2018-10-30T00:00:00-00:00</updated>
-  <published>2018-10-30T00:00:00-04:00</published>
+  <published>2018-10-30T00:00:00+09:00</published>
   
   <author>
     <name>kimyounghoon</name>
