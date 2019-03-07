@@ -36,31 +36,18 @@ mislav는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 �
         Arrays.sort(participant);
         Arrays.sort(completion);
 
-        HashMap<Integer, String> m = new HashMap<>();
-        for (int i = 0; i < participant.length; i++) {
-            m.put(i, participant[i]);
-        }
-
-
         for (int i = 0; i < completion.length; i++) {
             if(!participant[i].equals(completion[i])){
                 return participant[i];
             }
         }
-
-        Set<Integer> keys = m.keySet();
-        String answer = "";
-        for (Integer key : keys) {
-            answer = m.get(key);
-        }
-        return answer;
     }
 }
 {% endhighlight %}
 
 처음 문제 풀었을 때 정확성은 100 인데 효율성이 꽝이라 고민을 많이 하게 되었다.. 
-O(N) 으로 풀어야 하는 문제였다.;;
+O(N) 으로 풀어야 하는 문제였다.
+해시맵 문제 였는데 맵을 사용안하고 품.. 이래도 되는건가 우선 정확성과 효율성은 잘 통과 됨 
 두 배열을 sort 하고 참여자와 완주자가 다른 순간 값을 리턴시켜주면 되는 문제.
-동명이인도 있기 때문에 HashMap 을 사용하였다.
 
 출처 : https://programmers.co.kr/learn/courses/30/lessons/42576?language=java
