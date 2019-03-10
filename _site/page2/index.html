@@ -263,6 +263,134 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00"><a href="http://localhost:4000/android/constraintlayout-post/">December 18, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/constraintlayout-post/" rel="bookmark" title="ConstraintLayout 사용" itemprop="url">ConstraintLayout 사용</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>ConstraintLayout 의 강점을 살려보자.</p>
+
+<figure class="half">
+	<img src="/images/2018-12-18-constraintlayout-01.png" alt="" />
+    <img src="/images/2018-12-18-constraintlayout-02.png" alt="" />
+	<figcaption>초록색 링이 꺼졌다 켜졌다 해야할 때 layout 어떻게 배치 할까!?</figcaption>
+</figure>
+
+<p>보통 디자이너 분들은 해당 다운로드 이미지, 공유 이미지,초록색 링 이미지 이렇게 주신다.
+RelativeLayout을 사용하게 되면 만들기가 쉽지 않다. 
+기존에 RelativeLayout을 사용했을 때는 다운로드 이미지, 공유 이미지, 초록색 링이 포함된 다운로드 이미지 , 초록색 링이 포함된 공유 이미지 이렇게 받아서 작업을했다.
+하지만 ConstraintLayout 을 사용했을 때 이런 문제점을 해결할 수 있었다. 물론 RelativeLayout 으로도 아마 가능할수도 있을지 모르지만 쉽게 떠오르지 않았다.</p>
+
+<p>여기서 키워드는 GuideLine 과 ConstraintGroup 이다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">ConstraintLayout</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
+    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+    <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+    <span class="n">android</span><span class="ss">:animateLayoutChanges</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">View</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/bottom_background"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"80dp"</span>
+        <span class="n">android</span><span class="ss">:background</span><span class="o">=</span><span class="s2">"@color/take_bottom_black"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"parent"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"1dp"</span>
+        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintGuide_end</span><span class="o">=</span><span class="s2">"40dp"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.33333"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
+        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.666666"</span><span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/share_button"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/down_button"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_save"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_share_guide"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_share"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ImageView</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_download_guide"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
+        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Group</span>
+        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/group_quick_guide"</span>
+        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
+        <span class="n">android</span><span class="ss">:visibility</span><span class="o">=</span><span class="s2">"gone"</span>
+        <span class="n">app</span><span class="ss">:constraint_referenced_ids</span><span class="o">=</span><span class="s2">"image_share_guide,image_download_guide"</span> <span class="o">/&gt;</span>
+
+<span class="o">&lt;</span><span class="sr">/android.support.constraint.ConstraintLayout&gt;</span></code></pre></figure>
+
+<p>해당 이미지의 Layout 이다.
+가로 세로의 각각 GuideLine 을 설정 한 후 각 뷰는 부모의 뷰에서 몇 dp 만큼 떨어진게 아니라 기준점이 GuideLine 이 되는 것이다.
+쉽게 만들수 있다. 그리고 ConstraintGroup을 만들어서 referenceIds 에 뷰들이 GONE처리 되어야 하는 아이디들을 넣어 주면 된다.
+group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰들이 모두 적용된다.
+매우 편리하다!!ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-12-04T00:00:00+09:00"><a href="http://localhost:4000/android/android-locale/">December 04, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -542,49 +670,6 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
     <span class="p">}</span></code></pre></figure>
 
 <p>buildType 별로 facebook_app_id , fb_login_protocol_scheme 각각 string 정보에 설정한 값이 들어가게 된다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
-
-<p>외부공유 소스</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">title</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">plainContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">plain_content</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">htmlContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">html_content</span><span class="p">);</span>
-
-<span class="no">Intent</span> <span class="n">shareIntent</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">ACTION_SEND</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">setType</span><span class="p">(</span><span class="s2">"text/plain"</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_SUBJECT</span><span class="p">,</span> <span class="n">title</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_TEXT</span><span class="p">,</span> <span class="n">plainContent</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_HTML_TEXT</span><span class="p">,</span> <span class="n">htmlContent</span><span class="p">);</span>
-<span class="n">context</span><span class="p">.</span><span class="nf">startActivity</span><span class="p">(</span><span class="no">Intent</span><span class="p">.</span><span class="nf">createChooser</span><span class="p">(</span><span class="n">shareIntent</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">share_text</span><span class="p">)));</span></code></pre></figure>
-
-<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
-앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
-Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
-HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
-G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
 
       
   </div><!-- /.entry-content -->
