@@ -83,8 +83,6 @@ Kotlin 에서 AbstractMethod 에 Lambdas 식 적용하려면 Higher-Order-Functi
 
 ## 안드로이드 질문 : 
 
-### PagingLibrary 구현 질문 
-
 ### ViewModel 의 장점
 화면 회전시 데이터를 유지할 수 있는 구조로 디자인하였으며 Android Lifecycle 의 onDestroy코드가 동작한다.
 Lifecycle 을 내부적으로 알아서 호출해주기 때문에 좋다.
@@ -96,6 +94,7 @@ ConstraintLayout 은 복잡한 레이아웃을 단순한 계층구조를 이용�
 RelativeLayout과 비슷하지만 더 유연하고 다양하고 강력한 기능을 제공한다.
 
 ### CustomView 와 Fragment 의 차이점 
+Fragment 는 자체 생명주기를 따르고 Activity 의 생명주기에 따라 직접적으로 영향을 받는다. Fragment를 사용하려면 Activity 내에서 또는 상위 프래그먼트내에서 사용이 가능하고 다른 액티비티에서 재사용이 가능하다. 여기서 CustomView 는 자체 생명주기는 가지고 있지 않고 Fragment 보다는 더 작은 단위?를 커스터마이징해서 재사용을 할 수 있다. 
 
 ### Android KTX 란 무엇인가?
 안드로이드 프레임워크와 서포트 라이브러리를 모두 지원하여 안드로이드를 위한 코틀린(Kotlin) 코드를 간결하고 편하게 사용할 수 있게 설계된 확장 라이브러리이다.
@@ -123,9 +122,51 @@ Subject 와 Observer 가 존재하고 Subject에 Observer 를 등록하고 난 �
 한 클래스의 인터페이스를 클라이언트에서 사용하고자하는 다른 인터페이스로 변환한다.
 어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있다.
 ### 프로토콜이란?
+통신 프로토콜 또는 통신 규약은 컴퓨터나 원거리 통신 장비 사이에서 메세지를 주고 받는 양식과 규칙의 체계이다. 통신 프로토콜은 신호 체계, 인증 그리고 오류 감지 및 수정기능을 포함할 수 있다. 간단히 말해서 데이터 주고받는 상호간에 미리 약속된 규칙, 규약이다!!
 
-### mvvm 구조에서 ViewModel 상속을 사용 안하게 된다면?
+### ViewModel 상속받은 클래스에서 ViewModel 상속을 받지 않는다면 달라지는점은?
+viewModel 상속을 받지 않는다면 생명주기에 따른 처리,rotate상황 등등을 추가 해주어야한다는 점이 달라진다.
 
 ## Rx관련 질문 : 
 
 ### 새로운 스레드를 생성해도 되는데 왜 Schedulers.io() 를 사용하는가? 내부 동작이 어떻게 돌아가는 것인가를 묻는 질문
+화면단에서 사용되는 request 가 하나가 아니라 적게는 한자리수 많게는 두세자리수까지 갈수 있는데 이부분에서 Thread를 계속해서 생성,수거 하게 된다면 사용할 때마다 드는 비용을 무시할수 없다. 그렇기 때문에 Thread Pool 이 사용된다. 몇개의 스레드를 생성한뒤 큐에 Task를 넣고 작업하고 있지 않은 Thread에 Task를 할당하는 방식이다. 작업이 끝난 Thread 는 다시 어플리케이션에 결과값을 리턴한다. Thread를 재사용 하기때문에 성능저하를 방지할 수 있다. 하지만 Thread를 너무 많이 만들어 놓게 되면 메모리만 낭비하게 되므로 주의해서 사용해야 한다.
+
+###프로가드
+코드 축소와 바이트코드를 최적화하고 미사용 코드 명령을 제거하며 남아 있는 클래스,필드 및 메서드를 짧은 이름으로 난독 처리한다. 난독 처리된 코드는 APK 의 리버스 엔지니어링을 어렵게 만들며 보안에 민감한 기능이 앱에 사용되는 경우 특히 유용하다. 
+64K 참조 제한을 해결하기 위한 유용한 도구 이기도 하다.
+
+###코틀린 by lazy
+lateinit은 필요할 경우 언제든 초기화가 가능한 Properties 이지만 lazy properties는 생성 후 값을 변경할 수 없는 val 로 되어 있다.
+by lazy 정의에 의해서 초기화를 진행하고 val 이므로 값을 교체하는 건 불가능하다.
+lazy를 사용하는 경우 기본 synchronized 로 동작한다.
+
+###viewModel rotate 상황에서 파기 왜 안되는지 과정 ?
+ViewModelStoreOwner 인터페이스를 가지고 있는 Activity 또는 Fragment 는 viewModelStore를 가지고 있다. rotate 될 때 onDestroy 가 불리게 되는데 
+{% highlight ruby %}
+      boolean isChangingConfigurations = activity != null && activity.isChangingConfigurations();
+        if (this.mViewModelStore != null && !isChangingConfigurations) {
+            this.mViewModelStore.clear();
+        }
+{% endhighlight %}
+viewModelStore 가 null 이 아니고 configuration변화가 없을때 clear 를 불러 주기 때문에 rotate상황에서 viewModel이 clear 되지 않는다.
+
+###Dangerous permission
+
+
+###Multi dex
+안드로이드 앱을 구성하는 코드는 컴파일 되어 덱스 파일로 만들어 진다. 하나의 덱스 파일에는 64K 메소드참조만 저장할 수 있다. 큰 규모 앱을 작성하다 보면 앞의 메소드 제한을 훌쩍 넘게 되는데 멀티덱스를 사용하면 덱스 파일을 여러 개로 나누어 이러한 문제를 피할 수 있다. 
+
+###Viewholder 패턴에 대해 설명
+
+
+
+###Intent service 란?
+
+###Foreground service 사용?
+
+###Fragment 사용 장점 ? 
+
+###Parcelable serializable 차이와 성능은?
+
+###onSaveInstanceState 와 onRestoreInstanceState
