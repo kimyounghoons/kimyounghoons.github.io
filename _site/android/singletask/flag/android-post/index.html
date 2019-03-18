@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Locale &#8211; 영훈 블로그</title>
-<meta name="description" content="안드로이드 언어 및 지역">
-<meta name="keywords" content="lanuage, country">
+<title>singleTask Activity 사용 시 이슈 &#8211; 영훈 블로그</title>
+<meta name="description" content="singleTask Activity 사용 시 이슈">
+<meta name="keywords" content="SingleTask, Flag">
 
 <!-- Twitter Cards -->
 <meta name="twitter:card" content="summary">
@@ -17,9 +17,9 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Locale">
-<meta property="og:description" content="안드로이드 언어 및 지역">
-<meta property="og:url" content="http://localhost:4000/android/android-locale/">
+<meta property="og:title" content="singleTask Activity 사용 시 이슈">
+<meta property="og:description" content="singleTask Activity 사용 시 이슈">
+<meta property="og:url" content="http://localhost:4000/android/singletask/flag/android-post/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -27,7 +27,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-locale/">
+<link rel="canonical" href="http://localhost:4000/android/singletask/flag/android-post/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -173,9 +173,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Locale</h1>
+      <h1>singleTask Activity 사용 시 이슈</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-12-04T00:00:00+09:00">December 04, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-03-18T00:00:00+09:00">March 18, 2019</time></span></h2>
       
 
       
@@ -275,45 +275,45 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">Locale</h1>
-      <p>문제점 : 다국어 지원 앱
-다국어 지원을 위한 라이브러리를 사용해서 앱을 실행할 때 다국어 지원 관련 셋팅을 하게 된다.
-간체,번체의 경우 language 와 country 두가지 모두 사용해서 구분을 하게 된다.
-하지만 지역별로 이벤트를 설정 할 경우 locale 지역 정보를 가져올때 시스템에 설정된 지역 정보가 아닌 앱에서 설정된 지역을 가져오기때문에 문제</p>
+      <h1 class="post-title entry-title">singleTask Activity 사용 시 이슈</h1>
+      <table>
+  <tbody>
+    <tr>
+      <td>문제점 : A(Standard) Activity -&gt; B(Single Task) Activity -&gt;A(Standard)Activity Intent.FLAG_ACTIVITY_NEW_TASK</td>
+      <td>Intent.FLAG_ACTIVITY_CLEAR_TASK  FLAG로 startActivity 할 때 앱 강제 종료되는 문제</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>해결 : Application Class 에서 다국어 관련 Locale 을 셋팅 하기 전 country 정보를 미리 SharedPreference 에 저장해 놓고 필요한 경우 가져 온다. 시스템 언어를 변경 할 경우 onConfigurationChanged 가 불리게 되어서 여기서 다시 지역 정보를 갱신 시켜 주어야 한다.</p>
+<p>해결 : 
+SingleTask 는 하나의 Activity만 생성되고 다중 인스턴스를 가질 수 없다. 그리고 이미 존재하는 경우 시스템은 새 인스턴스 대신 onNewIntent() 메서드를 호출하여 인텐트를 기존 인스턴스로 라우팅한다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="no">Application</span> <span class="no">Class</span>
+<p>플로우가 수정 되면서 해당 이슈가 발생 되었는데 해결 방법은 생각 해본 건 대충 3가지로 정리</p>
 
-    <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">();</span>
-        <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
-        <span class="p">.</span><span class="nf">edit</span><span class="p">()</span>
-        <span class="p">.</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="no">Locale</span><span class="p">.</span><span class="nf">getDefault</span><span class="p">().</span><span class="nf">getCountry</span><span class="p">())</span>
-        <span class="p">.</span><span class="nf">apply</span><span class="p">();</span>
-        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="n">getApplicationContext</span><span class="p">(),</span> <span class="no">SUPPORTED_LOCALES</span><span class="p">);</span>
-    <span class="p">}</span>
+<p>첫번째는 액티비티 외에 다른 곳에서 호출 될 일이 있을까 하는 부분. Intent.FLAG_ACTIVITY_NEW_TASK 을 제거 하고 사용해도 무관한지 찾아 보는 것이다. 회원가입을 하거나 했을 때 뒤로가기 시 그대로 Task에 남게 되는 이슈가 있다. 이런 경우가 없을 시에는 FLAG_ACTIVITY_NEW_TASK를 제거하면 해결 가능하다.</p>
 
-      <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">void</span> <span class="n">onConfigurationChanged</span><span class="p">(</span><span class="no">Configuration</span> <span class="n">newConfig</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">(</span><span class="n">newConfig</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span> <span class="sr">//</span><span class="err">첫번째가</span> <span class="err">변경된</span> <span class="no">Locale</span> <span class="err">정보를</span> <span class="err">가진다</span><span class="o">.</span>
-            <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">edit</span><span class="p">().</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">getCountry</span><span class="p">()).</span><span class="nf">apply</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">();</span>
-    <span class="p">}</span></code></pre></figure>
+<p>두번째는 singleTask 액티비티에서만 Intent.FLAG_ACTIVITY_CLEAR_TASK 사용하고 NEW_TASK 는 사용하지 않는다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="k">if</span> <span class="p">(</span><span class="n">context</span> <span class="n">instanceof</span> <span class="no">Bactivity</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">intent</span><span class="p">.</span><span class="nf">setFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TASK</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">intent</span><span class="p">.</span><span class="nf">setFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_NEW_TASK</span> <span class="o">|</span> <span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TASK</span><span class="p">);</span>
+        <span class="p">}</span></code></pre></figure>
+
+<p>세번째는 굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.</p>
+
+<p>현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#lanuage" title="Pages tagged lanuage" class="tag"><span class="term">lanuage</span></a><a href="http://localhost:4000/tags#country" title="Pages tagged country" class="tag"><span class="term">country</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-12-04">December 04, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#SingleTask" title="Pages tagged SingleTask" class="tag"><span class="term">SingleTask</span></a><a href="http://localhost:4000/tags#Flag" title="Pages tagged Flag" class="tag"><span class="term">Flag</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2019-03-18">March 18, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-locale/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-locale/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-locale/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/singletask/flag/android-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/singletask/flag/android-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/singletask/flag/android-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -354,23 +354,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/notification/android-notification/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/singletask/flag/android-post/" title="singleTask Activity 사용 시 이슈">singleTask Activity 사용 시 이슈</a></h3>
-      <p>singleTask Activity 사용 시 이슈 <a href="http://localhost:4000/android/singletask/flag/android-post/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" title="알고리즘 문제">알고리즘 문제</a></h3>
+      <p>알고리즘 문제 <a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
         <h4><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" title="알고리즘 문제">알고리즘 문제</a></h4>
-        <span>Published on March 11, 2019</span>
+        <span>Published on March 07, 2019</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" title="알고리즘 문제">알고리즘 문제</a></h4>
-        <span>Published on March 07, 2019</span>
+        <h4><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/" title="RxKotlin Single">RxKotlin Single</a></h4>
+        <span>Published on February 23, 2019</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
