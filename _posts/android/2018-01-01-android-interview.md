@@ -14,6 +14,15 @@ categories: [android,interview]
 
 ## 자바 질문 : 
 
+### 클래스란?
+객체를 만들어 내기 위한 설계도 혹은 틀
+
+### 객체란?
+소프트웨어 세계에 구현할 대상
+
+### 인스턴스란?
+설계도를 바탕으로 소프트웨어 세계에 구현된 구체적인 실체
+
 ### abstract 와 interface 의 차이 와 자바는 왜 다중상속이 안되는 것인가?
 abstract 와 interface 는 자식 클래스 또는 인터페이스를 사용하는 곳에서 추상메소드를 강제로 사용하게끔 유도하는부분이 공통점이라고 할 수있다.
 비슷비슷 하지만 다른점은 자바가 다중상속을 지원하지 않지만 다중인터페이스를 지원한다는 것에 있다. 다중 상속을 지원하지 않는 것은 모호성때문이다. 다중상속을 하게 되면 부모로부터 상속받은 method가 동일하게 되면 누구의 부모로부터 가져와야하는지 애매해진다. 그렇기 때문에 자바에서는 다중상속을 지원하지 않는다. 하지만 왜 인터페이스는 다중인터페이스가 가능할까? 그부분에서는 인터페이스는 어떠한 특정 동작을 보장하기 위해서 존재하기 때문이다.
@@ -83,6 +92,14 @@ Kotlin 에서 AbstractMethod 에 Lambdas 식 적용하려면 Higher-Order-Functi
 
 ## 안드로이드 질문 : 
 
+### Context 란 ? 
+자신이 어떤 어플리케이션을 나타내고 있는지 알려주는 ID 역할
+ActivityManagerService 에 접근 할수 있도록 하는 통로 역할
+
+### ANR(Application Not Responding) 이란?
+메인 스레드가 일정 시간 어떤 TASK 에 잡혀 있으면 발생한다.
+시간 소모가 많은 작업은 스레드를 통해 처리해야 함
+
 ### ViewModel 의 장점
 화면 회전시 데이터를 유지할 수 있는 구조로 디자인하였으며 Android Lifecycle 의 onDestroy코드가 동작한다.
 Lifecycle 을 내부적으로 알아서 호출해주기 때문에 좋다.
@@ -132,16 +149,16 @@ viewModel 상속을 받지 않는다면 생명주기에 따른 처리,rotate상�
 ### 새로운 스레드를 생성해도 되는데 왜 Schedulers.io() 를 사용하는가? 내부 동작이 어떻게 돌아가는 것인가를 묻는 질문
 화면단에서 사용되는 request 가 하나가 아니라 적게는 한자리수 많게는 두세자리수까지 갈수 있는데 이부분에서 Thread를 계속해서 생성,수거 하게 된다면 사용할 때마다 드는 비용을 무시할수 없다. 그렇기 때문에 Thread Pool 이 사용된다. 몇개의 스레드를 생성한뒤 큐에 Task를 넣고 작업하고 있지 않은 Thread에 Task를 할당하는 방식이다. 작업이 끝난 Thread 는 다시 어플리케이션에 결과값을 리턴한다. Thread를 재사용 하기때문에 성능저하를 방지할 수 있다. 하지만 Thread를 너무 많이 만들어 놓게 되면 메모리만 낭비하게 되므로 주의해서 사용해야 한다.
 
-###프로가드
+### 프로가드
 코드 축소와 바이트코드를 최적화하고 미사용 코드 명령을 제거하며 남아 있는 클래스,필드 및 메서드를 짧은 이름으로 난독 처리한다. 난독 처리된 코드는 APK 의 리버스 엔지니어링을 어렵게 만들며 보안에 민감한 기능이 앱에 사용되는 경우 특히 유용하다. 
 64K 참조 제한을 해결하기 위한 유용한 도구 이기도 하다.
 
-###코틀린 by lazy
+### 코틀린 by lazy
 lateinit은 필요할 경우 언제든 초기화가 가능한 Properties 이지만 lazy properties는 생성 후 값을 변경할 수 없는 val 로 되어 있다.
 by lazy 정의에 의해서 초기화를 진행하고 val 이므로 값을 교체하는 건 불가능하다.
 lazy를 사용하는 경우 기본 synchronized 로 동작한다.
 
-###viewModel rotate 상황에서 파기 왜 안되는지 과정 ?
+### viewModel rotate 상황에서 파기 왜 안되는지 과정 ?
 ViewModelStoreOwner 인터페이스를 가지고 있는 Activity 또는 Fragment 는 viewModelStore를 가지고 있다. rotate 될 때 onDestroy 가 불리게 되는데 
 {% highlight ruby %}
       boolean isChangingConfigurations = activity != null && activity.isChangingConfigurations();
@@ -151,22 +168,71 @@ ViewModelStoreOwner 인터페이스를 가지고 있는 Activity 또는 Fragment
 {% endhighlight %}
 viewModelStore 가 null 이 아니고 configuration변화가 없을때 clear 를 불러 주기 때문에 rotate상황에서 viewModel이 clear 되지 않는다.
 
-###Dangerous permission
-
-
-###Multi dex
+### Multi dex
 안드로이드 앱을 구성하는 코드는 컴파일 되어 덱스 파일로 만들어 진다. 하나의 덱스 파일에는 64K 메소드참조만 저장할 수 있다. 큰 규모 앱을 작성하다 보면 앞의 메소드 제한을 훌쩍 넘게 되는데 멀티덱스를 사용하면 덱스 파일을 여러 개로 나누어 이러한 문제를 피할 수 있다. 
 
-###Viewholder 패턴에 대해 설명
+### 액티비티 생명 주기
+onCreate 
+onStart
+onResume
+Running
+onPause
+onStop
+onDestroy
 
 
+### 프래그먼트 생명 주기
+onAttach
+onCreate
+onCreateView
+onActivityCreated
+onStart
+onResume
+Running
+onPause
+onStop
+onDestroyView
+onDestroy
+onDetach
 
-###Intent service 란?
+### 서비스 생명 주기 2가지
+onCreate
+onStartCommand()
+return start_sticky , start_not_sticky, start_redeliver_intent
+Service Running
+onDestroy
 
-###Foreground service 사용?
+onCreate
+onBind
+onUnbind
+onDestroy
 
-###Fragment 사용 장점 ? 
+### FLAG_ACTIVITY_CLEAR_TOP 과 FLAG_ACTIVITY_SINGLE_TOP 차이
+CLEARTOP 은 A -> B -> A 일 때 최상위 A 만 남고 나머지 다 destroy 
+SINGLETOP 은 A -> B -> B 일때 A -> B 로 B가 하나로 됨.  
 
-###Parcelable serializable 차이와 성능은?
+### 스레드 통신방법?
+스레드가 시작 되면 이 스레드는  루퍼! 핸들러! 메세지 큐! 를 하나씩 가지고 있다.
+메세지큐는 외부 스레드로부터 핸들러를 통하여 받은 message 혹은 Task 를 저장하는 역할을 한다.
+루퍼는 메세지큐에서 메세지를 순차적으로 꺼내서 핸들러에게 전달하는 역할!!
+핸들러는 두가지 기능이 있다.
+1. 루퍼에게서 받은 메세지 혹은 Task 를 일정한 시간에 수행하는 기능을 한다.
+2. 외부 스레드로부터 받은 메세지를 핸들러를 통하여 Message Queue에 집어 넣는 역할을 한다.
 
-###onSaveInstanceState 와 onRestoreInstanceState
+### 스레드 충돌을 막으려면?
+두개 이상의 스레드가 같이 참조 하는 메소드 혹은 블럭구문을 synchronized , synchronized block 사용해서 해결할 수 있다.
+
+### Viewholder 패턴에 대해 설명
+예전 ListView 를 사용할 때 getView() 를 오버라이드 해서 뷰를 인플레이팅 시키는데 이부분에서 계속해서 생성하고 findviewById 를 불러주게 되면 부담이 많이 가는 작업이 된다. 데이터가 많아 질 수록 버벅거리는 현상이 일어날 확률이 높다. 그래서 viewHolder 패턴이 나오게 되었는데 해당 뷰가 널일때만 view를 인플레이트 시키고 viewHolder 클래스에 findviewById 를 사용해서 viewHolder 는 해당 뷰에 태깅처리해서 다음번 부터는 태그한 viewHolder 를 가져와서 사용한다. 그 이후에 viewHolder 를 강제로 구현하게 나온것이 RecyclerView 이다.
+
+### Dangerous permission
+
+### Intent service 란?
+
+### Foreground service 사용?
+
+### Fragment 사용 장점 ? 
+
+### Parcelable serializable 차이와 성능은?
+
+### onSaveInstanceState 와 onRestoreInstanceState
