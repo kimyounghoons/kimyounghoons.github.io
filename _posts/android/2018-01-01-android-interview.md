@@ -226,13 +226,28 @@ SINGLETOP 은 A -> B -> B 일때 A -> B 로 B가 하나로 됨.
 예전 ListView 를 사용할 때 getView() 를 오버라이드 해서 뷰를 인플레이팅 시키는데 이부분에서 계속해서 생성하고 findviewById 를 불러주게 되면 부담이 많이 가는 작업이 된다. 데이터가 많아 질 수록 버벅거리는 현상이 일어날 확률이 높다. 그래서 viewHolder 패턴이 나오게 되었는데 해당 뷰가 널일때만 view를 인플레이트 시키고 viewHolder 클래스에 findviewById 를 사용해서 viewHolder 는 해당 뷰에 태깅처리해서 다음번 부터는 태그한 viewHolder 를 가져와서 사용한다. 그 이후에 viewHolder 를 강제로 구현하게 나온것이 RecyclerView 이다.
 
 ### Dangerous permission
+시스템 권한은 두가지로 나눠 지는데 정상권한과 위험권한이 있다.
+정상권한은 사용자 개인정보를 직접 위험에 빠뜨리지않는다. 앱이 매니페스트에 정산 권한을 나열하는 경우 시스템은 자동으로 권한을 부여.
+위험권한은 사용자 기밀 데이터에 대한 액세스를 앱에 부여할 수 있다. 위험권한을 나열하는 경우, 사용자는 앱에 대한 명시적 승인을 제공해야 한다.
 
 ### Intent service 란?
+IntentService 는 Intent를 사용해서 시작되고 하나의 workerThread 가 생성 되고 Queue에 작업이 들어 가게 된다. onHandleIntent() 메소드가 이 스레드 내에서 호출되고 작업이 다 끝나면 알아서 destroy 되는 방식이라 stopSelf를 불러줄 필요가 없다.
 
 ### Foreground service 사용?
 
+
 ### Fragment 사용 장점 ? 
+Activity를 분할하여 화면의 한 부분을 정의할수 있고 자신의 생명주기를 가진다. 액티비티내에서 실행 중 추가 제거가 가능하고 다른 액티비티에서도 사용 할 수 있어 재사용성이 뛰어나다. 태블릿 지원하게 될 때 용이하게 사용 가능하다. 
 
 ### Parcelable serializable 차이와 성능은?
+복잡한 클래스의 객체를 이동시키려고 할 때 Serializable 또는 Parcelable 을 사용해서 직렬화하여 인텐트에 추가합니다.
+Serializable 은 Java 의 인터페이스이다. 해당 객체에 인터페이스 Serializable 을 사용해주면 되기 때문에 사용하기 쉽다. 하지만 내부에서 Reflection 을 사용하여 직렬화 처리하기 때문에 성능 저하 및 배터리 소모가 발생되게 된다.
+Parcelable 은 Android SDK 의 인터페이스이다. 
+직렬화 방법을 사용자가 명시적으로 작성하기 때문에 작동으로 처리하기 위한 reflection이 필요없다.
+속도적인 측면에서는 Parcelable 이 10배 이상 빠르다.
+
+하지만 Serializable 을 사용할 때 writeObject 와 readObject 를 구현해 주면 Parcelable 보다 쓰기는 속도가 3배 읽기의 경우 1.6배 더 빠르다.
+어떻게 사용하느냐에 따라 속도적인 측면에서 비교할 수 있다.
 
 ### onSaveInstanceState 와 onRestoreInstanceState
+Activity 또는 Fragment 가 종료 될 때 onSaveInstanceState은 onPause 다음 상태에서 불리게 된다. 이때 파라미터로 받은 Bundle에 데이터를 저장하고 onCreate 시점에서 savedInstanceState bundle 을 통해 값을 가져와서 사용할 수 있다. onRestoreInstanceState 은 정상적인 경우는 불리지 않고 메모리 부족한 경우 프로세스 자체에서 Activity 또는 Fragment 를 강제종료할 때 onRestoreInstanceState가 불리게 된다. bundle 통해서 데이터 백업 가능.
