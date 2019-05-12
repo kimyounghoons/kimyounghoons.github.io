@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "BottomNavigationView",
+      "category" : "",
+      "tags"     : "BottomNavigationView",
+      "url"      : "http://localhost:4000/android/android-bottom_navigation_view/",
+      "date"     : "2019-05-12 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "singleTask Activity 사용 시 이슈",
       "category" : "",
       "tags"     : "SingleTask, Flag",
