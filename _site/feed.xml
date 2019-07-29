@@ -4,13 +4,73 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-05-12T21:38:32+09:00</updated>
+<updated>2019-07-29T23:39:04+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[EditText 금액 콤마 표시 Typing 할 때 느려지는 현상]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-edittext_typing_slow/" />
+  <id>http://localhost:4000/android/android-edittext_typing_slow</id>
+  <updated>2019-05-12T00:00:00-00:00</updated>
+  <published>2019-07-29T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;edittext-금액-콤마-표시-typing-할-때-느려지는-현상&quot;&gt;EditText 금액 콤마 표시 Typing 할 때 느려지는 현상&lt;/h3&gt;
+
+&lt;p&gt;EditText 금액 적을 때 3자리 마다 , 표시를 해야하는 상황이 생겼다.
+TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.
+해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.
+EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에서 주는 Editable s 을 s.clear 와 s.append 를 통해 추가 해 주었고&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:inputType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;number|textNoSuggestions&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;inputType 을 number 에서 위와 같이 변경 해 준뒤 해당 이슈를 수정 할 수 있었고 변경 시 빠르게 변경할 수 있었다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-edittext_typing_slow/&quot;&gt;EditText 금액 콤마 표시 Typing 할 때 느려지는 현상&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on July 29, 2019.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[resConfig(Build.Gradle)]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-resconfig/" />
+  <id>http://localhost:4000/android/android-resconfig</id>
+  <updated>2019-05-12T00:00:00-00:00</updated>
+  <published>2019-07-24T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;buildgradle-에서-resconfig&quot;&gt;build.gradle 에서 resConfig&lt;/h3&gt;
+
+&lt;p&gt;빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;resConfigs&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ko&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;xxxhdpi&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
+locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.&lt;/p&gt;
+
+&lt;p&gt;이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-resconfig/&quot;&gt;resConfig(Build.Gradle)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on July 24, 2019.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1033,109 +1093,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 &lt;p&gt;확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/actionbar_menu-post/&quot;&gt;ActionBar Menu in Fragment&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 06, 2018.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[wireless build]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/wirelessbuild-post/" />
-  <id>http://localhost:4000/android/wirelessbuild-post</id>
-  <updated>2018-11-05T00:00:00-00:00</updated>
-  <published>2018-11-05T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;h2 id=&quot;무선으로-빌드-하는-방법&quot;&gt;무선으로 빌드 하는 방법&lt;/h2&gt;
-
-&lt;p&gt;처음에는 usb 연결이 필요하다.&lt;/p&gt;
-
-&lt;p&gt;터미널에서 
-adb tcpip 5555 치면&lt;/p&gt;
-
-&lt;p&gt;restarting in TCP mode port : 5555&lt;/p&gt;
-
-&lt;p&gt;5555포트가 열린거임&lt;/p&gt;
-
-&lt;p&gt;adb connect 주소:5555 라고 치면&lt;/p&gt;
-
-&lt;p&gt;connected to 주소:5555 라고 나온다.&lt;/p&gt;
-
-&lt;p&gt;그럼 연결 성공&lt;/p&gt;
-
-&lt;p&gt;usb를 빼고&lt;/p&gt;
-
-&lt;p&gt;adb devices 로 연결된 디바이스를 확인할 수 있다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/wirelessbuild-post/&quot;&gt;wireless build&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 05, 2018.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[drawerlayout navigationView 클릭 먹통]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/drawerlayout-post/" />
-  <id>http://localhost:4000/android/drawerlayout-post</id>
-  <updated>2018-11-02T00:00:00-00:00</updated>
-  <published>2018-11-02T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;딤처리 된 팝업을 추가 할 일이 생겨 아래의 구조로 작성함&lt;/p&gt;
-
-&lt;p&gt;DrawerLayout 사용하는 layout 에서의 구조&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
-        &lt;span class=&quot;err&quot;&gt;메인&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;뷰&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ConstraintLayout&amp;gt;
-
-    &amp;lt;NavigationView&amp;gt;  
-    &amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;NavigationView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
-        &lt;span class=&quot;err&quot;&gt;딤처리&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;팝업&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ConstraintLayout&amp;gt;
-&amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;이런식으로 구성 했다.&lt;/p&gt;
-
-&lt;p&gt;근데 딤처리 팝업 뜨고 나서만 NavigationView 에 있는 뷰들이 클릭을 먹지 않음…&lt;/p&gt;
-
-&lt;p&gt;딤처리 팝업을 확인 누르면 VISIBLE -&amp;gt; GONE 상태로 변경되서 상관이 없어야 할텐데 클릭이 되지 않는 문제..&lt;/p&gt;
-
-&lt;p&gt;처음에는 문제 초점을 딤처리 팝업에서의 setClickable 에 뒀다.&lt;/p&gt;
-
-&lt;p&gt;하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
-        &lt;span class=&quot;err&quot;&gt;메인&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;뷰&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ConstraintLayout&amp;gt;
-
-    &amp;lt;ConstraintLayout&amp;gt;  
-        딤처리 팝업
-    &amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ConstraintLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;NavigationView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/NavigationView&amp;gt;
-
-&amp;lt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DrawerLayout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;그렇게 처리하니 이슈가 사라짐!!&lt;/p&gt;
-&lt;div class=&quot;redText&quot;&gt;
-기억하자 NavigationView의 위치는 맨 마지막에 와야함!!
-&lt;/div&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/drawerlayout-post/&quot;&gt;drawerlayout navigationView 클릭 먹통&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 02, 2018.&lt;/p&gt;
   </content>
 </entry>
 

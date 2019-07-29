@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>index in firestore &#8211; 영훈 블로그</title>
-<meta name="description" content="파이어스토어 색인을 이용한 복합쿼리">
-<meta name="keywords" content="firestore">
+<title>resConfig(Build.Gradle) &#8211; 영훈 블로그</title>
+<meta name="description" content="resConfig(Build.Gradle)">
+<meta name="keywords" content="resConfig">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="index in firestore">
-<meta property="og:description" content="파이어스토어 색인을 이용한 복합쿼리">
-<meta property="og:url" content="http://localhost:4000/android/android-firestore-post/">
+<meta property="og:title" content="resConfig(Build.Gradle)">
+<meta property="og:description" content="resConfig(Build.Gradle)">
+<meta property="og:url" content="http://localhost:4000/android/android-resconfig/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-firestore-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-resconfig/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -170,9 +170,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>index in firestore</h1>
+      <h1>resConfig(Build.Gradle)</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00+09:00">November 12, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-07-24T00:00:00+09:00">July 24, 2019</time></span></h2>
       
 
       
@@ -270,31 +270,30 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">index in firestore</h1>
-      <h1 id="파이어스토어-색인을-이용한-복합쿼리">파이어스토어 색인을 이용한 복합쿼리</h1>
+      <h1 class="post-title entry-title">resConfig(Build.Gradle)</h1>
+      <h3 id="buildgradle-에서-resconfig">build.gradle 에서 resConfig</h3>
 
-<p>기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
-하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.</p>
+<p>빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.</p>
 
-<figure>
-	<img src="/images/2018-11-12-index_in_firestore.png" alt="" />
-	<figcaption>FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.</figcaption>
-</figure>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">dev</span> <span class="p">{</span>
+   <span class="n">resConfigs</span> <span class="s2">"ko"</span><span class="p">,</span> <span class="s2">"xxxhdpi"</span>
+<span class="p">}</span></code></pre></figure>
 
-<p>처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
-letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
-추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.</p>
+<p>주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
+locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
+
+<p>이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#firestore" title="Pages tagged firestore" class="tag"><span class="term">firestore</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-12">November 12, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#resConfig" title="Pages tagged resConfig" class="tag"><span class="term">resConfig</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2019-05-12">May 12, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-firestore-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-firestore-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-firestore-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-resconfig/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-resconfig/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-resconfig/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -329,7 +328,7 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-touch-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-bottom_navigation_view/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
       <h3><a href="http://localhost:4000/android/android-edittext_typing_slow/" title="EditText 금액 콤마 표시 Typing 할 때 느려지는 현상">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</a></h3>
@@ -339,13 +338,13 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-resconfig/" title="resConfig(Build.Gradle)">resConfig(Build.Gradle)</a></h4>
-        <span>Published on July 24, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
+        <span>Published on May 12, 2019</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on May 12, 2019</span>
+        <h4><a href="http://localhost:4000/android/singletask/flag/android-post/" title="singleTask Activity 사용 시 이슈">singleTask Activity 사용 시 이슈</a></h4>
+        <span>Published on March 18, 2019</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
