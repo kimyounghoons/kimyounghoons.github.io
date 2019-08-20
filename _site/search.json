@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "키보드 내려갈 때 특정 처리 하기",
+      "category" : "",
+      "tags"     : "editText, keyboard",
+      "url"      : "http://localhost:4000/android/android-keyboard/",
+      "date"     : "2019-08-20 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "EditText 금액 콤마 표시 Typing 할 때 느려지는 현상",
       "category" : "",
       "tags"     : "editText, textWatcher",

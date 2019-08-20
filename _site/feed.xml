@@ -4,13 +4,81 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-07-29T23:39:04+09:00</updated>
+<updated>2019-08-20T23:42:17+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[키보드 내려갈 때 특정 처리 하기]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-keyboard/" />
+  <id>http://localhost:4000/android/android-keyboard</id>
+  <updated>2019-08-20T00:00:00-00:00</updated>
+  <published>2019-08-20T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;키보드-내려갈-때-포커스-클리어-처리-하기&quot;&gt;키보드 내려갈 때 포커스 클리어 처리 하기&lt;/h3&gt;
+
+&lt;p&gt;키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt; &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;showKeyboard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EditText&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;editText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;editText&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;editText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;requestFocus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mInputMethodManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;showSoftInput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;editText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;InputMethodManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SHOW_FORCED&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;InputMethodManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HIDE_IMPLICIT_ONLY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+ &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clearFocus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Activity&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getCurrentFocus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;InputMethodManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;InputMethodManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getSystemService&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;INPUT_METHOD_SERVICE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;imm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hideSoftInputFromWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getWindowToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;clearFocus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;activity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setSoftInputMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;WindowManager&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;LayoutParams&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SOFT_INPUT_STATE_ALWAYS_HIDDEN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.&lt;br /&gt;
+editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;  &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastHeightDiff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isOpenKeyboard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ViewTreeObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;OnGlobalLayoutListener&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mOnGlobalLayoutListener&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ViewTreeObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;OnGlobalLayoutListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;vi&quot;&gt;@Override&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;onGlobalLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;no&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activityRootView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mActivity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getDecorView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;findViewById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightDiff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activityRootView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getRootView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activityRootView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastHeightDiff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;lastHeightDiff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heightDiff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heightDiff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastHeightDiff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keyboard&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;isOpenKeyboard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keyboard&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hide&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isOpenKeyboard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;clearFocus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;isOpenKeyboard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.&lt;br /&gt;
+한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-keyboard/&quot;&gt;키보드 내려갈 때 특정 처리 하기&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on August 20, 2019.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -28,9 +96,9 @@
   <content type="html">
     &lt;h3 id=&quot;edittext-금액-콤마-표시-typing-할-때-느려지는-현상&quot;&gt;EditText 금액 콤마 표시 Typing 할 때 느려지는 현상&lt;/h3&gt;
 
-&lt;p&gt;EditText 금액 적을 때 3자리 마다 , 표시를 해야하는 상황이 생겼다.
-TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.
-해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.
+&lt;p&gt;EditText 금액 적을 때 3자리 마다 , 표시를 해야하는 상황이 생겼다.&lt;br /&gt;
+TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.&lt;br /&gt;
+해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.&lt;br /&gt;
 EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에서 주는 Editable s 을 s.clear 와 s.append 를 통해 추가 해 주었고&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:inputType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;number|textNoSuggestions&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -1037,62 +1105,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 &lt;p&gt;corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/shape-post/&quot;&gt;Shape&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 07, 2018.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[ActionBar Menu in Fragment]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/actionbar_menu-post/" />
-  <id>http://localhost:4000/android/actionbar_menu-post</id>
-  <updated>2018-11-06T00:00:00-00:00</updated>
-  <published>2018-11-06T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xml&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0&quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;menu&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@+id/menu_answer_letter&quot;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@string/answer&quot;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:showAsAction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;always&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/menu&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!&lt;/p&gt;
-
-&lt;p&gt;Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.&lt;/p&gt;
-
-&lt;p&gt;위치는 OnCreateView 안에 넣어주면 됨.&lt;/p&gt;
-
-&lt;p&gt;그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt; &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;onCreateOptionsMenu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;menu: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Menu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;inflater: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MenuInflater&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;inflater&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;inflate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;menu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;menu_detail_letter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;menu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;onCreateOptionsMenu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;menu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inflater&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;다음은 메뉴 아이템이 선택 되면 불리는 메소드&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;onOptionsItemSelected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;item: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MenuItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Boolean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;itemId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-       &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;menu_answer_letter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-           &lt;span class=&quot;n&quot;&gt;locateListener?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;openAnswer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;letter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-           &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/actionbar_menu-post/&quot;&gt;ActionBar Menu in Fragment&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 06, 2018.&lt;/p&gt;
   </content>
 </entry>
 

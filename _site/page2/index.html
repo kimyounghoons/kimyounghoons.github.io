@@ -270,6 +270,82 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-03-11T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 11, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>쇠막대기 알고리즘</p>
+
+<p>여러 개의 쇠막대기를 레이저로 절단하려고 합니다. 효율적인 작업을 위해서 쇠막대기를 아래에서 위로 겹쳐 놓고, 레이저를 위에서 수직으로 발사하여 쇠막대기들을 자릅니다. 쇠막대기와 레이저의 배치는 다음 조건을 만족합니다.</p>
+
+<ul>
+  <li>쇠막대기는 자신보다 긴 쇠막대기 위에만 놓일 수 있습니다.</li>
+  <li>쇠막대기를 다른 쇠막대기 위에 놓는 경우 완전히 포함되도록 놓되, 끝점은 겹치지 않도록 놓습니다.</li>
+  <li>각 쇠막대기를 자르는 레이저는 적어도 하나 존재합니다.</li>
+  <li>레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않습니다.</li>
+</ul>
+
+<p>(a) 레이저는 여는 괄호와 닫는 괄호의 인접한 쌍 ‘()’으로 표현합니다. 또한 모든 ‘()’는 반드시 레이저를 표현합니다.
+(b) 쇠막대기의 왼쪽 끝은 여는 괄호 ‘(‘로, 오른쪽 끝은 닫힌 괄호 ‘)’로 표현됩니다.</p>
+
+<p>위 예의 괄호 표현은 그림 위에 주어져 있습니다.
+쇠막대기는 레이저에 의해 몇 개의 조각으로 잘리는데, 위 예에서 가장 위에 있는 두 개의 쇠막대기는 각각 3개와 2개의 조각으로 잘리고, 이와 같은 방식으로 주어진 쇠막대기들은 총 17개의 조각으로 잘립니다.</p>
+
+<p>쇠막대기와 레이저의 배치를 표현한 문자열 arrangement가 매개변수로 주어질 때, 잘린 쇠막대기 조각의 총 개수를 return 하도록 solution 함수를 작성해주세요.</p>
+
+<p>제한사항
+arrangement의 길이는 최대 100,000입니다.
+arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="p">.</span><span class="nf">*</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+    <span class="kp">public</span> <span class="n">int</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span> <span class="n">arrangement</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="no">String</span><span class="p">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrangement</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
+        <span class="no">Stack</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Stack</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="no">String</span> <span class="n">character</span> <span class="p">:</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">character</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
+                <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="nf">peek</span><span class="p">().</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span><span class="sr">//</span><span class="err">레이저</span>
+                    <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
+                    <span class="o">--</span><span class="n">count</span><span class="p">;</span>
+                    <span class="n">answer</span> <span class="o">+=</span> <span class="n">count</span><span class="p">;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="sr">//</span><span class="err">막대</span> <span class="err">끝</span>
+                    <span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                    <span class="n">count</span><span class="o">--</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>여기서 포인트는  stack 을 사용하면서 레이저와 막대끝을 구분하는 것 같다 ㅎㅎ
+알고리즘하니깐 시간 잘 가네 ㅎㅎ</p>
+
+<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42585</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-03-07T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 07, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -447,134 +523,6 @@ destroy 될때 등록되어 있던 observer를 제거 시켜준다.</p>
 
 <p>입력해주면 해결완료!
 그다음부터는 계정 요청을 하지않는다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00"><a href="http://localhost:4000/android/constraintlayout-post/">December 18, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/constraintlayout-post/" rel="bookmark" title="ConstraintLayout 사용" itemprop="url">ConstraintLayout 사용</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>ConstraintLayout 의 강점을 살려보자.</p>
-
-<figure class="half">
-	<img src="/images/2018-12-18-constraintlayout-01.png" alt="" />
-    <img src="/images/2018-12-18-constraintlayout-02.png" alt="" />
-	<figcaption>초록색 링이 꺼졌다 켜졌다 해야할 때 layout 어떻게 배치 할까!?</figcaption>
-</figure>
-
-<p>보통 디자이너 분들은 해당 다운로드 이미지, 공유 이미지,초록색 링 이미지 이렇게 주신다.
-RelativeLayout을 사용하게 되면 만들기가 쉽지 않다. 
-기존에 RelativeLayout을 사용했을 때는 다운로드 이미지, 공유 이미지, 초록색 링이 포함된 다운로드 이미지 , 초록색 링이 포함된 공유 이미지 이렇게 받아서 작업을했다.
-하지만 ConstraintLayout 을 사용했을 때 이런 문제점을 해결할 수 있었다. 물론 RelativeLayout 으로도 아마 가능할수도 있을지 모르지만 쉽게 떠오르지 않았다.</p>
-
-<p>여기서 키워드는 GuideLine 과 ConstraintGroup 이다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">ConstraintLayout</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
-    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
-    <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
-    <span class="n">android</span><span class="ss">:animateLayoutChanges</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;</span>
-
-    <span class="o">&lt;</span><span class="no">View</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/bottom_background"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"80dp"</span>
-        <span class="n">android</span><span class="ss">:background</span><span class="o">=</span><span class="s2">"@color/take_bottom_black"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"parent"</span> <span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintGuide_end</span><span class="o">=</span><span class="s2">"40dp"</span> <span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.33333"</span> <span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.666666"</span><span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/share_button"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/down_button"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_save"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
-
-
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_share_guide"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_download_guide"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Group</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/group_quick_guide"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:visibility</span><span class="o">=</span><span class="s2">"gone"</span>
-        <span class="n">app</span><span class="ss">:constraint_referenced_ids</span><span class="o">=</span><span class="s2">"image_share_guide,image_download_guide"</span> <span class="o">/&gt;</span>
-
-<span class="o">&lt;</span><span class="sr">/android.support.constraint.ConstraintLayout&gt;</span></code></pre></figure>
-
-<p>해당 이미지의 Layout 이다.
-가로 세로의 각각 GuideLine 을 설정 한 후 각 뷰는 부모의 뷰에서 몇 dp 만큼 떨어진게 아니라 기준점이 GuideLine 이 되는 것이다.
-쉽게 만들수 있다. 그리고 ConstraintGroup을 만들어서 referenceIds 에 뷰들이 GONE처리 되어야 하는 아이디들을 넣어 주면 된다.
-group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰들이 모두 적용된다.
-매우 편리하다!!ㅎㅎ</p>
 
       
   </div><!-- /.entry-content -->
