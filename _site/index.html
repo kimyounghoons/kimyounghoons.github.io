@@ -270,6 +270,96 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxjava-debounce/">August 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxjava-debounce/" rel="bookmark" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황" itemprop="url">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
+RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="no">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">val</span> <span class="ss">compositeDisposable: </span><span class="no">CompositeDisposable</span> <span class="o">=</span> <span class="no">CompositeDisposable</span><span class="p">()</span>
+    <span class="n">var</span> <span class="ss">publishSubject: </span><span class="no">PublishSubject</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="no">PublishSubject</span><span class="p">.</span><span class="nf">create</span><span class="p">()</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreate</span><span class="p">(</span><span class="ss">savedInstanceState: </span><span class="no">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+        <span class="n">setContentView</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">activity_main</span><span class="p">)</span>
+
+        <span class="n">button</span><span class="p">.</span><span class="nf">setOnClickListener</span> <span class="p">{</span>
+            <span class="n">textView</span><span class="p">.</span><span class="nf">text</span> <span class="o">=</span> <span class="p">(</span><span class="o">++</span><span class="n">count</span><span class="p">).</span><span class="nf">toString</span><span class="p">()</span>
+            <span class="n">publishSubject</span><span class="p">.</span><span class="nf">onNext</span><span class="p">(</span><span class="n">count</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span>
+            <span class="no">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="s2">"kyh"</span><span class="p">,</span> <span class="s2">"count : $count"</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">publishSubject</span>
+            <span class="p">.</span><span class="nf">debounce</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="no">TimeUnit</span><span class="o">.</span><span class="no">MILLISECONDS</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="no">AndroidSchedulers</span><span class="p">.</span><span class="nf">mainThread</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">doOnError</span> <span class="p">{</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">it</span><span class="p">.</span><span class="nf">message</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">string</span> <span class="o">-&gt;</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="s2">"publishSubject 사용~! api에 보낼 카운트 : $string"</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">})</span>
+
+        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="no">RxTextView</span><span class="p">.</span><span class="nf">textChanges</span><span class="p">(</span><span class="n">textView</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">debounce</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="no">TimeUnit</span><span class="o">.</span><span class="no">MILLISECONDS</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">charSequence</span> <span class="o">-&gt;</span> <span class="n">charSequence</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">}</span>
+            <span class="p">.</span><span class="nf">filter</span> <span class="p">{</span>
+                <span class="o">!</span><span class="n">it</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="no">AndroidSchedulers</span><span class="p">.</span><span class="nf">mainThread</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">doOnError</span> <span class="p">{</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">it</span><span class="p">.</span><span class="nf">message</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">string</span> <span class="o">-&gt;</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="s2">"RxBinding 사용~! api에 보낼 카운트 : $string"</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="n">onDestroy</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onDestroy</span><span class="p">()</span>
+        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">dispose</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>debounce 를 사용하면 편하게 처리할 수 있다.
+위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
+
+<p>둘중 마음에 드는 걸로 사용하면 됨</p>
+
+<p>rx 문서에서는 debounce 를 <br />
+only emit an item from an Observable if a particular timespan has passed without it emitting another item  <br />
+라고 소개 한다.</p>
+
+<p>아이템이 들어오다가 지정한 시간동안 아이템이 들어오지 않는 경우 마지막 아이템을 subscribe 를 통해 값을 보내준다.
+rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으로 이해가 잘됨.</p>
+
+<figure>
+	<img src="/images/2019-08-22-android-rxjava-debounce.png" alt="" />
+	<figcaption>출처 http://reactivex.io/documentation/operators/debounce.html</figcaption>
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-08-20T00:00:00+09:00"><a href="http://localhost:4000/android/android-keyboard/">August 20, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -462,50 +552,6 @@ implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
                 <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setNumber</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
             <span class="p">}</span>
         <span class="p">}</span></code></pre></figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-18T00:00:00+09:00"><a href="http://localhost:4000/android/singletask/flag/android-post/">March 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/singletask/flag/android-post/" rel="bookmark" title="singleTask Activity 사용 시 이슈" itemprop="url">singleTask Activity 사용 시 이슈</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="문제점-">문제점 :</h3>
-<p>A(Standard) Activity -&gt; B(Single Task) Activity -&gt;A(Standard)Activity Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK  FLAG로 startActivity 할 때 앱 강제 종료되는 문제</p>
-
-<h3 id="해결-">해결 :</h3>
-<p>SingleTask 는 하나의 Activity만 생성되고 다중 인스턴스를 가질 수 없다. 그리고 이미 존재하는 경우 시스템은 새 인스턴스 대신 onNewIntent() 메서드를 호출하여 인텐트를 기존 인스턴스로 라우팅한다.</p>
-
-<p>플로우가 수정 되면서 해당 이슈가 발생 되었는데 해결 방법은 생각 해본 건 대충 3가지로 정리</p>
-
-<p>1.액티비티 외에 다른 곳에서 호출 될 일이 있을까 하는 부분. Intent.FLAG_ACTIVITY_NEW_TASK 을 제거 하고 사용해도 무관한지 찾아 보는 것이다. 회원가입을 하거나 했을 때 뒤로가기 시 그대로 Task에 남게 되는 이슈가 있다. 이런 경우가 없을 시에는 FLAG_ACTIVITY_NEW_TASK를 제거하면 해결 가능하다.</p>
-
-<p>2.singleTask 액티비티에서만 Intent.FLAG_ACTIVITY_CLEAR_TASK 사용하고 NEW_TASK 는 사용하지 않는다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="k">if</span> <span class="p">(</span><span class="n">context</span> <span class="n">instanceof</span> <span class="no">Bactivity</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">intent</span><span class="p">.</span><span class="nf">setFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TASK</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">intent</span><span class="p">.</span><span class="nf">setFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_NEW_TASK</span> <span class="o">|</span> <span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TASK</span><span class="p">);</span>
-        <span class="p">}</span></code></pre></figure>
-
-<p>3.굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.</p>
-
-<p>현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.</p>
 
       
   </div><!-- /.entry-content -->

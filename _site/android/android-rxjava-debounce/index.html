@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>app build 문제 &#8211; 영훈 블로그</title>
-<meta name="description" content="app build 문제">
-<meta name="keywords" content="android">
+<title>카운트 연속 클릭 시 마지막 카운트 api 호출 상황 &#8211; 영훈 블로그</title>
+<meta name="description" content="카운트 연속 클릭 시 마지막 카운트 api 호출 상황">
+<meta name="keywords" content="rxJava2, rxAndroid, rxKotlin, debounce">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="app build 문제">
-<meta property="og:description" content="app build 문제">
-<meta property="og:url" content="http://localhost:4000/android/android-post/">
+<meta property="og:title" content="카운트 연속 클릭 시 마지막 카운트 api 호출 상황">
+<meta property="og:description" content="카운트 연속 클릭 시 마지막 카운트 api 호출 상황">
+<meta property="og:url" content="http://localhost:4000/android/android-rxjava-debounce/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-rxjava-debounce/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -170,9 +170,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>app build 문제</h1>
+      <h1>카운트 연속 클릭 시 마지막 카운트 api 호출 상황</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-11-01T00:00:00+09:00">November 01, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00">August 22, 2019</time></span></h2>
       
 
       
@@ -270,48 +270,85 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">app build 문제</h1>
-      <div class="errBlock">    
-Error while executing: am start -n "com.mngs.kimyounghoon.mngs/com.mngs.kimyounghoon.mngs.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
-Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.mngs.kimyounghoon.mngs/.MainActivity }
-Error type 3
-Error: Activity class {com.mngs.kimyounghoon.mngs/com.mngs.kimyounghoon.mngs.MainActivity} does not exist.
+      <h1 class="post-title entry-title">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</h1>
+      <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
+RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
 
-Error while Launching activity
-</div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="no">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
 
-<p>핸드폰에 어플은 지웠는데 계속 저 문구가 뜨거나 이전 버전 삭제하고 새로 설치 하시겠습니까 팝업도 떠서 ok 눌러도 새로 설치가 안됨…</p>
+    <span class="n">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">val</span> <span class="ss">compositeDisposable: </span><span class="no">CompositeDisposable</span> <span class="o">=</span> <span class="no">CompositeDisposable</span><span class="p">()</span>
+    <span class="n">var</span> <span class="ss">publishSubject: </span><span class="no">PublishSubject</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="no">PublishSubject</span><span class="p">.</span><span class="nf">create</span><span class="p">()</span>
 
-<p>adb uninstall -r <패키지명>
-adb uninstall <패키지명></패키지명></패키지명></p>
+    <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreate</span><span class="p">(</span><span class="ss">savedInstanceState: </span><span class="no">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+        <span class="n">setContentView</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">activity_main</span><span class="p">)</span>
 
-<p>지우려고 시도해도 삭제가 안되고 계속 에러가 뜸..</p>
+        <span class="n">button</span><span class="p">.</span><span class="nf">setOnClickListener</span> <span class="p">{</span>
+            <span class="n">textView</span><span class="p">.</span><span class="nf">text</span> <span class="o">=</span> <span class="p">(</span><span class="o">++</span><span class="n">count</span><span class="p">).</span><span class="nf">toString</span><span class="p">()</span>
+            <span class="n">publishSubject</span><span class="p">.</span><span class="nf">onNext</span><span class="p">(</span><span class="n">count</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span>
+            <span class="no">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="s2">"kyh"</span><span class="p">,</span> <span class="s2">"count : $count"</span><span class="p">)</span>
+        <span class="p">}</span>
 
-<p>어플은 다운 그레이드 시켜서 설치 할수 없다는 문구도 뜸..</p>
+        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">publishSubject</span>
+            <span class="p">.</span><span class="nf">debounce</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="no">TimeUnit</span><span class="o">.</span><span class="no">MILLISECONDS</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="no">AndroidSchedulers</span><span class="p">.</span><span class="nf">mainThread</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">doOnError</span> <span class="p">{</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">it</span><span class="p">.</span><span class="nf">message</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">string</span> <span class="o">-&gt;</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="s2">"publishSubject 사용~! api에 보낼 카운트 : $string"</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">})</span>
 
-<p>adb uninstall -r -d <패키지명>
-시도 해도 안됨...</패키지명></p>
+        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="no">RxTextView</span><span class="p">.</span><span class="nf">textChanges</span><span class="p">(</span><span class="n">textView</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">debounce</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="no">TimeUnit</span><span class="o">.</span><span class="no">MILLISECONDS</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">charSequence</span> <span class="o">-&gt;</span> <span class="n">charSequence</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">}</span>
+            <span class="p">.</span><span class="nf">filter</span> <span class="p">{</span>
+                <span class="o">!</span><span class="n">it</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="no">AndroidSchedulers</span><span class="p">.</span><span class="nf">mainThread</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">doOnError</span> <span class="p">{</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">it</span><span class="p">.</span><span class="nf">message</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">string</span> <span class="o">-&gt;</span>
+                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="s2">"RxBinding 사용~! api에 보낼 카운트 : $string"</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
 
-<p>그러다가 보안 폴더에 앱을 넣었던 기억이.. 갑자기 생각남 아 … 설마 했는데 안에 들어있네..</p>
+    <span class="n">override</span> <span class="n">fun</span> <span class="n">onDestroy</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">.</span><span class="nf">onDestroy</span><span class="p">()</span>
+        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">dispose</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
-<p>보안 폴더에 있는 어플은 따로 관리 되서 adb로는 지울 수 없게 되어있는 듯함..</p>
+<p>debounce 를 사용하면 편하게 처리할 수 있다.
+위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
 
-<p>보안 폴더 지우고 새로 build 해보니 잘 됨..</p>
+<p>둘중 마음에 드는 걸로 사용하면 됨</p>
 
-<p>다음부터는 uninstall 안되면 보안폴더부터 보게 될거 같음..</p>
+<p>rx 문서에서는 debounce 를 <br />
+only emit an item from an Observable if a particular timespan has passed without it emitting another item  <br />
+라고 소개 한다.</p>
 
-<p>삽질이었지만 보안폴더의 보안은 좋았던걸로 하고 끝..</p>
+<p>아이템이 들어오다가 지정한 시간동안 아이템이 들어오지 않는 경우 마지막 아이템을 subscribe 를 통해 값을 보내준다.
+rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으로 이해가 잘됨.</p>
+
+<figure>
+	<img src="/images/2019-08-22-android-rxjava-debounce.png" alt="" />
+	<figcaption>출처 http://reactivex.io/documentation/operators/debounce.html</figcaption>
+</figure>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#android" title="Pages tagged android" class="tag"><span class="term">android</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2018-11-01">November 01, 2018</time></span></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#rxJava2" title="Pages tagged rxJava2" class="tag"><span class="term">rxJava2</span></a><a href="http://localhost:4000/tags#rxAndroid" title="Pages tagged rxAndroid" class="tag"><span class="term">rxAndroid</span></a><a href="http://localhost:4000/tags#rxKotlin" title="Pages tagged rxKotlin" class="tag"><span class="term">rxKotlin</span></a><a href="http://localhost:4000/tags#debounce" title="Pages tagged debounce" class="tag"><span class="term">debounce</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2019-08-22">August 22, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-rxjava-debounce/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-rxjava-debounce/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-rxjava-debounce/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -346,23 +383,23 @@ adb uninstall <패키지명></패키지명></패키지명></p>
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-keyboard/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-rxjava-debounce/" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h3>
-      <p>카운트 연속 클릭 시 마지막 카운트 api 호출 상황 <a href="http://localhost:4000/android/android-rxjava-debounce/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-keyboard/" title="키보드 내려갈 때 특정 처리 하기">키보드 내려갈 때 특정 처리 하기</a></h3>
+      <p>키보드 내려갈 때 특정 처리 하기 <a href="http://localhost:4000/android/android-keyboard/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-keyboard/" title="키보드 내려갈 때 특정 처리 하기">키보드 내려갈 때 특정 처리 하기</a></h4>
-        <span>Published on August 20, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-edittext_typing_slow/" title="EditText 금액 콤마 표시 Typing 할 때 느려지는 현상">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</a></h4>
+        <span>Published on July 29, 2019</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-edittext_typing_slow/" title="EditText 금액 콤마 표시 Typing 할 때 느려지는 현상">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</a></h4>
-        <span>Published on July 29, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-resconfig/" title="resConfig(Build.Gradle)">resConfig(Build.Gradle)</a></h4>
+        <span>Published on July 24, 2019</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

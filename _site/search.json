@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "카운트 연속 클릭 시 마지막 카운트 api 호출 상황",
+      "category" : "",
+      "tags"     : "rxJava2, rxAndroid, rxKotlin, debounce",
+      "url"      : "http://localhost:4000/android/android-rxjava-debounce/",
+      "date"     : "2019-08-22 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "키보드 내려갈 때 특정 처리 하기",
       "category" : "",
       "tags"     : "editText, keyboard",
