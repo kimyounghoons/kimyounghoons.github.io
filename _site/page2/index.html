@@ -270,6 +270,67 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-05-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-bottom_navigation_view/">May 12, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bottom_navigation_view/" rel="bookmark" title="BottomNavigationView" itemprop="url">BottomNavigationView</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="bottomnavigationview-in-design-supportlibrary-">BottomNavigationView in Design SupportLibrary :</h3>
+<p>사용 하기 위해서는 다음과 같은 dependency 가 필요 하다.
+implementation ‘com.android.support:design:28.0.0’
+버전은 현재의 최신 버전으로 설정 했다.</p>
+
+<p>Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">private</span> <span class="n">fun</span> <span class="n">setBadge</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">val</span> <span class="ss">bottomNavigationMenuView: </span><span class="no">BottomNavigationMenuView</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">getChildAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">as</span> <span class="no">BottomNavigationMenuView</span>
+        <span class="n">val</span> <span class="n">bottomNavigationItemView</span>  <span class="o">=</span> <span class="n">bottomNavigationMenuView</span><span class="p">.</span><span class="nf">getChildAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">as</span> <span class="no">BottomNavigationItemView</span>
+
+        <span class="n">val</span> <span class="n">badgeContainer</span> <span class="o">=</span> <span class="no">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">view_badge</span><span class="p">,</span> <span class="n">bottomNavigationMenuView</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
+        <span class="n">val</span> <span class="ss">firstBadgeCountText: </span><span class="no">TextView</span> <span class="o">=</span> <span class="n">badgeContainer</span><span class="p">.</span><span class="nf">findViewById</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">count</span><span class="p">)</span>
+        <span class="n">firstBadgeCountText</span><span class="p">.</span><span class="nf">text</span> <span class="o">=</span> <span class="s2">"99"</span>
+        <span class="n">bottomNavigationItemView</span><span class="p">.</span><span class="nf">addView</span><span class="p">(</span><span class="n">badgeContainer</span><span class="p">)</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p>BottomNavigationView의 getChildAt 0부터 첫번째 BottomNavigationItemView 다.
+inflate 한 view 를 bottomNavigationItemView에 추가해서 사용하면 됨.</p>
+
+<h3 id="bottomnavigationview-in-material-">BottomNavigationView in Material :</h3>
+<p>사용하기 위해서는 다음과 같은 dependency 가 필요 하다.
+implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
+
+<p>이 버전에서는 BadgeDrawable 이 BottomNavigationView 안에 구현 되어 있어서 showBadge, removeBadge api를 통해 간편하게 사용 할 수 있다.
+1.1.0-alpha05 이하 버전에서는 BadgeDrawable 이 구현 되어 있지 않아 showBadge, removeBadge 를 사용할 수 없는 걸 확인 했다.</p>
+
+<p>사용방법은 Badge 구현 빼고는 Support BottomNavigationView 와 비슷했다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">public</span> <span class="n">void</span> <span class="n">updateFirstBadge</span><span class="p">(</span><span class="n">int</span> <span class="n">count</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">removeBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="no">BadgeDrawable</span> <span class="n">badgeDrawable</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">showBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
+                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setBackgroundColor</span><span class="p">(</span><span class="n">getResources</span><span class="p">().</span><span class="nf">getColor</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">color</span><span class="p">.</span><span class="nf">red</span><span class="p">));</span>
+                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setNumber</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span></code></pre></figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-03-18T00:00:00+09:00"><a href="http://localhost:4000/android/singletask/flag/android-post/">March 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -479,65 +540,6 @@ O(N) 으로 풀어야 하는 문제였다.
 왜 그러지 라는생각이 듬..</p>
 
 <p>이유는 구독중 onSuccess 또는 onError 가 불리기 전에 이슈가 발생할 우려가 높기 때문에 추가해주고 dispose시켜주는것 같음.ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-02-22T00:00:00+09:00"><a href="http://localhost:4000/android/aac/android-lifecycle/">February 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/aac/android-lifecycle/" rel="bookmark" title="Lifecycle" itemprop="url">Lifecycle</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>문제점 : 뎁스가 깊어질때 CustomVideoView가 가지고 있는 mediaplayer 메모리가 제대로 해제 되지 않는 문제</p>
-
-<p>해결 : life cycle 사용해서 Stop 시 mediaplayer release 처리</p>
-
-<p>VideoView 는 LifecycleObserver 인터페이스를 가지고 있다.
-우선 뷰 생성시 라이프 사이클 옵저버 등록</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">     <span class="kp">public</span> <span class="no">VideoView</span><span class="p">(</span><span class="no">Context</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-        <span class="n">initialize</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kp">private</span> <span class="n">void</span> <span class="n">initialize</span><span class="p">(</span><span class="no">Context</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">context</span> <span class="n">instanceof</span> <span class="no">AppCompatActivity</span><span class="p">)</span> <span class="p">{</span>
-            <span class="p">((</span><span class="no">AppCompatActivity</span><span class="p">)</span> <span class="n">context</span><span class="p">).</span><span class="nf">getLifecycle</span><span class="p">().</span><span class="nf">addObserver</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
-
-<p>@OnLifecycleEvent 종류에 따라 life cycle 콜백이 불리게 되는데 stop 되었을때 release 
-destroy 될때 등록되어 있던 observer를 제거 시켜준다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="vi">@OnLifecycleEvent</span><span class="p">(</span><span class="no">Lifecycle</span><span class="o">.</span><span class="no">Event</span><span class="o">.</span><span class="no">ON_STOP</span><span class="p">)</span>
-    <span class="kp">public</span> <span class="n">void</span> <span class="n">onLifecycleStop</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">stop</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="vi">@OnLifecycleEvent</span><span class="p">(</span><span class="no">Lifecycle</span><span class="o">.</span><span class="no">Event</span><span class="o">.</span><span class="no">ON_DESTROY</span><span class="p">)</span>
-    <span class="kp">public</span> <span class="n">void</span> <span class="n">onLifecycleDestroy</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">getContext</span><span class="p">()</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">getContext</span><span class="p">()</span> <span class="n">instanceof</span> <span class="no">AppCompatActivity</span><span class="p">)</span> <span class="p">{</span>
-                <span class="p">((</span><span class="no">AppCompatActivity</span><span class="p">)</span> <span class="n">getContext</span><span class="p">()).</span><span class="nf">getLifecycle</span><span class="p">().</span><span class="nf">removeObserver</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
-
-<p>사용법 참 쉽구먼 ㅎㅎ</p>
 
       
   </div><!-- /.entry-content -->

@@ -4,13 +4,69 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-08-22T23:26:08+09:00</updated>
+<updated>2019-10-07T22:29:23+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[애니메이션 UI 대응 로티 라이브러리]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-lottie/" />
+  <id>http://localhost:4000/android/android-lottie</id>
+  <updated>2019-10-07T00:00:00-00:00</updated>
+  <published>2019-10-07T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;UI 작업을 하다보면 애니메이션 효과는 피할래야 피할수 없다.&lt;br /&gt;
+하지만 처음 디자인팀으로부터 전달 받는 경우 여러 효과가 있을 때 각 효과에 대해 정확한 데이터를 받는 경우는 드물다.&lt;br /&gt;
+그렇기 때문에 우선 작업하고 디자인QA 를 거치는 경우가 많다.&lt;br /&gt;
+하지만 이 lottie 라이브러리를 사용하게 되면 개발자와 디자인 작업자 모두 행복해 질 수 있다.&lt;br /&gt;
+안드로이드 뿐만아니라 IOS , React Native , Web , Window 다 지원하기 때문에 Json파일만 있으면 모두 동일한 애니메이션을 만들 수 있다.&lt;/p&gt;
+
+&lt;p&gt;디자인팀에 해당 애니메이션을 json 파일로 보내달라고 요청하면 받을 수 있는데 해당 파일만 있으면 Ok!&lt;/p&gt;
+
+&lt;p&gt;사용법은 쉽기 때문에 업로드 하지 않는다.&lt;br /&gt;
+하지만 사용하면서 RecyclerView 에서 사용하는 경우 2가지 이슈를 발견 했다.&lt;/p&gt;
+
+&lt;p&gt;첫번째 : 나는 한번만 실행 하고 싶은데 스크롤 시 계속 애니메이션 실행 되는 이슈가 있었다.&lt;br /&gt;
+라이브러리 내부 코드를 보니 애니메이션이 다 끝나기 전에 해당 뷰가 Detach 되는 경우 Attach 될 때 강제로 animation을 실행 시키고 있었다.&lt;br /&gt;
+그래서 다음과 같이 Detach 될때 애니메이션을 강제로 취소시켰다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;vi&quot;&gt;@Override&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;onViewDetachedFromWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@NonNull&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ViewHolderGeneric&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;onViewDetachedFromWindow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;instanceof&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LottieViewHolder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;LottieViewHolder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;holder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cancelLottieAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;아래에&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LottieViewHolder&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;method&lt;/span&gt; 
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;sr&quot;&gt;//me&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thod&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;LottieViewHolder&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancelLottieAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lottieAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;isAnimating&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;lottieAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cancelAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;lottieAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setProgress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;두번째 : 핸들러 사용 하지 않으면 playAnimation 정상 작동 하지 않는 이슈.&lt;br /&gt;
+아래와 같이 처리해주었다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lottieAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;playAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;이제는 편하게 애니메이션 적용해보자~!ㅎㅎ&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-lottie/&quot;&gt;애니메이션 UI 대응 로티 라이브러리&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on October 07, 2019.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1073,78 +1129,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 &lt;p&gt;프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-touch-post/&quot;&gt;view setAlpha in OnTouchListener&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 09, 2018.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[how to use `when` in kotlin]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/kotlin/kotlin-when-post/" />
-  <id>http://localhost:4000/kotlin/kotlin-when-post</id>
-  <updated>2018-11-08T00:00:00-00:00</updated>
-  <published>2018-11-08T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;우선 자바 소스&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt; &lt;span class=&quot;vi&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;onOptionsItemSelected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MenuItem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getItemId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;menu_write_letter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;obtainViewModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sendLetter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;ss&quot;&gt;default: 
-                &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;아래는 코틀린&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;  &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;onOptionsItemSelected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;item: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MenuItem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Boolean&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;itemId&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;menu_write_letter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;obtainViewModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sendLetter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-            &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.&lt;/p&gt;
-
-&lt;p&gt;when은 switch랑 비슷한것 같은데 뭐가 차이가 날까 ~ 궁금해서 구글링 해서 찾아보니~&lt;/p&gt;
-
-&lt;p&gt;2가지가 있었다.&lt;/p&gt;
-
-&lt;p&gt;1.Auto-casting&lt;/p&gt;
-
-&lt;p&gt;2.when without arguments&lt;/p&gt;
-
-&lt;p&gt;1번 예를 한번 보면&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;TextView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;toast&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; 
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.&lt;/p&gt;
-
-&lt;p&gt;2번 예를 한번 보면&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;..&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;cheap&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;contains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;money&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Welcome&quot;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;when(argument) 를 사용하지 않고 when {} 으로 바로 사용.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/kotlin/kotlin-when-post/&quot;&gt;how to use `when` in kotlin&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 08, 2018.&lt;/p&gt;
   </content>
 </entry>
 

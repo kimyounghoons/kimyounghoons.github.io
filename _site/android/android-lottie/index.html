@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>A Post with a Video &#8211; 영훈 블로그</title>
-<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta name="keywords" content="sample">
+<title>애니메이션 UI 대응 로티 라이브러리 &#8211; 영훈 블로그</title>
+<meta name="description" content="애니메이션 UI 대응 로티 라이브러리">
+<meta name="keywords" content="animation, lottie">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Post with a Video">
-<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta property="og:url" content="http://localhost:4000/sample/video-post/">
+<meta property="og:title" content="애니메이션 UI 대응 로티 라이브러리">
+<meta property="og:description" content="애니메이션 UI 대응 로티 라이브러리">
+<meta property="og:url" content="http://localhost:4000/android/android-lottie/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/sample/video-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-lottie/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -170,9 +170,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>A Post with a Video</h1>
+      <h1>애니메이션 UI 대응 로티 라이브러리</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2016-11-27T00:00:00+09:00">November 27, 2016</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-10-07T00:00:00+09:00">October 07, 2019</time></span></h2>
       
 
       
@@ -270,27 +270,55 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">A Post with a Video</h1>
-      <iframe width="560" height="315" src="//www.youtube.com/embed/SU3kYxJmWuQ" frameborder="0" allowfullscreen></iframe>
+      <h1 class="post-title entry-title">애니메이션 UI 대응 로티 라이브러리</h1>
+      <p>UI 작업을 하다보면 애니메이션 효과는 피할래야 피할수 없다.<br />
+하지만 처음 디자인팀으로부터 전달 받는 경우 여러 효과가 있을 때 각 효과에 대해 정확한 데이터를 받는 경우는 드물다.<br />
+그렇기 때문에 우선 작업하고 디자인QA 를 거치는 경우가 많다.<br />
+하지만 이 lottie 라이브러리를 사용하게 되면 개발자와 디자인 작업자 모두 행복해 질 수 있다.<br />
+안드로이드 뿐만아니라 IOS , React Native , Web , Window 다 지원하기 때문에 Json파일만 있으면 모두 동일한 애니메이션을 만들 수 있다.</p>
 
-<p>Video embeds are responsive and scale with the width of the main content block with the help of <a href="http://fitvidsjs.com/">FitVids</a>.</p>
+<p>디자인팀에 해당 애니메이션을 json 파일로 보내달라고 요청하면 받을 수 있는데 해당 파일만 있으면 Ok!</p>
 
-<p>Adding YouTube video embeds causes errors when building your Jekyll site. To fix wrap the html within <code class="highlighter-rouge">{::nomarkdown}</code> tags. Example below:</p>
+<p>사용법은 쉽기 때문에 업로드 하지 않는다.<br />
+하지만 사용하면서 RecyclerView 에서 사용하는 경우 2가지 이슈를 발견 했다.</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html">{::nomarkdown}
-<span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">"560"</span> <span class="na">height=</span><span class="s">"315"</span> <span class="na">src=</span><span class="s">"//www.youtube.com/embed/SU3kYxJmWuQ"</span> <span class="na">frameborder=</span><span class="s">"0"</span> <span class="na">allowfullscreen</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-{:/nomarkdown}</code></pre></figure>
+<p>첫번째 : 나는 한번만 실행 하고 싶은데 스크롤 시 계속 애니메이션 실행 되는 이슈가 있었다.<br />
+라이브러리 내부 코드를 보니 애니메이션이 다 끝나기 전에 해당 뷰가 Detach 되는 경우 Attach 될 때 강제로 animation을 실행 시키고 있었다.<br />
+그래서 다음과 같이 Detach 될때 애니메이션을 강제로 취소시켰다.</p>
 
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@Override</span>
+<span class="kp">public</span> <span class="n">void</span> <span class="n">onViewDetachedFromWindow</span><span class="p">(</span><span class="vi">@NonNull</span> <span class="no">ViewHolderGeneric</span> <span class="n">holder</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">.</span><span class="nf">onViewDetachedFromWindow</span><span class="p">(</span><span class="n">holder</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">holder</span> <span class="n">instanceof</span> <span class="no">LottieViewHolder</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">((</span><span class="no">LottieViewHolder</span><span class="p">)</span> <span class="n">holder</span><span class="p">).</span><span class="nf">cancelLottieAnimation</span><span class="p">();</span> <span class="sr">//</span><span class="err">아래에</span> <span class="no">LottieViewHolder</span> <span class="nb">method</span> 
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="sr">//me</span><span class="n">thod</span> <span class="k">in</span> <span class="no">LottieViewHolder</span>
+<span class="kp">public</span> <span class="n">void</span> <span class="n">cancelLottieAnimation</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">isAnimating</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">cancelAnimation</span><span class="p">();</span>
+        <span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">setProgress</span><span class="p">(</span><span class="mi">1</span><span class="n">f</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>두번째 : 핸들러 사용 하지 않으면 playAnimation 정상 작동 하지 않는 이슈.<br />
+아래와 같이 처리해주었다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">new</span> <span class="no">Handler</span><span class="p">().</span><span class="nf">post</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">playAnimation</span><span class="p">());</span></code></pre></figure>
+
+<p>이제는 편하게 애니메이션 적용해보자~!ㅎㅎ</p>
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#sample" title="Pages tagged sample" class="tag"><span class="term">sample</span></a></span>
+        <span class="entry-tags"><a href="http://localhost:4000/tags#animation" title="Pages tagged animation" class="tag"><span class="term">animation</span></a><a href="http://localhost:4000/tags#lottie" title="Pages tagged lottie" class="tag"><span class="term">lottie</span></a></span>
+        <span>Updated on <span class="entry-date date updated"><time datetime="2019-10-07">October 07, 2019</time></span></span>
         
         <span class="author vcard"><span class="fn">kimyounghoon</span></span>
         <div class="social-share">
   <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/sample/video-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/sample/video-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/sample/video-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
+    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/android/android-lottie/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
+    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/android/android-lottie/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
+    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/android/android-lottie/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
   </ul>
 </div><!-- /.social-share -->
 
@@ -325,23 +353,23 @@
     <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/sample/sample-post-images/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-rxjava-debounce/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-lottie/" title="애니메이션 UI 대응 로티 라이브러리">애니메이션 UI 대응 로티 라이브러리</a></h3>
-      <p>애니메이션 UI 대응 로티 라이브러리 <a href="http://localhost:4000/android/android-lottie/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-rxjava-debounce/" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h3>
+      <p>카운트 연속 클릭 시 마지막 카운트 api 호출 상황 <a href="http://localhost:4000/android/android-rxjava-debounce/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-rxjava-debounce/" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h4>
-        <span>Published on August 22, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-keyboard/" title="키보드 내려갈 때 특정 처리 하기">키보드 내려갈 때 특정 처리 하기</a></h4>
+        <span>Published on August 20, 2019</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-keyboard/" title="키보드 내려갈 때 특정 처리 하기">키보드 내려갈 때 특정 처리 하기</a></h4>
-        <span>Published on August 20, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-edittext_typing_slow/" title="EditText 금액 콤마 표시 Typing 할 때 느려지는 현상">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</a></h4>
+        <span>Published on July 29, 2019</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
