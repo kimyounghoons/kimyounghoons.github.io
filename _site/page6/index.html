@@ -270,6 +270,74 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-02T00:00:00+09:00"><a href="http://localhost:4000/android/drawerlayout-post/">November 02, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/drawerlayout-post/" rel="bookmark" title="drawerlayout navigationView 클릭 먹통" itemprop="url">drawerlayout navigationView 클릭 먹통</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>딤처리 된 팝업을 추가 할 일이 생겨 아래의 구조로 작성함</p>
+
+<p>DrawerLayout 사용하는 layout 에서의 구조</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span> 
+        <span class="err">메인</span> <span class="err">뷰</span>
+    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+
+    &lt;NavigationView&gt;  
+    &lt;/</span><span class="no">NavigationView</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
+        <span class="err">딤처리</span> <span class="err">팝업</span>
+    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>이런식으로 구성 했다.</p>
+
+<p>근데 딤처리 팝업 뜨고 나서만 NavigationView 에 있는 뷰들이 클릭을 먹지 않음…</p>
+
+<p>딤처리 팝업을 확인 누르면 VISIBLE -&gt; GONE 상태로 변경되서 상관이 없어야 할텐데 클릭이 되지 않는 문제..</p>
+
+<p>처음에는 문제 초점을 딤처리 팝업에서의 setClickable 에 뒀다.</p>
+
+<p>하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
+        <span class="err">메인</span> <span class="err">뷰</span>
+    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+
+    &lt;ConstraintLayout&gt;  
+        딤처리 팝업
+    &lt;/</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="no">NavigationView</span><span class="o">&gt;</span>  
+    <span class="o">&lt;</span><span class="sr">/NavigationView&gt;
+
+&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>그렇게 처리하니 이슈가 사라짐!!</p>
+<div class="redText">
+기억하자 NavigationView의 위치는 맨 마지막에 와야함!!
+</div>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-01T00:00:00+09:00"><a href="http://localhost:4000/android/android-post/">November 01, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -428,52 +496,6 @@ image_selector.xml 파일 만들기</p>
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00+09:00"><a href="http://localhost:4000/android/android-post/">October 30, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-post/" rel="bookmark" title="다중 매니페스트 파일 병합" itemprop="url">다중 매니페스트 파일 병합</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="toolsreplaceattr">tools:replace=”attr,…”</h2>
-
-<p>android:allowBackup 을 false 로 변경 시킬 때 아래와 같은 에러가 나왔다.</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">Manifest</span> <span class="nt">merger</span> <span class="nt">failed</span> <span class="o">:</span> <span class="nt">Attribute</span> <span class="nt">application</span><span class="k">@allowBackup</span> <span class="n">value</span><span class="err">=</span><span class="p">(</span><span class="n">false</span><span class="p">)</span> <span class="n">from</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">26</span><span class="p">:</span><span class="m">9-36</span>
-	<span class="n">is</span> <span class="n">also</span> <span class="n">present</span> <span class="n">at</span> <span class="p">[</span><span class="n">com</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">danylovolokh</span><span class="p">:</span><span class="n">hashtag-helper</span><span class="p">:</span><span class="m">1.1.0</span><span class="p">]</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">12</span><span class="p">:</span><span class="m">9-35</span> <span class="n">value</span><span class="err">=</span><span class="p">(</span><span class="n">true</span><span class="p">).</span>
-	<span class="n">Suggestion</span><span class="p">:</span> <span class="n">add</span> <span class="s2">'tools:replace="android:allowBackup"'</span> <span class="n">to</span> <span class="err">&lt;</span><span class="n">application</span><span class="err">&gt;</span> <span class="n">element</span> <span class="n">at</span> <span class="n">AndroidManifest</span><span class="p">.</span><span class="n">xml</span><span class="p">:</span><span class="m">24</span><span class="p">:</span><span class="m">5-208</span><span class="p">:</span><span class="m">19</span> <span class="n">to</span> <span class="n">override</span><span class="p">.</span></code></pre></figure>
-
-<p>문제는 manifest 병합 문제..
-hashtag 라이브러리에서도 allowBackup 속성이 설정 되어있어서 문제가 되었다.</p>
-
-<p>해결 방법은 다음과 같이 tools:replace=”android:allowBackup” 을 설정 해주면 해당 manifest android:allowBackup 속성이 우선순위가 높아진다.</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"> <span class="o">&lt;</span><span class="nt">application</span>
-        <span class="nt">android</span><span class="nd">:name</span><span class="o">=</span><span class="s1">".name"</span>
-        <span class="nt">android</span><span class="nd">:allowBackup</span><span class="o">=</span><span class="s1">"false"</span>
-        <span class="nt">android</span><span class="nd">:icon</span><span class="o">=</span><span class="s1">"${appIcon}"</span>
-        <span class="nt">android</span><span class="nd">:label</span><span class="o">=</span><span class="s1">"@string/app_name"</span>
-        <span class="nt">android</span><span class="nd">:supportsRtl</span><span class="o">=</span><span class="s1">"false"</span>
-        <span class="nt">android</span><span class="nd">:theme</span><span class="o">=</span><span class="s1">"@style/AppTheme"</span>
-        <span class="nt">tools</span><span class="nd">:replace</span><span class="o">=</span><span class="s1">"supportsRtl,allowBackup"</span><span class="o">&gt;</span></code></pre></figure>
-
-<p>다른곳에서 allowBackup 설정이 true 가 되어 있어도 해당 manifest 가 우선순위가 높기 때문에 false 가 적용 된다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -527,12 +549,19 @@ hashtag 라이브러리에서도 allowBackup 속성이 설정 되어있어서 �
         <li><a href="http://localhost:4000/page7/">7</a></li>
       
     
+      
+        
+        
+        
+        <li><a href="http://localhost:4000/page8/">8</a></li>
+      
+    
 
     
     
 
     
-      <li><a href="http://localhost:4000/page8/">8</a></li>
+      <li><a href="http://localhost:4000/page9/">9</a></li>
     
 
     

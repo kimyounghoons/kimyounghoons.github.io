@@ -4,13 +4,50 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-10-07T22:29:23+09:00</updated>
+<updated>2019-10-15T23:34:50+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[notifyDataSetChanged()]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-notifyDataSetChanged/" />
+  <id>http://localhost:4000/android/android-notifyDataSetChanged</id>
+  <updated>2019-10-15T00:00:00-00:00</updated>
+  <published>2019-10-15T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+&lt;p&gt;notifyDataSetChanged() 호출 시 RecyclerView 리스트가 갱신이 되지 않는 문제&lt;/p&gt;
+
+&lt;h2 id=&quot;문제-해결&quot;&gt;문제 해결&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()&quot;&gt;https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;LayoutManagers will be forced to fully rebind and relayout all visible views.&lt;/p&gt;
+
+&lt;p&gt;문서에 의하면 뷰가 Gone 상태 일때는 갱신이 일어나지 않는다.&lt;/p&gt;
+
+&lt;p&gt;그래서 Invisible 상태로 두고 갱신시켜 줘서 해결 함.&lt;/p&gt;
+
+&lt;h2 id=&quot;회고&quot;&gt;회고&lt;/h2&gt;
+&lt;p&gt;처음에는 data 가 제대로 들어가 있지 않은것 같아서 확인 했는데 정상적으로 들어가 있었고&lt;br /&gt;
+두번째는 adapter 의 data list 의 참조 문제를 의심해서 한 곳에서 list 를 만들고 해당 리스트를 다른곳에서도 같이 바라보게 했지만 그대로 문제가 발생&lt;br /&gt;
+세번째는 뷰가 바인딩 되지 않는 것을 보고 이상하게 생각해서 뷰를 가리지 않고 그대로 하니 잘 나옴..&lt;br /&gt;
+뷰의 visible 상태에 뭔가 문제가 있다고 생각해서 다큐먼트를 찾아 보니.. 위의 글이 있었다.&lt;br /&gt;
+좀 더 정확히 알고 사용하는 버릇을 들여야 할 것 같다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-notifyDataSetChanged/&quot;&gt;notifyDataSetChanged()&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on October 15, 2019.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1085,50 +1122,6 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
 추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-firestore-post/&quot;&gt;index in firestore&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 12, 2018.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[view setAlpha in OnTouchListener]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-touch-post/" />
-  <id>http://localhost:4000/android/android-touch-post</id>
-  <updated>2018-11-09T00:00:00-00:00</updated>
-  <published>2018-11-09T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;view pressed 상태 되었을 때 알파 50% 먹이기&lt;/p&gt;
-
-&lt;p&gt;커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;   &lt;span class=&quot;vi&quot;&gt;@Override&lt;/span&gt;
-    &lt;span class=&quot;kp&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;onTouch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;View&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MotionEvent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;n&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MotionEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ACTION_DOWN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setAlpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MotionEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ACTION_UP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MotionEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ACTION_CANCEL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setAlpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;ACTION_DOWN 상태에서는 Pressed 상태 
-ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
-ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
-에서 각각 Action을 가진다.&lt;/p&gt;
-
-&lt;p&gt;프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-touch-post/&quot;&gt;view setAlpha in OnTouchListener&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 09, 2018.&lt;/p&gt;
   </content>
 </entry>
 
