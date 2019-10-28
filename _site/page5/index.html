@@ -270,6 +270,85 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
+
+<p>외부공유 소스</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">title</span><span class="p">);</span>
+<span class="no">String</span> <span class="n">plainContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">plain_content</span><span class="p">);</span>
+<span class="no">String</span> <span class="n">htmlContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">html_content</span><span class="p">);</span>
+
+<span class="no">Intent</span> <span class="n">shareIntent</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">ACTION_SEND</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">setType</span><span class="p">(</span><span class="s2">"text/plain"</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_SUBJECT</span><span class="p">,</span> <span class="n">title</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_TEXT</span><span class="p">,</span> <span class="n">plainContent</span><span class="p">);</span>
+<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_HTML_TEXT</span><span class="p">,</span> <span class="n">htmlContent</span><span class="p">);</span>
+<span class="n">context</span><span class="p">.</span><span class="nf">startActivity</span><span class="p">(</span><span class="no">Intent</span><span class="p">.</span><span class="nf">createChooser</span><span class="p">(</span><span class="n">shareIntent</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">share_text</span><span class="p">)));</span></code></pre></figure>
+
+<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
+앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
+Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
+HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
+G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-firestore-post/">November 12, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-firestore-post/" rel="bookmark" title="index in firestore" itemprop="url">index in firestore</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="파이어스토어-색인을-이용한-복합쿼리">파이어스토어 색인을 이용한 복합쿼리</h1>
+
+<p>기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
+하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.</p>
+
+<figure>
+	<img src="/images/2018-11-12-index_in_firestore.png" alt="" />
+	<figcaption>FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.</figcaption>
+</figure>
+
+<p>처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
+letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
+추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-touch-post/">November 09, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -435,109 +514,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 <p>padding 은 도형 안쪽 여백</p>
 
 <p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/actionbar_menu-post/" rel="bookmark" title="ActionBar Menu in Fragment" itemprop="url">ActionBar Menu in Fragment</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">menu</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
-    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/menu_answer_letter"</span>
-        <span class="n">android</span><span class="ss">:title</span><span class="o">=</span><span class="s2">"@string/answer"</span>
-        <span class="n">app</span><span class="ss">:showAsAction</span><span class="o">=</span><span class="s2">"always"</span><span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/menu&gt;</span></code></pre></figure>
-
-<p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
-
-<p>Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.</p>
-
-<p>위치는 OnCreateView 안에 넣어주면 됨.</p>
-
-<p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreateOptionsMenu</span><span class="p">(</span><span class="ss">menu: </span><span class="no">Menu</span><span class="p">?,</span> <span class="ss">inflater: </span><span class="no">MenuInflater</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">inflater</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">menu</span><span class="p">.</span><span class="nf">menu_detail_letter</span><span class="p">,</span> <span class="n">menu</span><span class="p">)</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onCreateOptionsMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">,</span> <span class="n">inflater</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></figure>
-
-<p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">){</span>
-       <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_answer_letter</span> <span class="o">-&gt;</span><span class="p">{</span>
-           <span class="n">locateListener?</span><span class="p">.</span><span class="nf">openAnswer</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
-           <span class="kp">true</span>
-       <span class="p">}</span>
-        <span class="k">else</span> <span class="o">-&gt;</span><span class="p">{</span>
-            <span class="kp">false</span>
-        <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-05T00:00:00+09:00"><a href="http://localhost:4000/android/wirelessbuild-post/">November 05, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/wirelessbuild-post/" rel="bookmark" title="wireless build" itemprop="url">wireless build</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="무선으로-빌드-하는-방법">무선으로 빌드 하는 방법</h2>
-
-<p>처음에는 usb 연결이 필요하다.</p>
-
-<p>터미널에서 
-adb tcpip 5555 치면</p>
-
-<p>restarting in TCP mode port : 5555</p>
-
-<p>5555포트가 열린거임</p>
-
-<p>adb connect 주소:5555 라고 치면</p>
-
-<p>connected to 주소:5555 라고 나온다.</p>
-
-<p>그럼 연결 성공</p>
-
-<p>usb를 빼고</p>
-
-<p>adb devices 로 연결된 디바이스를 확인할 수 있다.</p>
 
       
   </div><!-- /.entry-content -->

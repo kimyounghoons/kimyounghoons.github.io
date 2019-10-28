@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>notifyDataSetChanged() &#8211; 영훈 블로그</title>
-<meta name="description" content="notifyDataSetChanged()">
-<meta name="keywords" content="recyclerview, notifyDataSetChanged">
+<title>FragmentStatePagerAdapter &#8211; 영훈 블로그</title>
+<meta name="description" content="FragmentStatePagerAdapter BEHAVIOR_SET_USER_VISIBLE_HINT, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT">
+<meta name="keywords" content="FragmentStatePagerAdapter, setUserVisibleHint, onResume">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="notifyDataSetChanged()">
-<meta property="og:description" content="notifyDataSetChanged()">
-<meta property="og:url" content="http://localhost:4000/android/android-notifyDataSetChanged/">
+<meta property="og:title" content="FragmentStatePagerAdapter">
+<meta property="og:description" content="FragmentStatePagerAdapter BEHAVIOR_SET_USER_VISIBLE_HINT, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT">
+<meta property="og:url" content="http://localhost:4000/android/android-FragmentStatePagerAdapter/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-notifyDataSetChanged/">
+<link rel="canonical" href="http://localhost:4000/android/android-FragmentStatePagerAdapter/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -170,9 +170,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>notifyDataSetChanged()</h1>
+      <h1>FragmentStatePagerAdapter</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2019-10-15T00:00:00+09:00">October 15, 2019</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-10-29T00:00:00+09:00">October 29, 2019</time></span></h2>
       
 
       
@@ -270,25 +270,43 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">notifyDataSetChanged()</h1>
-      <h2 id="문제">문제</h2>
-<p>notifyDataSetChanged() 호출 시 RecyclerView 리스트가 갱신이 되지 않는 문제</p>
+      <h1 class="post-title entry-title">FragmentStatePagerAdapter</h1>
+      <p>FragmentStatePagerAdapter 안에서 사용 되는 Fragment 의 경우 현재 보여지는 Fragment 를 인식 하기 위해</p>
 
-<h2 id="문제-해결">문제 해결</h2>
-<p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()">https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()</a></p>
+<h2 id="기존-방법deprecated">기존 방법(Deprecated)</h2>
+<p>setUserVisibleHint(isVisibleToUser : Boolean) method를 오버라이드 해서 사용하였다.</p>
 
-<p>LayoutManagers will be forced to fully rebind and relayout all visible views.</p>
+<h2 id="새로운-방법">새로운 방법</h2>
+<p>FragmentStatePagerAdapter 생성자부분에서 두번째 파라미터가 생겼는데 BEHAVIOR_SET_USER_VISIBLE_HINT,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 두가지 값으로 나뉘어진다. BEHAVIOR_SET_USER_VISIBLE_HINT 는 deprecated 되었고 BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 를 권장 사용하게 한다.</p>
 
-<p>문서에 의하면 뷰가 Gone 상태 일때는 갱신이 일어나지 않는다.</p>
+<figure>
+	<img src="/images/20191029_Android_FragmentStatePagerAdapter.png" alt="" />
+</figure>
+<p><a href="https://developer.android.com/reference/androidx/fragment/app/FragmentStatePagerAdapter.html#BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT">https://developer.android.com/reference/androidx/fragment/app/FragmentStatePagerAdapter.html#BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT</a></p>
 
-<p>그래서 Invisible 상태로 두고 갱신시켜 줘서 해결 함.</p>
+<p>아래와 같이 사용하면 된다~!</p>
 
-<h2 id="회고">회고</h2>
-<p>처음에는 data 가 제대로 들어가 있지 않은것 같아서 확인 했는데 정상적으로 들어가 있었고<br />
-두번째는 adapter 의 data list 의 참조 문제를 의심해서 한 곳에서 list 를 만들고 해당 리스트를 다른곳에서도 같이 바라보게 했지만 그대로 문제가 발생<br />
-세번째는 뷰가 바인딩 되지 않는 것을 보고 이상하게 생각해서 뷰를 가리지 않고 그대로 하니 잘 나옴..<br />
-뷰의 visible 상태에 뭔가 문제가 있다고 생각해서 다큐먼트를 찾아 보니.. 위의 글이 있었다.<br />
-좀 더 정확히 알고 사용하는 버릇을 들여야 할 것 같다.</p>
+<p>Adapter 예시</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainAdapter(fm: FragmentManager) :
+    FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    }
+</code></pre></div></div>
+
+<p>Fragment 예시</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onPause() {
+        super.onPause()
+        //Fragment 가려질 때 처리
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Fragment 보여질 때 처리
+    }
+</code></pre></div></div>
+
+<p>그리고 마지막으로
+만약 onResume 이나 onPause가 두번 불리게 된다면 다른 Listener 를 통해 해당 프래그먼트가 불리고 있지 않은지 체크 해봐야한다.</p>
 
     </div><!-- /.entry-content -->
     
@@ -336,11 +354,11 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-lottie/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-notifyDataSetChanged/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-FragmentStatePagerAdapter/" title="FragmentStatePagerAdapter">FragmentStatePagerAdapter</a></h3>
-      <p>FragmentStatePagerAdapter BEHAVIOR_SET_USER_VISIBLE_HINT, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT <a href="http://localhost:4000/android/android-FragmentStatePagerAdapter/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-notifyDataSetChanged/" title="notifyDataSetChanged()">notifyDataSetChanged()</a></h3>
+      <p>notifyDataSetChanged() <a href="http://localhost:4000/android/android-notifyDataSetChanged/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">

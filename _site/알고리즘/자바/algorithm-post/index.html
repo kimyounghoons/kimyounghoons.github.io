@@ -172,7 +172,7 @@
     <div class="header-title-wrap">
       <h1>알고리즘 문제</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2019-03-11T00:00:00+09:00">March 11, 2019</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-03-16T00:00:00+09:00">March 16, 2019</time></span></h2>
       
 
       
@@ -271,125 +271,98 @@
     <div class="entry-content">
         
       <h1 class="post-title entry-title">알고리즘 문제</h1>
-      <p>쇠막대기 알고리즘</p>
+      <p>직사각형 나머지 한 좌표 구하기 !!</p>
 
-<p>여러 개의 쇠막대기를 레이저로 절단하려고 합니다. 효율적인 작업을 위해서 쇠막대기를 아래에서 위로 겹쳐 놓고, 레이저를 위에서 수직으로 발사하여 쇠막대기들을 자릅니다. 쇠막대기와 레이저의 배치는 다음 조건을 만족합니다.</p>
+<p>직사각형을 만드는 데 필요한 4개의 점 중 3개의 좌표가 주어질 때, 나머지 한 점의 좌표를 구하려고 합니다. 점 3개의 좌표가 들어있는 배열 v가 매개변수로 주어질 때, 직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 return 하도록 solution 함수를 완성해주세요. 단, 직사각형의 각 변은 x축, y축에 평행하며, 반드시 직사각형을 만들 수 있는 경우만 입력으로 주어집니다.</p>
 
-<ul>
-  <li>쇠막대기는 자신보다 긴 쇠막대기 위에만 놓일 수 있습니다.</li>
-  <li>쇠막대기를 다른 쇠막대기 위에 놓는 경우 완전히 포함되도록 놓되, 끝점은 겹치지 않도록 놓습니다.</li>
-  <li>각 쇠막대기를 자르는 레이저는 적어도 하나 존재합니다.</li>
-  <li>레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않습니다.</li>
-</ul>
+<p>v는 세 점의 좌표가 들어있는 2차원 배열입니다.
+v의 각 원소는 점의 좌표를 나타내며, 좌표는 [x축 좌표, y축 좌표] 순으로 주어집니다.
+좌표값은 1 이상 10억 이하의 자연수입니다.
+직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 [x축 좌표, y축 좌표] 순으로 담아 return 해주세요.</p>
 
-<p>(a) 레이저는 여는 괄호와 닫는 괄호의 인접한 쌍 ‘()’으로 표현합니다. 또한 모든 ‘()’는 반드시 레이저를 표현합니다.
-(b) 쇠막대기의 왼쪽 끝은 여는 괄호 ‘(‘로, 오른쪽 끝은 닫힌 괄호 ‘)’로 표현됩니다.</p>
+<p>입출력 예 설명
+입출력 예 #1
+세 점이 [1, 4], [3, 4], [3, 10] 위치에 있을 때, [1, 10]에 점이 위치하면 직사각형이 됩니다.</p>
 
-<p>위 예의 괄호 표현은 그림 위에 주어져 있습니다.
-쇠막대기는 레이저에 의해 몇 개의 조각으로 잘리는데, 위 예에서 가장 위에 있는 두 개의 쇠막대기는 각각 3개와 2개의 조각으로 잘리고, 이와 같은 방식으로 주어진 쇠막대기들은 총 17개의 조각으로 잘립니다.</p>
+<p>입출력 예 #2
+세 점이 [1, 1], [2, 2], [1, 2] 위치에 있을 때, [2, 1]에 점이 위치하면 직사각형이 됩니다.</p>
 
-<p>쇠막대기와 레이저의 배치를 표현한 문자열 arrangement가 매개변수로 주어질 때, 잘린 쇠막대기 조각의 총 개수를 return 하도록 solution 함수를 작성해주세요.</p>
-
-<p>제한사항
-arrangement의 길이는 최대 100,000입니다.
-arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="p">.</span><span class="nf">*</span><span class="p">;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="o">.</span><span class="no">HashMap</span><span class="p">;</span>
 <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="n">int</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span> <span class="n">arrangement</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="no">String</span><span class="p">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrangement</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
-        <span class="no">Stack</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Stack</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="no">String</span> <span class="n">character</span> <span class="p">:</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">character</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span>
-                <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="nf">peek</span><span class="p">().</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span><span class="sr">//</span><span class="err">레이저</span>
-                    <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                    <span class="o">--</span><span class="n">count</span><span class="p">;</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="n">count</span><span class="p">;</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="sr">//</span><span class="err">막대</span> <span class="err">끝</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-                    <span class="n">count</span><span class="o">--</span><span class="p">;</span>
-                <span class="p">}</span>
+    <span class="kp">public</span> <span class="n">int</span><span class="p">[]</span> <span class="n">solution</span><span class="p">(</span><span class="n">int</span><span class="p">[][]</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+         <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">xHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">yHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">xHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+            <span class="n">yHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">xHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
             <span class="p">}</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">yHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">new</span> <span class="n">int</span><span class="p">[]{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">};</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>여기서 포인트는  stack 을 사용하면서 레이저와 막대끝을 구분하는 것 같다 ㅎㅎ
-알고리즘하니깐 시간 잘 가네 ㅎㅎ</p>
+<p>==========================================================</p>
 
-<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42585</p>
+<p>앞뒤를 뒤집어도 똑같은 문자를 palindrome(팰린드롬)이라고 합니다. 예를 들어 12321은 팰린드롬이며, 21453은 팰린드롬이 아닙니다.</p>
 
-      <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#자바" title="Pages tagged 자바" class="tag"><span class="term">자바</span></a><a href="http://localhost:4000/tags#알고리즘" title="Pages tagged 알고리즘" class="tag"><span class="term">알고리즘</span></a></span>
-        <span>Updated on <span class="entry-date date updated"><time datetime="2019-03-11">March 11, 2019</time></span></span>
-        
-        <span class="author vcard"><span class="fn">kimyounghoon</span></span>
-        <div class="social-share">
-  <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
-  </ul>
-</div><!-- /.social-share -->
+<p>자연수 n이 매개변수로 주어질 때, n이 팰린드롬이면 true를, 아니면 false를 반환하도록 함수 solution 을 완성하세요.</p>
 
-      </footer>
+<p>제한사항
+n은 231 - 1 보다 작거나 같은 자연수입니다.</p>
+
+<p>입출력 예
+n	result
+12321	true
+21453	false
+입출력 예 설명
+입출력 예 #1
+12321을 뒤집으면 12321이 되어 팰린드롬입니다.</p>
+
+<p>입출력 예 #2
+21453을 뒤집으면 35412가 되어 팰린드롬이 아닙니다.</p>
+
+<p>class Solution {
+    public boolean solution(int n) {
+         int length = String.valueOf(n).length();
+        String[] values = String.valueOf(n).split(“”);</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (length % 2 == 0) {
+        int center = (length / 2);
+        for (int i = 0; i &lt; center; i++) {
+            if (!values[i].equals(values[length -i - 1])) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        int center = (length / 2) + 1;
+        for (int i = 0; i &lt; center; i++) {
+            if (!values[i].equals(values[length -i - 1])) {
+                return false;
+            }
+        }
+        return true;
+    }
+} }
+</code></pre></div></div>
+
+<p>출처 : https://programmers.co.kr/tryouts/3923/challenges/11576</p>
+
     </div><!-- /.entry-content -->
-    <div class="read-more">
-  <div class="read-more-header">
-    <a href="https://kimyounghoons.github.io" class="read-more-btn">About the Author</a>
-  </div><!-- /.read-more-header -->
-  <div class="read-more-content author-info">
-    <h3>kimyounghoon</h3>
-    <div class="author-container">
-      <img class="author-img" src="http://localhost:4000/images/avatar.jpg" alt="kimyounghoon" />
-      <div class="author-bio">Android Developer</div>
-    </div>
-    <div class="author-share">
-      <ul class="list-inline social-buttons">
-        
-          <li><a href="https://github.com/kimyounghoons" target="_blank"><i class="fa fa-github fa-fw"></i></a></li>
-        
-      </ul>
-      
-        <a aria-label="Follow @kimyounghoons on GitHub" data-style="mega" href="https://github.com/kimyounghoons" class="github-button">Follow @kimyounghoons</a>
-      
-      <br>
-      
-    </div>
-  </div>
-</div>
-
     
-    <div class="read-more">
-  
-    <div class="read-more-header">
-      <a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" class="read-more-btn">Read More</a>
-    </div><!-- /.read-more-header -->
-    <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-notifyDataSetChanged/" title="notifyDataSetChanged()">notifyDataSetChanged()</a></h3>
-      <p>notifyDataSetChanged() <a href="http://localhost:4000/android/android-notifyDataSetChanged/">Continue reading</a></p>
-    </div><!-- /.read-more-content -->
-  
-  <div class="read-more-list">
-    
-      <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-lottie/" title="애니메이션 UI 대응 로티 라이브러리">애니메이션 UI 대응 로티 라이브러리</a></h4>
-        <span>Published on October 07, 2019</span>
-      </div><!-- /.list-item -->
-    
-      <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-rxjava-debounce/" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h4>
-        <span>Published on August 22, 2019</span>
-      </div><!-- /.list-item -->
-    
-  </div><!-- /.read-more-list -->
-</div><!-- /.read-more -->
   </article>
 </div><!-- /#main -->
 
@@ -402,8 +375,27 @@ arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
 
 
 
+<div id="disqus_thread"></div>
+<script>
 
-
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://kimyounghoons.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
 
 
 <script type="text/javascript">
@@ -411,13 +403,30 @@ arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
 </script>
 
 
-
-<div class="footer-wrapper">
-  <footer role="contentinfo">
-    <span>&copy; 2019 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
-
-  </footer>
-</div><!-- /.footer-wrapper -->
-
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/android-FragmentStatePagerAdapter/" title="FragmentStatePagerAdapter">FragmentStatePagerAdapter</a></h3>
+      <p>FragmentStatePagerAdapter BEHAVIOR_SET_USER_VISIBLE_HINT, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT <a href="http://localhost:4000/android/android-FragmentStatePagerAdapter/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/android-notifyDataSetChanged/" title="notifyDataSetChanged()">notifyDataSetChanged()</a></h4>
+        <span>Published on October 15, 2019</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/android-lottie/" title="애니메이션 UI 대응 로티 라이브러리">애니메이션 UI 대응 로티 라이브러리</a></h4>
+        <span>Published on October 07, 2019</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
 </body>
 </html>
