@@ -4,13 +4,68 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-10-29T00:53:10+09:00</updated>
+<updated>2019-11-13T23:33:30+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[DS6 Barcode (Android 7.1 Nougat)]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-barcode/" />
+  <id>http://localhost:4000/android/android-barcode</id>
+  <updated>2019-11-13T00:00:00-00:00</updated>
+  <published>2019-11-13T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;기기명--ds6-android-71-nougat&quot;&gt;기기명 : DS6 (Android 7.1 Nougat)&lt;/h3&gt;
+
+&lt;p&gt;기본적으로 바코드 트레이라는 앱이 설치 되어있습니다.&lt;br /&gt;
+이 앱 안에서 스캔 설정을 할 수 있습니다.&lt;br /&gt;
+스캔 타임, 데이터 수신 방식, 인식 성공시 알림 등등 여러가지가 있습니다.&lt;br /&gt;
+여기서 중요한 데이터 수신 방식(3가지)에 대해 알아 보겠습니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;INTERNET_EVENT&lt;/li&gt;
+  &lt;li&gt;KEYBOARD_EVENT&lt;/li&gt;
+  &lt;li&gt;CLIPBOARD_EVENT&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;internet_event-방식&quot;&gt;INTERNET_EVENT 방식&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;BroadcastReceiver&lt;/strong&gt; 로 데이터를 받아 올 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;ActionName : &lt;strong&gt;app.dsic.barcodetray.BARCODE_BR_DECODING_DATA&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;BarcodeData : &lt;strong&gt;EXTRA_BARCODE_DECODED_DATA&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;해당 액션이름으로 이벤트를 받을 수 있고 &lt;strong&gt;EXTRA_BARCODE_DECODED_DATA&lt;/strong&gt; 키 값으로 intent 에 담겨 오는 데이터를 가져올 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;이 방식으로 데이터를 받을 경우 EditText 에 포커스가 되어 있어도 브로드캐스트리시버로 데이터가 넘어 왔기 때문에 EditText 에 입력 되지 않습니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;keyboard_event-방식&quot;&gt;KEYBOARD_EVENT 방식&lt;/h3&gt;
+&lt;p&gt;바코드 스캔 할 때 EditText 포커스 된 경우만 데이터가 셋팅 됩니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;주의 사항&lt;/span&gt;&lt;br /&gt;
+이 방식은 실제로 키보드 타이핑하는 방법과 같습니다.&lt;br /&gt;
+키보드가 한글로 셋팅 되어 있을 경우 스캔한 내용이 영어일지라도 한글 키보드로 입력한것 처럼 됩니다.&lt;br /&gt;
+rladudgns0837 내용을 스캔한경우 김영훈0837 이런식으로 입력되기 때문에 주의해야합니다.&lt;/p&gt;
+
+&lt;p&gt;키보드가 안보일 경우도 똑같이 적용됩니다.&lt;/p&gt;
+
+&lt;h3 id=&quot;clipboard_event-방식&quot;&gt;CLIPBOARD_EVENT 방식&lt;/h3&gt;
+&lt;p&gt;바코드 스캔 할 때 클립보드에 복사되고 EditText에 포커스 되어 있을 경우만 데이터 셋팅 됩니다. 키보드 타이핑 방식은 아니기 때문에 키보드가 영어, 한국어 무관합니다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-barcode/&quot;&gt;DS6 Barcode (Android 7.1 Nougat)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 13, 2019.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1169,51 +1224,6 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음&lt;/p&gt
 &lt;p&gt;보내면 push 가 성공적으로 200 떨어진다.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/firebase/firebase-push/&quot;&gt;Firebase Push Test in Postman&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 20, 2018.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Build Type String]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-buildtypestring-post/" />
-  <id>http://localhost:4000/android/android-buildtypestring-post</id>
-  <updated>2018-11-19T00:00:00-00:00</updated>
-  <published>2018-11-19T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;h1 id=&quot;빌드-타입-별-스트링-관리&quot;&gt;빌드 타입 별 스트링 관리&lt;/h1&gt;
-
-&lt;p&gt;페이스북 소셜 연동 시 다음과 같은 facebook 앱 아이디 정보가 필요하다.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meta&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;com.facebook.sdk.ApplicationId&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@string/facebook_app_id&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;페이스북 소셜 연동 시 live , dev , stage 세가지로 나눠서 작업을 하고 있는데 facebook_app_id 가 각각 build Type 별로 다르기 때문에 type이 바뀔 때 마다 동적으로 변경 되어야 하는 문제가 생겼다.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;   &lt;span class=&quot;n&quot;&gt;buildTypes&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;release&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;resValue&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;string&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;facebook_app_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;페이스북 앱 아이디&quot;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;resValue&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;string&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fb_login_protocol_scheme&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fb페이스북 앱 아이디&quot;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;staging&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;resValue&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;string&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;facebook_app_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;페이스북 앱 아이디&quot;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;resValue&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;string&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fb_login_protocol_scheme&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fb페이스북 앱 아이디&quot;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;resValue&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;string&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;facebook_app_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;페이스북 앱 아이디&quot;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;resValue&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;string&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fb_login_protocol_scheme&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;fb페이스북 앱 아이디&quot;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;buildType 별로 facebook_app_id , fb_login_protocol_scheme 각각 string 정보에 설정한 값이 들어가게 된다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-buildtypestring-post/&quot;&gt;Build Type String&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 19, 2018.&lt;/p&gt;
   </content>
 </entry>
 

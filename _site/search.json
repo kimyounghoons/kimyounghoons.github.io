@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "DS6 Barcode (Android 7.1 Nougat)",
+      "category" : "",
+      "tags"     : "barcode, DS6, 바코드",
+      "url"      : "http://localhost:4000/android/android-barcode/",
+      "date"     : "2019-11-13 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "FragmentStatePagerAdapter",
       "category" : "",
       "tags"     : "FragmentStatePagerAdapter, setUserVisibleHint, onResume",
