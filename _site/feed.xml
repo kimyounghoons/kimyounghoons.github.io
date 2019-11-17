@@ -4,13 +4,46 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-11-13T23:33:30+09:00</updated>
+<updated>2019-11-18T00:06:39+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[두두(dodo) 개인정보 취급방침]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/" />
+  <id>http://localhost:4000/applicationinfo/dodo-app-privacy_policy</id>
+  <updated>2018-11-28T00:00:00-00:00</updated>
+  <published>2019-11-18T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;두두(dodo)는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법,사업법 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하겠습니다.&lt;/p&gt;
+
+&lt;p&gt;두두(dodo)는 사용자 개인정보를 수집 하지 않습니다.&lt;/p&gt;
+
+&lt;p&gt;앱 관리자&lt;br /&gt;
+이름: 김영훈(Davis)&lt;br /&gt;
+직위: 두두(DoDo) Android Developer&lt;br /&gt;
+연락처: kimyh8496@gmail.com&lt;/p&gt;
+
+&lt;p&gt;고지의 의무
+두두(DoDo) 법률이나 서비스의 변경사항을 반영하기 위한 목적 등으로 개인정보 취급방침을 수정할 수 있습니다. 개인정보 취급방침이 변경되는 경우 두두(DoDo)는 변경 사항을 게시하며, 변경된 개인정보 취급방침은 게시한 날로부터 7일 후부터 효력이 발생합니다.&lt;/p&gt;
+
+&lt;p&gt;공고일자: 2019년 11월 18일&lt;br /&gt;
+시행일자: 2019년 12월 25일&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/applicationinfo/dodo-app-privacy_policy/&quot;&gt;두두(dodo) 개인정보 취급방침&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 18, 2019.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1158,72 +1191,6 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음&lt;/p&gt
 &lt;p&gt;Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/notification/android-notification/&quot;&gt;Notification&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 27, 2018.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[Firebase Push Test in Postman]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/firebase/firebase-push/" />
-  <id>http://localhost:4000/firebase/firebase-push</id>
-  <updated>2018-11-20T00:00:00-00:00</updated>
-  <published>2018-11-20T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;h1 id=&quot;포스트맨에서-파이어베이스-푸시-테스트&quot;&gt;포스트맨에서 파이어베이스 푸시 테스트!!&lt;/h1&gt;
-
-&lt;p&gt;POST 형식 url : https://fcm.googleapis.com/fcm/send&lt;/p&gt;
-
-&lt;h3 id=&quot;headers&quot;&gt;Headers&lt;/h3&gt;
-
-&lt;table rules=&quot;groups&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;KEY&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;VALUE&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Authorization&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;key= server key&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Content-Type&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;application/json&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;body-raw-applicationjson&quot;&gt;Body raw (application/json)&lt;/h3&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&quot;to&quot;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:&quot;받을 사람 firebase token key&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&quot;notification&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:{&lt;/span&gt;
-      &lt;span class=&quot;s2&quot;&gt;&quot;title&quot;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:&quot;제목&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-      &lt;span class=&quot;s2&quot;&gt;&quot;body&quot;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:&quot;바디&quot;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&quot;data&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;s2&quot;&gt;&quot;letterId&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;CUXbq8XrXOBOw8bWfMkz&quot;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;보내면 push 가 성공적으로 200 떨어진다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/firebase/firebase-push/&quot;&gt;Firebase Push Test in Postman&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 20, 2018.&lt;/p&gt;
   </content>
 </entry>
 

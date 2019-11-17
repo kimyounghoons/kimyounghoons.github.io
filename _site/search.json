@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "두두(dodo) 개인정보 취급방침",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "http://localhost:4000/applicationinfo/dodo-app-privacy_policy/",
+      "date"     : "2019-11-18 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "DS6 Barcode (Android 7.1 Nougat)",
       "category" : "",
       "tags"     : "barcode, DS6, 바코드",
