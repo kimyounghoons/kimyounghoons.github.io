@@ -286,7 +286,7 @@
   <li>1000 items and 200 modifications without moves: 13.54 ms, median: 13.36 ms</li>
 </ul>
 
-<p>Eugene W. Myers의 차이 알고리즘을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.</p>
+<p>Eugene W. Myers 의 difference algorithm 을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.</p>
 
 <p>사용법을 알아보자~!</p>
 
@@ -329,7 +329,7 @@ RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispat
   <li>mAdapter.notifyItemRangeChanged(position, count, payload);</li>
 </ul>
 
-<p>기존 방식으로는 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 많이 편리해지는 방법인것 같다.</p>
+<p>기존 방식은 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 DiffUtil 을 사용하면 개발자가 신경 쓰지 않아도 편리하게 수정 할수 있어서 좋은 것 같다.</p>
 
 <h3 id="주의-사항">주의 사항</h3>
 <ol>

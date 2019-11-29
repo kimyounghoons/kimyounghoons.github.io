@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2019-11-27T21:42:24+09:00</updated>
+<updated>2019-11-28T11:45:28+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
@@ -41,7 +41,7 @@
   &lt;li&gt;1000 items and 200 modifications without moves: 13.54 ms, median: 13.36 ms&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Eugene W. Myers의 차이 알고리즘을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.&lt;/p&gt;
+&lt;p&gt;Eugene W. Myers 의 difference algorithm 을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.&lt;/p&gt;
 
 &lt;p&gt;사용법을 알아보자~!&lt;/p&gt;
 
@@ -84,7 +84,7 @@ RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispat
   &lt;li&gt;mAdapter.notifyItemRangeChanged(position, count, payload);&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;기존 방식으로는 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 많이 편리해지는 방법인것 같다.&lt;/p&gt;
+&lt;p&gt;기존 방식은 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 DiffUtil 을 사용하면 개발자가 신경 쓰지 않아도 편리하게 수정 할수 있어서 좋은 것 같다.&lt;/p&gt;
 
 &lt;h3 id=&quot;주의-사항&quot;&gt;주의 사항&lt;/h3&gt;
 &lt;ol&gt;

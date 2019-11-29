@@ -21,7 +21,7 @@ oldList 와 newList 리스트의 차이를 계산하고 oldList를 newList로 �
 * 1000 items and 200 modifications without moves: 13.54 ms, median: 13.36 ms
 
   
-Eugene W. Myers의 차이 알고리즘을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.
+Eugene W. Myers 의 difference algorithm 을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.
 
 사용법을 알아보자~!
 
