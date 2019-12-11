@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>How to use Blog &#8211; 영훈 블로그</title>
-<meta name="description" content="description how to use blog">
-<meta name="keywords" content="blog">
+<title>RxKotlin combineLatest &#8211; 영훈 블로그</title>
+<meta name="description" content="RxKotlin combineLatest">
+<meta name="keywords" content="RxKotlin">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="How to use Blog">
-<meta property="og:description" content="description how to use blog">
-<meta property="og:url" content="http://localhost:4000/blog/blog-post/">
+<meta property="og:title" content="RxKotlin combineLatest">
+<meta property="og:description" content="RxKotlin combineLatest">
+<meta property="og:url" content="http://localhost:4000/android/android-rxkotlin_combineLatest/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/blog/blog-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-rxkotlin_combineLatest/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -170,9 +170,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>How to use Blog</h1>
+      <h1>RxKotlin combineLatest</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00+09:00">October 30, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-12-12T00:00:00+09:00">December 12, 2019</time></span></h2>
       
 
       
@@ -270,14 +270,66 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">How to use Blog</h1>
-      <p>블로그 사용법</p>
+      <h1 class="post-title entry-title">RxKotlin combineLatest</h1>
+      <p>집에 와서 안드로이드 단톡방 쭉쭉 보다가 어떤 분이 질문 올린 글을 봤다.<br />
+Rx 공부 해야지 해야지 생각 하다가 안하고 있었는데 마침 문제가 하나 생김 ㅎㅎ</p>
 
-<h2 id="bundle-exec-jekyll-watch">bundle exec jekyll –watch</h2>
+<p>문제는 RxKotlin 을 사용해서 입력창 세가지가 있는데 각각 입력창에서 입력 할 때마다 validation 체크를 하고 다 통과 되면 버튼을 활성화 시키고 싶다.</p>
 
-<p>md 파일 업데이트 한뒤 다음을 실행하면 html 파일들이 수정된다.</p>
+<p>키워드는 combineLatest 이다. 아래의 TestCode 를 보자.</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">bundle</span> <span class="nt">exec</span> <span class="nt">jekyll</span> <span class="nt">--watch</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class CombineLatestTest {
+    @Test
+    fun test() {
+        var isValid = false
+        val emailSubject = BehaviorSubject.create&lt;String&gt;()
+        val passwordSubject = BehaviorSubject.create&lt;String&gt;()
+        val nickNameSubject = BehaviorSubject.create&lt;String&gt;()
+        BehaviorSubject.combineLatest&lt;String, String, String, Boolean&gt;(
+            emailSubject,
+            passwordSubject,
+            nickNameSubject,
+            Function3&lt;String, String, String, Boolean&gt; { email, password, nickname -&gt;
+                return@Function3 email.isNotEmpty() &amp;&amp; password.isNotEmpty() &amp;&amp; nickname.isNotEmpty()
+            }
+        ).subscribe { result -&gt;
+            isValid = result
+             println("활성화 여부 $isValid")
+        }
+
+        emailSubject.onNext("이메일 입력")
+        assertEquals(isValid, false)
+
+        passwordSubject.onNext("패스워드 입력")
+        assertEquals(isValid, false)
+
+        nickNameSubject.onNext("닉네임 입력")
+        assertEquals(isValid, true)
+
+        passwordSubject.onNext("")  //패스워드 제거
+        assertEquals(isValid, false)
+
+        passwordSubject.onNext("패스워드 입력")  //패스워드 다시 입력
+        assertEquals(isValid, true)
+
+    }
+
+}
+
+
+    결과는 
+    활성화 여부 false
+    활성화 여부 false
+    활성화 여부 true
+    활성화 여부 false
+    활성화 여부 true
+
+
+</code></pre></div></div>
+
+<p>combineLatest 은 파라미터로 ObservableSource 를 받고 마지막에 리턴할 Function 을 받는다.<br />
+ObservableSource 갯수 제한은 9개 까지로 확인했다.<br />
+테스트 코드라서 isNotEmpty 로 처리 해뒀는데 저기 부분이 isValid 로 변경 되면 되겠다~</p>
 
     </div><!-- /.entry-content -->
     
@@ -325,23 +377,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-debug-signingkey/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" title="RxKotlin combineLatest">RxKotlin combineLatest</a></h3>
-      <p>RxKotlin combineLatest <a href="http://localhost:4000/android/android-rxkotlin_combineLatest/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-debug-signingkey/" title="디버그 용 서명 키 만들기">디버그 용 서명 키 만들기</a></h3>
+      <p>디버그 용 서명 키 만들기 <a href="http://localhost:4000/android/android-debug-signingkey/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-debug-signingkey/" title="디버그 용 서명 키 만들기">디버그 용 서명 키 만들기</a></h4>
-        <span>Published on December 09, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-diffUtil/" title="RecyclerView DiffUtil">RecyclerView DiffUtil</a></h4>
+        <span>Published on November 27, 2019</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-diffUtil/" title="RecyclerView DiffUtil">RecyclerView DiffUtil</a></h4>
-        <span>Published on November 27, 2019</span>
+        <h4><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/" title="두두(dodo) 개인정보 취급방침">두두(dodo) 개인정보 취급방침</a></h4>
+        <span>Published on November 18, 2019</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
