@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Dark Post &#8211; 영훈 블로그</title>
-<meta name="description" content="Sample Dark post">
-<meta name="keywords" content="sample">
+<title>DataBidning , BindingAdapter &#8211; 영훈 블로그</title>
+<meta name="description" content="DataBidning , BindingAdapter">
+<meta name="keywords" content="DataBinding, BindingAdapter">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dark Post">
-<meta property="og:description" content="Sample Dark post">
-<meta property="og:url" content="http://localhost:4000/dark-post/">
+<meta property="og:title" content="DataBidning , BindingAdapter">
+<meta property="og:description" content="DataBidning , BindingAdapter">
+<meta property="og:url" content="http://localhost:4000/android/android-bindingadapter/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/dark-post/">
+<link rel="canonical" href="http://localhost:4000/android/android-bindingadapter/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -170,15 +170,17 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Dark Post</h1>
+      <h1>DataBidning , BindingAdapter</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2016-11-30T00:00:00+09:00">November 30, 2016</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2019-12-26T00:00:00+09:00">December 26, 2019</time></span></h2>
       
 
       
-          <p class="entry-reading-time">
-            &nbsp;
-          </p><!-- /.entry-reading-time -->
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
       
     </div><!-- /.header-title-wrap -->
   </div><!-- /.header-title -->
@@ -265,80 +267,60 @@
 
 
 <div id="main" role="main">
-  <article class="hentry hentry-dark">
+  <article class="hentry">
     <div class="entry-content">
-      
-      <h1 class="post-title entry-title">Dark Post</h1>
-      <p>This is a sample post to show the dark post theme. To use this dark theme, just add:</p>
-
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">    <span class="na">layout</span><span class="pi">:</span> <span class="s">dark-post</span></code></pre></figure>
-
-<p>on your post. This theme adds a dark background with a white panel to show your content.</p>
-
-      <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://localhost:4000/tags#sample" title="Pages tagged sample" class="tag"><span class="term">sample</span></a></span>
         
-        <span class="author vcard"><span class="fn">kimyounghoon</span></span>
-        <div class="social-share">
-  <ul class="socialcount socialcount-small inline-list">
-    <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/dark-post/" title="Share on Facebook"><span class="count"><i class="fa fa-facebook-square"></i> Like</span></a></li>
-    <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://localhost:4000/dark-post/" title="Share on Twitter"><span class="count"><i class="fa fa-twitter-square"></i> Tweet</span></a></li>
-    <li class="googleplus"><a href="https://plus.google.com/share?url=http://localhost:4000/dark-post/" title="Share on Google Plus"><span class="count"><i class="fa fa-google-plus-square"></i> +1</span></a></li>
-  </ul>
-</div><!-- /.social-share -->
+      <h1 class="post-title entry-title">DataBidning , BindingAdapter</h1>
+      <p>데이터 바인딩라이브러리는 레이아웃의 UI 구성 요소를 프로그래밍 방식이 아닌 선언적 형식을 사용하여 앱의 데이터 소스에 바인딩 할 수있는 지원 라이브러리다.</p>
 
-      </footer>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;layout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">xmlns:bind=</span><span class="s">"http://schemas.android.com/tools"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;data&gt;</span>
+        <span class="nt">&lt;import</span> <span class="na">type=</span><span class="s">"android.view.View"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;variable</span>
+            <span class="na">name=</span><span class="s">"viewModel"</span>
+            <span class="na">type=</span><span class="s">"패키지경로.ExampleViewModel"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/data&gt;</span>
+    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+            <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+            <span class="na">android:background=</span><span class="s">"@{viewModel.isRedBackground ? @color/red : @color/white}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+<span class="nt">&lt;/layout&gt;</span>
+
+</code></pre></div></div>
+
+<p>예를 들어 API 호출을 하고 받아온 값이 빨간색 배경색을 가져야 한다면 viewModel.isRedBackground(ObservableField Boolean 값) 데이터 변경 만으로 뷰가 빨간색 또는 흰색으로 변경 된다. 하지만 상태값이 빨간색 흰색 그외 초록색이 필요하다면 BindingAdapter를 통해서 구현할 수 있다.</p>
+
+<p>android:background=”@{viewModel.isRedBackground ? @color/red : @color/white}”<br />
+–&gt; bind:status=”@{viewModel.status}”</p>
+
+<p>위의 코드에서 해당 줄만 변경한다. 그 다음 BindingAdapter를 만들어준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@BindingAdapter("bind:status")
+fun bindBuyingStatusText(imageView: ImageView, status: String?) {
+    when (status) {
+        "빨간색" -&gt; {
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_red))
+        }
+        "흰색" -&gt; {
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_white))
+        }
+        else -&gt; {  //초록색
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_green))
+        }
+    }
+}
+
+</code></pre></div></div>
+
+<p>상태값이 2가지만 있는경우에도 BindingAdapter 사용해서 처리할수 있지만 굳이 사용할 필요는 없을것 같다.</p>
+
     </div><!-- /.entry-content -->
-    <div class="read-more">
-  <div class="read-more-header">
-    <a href="https://kimyounghoons.github.io" class="read-more-btn">About the Author</a>
-  </div><!-- /.read-more-header -->
-  <div class="read-more-content author-info">
-    <h3>kimyounghoon</h3>
-    <div class="author-container">
-      <img class="author-img" src="http://localhost:4000/images/avatar.jpg" alt="kimyounghoon" />
-      <div class="author-bio">Android Developer</div>
-    </div>
-    <div class="author-share">
-      <ul class="list-inline social-buttons">
-        
-          <li><a href="https://github.com/kimyounghoons" target="_blank"><i class="fa fa-github fa-fw"></i></a></li>
-        
-      </ul>
-      
-        <a aria-label="Follow @kimyounghoons on GitHub" data-style="mega" href="https://github.com/kimyounghoons" class="github-button">Follow @kimyounghoons</a>
-      
-      <br>
-      
-    </div>
-  </div>
-</div>
-
     
-    <div class="read-more">
-  
-    <div class="read-more-header">
-      <a href="http://localhost:4000/sample/background-image/" class="read-more-btn">Read More</a>
-    </div><!-- /.read-more-header -->
-    <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-bindingadapter/" title="DataBidning , BindingAdapter">DataBidning , BindingAdapter</a></h3>
-      <p>DataBidning , BindingAdapter <a href="http://localhost:4000/android/android-bindingadapter/">Continue reading</a></p>
-    </div><!-- /.read-more-content -->
-  
-  <div class="read-more-list">
-    
-      <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" title="RxKotlin combineLatest">RxKotlin combineLatest</a></h4>
-        <span>Published on December 12, 2019</span>
-      </div><!-- /.list-item -->
-    
-      <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-debug-signingkey/" title="디버그 용 서명 키 만들기">디버그 용 서명 키 만들기</a></h4>
-        <span>Published on December 09, 2019</span>
-      </div><!-- /.list-item -->
-    
-  </div><!-- /.read-more-list -->
-</div><!-- /.read-more -->
   </article>
 </div><!-- /#main -->
 
@@ -401,13 +383,30 @@ s.setAttribute('data-timestamp', +new Date());
   gtag('config', 'UA-154716591-1');
 </script>
 
-
-<div class="footer-wrapper">
-  <footer role="contentinfo">
-    <span>&copy; 2019 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
-
-  </footer>
-</div><!-- /.footer-wrapper -->
-
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" title="RxKotlin combineLatest">RxKotlin combineLatest</a></h3>
+      <p>RxKotlin combineLatest <a href="http://localhost:4000/android/android-rxkotlin_combineLatest/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/android-debug-signingkey/" title="디버그 용 서명 키 만들기">디버그 용 서명 키 만들기</a></h4>
+        <span>Published on December 09, 2019</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/android-diffUtil/" title="RecyclerView DiffUtil">RecyclerView DiffUtil</a></h4>
+        <span>Published on November 27, 2019</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
 </body>
 </html>
