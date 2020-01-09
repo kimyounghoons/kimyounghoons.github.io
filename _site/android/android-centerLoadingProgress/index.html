@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>resConfig(Build.Gradle) &#8211; 영훈 블로그</title>
-<meta name="description" content="resConfig(Build.Gradle)">
-<meta name="keywords" content="resConfig">
+<title>Center Loading Progress &#8211; 영훈 블로그</title>
+<meta name="description" content="Center Loading Progress">
+<meta name="keywords" content="Center Loading Progress">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="resConfig(Build.Gradle)">
-<meta property="og:description" content="resConfig(Build.Gradle)">
-<meta property="og:url" content="http://localhost:4000/android/android-resconfig/">
+<meta property="og:title" content="Center Loading Progress">
+<meta property="og:description" content="Center Loading Progress">
+<meta property="og:url" content="http://localhost:4000/android/android-centerLoadingProgress/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-resconfig/">
+<link rel="canonical" href="http://localhost:4000/android/android-centerLoadingProgress/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -170,9 +170,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>resConfig(Build.Gradle)</h1>
+      <h1>Center Loading Progress</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2019-07-24T00:00:00+09:00">July 24, 2019</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-01-10T00:00:00+09:00">January 10, 2020</time></span></h2>
       
 
       
@@ -270,19 +270,67 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">resConfig(Build.Gradle)</h1>
-      <h3 id="buildgradle-에서-resconfig">build.gradle 에서 resConfig</h3>
+      <h1 class="post-title entry-title">Center Loading Progress</h1>
+      <p>API 호출 할 때 다른 터치를 막기 위해 센터 프로그레스를 보여주는 경우 여러 가지 방법이 있지만 그중 progressDialog 를 사용해보자~!</p>
 
-<p>빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.</p>
+<p>BaseActivity 에서 progressDialog 를 가지고 있고 필요할 때 showProgress() , hideProgress() 를 통해 보여주거나 감출수 있다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">dev</span> <span class="p">{</span>
-   <span class="n">resConfigs</span> <span class="s2">"ko"</span><span class="p">,</span> <span class="s2">"xxxhdpi"</span>
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract class BaseActivity : AppCompatActivity(){
+    private var progressDialog: AppCompatDialog? = null
 
-<p>주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
-locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
+    fun showProgress() {
+        if (this == null || isFinishing) {
+            return
+        }
 
-<p>이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.</p>
+        progressDialog?.apply {
+            dismiss()
+        }
+
+        progressDialog = AppCompatDialog(this)
+        progressDialog?.apply {
+            setCancelable(false)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setContentView(R.layout.progress_center_loading)
+            show()
+        }
+    }
+
+    fun hideProgress() {
+        progressDialog?.dismiss()
+    }
+}
+</code></pre></div></div>
+
+<p>아래는 layout 코드</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">android:clickable=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;ProgressBar</span>
+        <span class="na">style=</span><span class="s">"?android:attr/indeterminateDrawable"</span>
+        <span class="na">android:layout_width=</span><span class="s">"34dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"34dp"</span>
+        <span class="na">android:indeterminate=</span><span class="s">"true"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+</code></pre></div></div>
+
+<p>이 경우 장점은 
+BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.</p>
+
+<p>그리고 액티비티 layout에서 위의 layout 코드를 포함 하고 있지 않아도 된다.</p>
+
+<p>단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있을 수 있다.</p>
+
+<p>다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.</p>
 
     </div><!-- /.entry-content -->
     
@@ -352,23 +400,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-bottom_navigation_view/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-bindingadapter/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-centerLoadingProgress/" title="Center Loading Progress">Center Loading Progress</a></h3>
-      <p>Center Loading Progress <a href="http://localhost:4000/android/android-centerLoadingProgress/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-bindingadapter/" title="DataBidning , BindingAdapter">DataBidning , BindingAdapter</a></h3>
+      <p>DataBidning , BindingAdapter <a href="http://localhost:4000/android/android-bindingadapter/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bindingadapter/" title="DataBidning , BindingAdapter">DataBidning , BindingAdapter</a></h4>
-        <span>Published on December 26, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" title="RxKotlin combineLatest">RxKotlin combineLatest</a></h4>
+        <span>Published on December 12, 2019</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" title="RxKotlin combineLatest">RxKotlin combineLatest</a></h4>
-        <span>Published on December 12, 2019</span>
+        <h4><a href="http://localhost:4000/android/android-debug-signingkey/" title="디버그 용 서명 키 만들기">디버그 용 서명 키 만들기</a></h4>
+        <span>Published on December 09, 2019</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

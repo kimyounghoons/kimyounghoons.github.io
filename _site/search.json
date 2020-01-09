@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Center Loading Progress",
+      "category" : "",
+      "tags"     : "Center Loading Progress",
+      "url"      : "http://localhost:4000/android/android-centerLoadingProgress/",
+      "date"     : "2020-01-10 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "DataBidning , BindingAdapter",
       "category" : "",
       "tags"     : "DataBinding, BindingAdapter",

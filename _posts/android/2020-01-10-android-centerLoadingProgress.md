@@ -60,5 +60,11 @@ abstract class BaseActivity : AppCompatActivity(){
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-이 경우 장점은 BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.
-단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있는다.
+이 경우 장점은 
+BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.  
+
+그리고 액티비티 layout에서 위의 layout 코드를 포함 하고 있지 않아도 된다.  
+
+단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있을 수 있다.  
+
+다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.
