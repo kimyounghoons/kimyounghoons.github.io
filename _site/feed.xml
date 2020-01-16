@@ -4,13 +4,85 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-01-10T01:52:55+09:00</updated>
+<updated>2020-01-17T01:03:24+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[안드로이드 10(29) 블루투스 연결 대응]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-bluetooth-android10/" />
+  <id>http://localhost:4000/android/android-bluetooth-android10</id>
+  <updated>2020-01-16T00:00:00-00:00</updated>
+  <published>2020-01-16T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h1 id=&quot;문제점&quot;&gt;문제점&lt;/h1&gt;
+&lt;h2 id=&quot;bluetoothadapterstartdiscovery-return-false-&quot;&gt;bluetoothAdapter.startDiscovery() return false !!!&lt;/h2&gt;
+
+&lt;p&gt;true로 반환 되어야 하는데 false 로 반환 되어 블루투스 검색을 할 수 없음&lt;/p&gt;
+
+&lt;p&gt;안드로이드 10 버전에서 위치 관련 보안이 강화 되었는데 블루투스 검색 할때 위치 관련 퍼미션이 필요하기 때문에 일어난 퍼미션 관련 이슈였습니다.&lt;/p&gt;
+
+&lt;p&gt;버전 별로 블루투스 검색 및 연결 관련 퍼미션을 알아보겠습니다.&lt;/p&gt;
+
+&lt;p&gt;기본적으로 블루투스 기능 ON , 위치 기능 ON 상태 여야 합니다.&lt;/p&gt;
+
+&lt;p&gt;블루투스 기능 OFF 상태일 때는 사용 가능 하게 팝업 띄어 주고 위치 기능 OFF 상태일때는 체크 해서 설정 화면으로 보내면됩니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;targetsdkversion-29-미만인-경우&quot;&gt;targetSdkVersion 29 미만인 경우&lt;/h2&gt;
+
+&lt;p&gt;AndroidManifest.xml 파일&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot; /&amp;gt;
+&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot; /&amp;gt;
+&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot;/&amp;gt;
+&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;29 미만인 경우 위치 관련 퍼미션이 적용 되어 있을 경우 아래 퍼미션이 자동으로 추가 됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot;/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래 퍼미션은 런타임 퍼미션 적용&lt;br /&gt;
+Manifest.permission.ACCESS_COARSE_LOCATION&lt;/p&gt;
+
+&lt;h2 id=&quot;targetsdkversion-29-인-경우&quot;&gt;targetSdkVersion 29 인 경우&lt;/h2&gt;
+
+&lt;p&gt;AndroidManifest.xml 파일 &lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot; /&amp;gt;
+&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot; /&amp;gt;
+&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot;/&amp;gt;
+&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&amp;gt;
+&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot;/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래 퍼미션은 런타임 퍼미션 적용&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Manifest.permission.ACCESS_COARSE_LOCATION,
+Manifest.permission.ACCESS_FINE_LOCATION,
+Manifest.permission.ACCESS_BACKGROUND_LOCATION
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;퍼미션 승인 후 bluetoothAdapter. startDiscovery() 이 true로 반환되는걸 확인 할 수 있었습니다.&lt;/p&gt;
+
+&lt;p&gt;아래 이미지는 블루투스 연결 버튼 클릭 시 플로우 차트&lt;/p&gt;
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2020-01-17-bluetooth-flow-chart.png&quot; alt=&quot;&quot; /&gt;
+&lt;/figure&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-bluetooth-android10/&quot;&gt;안드로이드 10(29) 블루투스 연결 대응&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on January 16, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1161,35 +1233,6 @@ O(N) 으로 풀어야 하는 문제였다.
 &lt;p&gt;출처 : https://programmers.co.kr/learn/courses/30/lessons/42576?language=java&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/&quot;&gt;알고리즘 문제&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on March 07, 2019.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[RxKotlin Single]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/rxkotlin/single/android-rxkotlin/" />
-  <id>http://localhost:4000/rxkotlin/single/android-rxkotlin</id>
-  <updated>2019-02-22T00:00:00-00:00</updated>
-  <published>2019-02-23T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;Rx 공부한지 별로 되진않았지만 확실히 매력있는 친구다.ㅎㅎ&lt;/p&gt;
-
-&lt;p&gt;Single 에 대해 궁금증이 생겼다.&lt;/p&gt;
-
-&lt;p&gt;Single은 onSuccess 나 onError 중 하나가 불리게 되면 dispose 가 된다.
-하지만 오픈 소스들을 보면 CompositeDisposible 에 차곡차곡 쌓고 dispose 시켜준다.
-이렇게 되면 중복으로 처리하는게 아닌가 ?? 
-왜 그러지 라는생각이 듬..&lt;/p&gt;
-
-&lt;p&gt;이유는 구독중 onSuccess 또는 onError 가 불리기 전에 이슈가 발생할 우려가 높기 때문에 추가해주고 dispose시켜주는것 같음.ㅎㅎ&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/rxkotlin/single/android-rxkotlin/&quot;&gt;RxKotlin Single&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on February 23, 2019.&lt;/p&gt;
   </content>
 </entry>
 

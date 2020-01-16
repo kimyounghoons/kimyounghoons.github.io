@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "안드로이드 10(29) 블루투스 연결 대응",
+      "category" : "",
+      "tags"     : "안드로이드 10(29) 블루투스 연결 대응",
+      "url"      : "http://localhost:4000/android/android-bluetooth-android10/",
+      "date"     : "2020-01-16 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "Center Loading Progress",
       "category" : "",
       "tags"     : "Center Loading Progress",
