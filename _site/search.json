@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "코틀린 람다 콜렉션 사용(kotlin lambda collection)",
+      "category" : "",
+      "tags"     : "intent, kotlin lambda collection",
+      "url"      : "http://localhost:4000/android/android-collections/",
+      "date"     : "2020-01-28 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "안드로이드 10(29) 블루투스 연결 대응",
       "category" : "",
       "tags"     : "안드로이드 10(29) 블루투스 연결 대응",

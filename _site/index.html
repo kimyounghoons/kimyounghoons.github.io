@@ -270,6 +270,136 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-01-28T00:00:00+09:00"><a href="http://localhost:4000/android/android-collections/">January 28, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-collections/" rel="bookmark" title="코틀린 람다 콜렉션 사용(kotlin lambda collection)" itemprop="url">코틀린 람다 콜렉션 사용(kotlin lambda collection)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>TODO : 선택된 아이템들은 알파벳을 가지고 있는데 알파벳들을 콤마로 구분해서 String 으로 만들어야 하는 상황</p>
+
+<p>사용 된 함수는 filterIsInstance,filter,map,joinToString 이렇게 4가지.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/**
+ * Created by kimyounghoon on 2020-01-29.
+ */
+class KotlinLambdaCollectionTest {
+    open class BaseItem(var id: String)
+
+    class Item(id: String, val alphabet: String, val isSelected: Boolean) : BaseItem(id)
+
+    lateinit var items: ArrayList&lt;BaseItem&gt;
+
+    //TODO 선택된 아이템 알파벳들을 콤마로 구분해서 String 으로 만들기
+
+    @Before
+    fun before() {  //테스트 시작 되기 전에 불린다. 리스트 셋팅!!
+        items =
+            arrayListOf(
+                Item("1", "a", false),
+                Item("2", "b", true),
+                Item("3", "c", true),
+                Item("4", "d", true),
+                Item("5", "e", false),
+                Item("6", "f", false),
+                Item("7", "g", false)
+            )
+    }
+
+
+   /*
+    *  test1 은 명령형 프로그래밍 2,3,4 함수형 프로그래밍으로 변환하는 작업입니다.
+    * */
+    @Test
+    fun test1() {
+        var alphabets = ""                  
+        val filterItems = arrayListOf&lt;Item&gt;()
+        for (item in items) {
+            if (item is Item &amp;&amp; item.isSelected) {
+                filterItems.add(item)
+            }
+        }
+
+        for (index in 0 until filterItems.size) {
+            if (index == filterItems.size - 1) {
+                alphabets += filterItems[index].alphabet
+            } else {
+                alphabets += filterItems[index].alphabet + ","
+            }
+        }
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+
+    /*
+    *  filter 를 사용해서 Item 으로만 걸렀기 때문에 as List&lt;Item&gt; 으로 캐스팅. 뭔가 아쉽다.
+    * */
+    @Test
+    fun test2() {
+        var alphabets = ""
+        (items.filter {
+            (it is Item &amp;&amp; it.isSelected)
+        } as List&lt;Item&gt;).let {
+            for (index in 0 until it.size) {
+                if (index == it.size - 1) {
+                    alphabets += it[index].alphabet
+                } else {
+                    alphabets += it[index].alphabet + ","
+                }
+            }
+        }
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+
+    /*
+    * filter 와 map , joinToString 을 사용하니 함수형 프로그래밍으로 바뀌고
+    * 가독성도 많이 좋아졌는데 map 에서 한번더 캐스팅 해서 써야하는게 불편해서 구글링 한번더!!
+    * */
+    @Test
+    fun test3() {
+        val alphabets = items.filter {
+            (it is Item &amp;&amp; it.isSelected)
+        }.map {
+            (it as Item).alphabet
+        }.joinToString(",")
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+
+    /*
+    * filterIsInstance 를 사용하면 Item 만 필터 되어서 Item 형태로 반환 되기때문에 캐스팅이 필요 없다.
+    *  처음 코드보다 훨씬 가독성이 많이 올라간것 같다.
+    * */
+    @Test
+    fun test4() {
+        val alphabets = items.filterIsInstance&lt;Item&gt;().filter {
+            it.isSelected
+        }.map {
+            it.alphabet
+        }.joinToString(",")
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+}
+</code></pre></div></div>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-01-16T00:00:00+09:00"><a href="http://localhost:4000/android/android-bluetooth-android10/">January 16, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -572,67 +702,6 @@ Rx 공부 해야지 해야지 생각 하다가 안하고 있었는데 마침 문
 <p>combineLatest 은 파라미터로 ObservableSource 를 받고 마지막에 리턴할 Function 을 받는다.<br />
 ObservableSource 갯수 제한은 9개 까지로 확인했다.<br />
 테스트 코드라서 isNotEmpty 로 처리 해뒀는데 저기 부분이 isValid 로 변경 되면 되겠다~</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-12-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-debug-signingkey/">December 09, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-debug-signingkey/" rel="bookmark" title="디버그 용 서명 키 만들기" itemprop="url">디버그 용 서명 키 만들기</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>기본적으로 Android Studio 에서 프로젝트를 만들게 되면 기본적으로 Build Variants가 Debug 로 셋팅 되어 있다.</p>
-
-<p>Android SDK 도구에서 생성된 디버그 인증서를 사용하여 앱에 자동으로 서명하기 때문이다.</p>
-
-<p>안드로이드 앱을 출시 하기 위해서는 Release KeyStore 를 통해 서명 된 앱이 필요하다.</p>
-
-<p>Release KeyStore 를 생성해서 서명한 앱을 출시 하고 난 뒤, Release 용 apk 가 설치 된 앱에서 Debug 모드로 빌드하게 되면 빌드 실패가 뜨고 삭제 후 설치 하시겠습니까? 라는 팝업이 뜬다.</p>
-
-<p>이 이유는 Release apk 와 Debug apk 인증 정보가 다르기 때문이다.</p>
-
-<p>이렇게 되면 삭제 후 설치는 할 수 있지만 Build Variants 가 변경될 때마다 다시 설치해야하는 번거러움도 있고 삭제하지 않고 디버깅 하고 싶은 상황에서 할 수 없게 된다.</p>
-
-<p>이 상황을 해결 하기 위해서는 Release Keystore 로부터 Debug Keystore 를 만들면 된다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>keytool -importkeystore -v -srckeystore 릴리즈용 키스토어 파일이름 및 경로 -destkeystore 디버그용 키스토어 파일이름 및 경로 -srcstorepass 릴리즈용 키스토어 비밀번호 -deststorepass android -srcalias alias이름 -destalias androiddebugkey -srckeypass alias비밀번호 -destkeypass android
-</code></pre></div></div>
-
-<p>새로 만드는 Debug Keystore 를 Android Studio 기본 제공해주는 Debug Keystore 와 매칭 시켜주는 작업이다.<br />
--destalias androiddebugkey , -deskkeypass android  는 Android SDK 도구에서 생성된 디버그 인증 정보와 동일하게 해서 나중에 별도 셋팅이 필요없다.</p>
-
-<p>build.gradle 셋팅은 아래와 같이 하면 된다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android {
- signingConfigs {
-        release {
-            storeFile file('릴리즈 키스토어 경로')
-            storePassword '패스워드'
-            keyAlias '릴리즈 alias'
-            keyPassword '패스워드'
-        }
-
-        debug {
-            storeFile file('디버그 키스토어 경로')
-            //따로 정보 필요 없음
-        }
-    }
-}
-</code></pre></div></div>
 
       
   </div><!-- /.entry-content -->
