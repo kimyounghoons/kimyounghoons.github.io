@@ -1,17 +1,16 @@
 ---
 layout: post
-title: 코틀린 람다 콜렉션 사용(kotlin lambda collection)
+title: 코틀린 람다 콜렉션(kotlin lambda collection)
 description: "코틀린 람다 콜렉션 사용(kotlin lambda collection)"
 modified: 2020-01-28
 tags: [intent,kotlin lambda collection]
 categories: [android]
 ---
 
-TODO : 선택된 아이템들은 알파벳을 가지고 있는데 알파벳들을 콤마로 구분해서 String 으로 만들어야 하는 상황
+### TODO : 선택된 아이템 알파벳들을 콤마로 구분해서 String 으로 만들기
 
-### 사용 된 함수는 filterIsInstance , filter , map , joinToString
-
-선언형 프로그래밍 -> 함수형 프로그래밍 방식으로 변경 하는 과정을 코딩
+사용 된 함수는 filterIsInstance , filter , map , joinToString  
+선언형 프로그래밍 -> 함수형 프로그래밍 방식으로 변경 하는 과정을 코딩  
 
 ```
 /**
@@ -23,8 +22,6 @@ class KotlinLambdaCollectionTest {
     class Item(id: String, val alphabet: String, val isSelected: Boolean) : BaseItem(id)
 
     lateinit var items: ArrayList<BaseItem>
-
-    //TODO 선택된 아이템 알파벳들을 콤마로 구분해서 String 으로 만들기
 
     @Before
     fun before() {  //테스트 시작 되기 전에 불린다. 리스트 셋팅!!
