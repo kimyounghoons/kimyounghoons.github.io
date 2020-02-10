@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "인텐트 사용해서 다른 액티비티로 데이터 넘기기",
+      "category" : "",
+      "tags"     : "intent",
+      "url"      : "http://localhost:4000/android/android-intent/",
+      "date"     : "2020-02-10 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "코틀린 람다 콜렉션(kotlin lambda collection)",
       "category" : "",
       "tags"     : "intent, kotlin lambda collection",
