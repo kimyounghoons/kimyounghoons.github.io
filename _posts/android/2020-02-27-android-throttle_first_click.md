@@ -89,16 +89,16 @@ onThrottleInterval 은 싱글 클릭이 필요 없는 경우에만 넣어주면 
 
 ### button을 가지고 있는 클래스(Before)
 ```
-    button.setOnClickListener {
-        //어떤 처리
-    }
+button.setOnClickListener {
+    //어떤 처리
+}
 ```
 
 ### button을 가지고 있는 클래스(After)
 ```
-    button.onThrottleFirstClick {
-        //어떤 처리
-    }
+button.onThrottleFirstClick {
+    //어떤 처리
+}
 ```
 
 사용법도 크게 차이가 없어서 편하게 사용할 수 있게 만들어진 것 같다.
