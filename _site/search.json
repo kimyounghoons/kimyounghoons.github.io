@@ -1,6 +1,22 @@
 [
   
     {
+      "title"    : "BottomNavigationView",
+      "category" : "",
+      "tags"     : "BottomNavigationView",
+      "url"      : "http://localhost:4000/android/android-bottom_navigation_view/",
+      "date"     : "2020-03-12 00:00:00 +0900"
+    } ,
+  
+    {
+      "title"    : "AppCenter Distribute",
+      "category" : "",
+      "tags"     : "android",
+      "url"      : "http://localhost:4000/android/android-appcenter/",
+      "date"     : "2020-03-03 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "안드로이드 다중 클릭 방지(Prevent Multiple Click)",
       "category" : "",
       "tags"     : "android",
@@ -142,14 +158,6 @@
       "tags"     : "resConfig",
       "url"      : "http://localhost:4000/android/android-resconfig/",
       "date"     : "2019-07-24 00:00:00 +0900"
-    } ,
-  
-    {
-      "title"    : "BottomNavigationView",
-      "category" : "",
-      "tags"     : "BottomNavigationView",
-      "url"      : "http://localhost:4000/android/android-bottom_navigation_view/",
-      "date"     : "2019-05-12 00:00:00 +0900"
     } ,
   
     {

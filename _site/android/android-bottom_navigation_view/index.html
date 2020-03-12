@@ -172,7 +172,7 @@
     <div class="header-title-wrap">
       <h1>BottomNavigationView</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2019-05-12T00:00:00+09:00">May 12, 2019</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-03-12T00:00:00+09:00">March 12, 2020</time></span></h2>
       
 
       
@@ -310,6 +310,20 @@ implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
             <span class="p">}</span>
         <span class="p">}</span></code></pre></figure>
 
+<p>2020년 03 월 12일 기준 최신 버전
+implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.<br />
+적용하면 아래와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">public</span> <span class="n">void</span> <span class="n">updateFirstBadge</span><span class="p">(</span><span class="n">int</span> <span class="n">count</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">removeBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="no">BadgeDrawable</span> <span class="n">badgeDrawable</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">getOrCreateBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
+                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setBackgroundColor</span><span class="p">(</span><span class="n">getResources</span><span class="p">().</span><span class="nf">getColor</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">color</span><span class="p">.</span><span class="nf">red</span><span class="p">));</span>
+                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setNumber</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span></code></pre></figure>
+
     </div><!-- /.entry-content -->
     
   </article>
@@ -378,23 +392,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/singletask/flag/android-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-appcenter/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/android-throttle_first_click/" title="안드로이드 다중 클릭 방지(Prevent Multiple Click)">안드로이드 다중 클릭 방지(Prevent Multiple Click)</a></h3>
-      <p>안드로이드 다중 클릭 방지(Prevent Multiple Click) <a href="http://localhost:4000/android/android-throttle_first_click/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-appcenter/" title="AppCenter Distribute">AppCenter Distribute</a></h3>
+      <p>AppCenter Distribute <a href="http://localhost:4000/android/android-appcenter/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-intent/" title="인텐트 사용해서 다른 액티비티로 데이터 넘기기">인텐트 사용해서 다른 액티비티로 데이터 넘기기</a></h4>
-        <span>Published on February 10, 2020</span>
+        <h4><a href="http://localhost:4000/android/android-throttle_first_click/" title="안드로이드 다중 클릭 방지(Prevent Multiple Click)">안드로이드 다중 클릭 방지(Prevent Multiple Click)</a></h4>
+        <span>Published on February 27, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-collections/" title="코틀린 람다 콜렉션(kotlin lambda collection)">코틀린 람다 콜렉션(kotlin lambda collection)</a></h4>
-        <span>Published on January 28, 2020</span>
+        <h4><a href="http://localhost:4000/android/android-intent/" title="인텐트 사용해서 다른 액티비티로 데이터 넘기기">인텐트 사용해서 다른 액티비티로 데이터 넘기기</a></h4>
+        <span>Published on February 10, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

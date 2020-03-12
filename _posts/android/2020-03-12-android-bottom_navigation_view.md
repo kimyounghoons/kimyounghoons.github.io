@@ -2,7 +2,7 @@
 layout: post
 title: BottomNavigationView
 description: "BottomNavigationView"
-modified: 2019-05-12
+modified: 2020-03-12
 tags: [BottomNavigationView]
 categories: [android]
 ---
@@ -43,6 +43,22 @@ implementation 'com.google.android.material:material:1.1.0-alpha06'
                 bottomNavigationView.removeBadge(R.id.title_first);
             } else {
                 BadgeDrawable badgeDrawable = bottomNavigationView.showBadge(R.id.title_first);
+                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
+                badgeDrawable.setNumber(count);
+            }
+        }
+{% endhighlight %}
+
+2020년 03 월 12일 기준 최신 버전
+implementation 'com.google.android.material:material:1.2.0-alpha05' 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.  
+적용하면 아래와 같다.  
+
+{% highlight ruby %}
+    public void updateFirstBadge(int count) {
+            if (count <= 0) {
+                bottomNavigationView.removeBadge(R.id.title_first);
+            } else {
+                BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.title_first);
                 badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
                 badgeDrawable.setNumber(count);
             }
