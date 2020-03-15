@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>A Post with a Video &#8211; 영훈 블로그</title>
-<meta name="description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta name="keywords" content="sample">
+<title>Strategy Pattern (디자인 패턴 1장) &#8211; 영훈 블로그</title>
+<meta name="description" content="Strategy Pattern (디자인 패턴 1장)">
+<meta name="keywords" content="Strategy Pattern">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Post with a Video">
-<meta property="og:description" content="Custom written post descriptions are the way to go... if you're not lazy.">
-<meta property="og:url" content="http://localhost:4000/sample/video-post/">
+<meta property="og:title" content="Strategy Pattern (디자인 패턴 1장)">
+<meta property="og:description" content="Strategy Pattern (디자인 패턴 1장)">
+<meta property="og:url" content="http://localhost:4000/java/kotlin/android-strategy-pattern/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/sample/video-post/">
+<link rel="canonical" href="http://localhost:4000/java/kotlin/android-strategy-pattern/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -173,9 +173,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>A Post with a Video</h1>
+      <h1>Strategy Pattern (디자인 패턴 1장)</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2016-11-27T00:00:00+09:00">November 27, 2016</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-03-15T00:00:00+09:00">March 15, 2020</time></span></h2>
       
 
       
@@ -276,17 +276,52 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">A Post with a Video</h1>
-      <iframe width="560" height="315" src="//www.youtube.com/embed/SU3kYxJmWuQ" frameborder="0" allowfullscreen></iframe>
+      <h1 class="post-title entry-title">Strategy Pattern (디자인 패턴 1장)</h1>
+      <h3 id="strategy-pattern-에-대해-알아보자">Strategy Pattern 에 대해 알아보자.</h3>
 
-<p>Video embeds are responsive and scale with the width of the main content block with the help of <a href="http://fitvidsjs.com/">FitVids</a>.</p>
+<p>알고리즘군을 정의하고 각각을 캡슐화하여 교환해서 사용할 수 있도록 만든다.<br />
+스트래티지를 활용하면 알고리즘을 사용하는 클라이언트와는 독릭적으로 알고리즘을 변경할 수 있다.</p>
 
-<p>Adding YouTube video embeds causes errors when building your Jekyll site. To fix wrap the html within <code class="highlighter-rouge">{::nomarkdown}</code> tags. Example below:</p>
+<p>1장에서는 다음과 같은 3가지 디자인 원칙이 나온다.</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html">{::nomarkdown}
-<span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">"560"</span> <span class="na">height=</span><span class="s">"315"</span> <span class="na">src=</span><span class="s">"//www.youtube.com/embed/SU3kYxJmWuQ"</span> <span class="na">frameborder=</span><span class="s">"0"</span> <span class="na">allowfullscreen</span><span class="nt">&gt;&lt;/iframe&gt;</span>
-{:/nomarkdown}</code></pre></figure>
+<ol>
+  <li>애플리케이션에서 달라지는 부분을 찾아내고, 달라지지 않는 부분으로부터 분리시킨다.</li>
+  <li>구현이 아닌 인터페이스에 맞춰서 프로그래밍한다.</li>
+  <li>상속보다는 구성을 활용한다.</li>
+</ol>
 
+<p>디자인 패턴책에서는 오리의 예제를 들었는데 안드로이드 부분에서 찾아 보았다.<br />
+얼마전 AppCenter 를 사용하면서 사용된 스트래티지패턴의 예제를 보려고 한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InAppUpdateListener : DistributeListener {
+    override fun onReleaseAvailable(
+        activity: Activity?,
+        releaseDetails: ReleaseDetails
+    ): Boolean {
+        activity?.apply {
+            val dialogBuilder = AlertDialog.Builder(activity)
+            dialogBuilder.setTitle(R.string.in_app_update)
+            dialogBuilder.setMessage(R.string.msg_download_latest_version)
+            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&gt;
+                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
+            }
+            dialogBuilder.setCancelable(false)
+            dialogBuilder.create()
+                .show()
+            return true
+        }
+        return false
+    }
+}
+
+Distribute.setListener(InAppUpdateListener())
+</code></pre></div></div>
+
+<p>위의 코드는 업데이트할 버전이 있을때 onReleaseAvailable 가 불려서 다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다.<br />
+Distribute 에는 DistributeListener 인터페이스를 구성했다.</p>
+
+<p>다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다. 라는 알고리즘을 캡슐화해서 사용하였고 InAppUpdateListener를 다른 DistributeListener로 교환해서 사용할 수 있다.<br />
+그렇기 때문에 이 코드도 strategy pattern 으로 볼 수 있다.</p>
 
     </div><!-- /.entry-content -->
     
@@ -356,23 +391,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/sample/sample-post-images/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/android-bottom_navigation_view/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h3>
-      <p>Strategy Pattern (디자인 패턴 1장) <a href="http://localhost:4000/java/kotlin/android-strategy-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h3>
+      <p>BottomNavigationView <a href="http://localhost:4000/android/android-bottom_navigation_view/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/android/android-appcenter/" title="AppCenter Distribute">AppCenter Distribute</a></h4>
+        <span>Published on March 03, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-appcenter/" title="AppCenter Distribute">AppCenter Distribute</a></h4>
-        <span>Published on March 03, 2020</span>
+        <h4><a href="http://localhost:4000/android/android-throttle_first_click/" title="안드로이드 다중 클릭 방지(Prevent Multiple Click)">안드로이드 다중 클릭 방지(Prevent Multiple Click)</a></h4>
+        <span>Published on February 27, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

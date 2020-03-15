@@ -4,13 +4,77 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-03-12T15:02:59+09:00</updated>
+<updated>2020-03-16T00:54:18+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Strategy Pattern (디자인 패턴 1장)]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/java/kotlin/android-strategy-pattern/" />
+  <id>http://localhost:4000/java/kotlin/android-strategy-pattern</id>
+  <updated>2020-03-16T00:00:00-00:00</updated>
+  <published>2020-03-15T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;strategy-pattern-에-대해-알아보자&quot;&gt;Strategy Pattern 에 대해 알아보자.&lt;/h3&gt;
+
+&lt;p&gt;알고리즘군을 정의하고 각각을 캡슐화하여 교환해서 사용할 수 있도록 만든다.&lt;br /&gt;
+스트래티지를 활용하면 알고리즘을 사용하는 클라이언트와는 독릭적으로 알고리즘을 변경할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;1장에서는 다음과 같은 3가지 디자인 원칙이 나온다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;애플리케이션에서 달라지는 부분을 찾아내고, 달라지지 않는 부분으로부터 분리시킨다.&lt;/li&gt;
+  &lt;li&gt;구현이 아닌 인터페이스에 맞춰서 프로그래밍한다.&lt;/li&gt;
+  &lt;li&gt;상속보다는 구성을 활용한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;디자인 패턴책에서는 오리의 예제를 들었는데 안드로이드 부분에서 찾아 보았다.&lt;br /&gt;
+얼마전 AppCenter 를 사용하면서 사용된 스트래티지패턴의 예제를 보려고 한다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class InAppUpdateListener : DistributeListener {
+    override fun onReleaseAvailable(
+        activity: Activity?,
+        releaseDetails: ReleaseDetails
+    ): Boolean {
+        activity?.apply {
+            val dialogBuilder = AlertDialog.Builder(activity)
+            dialogBuilder.setTitle(R.string.in_app_update)
+            dialogBuilder.setMessage(R.string.msg_download_latest_version)
+            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&amp;gt;
+                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
+            }
+            dialogBuilder.setCancelable(false)
+            dialogBuilder.create()
+                .show()
+            return true
+        }
+        return false
+    }
+}
+
+Distribute.setListener(InAppUpdateListener())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위의 코드는 업데이트할 버전이 있을때 onReleaseAvailable 가 불려서 다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다.&lt;br /&gt;
+Distribute 에는 DistributeListener 인터페이스를 구성했다.&lt;/p&gt;
+
+&lt;p&gt;다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다. 라는 알고리즘을 캡슐화해서 사용하였고 InAppUpdateListener를 다른 DistributeListener로 교환해서 사용할 수 있다.&lt;br /&gt;
+그렇기 때문에 이 코드도 strategy pattern 으로 볼 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/java/kotlin/android-strategy-pattern/&quot;&gt;Strategy Pattern (디자인 패턴 1장)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on March 15, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1373,37 +1437,6 @@ EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에
 &lt;p&gt;inputType 을 number 에서 위와 같이 변경 해 준뒤 해당 이슈를 수정 할 수 있었고 변경 시 빠르게 변경할 수 있었다.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-edittext_typing_slow/&quot;&gt;EditText 금액 콤마 표시 Typing 할 때 느려지는 현상&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on July 29, 2019.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[resConfig(Build.Gradle)]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-resconfig/" />
-  <id>http://localhost:4000/android/android-resconfig</id>
-  <updated>2019-05-12T00:00:00-00:00</updated>
-  <published>2019-07-24T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;h3 id=&quot;buildgradle-에서-resconfig&quot;&gt;build.gradle 에서 resConfig&lt;/h3&gt;
-
-&lt;p&gt;빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;dev&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;resConfigs&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ko&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;xxxhdpi&quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
-locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.&lt;/p&gt;
-
-&lt;p&gt;이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-resconfig/&quot;&gt;resConfig(Build.Gradle)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on July 24, 2019.&lt;/p&gt;
   </content>
 </entry>
 

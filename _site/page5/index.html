@@ -122,6 +122,9 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#interview">interview</a></li>
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#java">java</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
               
                 
@@ -234,6 +237,9 @@
                 <li><a href="http://localhost:4000/categories/#interview">interview</a></li>
             
               
+                <li><a href="http://localhost:4000/categories/#java">java</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
             
               
@@ -266,6 +272,41 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-07-24T00:00:00+09:00"><a href="http://localhost:4000/android/android-resconfig/">July 24, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-resconfig/" rel="bookmark" title="resConfig(Build.Gradle)" itemprop="url">resConfig(Build.Gradle)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="buildgradle-에서-resconfig">build.gradle 에서 resConfig</h3>
+
+<p>빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">dev</span> <span class="p">{</span>
+   <span class="n">resConfigs</span> <span class="s2">"ko"</span><span class="p">,</span> <span class="s2">"xxxhdpi"</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
+locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
+
+<p>이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -563,39 +604,6 @@ O(N) 으로 풀어야 하는 문제였다.
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-02-23T00:00:00+09:00"><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/">February 23, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/" rel="bookmark" title="RxKotlin Single" itemprop="url">RxKotlin Single</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>Rx 공부한지 별로 되진않았지만 확실히 매력있는 친구다.ㅎㅎ</p>
-
-<p>Single 에 대해 궁금증이 생겼다.</p>
-
-<p>Single은 onSuccess 나 onError 중 하나가 불리게 되면 dispose 가 된다.
-하지만 오픈 소스들을 보면 CompositeDisposible 에 차곡차곡 쌓고 dispose 시켜준다.
-이렇게 되면 중복으로 처리하는게 아닌가 ?? 
-왜 그러지 라는생각이 듬..</p>
-
-<p>이유는 구독중 onSuccess 또는 onError 가 불리기 전에 이슈가 발생할 우려가 높기 때문에 추가해주고 dispose시켜주는것 같음.ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -663,7 +671,7 @@ O(N) 으로 풀어야 하는 문제였다.
     
 
     
-      <li><a href="http://localhost:4000/page11/">11</a></li>
+      <li><a href="http://localhost:4000/page12/">12</a></li>
     
 
     
