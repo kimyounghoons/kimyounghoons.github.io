@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Observer Pattern (디자인 패턴 2장)",
+      "category" : "",
+      "tags"     : "Observer Pattern",
+      "url"      : "http://localhost:4000/java/kotlin/android-observer-pattern/",
+      "date"     : "2020-03-25 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "Strategy Pattern (디자인 패턴 1장)",
       "category" : "",
       "tags"     : "Strategy Pattern",

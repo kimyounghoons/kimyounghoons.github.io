@@ -4,13 +4,126 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-03-16T00:54:18+09:00</updated>
+<updated>2020-03-25T23:54:54+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Observer Pattern (디자인 패턴 2장)]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/java/kotlin/android-observer-pattern/" />
+  <id>http://localhost:4000/java/kotlin/android-observer-pattern</id>
+  <updated>2020-03-25T00:00:00-00:00</updated>
+  <published>2020-03-25T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h4 id=&quot;정의&quot;&gt;정의&lt;/h4&gt;
+&lt;p&gt;한 객체의 상태가 바뀌면 그 객체에 의존하는 다른 객체들한테 연락이 가고 자동으로 내용이 갱신되는 방식으로 일대다(one-to-many) 의존성을 정의함.&lt;/p&gt;
+
+&lt;h4 id=&quot;디자인-원칙&quot;&gt;디자인 원칙&lt;/h4&gt;
+&lt;p&gt;서로 상호작용을 하는 객체 사이에서는 가능하면 느슨하게 결합하는 디자인을 사용해야 한다.&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2020-03-25-android-observer-pattern.png&quot; alt=&quot;&quot; /&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;위의 사진은 위키백과에서 가져온 이미지이다.&lt;br /&gt;
+Subject 에 Observer를 등록 시키고 Subeject 의 데이터가 변경 되었을때 Observer 에게 알려주는 내용이다.&lt;/p&gt;
+
+&lt;p&gt;이번에는 옵저버패턴 예시를 위해 TextView를 살펴 보자.&lt;br /&gt;
+전체 소스는 많기 때문에 필요한 부분만 짤라서 요약함.&lt;br /&gt;
+Subject 는 TextView 이고 Observer 는 TextWatcher 라고 생각하면 될것 같다.&lt;br /&gt;
+아래를 보면 TextView(Subject)에서 Observer 를 관리 하기위해 ArrayList&lt;TextWatcher&gt; 로 가지고 있는걸 볼수 있다.&lt;/TextWatcher&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class TextView extends View implements ViewTreeObserver.OnPreDrawListener {
+    private ArrayList&amp;lt;TextWatcher&amp;gt; mListeners;
+
+    public void addTextChangedListener(TextWatcher watcher) {
+        if (mListeners == null) {
+            mListeners = new ArrayList&amp;lt;TextWatcher&amp;gt;();
+        }
+        mListeners.add(watcher);
+    }
+
+    public void removeTextChangedListener(TextWatcher watcher) {
+        if (mListeners != null) {
+            int i = mListeners.indexOf(watcher);
+            if (i &amp;gt;= 0) {
+                mListeners.remove(i);
+            }
+        }
+    }
+
+    void sendOnTextChanged(CharSequence text, int start, int before, int after) {
+        if (mListeners != null) {
+            final ArrayList&amp;lt;TextWatcher&amp;gt; list = mListeners;
+            final int count = list.size();
+            for (int i = 0; i &amp;lt; count; i++) {
+                list.get(i).onTextChanged(text, start, before, after);
+            }
+        }
+        if (mEditor != null) mEditor.sendOnTextChanged(start, before, after);
+    }
+
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 이다.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class LogTextWacher : TextWatcher {
+    override fun afterTextChanged(s: Editable?) {
+        Log.d(&quot;kyh&quot;, &quot;텍스트 변경후&quot;)
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        Log.d(&quot;kyh&quot;, &quot;텍스트 변경전&quot;)
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        Log.d(&quot;kyh&quot;, &quot;텍스트 변경할때&quot;)
+    }
+}
+
+class PrintTextWatcher : TextWatcher {
+    override fun afterTextChanged(s: Editable?) {
+        System.out.println(&quot;텍스트 변경후&quot;)
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        System.out.println(&quot;텍스트 변경전&quot;)
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        System.out.println(&quot;텍스트 변경할때&quot;)
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 를 TextView(Subject)에 등록&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun initTextView(context: Context) {
+    val textView = TextView(context)
+    textView.addTextChangedListener(LogTextWacher())
+    textView.addTextChangedListener(PrintTextWatcher())
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;TextView 의 text 가 변경 될 때마다 Log 와 Print 가 찍히게 된다.&lt;br /&gt;
+하지만 유의해야하는것은 같은 옵저버를 두번 등록 하지않게 해야한다.&lt;br /&gt;
+두번 등록 하게 될 경우 Log 와 Print 를 한번씩만 호출되길 원하는데 두번씩 호출 될 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/java/kotlin/android-observer-pattern/&quot;&gt;Observer Pattern (디자인 패턴 2장)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on March 25, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1408,35 +1521,6 @@ editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 �
 한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-keyboard/&quot;&gt;키보드 내려갈 때 특정 처리 하기&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on August 20, 2019.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[EditText 금액 콤마 표시 Typing 할 때 느려지는 현상]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-edittext_typing_slow/" />
-  <id>http://localhost:4000/android/android-edittext_typing_slow</id>
-  <updated>2019-05-12T00:00:00-00:00</updated>
-  <published>2019-07-29T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;h3 id=&quot;edittext-금액-콤마-표시-typing-할-때-느려지는-현상&quot;&gt;EditText 금액 콤마 표시 Typing 할 때 느려지는 현상&lt;/h3&gt;
-
-&lt;p&gt;EditText 금액 적을 때 3자리 마다 , 표시를 해야하는 상황이 생겼다.&lt;br /&gt;
-TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.&lt;br /&gt;
-해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.&lt;br /&gt;
-EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에서 주는 Editable s 을 s.clear 와 s.append 를 통해 추가 해 주었고&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;android&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:inputType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;number|textNoSuggestions&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;inputType 을 number 에서 위와 같이 변경 해 준뒤 해당 이슈를 수정 할 수 있었고 변경 시 빠르게 변경할 수 있었다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-edittext_typing_slow/&quot;&gt;EditText 금액 콤마 표시 Typing 할 때 느려지는 현상&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on July 29, 2019.&lt;/p&gt;
   </content>
 </entry>
 

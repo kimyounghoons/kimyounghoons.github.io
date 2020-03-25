@@ -276,6 +276,39 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-07-29T00:00:00+09:00"><a href="http://localhost:4000/android/android-edittext_typing_slow/">July 29, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-edittext_typing_slow/" rel="bookmark" title="EditText 금액 콤마 표시 Typing 할 때 느려지는 현상" itemprop="url">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="edittext-금액-콤마-표시-typing-할-때-느려지는-현상">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</h3>
+
+<p>EditText 금액 적을 때 3자리 마다 , 표시를 해야하는 상황이 생겼다.<br />
+TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.<br />
+해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.<br />
+EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에서 주는 Editable s 을 s.clear 와 s.append 를 통해 추가 해 주었고</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">android</span><span class="ss">:inputType</span><span class="o">=</span><span class="s2">"number|textNoSuggestions"</span></code></pre></figure>
+
+<p>inputType 을 number 에서 위와 같이 변경 해 준뒤 해당 이슈를 수정 할 수 있었고 변경 시 빠르게 변경할 수 있었다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-07-24T00:00:00+09:00"><a href="http://localhost:4000/android/android-resconfig/">July 24, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -534,71 +567,6 @@ arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
 알고리즘하니깐 시간 잘 가네 ㅎㅎ</p>
 
 <p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42585</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-07T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 07, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>알고리즘 공부 시작!!!</p>
-
-<p>문제 설명
-수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.</p>
-
-<p>마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.</p>
-
-<p>제한사항
-마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
-completion의 길이는 participant의 길이보다 1 작습니다.
-참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
-참가자 중에는 동명이인이 있을 수 있습니다.</p>
-
-<p>입출력 예 설명
-예제 #1
-leo는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
-
-<p>예제 #2
-vinko는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
-
-<p>예제 #3
-mislav는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="no">String</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span><span class="p">[]</span> <span class="n">participant</span><span class="p">,</span> <span class="no">String</span><span class="p">[]</span> <span class="n">completion</span><span class="p">)</span> <span class="p">{</span>
-        <span class="no">Arrays</span><span class="p">.</span><span class="nf">sort</span><span class="p">(</span><span class="n">participant</span><span class="p">);</span>
-        <span class="no">Arrays</span><span class="p">.</span><span class="nf">sort</span><span class="p">(</span><span class="n">completion</span><span class="p">);</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">completion</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">equals</span><span class="p">(</span><span class="n">completion</span><span class="p">[</span><span class="n">i</span><span class="p">])){</span>
-                <span class="k">return</span> <span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>처음 문제 풀었을 때 정확성은 100 인데 효율성이 꽝이라 고민을 많이 하게 되었다.. 
-O(N) 으로 풀어야 하는 문제였다.
-해시맵 문제 였는데 맵을 사용안하고 품.. 이래도 되는건가 우선 정확성과 효율성은 잘 통과 됨 
-두 배열을 sort 하고 참여자와 완주자가 다른 순간 값을 리턴시켜주면 되는 문제.</p>
-
-<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42576?language=java</p>
 
       
   </div><!-- /.entry-content -->
