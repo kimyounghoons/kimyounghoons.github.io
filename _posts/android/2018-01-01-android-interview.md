@@ -36,34 +36,34 @@ JVM은 쓰레드 생성 개수 제한이 없어서 계속해서 쓰레드를 만
 ### let, apply,run, with 차이점 
 let : 이 함수를 호출한 객체를 이어지는 함수 블록의 인자로 전달한다.
 
-{% highlight ruby %}
+```
 getPadding().let {
         it 은 패딩 값
         setPadding(it, 0, it, 0)
     }
-{% endhighlight %}
+```
 
 apply : 이 함수를 호출한 객체를 이어지는 함수 블록의 리시버로 전달한다.
 
-{% highlight ruby %}
+```
 params.apply {
         weight = 1f     params를 리시버로 전달 받았기 때문에 params.weight 이나 params.topMargin 바로사용
         topMargin = 100
     }
-{% endhighlight %}
+```
 
 with : 인자로 받은 객체를 이어지는 함수 블록의 리시버로 전달, block 함수의 결과를 반환
 
-{% highlight ruby %}
+```
 with(textView) {
         text = "textView!!!"
         gravity = Gravity.CENTER_HORIZONTAL
     }
-{% endhighlight %}
+```
 
 run : 인자가 없는 익명 함수처럼 사용하는 형태와 객체에서 호출하는 형태 제공
 함수형 인자 block 을 호출하고 결과반환 또는 호출한 객체를 함수형 인자 block의 리시버로 전달하고 그 결과를 반환한다.
-{% highlight ruby %}
+```
 val AplusB = run {
       val a = 1
       val b = 2
@@ -74,7 +74,7 @@ textView?.run {  with 와 비슷하지만 textView 의 널체크를 해야 하�
         text = "textView!!!"
         gravity = Gravity.CENTER_HORIZONTAL
     }
-{% endhighlight %}
+```
 
 ### kotlin SAM(Single Abstract Method) 질문
 선언부가 Java에 있고 ,Kotlin에서 호출 할 경우 SAM 이 동작
@@ -160,12 +160,12 @@ lazy를 사용하는 경우 기본 synchronized 로 동작한다.
 
 ### viewModel rotate 상황에서 파기 왜 안되는지 과정 ?
 ViewModelStoreOwner 인터페이스를 가지고 있는 Activity 또는 Fragment 는 viewModelStore를 가지고 있다. rotate 될 때 onDestroy 가 불리게 되는데 
-{% highlight ruby %}
+```
       boolean isChangingConfigurations = activity != null && activity.isChangingConfigurations();
         if (this.mViewModelStore != null && !isChangingConfigurations) {
             this.mViewModelStore.clear();
         }
-{% endhighlight %}
+```
 viewModelStore 가 null 이 아니고 configuration변화가 없을때 clear 를 불러 주기 때문에 rotate상황에서 viewModel이 clear 되지 않는다.
 
 ### Multi dex

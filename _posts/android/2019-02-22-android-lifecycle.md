@@ -14,7 +14,7 @@ categories: [android,aac]
 VideoView 는 LifecycleObserver 인터페이스를 가지고 있다.
 우선 뷰 생성시 라이프 사이클 옵저버 등록
 
-{% highlight ruby %}
+```
      public VideoView(Context context) {
         super(context);
         initialize(context);
@@ -25,13 +25,13 @@ VideoView 는 LifecycleObserver 인터페이스를 가지고 있다.
             ((AppCompatActivity) context).getLifecycle().addObserver(this);
         }
     }
-{% endhighlight %}
+```
 
 
 @OnLifecycleEvent 종류에 따라 life cycle 콜백이 불리게 되는데 stop 되었을때 release 
 destroy 될때 등록되어 있던 observer를 제거 시켜준다.
 
-{% highlight ruby %}
+```
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void onLifecycleStop() {
         stop();
@@ -45,6 +45,6 @@ destroy 될때 등록되어 있던 observer를 제거 시켜준다.
             }
         }
     }
-{% endhighlight %}
+```
 
 사용법 참 쉽구먼 ㅎㅎ

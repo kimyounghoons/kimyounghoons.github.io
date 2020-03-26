@@ -22,7 +22,7 @@ RelativeLayout을 사용하게 되면 만들기가 쉽지 않다.
 
 여기서 키워드는 GuideLine 과 ConstraintGroup 이다.
 
-{% highlight ruby %}
+```
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -107,7 +107,7 @@ RelativeLayout을 사용하게 되면 만들기가 쉽지 않다.
         app:constraint_referenced_ids="image_share_guide,image_download_guide" />
 
 </android.support.constraint.ConstraintLayout>
-{% endhighlight %}
+```
 
 해당 이미지의 Layout 이다.
 가로 세로의 각각 GuideLine 을 설정 한 후 각 뷰는 부모의 뷰에서 몇 dp 만큼 떨어진게 아니라 기준점이 GuideLine 이 되는 것이다.

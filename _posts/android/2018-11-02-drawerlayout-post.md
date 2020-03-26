@@ -11,7 +11,7 @@ categories: [android]
 
 DrawerLayout 사용하는 layout 에서의 구조 
 
-{% highlight ruby %}
+```
 
 <DrawerLayout>
     <ConstraintLayout> 
@@ -26,7 +26,7 @@ DrawerLayout 사용하는 layout 에서의 구조
     </ConstraintLayout>
 </DrawerLayout>
 
-{% endhighlight %}
+```
 
 이런식으로 구성 했다.
 
@@ -38,7 +38,7 @@ DrawerLayout 사용하는 layout 에서의 구조
 
 하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.
 
-{% highlight ruby %}
+```
 
 <DrawerLayout>
     <ConstraintLayout>  
@@ -54,7 +54,7 @@ DrawerLayout 사용하는 layout 에서의 구조
 
 </DrawerLayout>
 
-{% endhighlight %}
+```
 
 그렇게 처리하니 이슈가 사라짐!! 
 <div class="redText">

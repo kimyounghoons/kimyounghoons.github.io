@@ -20,7 +20,7 @@ UI 작업을 하다보면 애니메이션 효과는 피할래야 피할수 없�
 첫번째 : 나는 한번만 실행 하고 싶은데 스크롤 시 계속 애니메이션 실행 되는 이슈가 있었다.  
 라이브러리 내부 코드를 보니 애니메이션이 다 끝나기 전에 해당 뷰가 Detach 되는 경우 Attach 될 때 강제로 animation을 실행 시키고 있었다.  
 그래서 다음과 같이 Detach 될때 애니메이션을 강제로 취소시켰다.  
-{% highlight ruby %}
+```
 @Override
 public void onViewDetachedFromWindow(@NonNull ViewHolderGeneric holder) {
     super.onViewDetachedFromWindow(holder);
@@ -36,12 +36,12 @@ public void cancelLottieAnimation() {
         lottieAnimation.setProgress(1f);
     }
 }
-{% endhighlight %}
+```
 
 두번째 : 핸들러 사용 하지 않으면 playAnimation 정상 작동 하지 않는 이슈.  
 아래와 같이 처리해주었다.  
-{% highlight ruby %}
+```
 new Handler().post(() -> lottieAnimation.playAnimation());
-{% endhighlight %}
+```
 
 이제는 편하게 애니메이션 적용해보자~!ㅎㅎ

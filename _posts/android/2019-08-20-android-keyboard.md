@@ -11,7 +11,7 @@ categories: [android]
 
 키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function 
 
-{% highlight ruby %}
+```
 
  public static void showKeyboard(EditText editText) {
         if (editText == null) {
@@ -32,12 +32,12 @@ categories: [android]
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
  }
 
-{% endhighlight %}
+```
 
 키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.  
 editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.
 
-{% highlight ruby %}
+```
   int lastHeightDiff = 0;
     boolean isOpenKeyboard = false;
     private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -58,7 +58,7 @@ editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 �
             }
         }
     };
-{% endhighlight %}
+```
 
 해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.  
 한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.

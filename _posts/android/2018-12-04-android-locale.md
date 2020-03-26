@@ -14,7 +14,7 @@ categories: [android]
 
 해결 : Application Class 에서 다국어 관련 Locale 을 셋팅 하기 전 country 정보를 미리 SharedPreference 에 저장해 놓고 필요한 경우 가져 온다. 시스템 언어를 변경 할 경우 onConfigurationChanged 가 불리게 되어서 여기서 다시 지역 정보를 갱신 시켜 주어야 한다.
 
-{% highlight ruby %}
+```
     Application Class
 
     @Override
@@ -36,4 +36,4 @@ categories: [android]
         LocaleChanger.onConfigurationChanged();
     }
 
-{% endhighlight %}
+```

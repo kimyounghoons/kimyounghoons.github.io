@@ -25,7 +25,7 @@ Subject 에 Observer를 등록 시키고 Subeject 의 데이터가 변경 되었
 Subject 는 TextView 이고 Observer 는 TextWatcher 라고 생각하면 될것 같다.  
 아래를 보면 TextView(Subject)에서 Observer 를 관리 하기위해 ArrayList<TextWatcher> 로 가지고 있는걸 볼수 있다.  
 
-```
+```java
 public class TextView extends View implements ViewTreeObserver.OnPreDrawListener {
     private ArrayList<TextWatcher> mListeners;
 
@@ -61,7 +61,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 ```
 
 아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 이다.
-```
+```java
 class LogTextWacher : TextWatcher {
     override fun afterTextChanged(s: Editable?) {
         Log.d("kyh", "텍스트 변경후")
@@ -93,7 +93,7 @@ class PrintTextWatcher : TextWatcher {
 ```
 
 아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 를 TextView(Subject)에 등록
-```
+```kotlin
 fun initTextView(context: Context) {
     val textView = TextView(context)
     textView.addTextChangedListener(LogTextWacher())

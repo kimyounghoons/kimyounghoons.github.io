@@ -11,7 +11,7 @@ categories: [android]
 
 drawable/파일명.xml 만들어 준다.
 
-{% highlight ruby %}
+```
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -27,7 +27,7 @@ drawable/파일명.xml 만들어 준다.
 
     <corners android:radius="7dp"/>
 </shape>
-{% endhighlight %}
+```
 
 solid 안에 컬러는 도형의 내부 색상 
 

@@ -13,7 +13,7 @@ implementation 'com.android.support:design:28.0.0'
 버전은 현재의 최신 버전으로 설정 했다.
 
 Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.
-{% highlight ruby %}
+```
     private fun setBadge() {
         val bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
         val bottomNavigationItemView  = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
@@ -23,7 +23,7 @@ Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.
         firstBadgeCountText.text = "99"
         bottomNavigationItemView.addView(badgeContainer)
     }
-{% endhighlight %}
+```
 
 BottomNavigationView의 getChildAt 0부터 첫번째 BottomNavigationItemView 다.
 inflate 한 view 를 bottomNavigationItemView에 추가해서 사용하면 됨.
@@ -37,7 +37,7 @@ implementation 'com.google.android.material:material:1.1.0-alpha06'
 
 사용방법은 Badge 구현 빼고는 Support BottomNavigationView 와 비슷했다.
 
-{% highlight ruby %}
+```
     public void updateFirstBadge(int count) {
             if (count <= 0) {
                 bottomNavigationView.removeBadge(R.id.title_first);
@@ -47,13 +47,13 @@ implementation 'com.google.android.material:material:1.1.0-alpha06'
                 badgeDrawable.setNumber(count);
             }
         }
-{% endhighlight %}
+```
 
 2020년 03 월 12일 기준 최신 버전
 implementation 'com.google.android.material:material:1.2.0-alpha05' 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.  
 적용하면 아래와 같다.  
 
-{% highlight ruby %}
+```
     public void updateFirstBadge(int count) {
             if (count <= 0) {
                 bottomNavigationView.removeBadge(R.id.title_first);
@@ -63,4 +63,4 @@ implementation 'com.google.android.material:material:1.2.0-alpha05' 에서는 �
                 badgeDrawable.setNumber(count);
             }
         }
-{% endhighlight %}
+```

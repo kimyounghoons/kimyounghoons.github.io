@@ -19,13 +19,13 @@ SingleTask 는 하나의 Activity만 생성되고 다중 인스턴스를 가질 
 
 2.singleTask 액티비티에서만 Intent.FLAG_ACTIVITY_CLEAR_TASK 사용하고 NEW_TASK 는 사용하지 않는다.
 
-{% highlight ruby %}
+```
     if (context instanceof Bactivity) {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         } else {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
-{% endhighlight %}
+```
 3.굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.
 
 현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.

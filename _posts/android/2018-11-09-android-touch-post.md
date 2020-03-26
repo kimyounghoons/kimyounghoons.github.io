@@ -11,7 +11,7 @@ view pressed 상태 되었을 때 알파 50% 먹이기
 
 커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용
 
-{% highlight ruby %}
+```
    @Override
     public boolean onTouch(View v, MotionEvent event) {
 
@@ -26,7 +26,7 @@ view pressed 상태 되었을 때 알파 50% 먹이기
         }
         return false;
     }
-{% endhighlight %}
+```
 
 ACTION_DOWN 상태에서는 Pressed 상태 
 ACTION_UP 상태에서는 그 뷰에서 뗀 상태 

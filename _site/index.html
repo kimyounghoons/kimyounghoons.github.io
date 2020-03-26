@@ -308,77 +308,77 @@ Subject 에 Observer를 등록 시키고 Subeject 의 데이터가 변경 되었
 Subject 는 TextView 이고 Observer 는 TextWatcher 라고 생각하면 될것 같다.<br />
 아래를 보면 TextView(Subject)에서 Observer 를 관리 하기위해 ArrayList<TextWatcher> 로 가지고 있는걸 볼수 있다.</TextWatcher></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class TextView extends View implements ViewTreeObserver.OnPreDrawListener {
-    private ArrayList&lt;TextWatcher&gt; mListeners;
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextView</span> <span class="kd">extends</span> <span class="n">View</span> <span class="kd">implements</span> <span class="n">ViewTreeObserver</span><span class="o">.</span><span class="na">OnPreDrawListener</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">mListeners</span><span class="o">;</span>
 
-    public void addTextChangedListener(TextWatcher watcher) {
-        if (mListeners == null) {
-            mListeners = new ArrayList&lt;TextWatcher&gt;();
-        }
-        mListeners.add(watcher);
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">mListeners</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;();</span>
+        <span class="o">}</span>
+        <span class="n">mListeners</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    public void removeTextChangedListener(TextWatcher watcher) {
-        if (mListeners != null) {
-            int i = mListeners.indexOf(watcher);
-            if (i &gt;= 0) {
-                mListeners.remove(i);
-            }
-        }
-    }
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">mListeners</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    void sendOnTextChanged(CharSequence text, int start, int before, int after) {
-        if (mListeners != null) {
-            final ArrayList&lt;TextWatcher&gt; list = mListeners;
-            final int count = list.size();
-            for (int i = 0; i &lt; count; i++) {
-                list.get(i).onTextChanged(text, start, before, after);
-            }
-        }
-        if (mEditor != null) mEditor.sendOnTextChanged(start, before, after);
-    }
+    <span class="kt">void</span> <span class="nf">sendOnTextChanged</span><span class="o">(</span><span class="n">CharSequence</span> <span class="n">text</span><span class="o">,</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">before</span><span class="o">,</span> <span class="kt">int</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">;</span>
+            <span class="kd">final</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">onTextChanged</span><span class="o">(</span><span class="n">text</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mEditor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">mEditor</span><span class="o">.</span><span class="na">sendOnTextChanged</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
+    <span class="o">}</span>
 
-    ...
-}
+    <span class="o">...</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
 <p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 이다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class LogTextWacher : TextWatcher {
-    override fun afterTextChanged(s: Editable?) {
-        Log.d("kyh", "텍스트 변경후")
-    }
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">LogTextWacher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경후"</span><span class="o">)</span>
+    <span class="o">}</span>
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        Log.d("kyh", "텍스트 변경전")
-    }
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경전"</span><span class="o">)</span>
+    <span class="o">}</span>
 
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        Log.d("kyh", "텍스트 변경할때")
-    }
-}
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경할때"</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-class PrintTextWatcher : TextWatcher {
-    override fun afterTextChanged(s: Editable?) {
-        System.out.println("텍스트 변경후")
-    }
+<span class="kd">class</span> <span class="nc">PrintTextWatcher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경후"</span><span class="o">)</span>
+    <span class="o">}</span>
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        System.out.println("텍스트 변경전")
-    }
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경전"</span><span class="o">)</span>
+    <span class="o">}</span>
 
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        System.out.println("텍스트 변경할때")
-    }
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경할때"</span><span class="o">)</span>
+    <span class="o">}</span>
 
-}
+<span class="o">}</span>
 </code></pre></div></div>
 
 <p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 를 TextView(Subject)에 등록</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fun initTextView(context: Context) {
-    val textView = TextView(context)
-    textView.addTextChangedListener(LogTextWacher())
-    textView.addTextChangedListener(PrintTextWatcher())
-}
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">initTextView</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="nc">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">val</span> <span class="py">textView</span> <span class="p">=</span> <span class="n">TextView</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">LogTextWacher</span><span class="p">())</span>
+    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">PrintTextWatcher</span><span class="p">())</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>TextView 의 text 가 변경 될 때마다 Log 와 Print 가 찍히게 된다.<br />

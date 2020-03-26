@@ -23,7 +23,7 @@ POST 형식 url : https://fcm.googleapis.com/fcm/send
 
 ### Body raw (application/json)
 
-{% highlight ruby %}
+```
 {
     "to":"받을 사람 firebase token key",
     "notification":{
@@ -36,6 +36,6 @@ POST 형식 url : https://fcm.googleapis.com/fcm/send
       ...
     }
 }
-{% endhighlight %}
+```
 
 보내면 push 가 성공적으로 200 떨어진다.

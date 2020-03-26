@@ -12,13 +12,13 @@ categories: [android]
 image selector
 image_selector.xml 파일 만들기
 
-{% highlight ruby %}
+```
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/image_pressed" android:state_pressed="true"/>
     <item android:drawable="@drawable/image_default" />
 </selector>
-{% endhighlight %}
+```
 
 사용 : android:src="@drawable/image_selector"
 
@@ -26,12 +26,12 @@ image_selector.xml 파일 만들기
 text selector
 
 text_selector.xml 파일 만들기
-{% highlight ruby %}
+```
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@color/color_pressed" android:state_pressed="true"/>
     <item android:color="@color/color_default" />
 </selector>
-{% endhighlight %}
+```
 
 사용 : android:textColor="@drawable/text_selector"

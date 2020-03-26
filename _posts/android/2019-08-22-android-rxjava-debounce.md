@@ -9,7 +9,7 @@ categories: [android]
 RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데...  
 RxKotlin을 사용하면 간단하게 처리 할 수 있다.  
 
-{% highlight ruby %}
+```
 class MainActivity : AppCompatActivity() {
 
     var count = 0
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         compositeDisposable.dispose()
     }
 }
-{% endhighlight %}
+```
 
 debounce 를 사용하면 편하게 처리할 수 있다.
 위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스
