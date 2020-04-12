@@ -279,28 +279,30 @@
       <h1 class="post-title entry-title">how to use `when` in kotlin</h1>
       <p>우선 자바 소스</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">boolean</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="no">MenuItem</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">switch</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">getItemId</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span><span class="p">:</span>
-                <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
-                <span class="k">return</span> <span class="kp">true</span><span class="p">;</span>
-            <span class="ss">default: 
-                </span><span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_write_letter:
+                obtainViewModel().sendLetter()
+                return true;
+            default: 
+                return false;
+        }
+    }
+</code></pre></div></div>
 
 <p>아래는 코틀린</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">)</span> <span class="p">{</span>
-        <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span> <span class="o">-&gt;</span> <span class="p">{</span>
-            <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
-            <span class="kp">true</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="o">-&gt;</span> <span class="p">{</span>
-            <span class="kp">false</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menu_write_letter -&gt; {
+            obtainViewModel().sendLetter()
+            true
+        }
+        else -&gt; {
+            false
+        }
+    }
+</code></pre></div></div>
 
 <p>코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.</p>
 
@@ -314,20 +316,22 @@
 
 <p>1번 예를 한번 보면</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">when</span><span class="p">(</span><span class="n">view</span><span class="p">){</span>
-    <span class="n">is</span> <span class="no">TextView</span> <span class="o">-&gt;</span> <span class="n">toast</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="nf">text</span><span class="p">)</span>
-    <span class="k">else</span> <span class="o">-&gt;</span> 
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>when(view){
+    is TextView -&gt; toast(view.text)
+    else -&gt; 
+}
+</code></pre></div></div>
 
 <p>is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.</p>
 
 <p>2번 예를 한번 보면</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">val</span> <span class="n">str</span> <span class="o">=</span> <span class="k">when</span><span class="p">{</span>
-    <span class="n">x</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="o">-&gt;</span> <span class="s2">"cheap"</span>
-    <span class="n">s</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="s2">"money"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"Welcome"</span>
-    <span class="k">else</span> <span class="o">-&gt;</span> <span class="s2">""</span>
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val str = when{
+    x in 1..5 -&gt; "cheap"
+    s.contains("money") -&gt; "Welcome"
+    else -&gt; ""
+}
+</code></pre></div></div>
 
 <p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
 
@@ -402,20 +406,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/shape-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

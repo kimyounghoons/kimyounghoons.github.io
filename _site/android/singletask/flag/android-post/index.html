@@ -289,12 +289,12 @@
 
 <p>2.singleTask 액티비티에서만 Intent.FLAG_ACTIVITY_CLEAR_TASK 사용하고 NEW_TASK 는 사용하지 않는다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="k">if</span> <span class="p">(</span><span class="n">context</span> <span class="n">instanceof</span> <span class="no">Bactivity</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">intent</span><span class="p">.</span><span class="nf">setFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TASK</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">intent</span><span class="p">.</span><span class="nf">setFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_NEW_TASK</span> <span class="o">|</span> <span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TASK</span><span class="p">);</span>
-        <span class="p">}</span></code></pre></figure>
-
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (context instanceof Bactivity) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        } else {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+</code></pre></div></div>
 <p>3.굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.</p>
 
 <p>현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.</p>
@@ -370,20 +370,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

@@ -276,6 +276,135 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00"><a href="http://localhost:4000/android/constraintlayout-post/">December 18, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/constraintlayout-post/" rel="bookmark" title="ConstraintLayout 사용" itemprop="url">ConstraintLayout 사용</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>ConstraintLayout 의 강점을 살려보자.</p>
+
+<figure class="half">
+	<img src="/images/2018-12-18-constraintlayout-01.png" alt="" />
+    <img src="/images/2018-12-18-constraintlayout-02.png" alt="" />
+	<figcaption>초록색 링이 꺼졌다 켜졌다 해야할 때 layout 어떻게 배치 할까!?</figcaption>
+</figure>
+
+<p>보통 디자이너 분들은 해당 다운로드 이미지, 공유 이미지,초록색 링 이미지 이렇게 주신다.
+RelativeLayout을 사용하게 되면 만들기가 쉽지 않다. 
+기존에 RelativeLayout을 사용했을 때는 다운로드 이미지, 공유 이미지, 초록색 링이 포함된 다운로드 이미지 , 초록색 링이 포함된 공유 이미지 이렇게 받아서 작업을했다.
+하지만 ConstraintLayout 을 사용했을 때 이런 문제점을 해결할 수 있었다. 물론 RelativeLayout 으로도 아마 가능할수도 있을지 모르지만 쉽게 떠오르지 않았다.</p>
+
+<p>여기서 키워드는 GuideLine 과 ConstraintGroup 이다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;android.support.constraint.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">android:animateLayoutChanges=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;View</span>
+        <span class="na">android:id=</span><span class="s">"@+id/bottom_background"</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"80dp"</span>
+        <span class="na">android:background=</span><span class="s">"@color/take_bottom_black"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;android.support.constraint.Guideline</span>
+        <span class="na">android:id=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"1dp"</span>
+        <span class="na">android:orientation=</span><span class="s">"horizontal"</span>
+        <span class="na">app:layout_constraintGuide_end=</span><span class="s">"40dp"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;android.support.constraint.Guideline</span>
+        <span class="na">android:id=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">android:layout_width=</span><span class="s">"1dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+        <span class="na">android:orientation=</span><span class="s">"vertical"</span>
+        <span class="na">app:layout_constraintGuide_percent=</span><span class="s">"0.33333"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;android.support.constraint.Guideline</span>
+        <span class="na">android:id=</span><span class="s">"@+id/guideline_down"</span>
+        <span class="na">android:layout_width=</span><span class="s">"1dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+        <span class="na">android:orientation=</span><span class="s">"vertical"</span>
+        <span class="na">app:layout_constraintGuide_percent=</span><span class="s">"0.666666"</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/share_button"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/take_btn_finish_share"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/down_button"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/take_btn_finish_save"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_down"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_down"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
+
+
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/image_share_guide"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/quick_round_03"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_share"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/image_download_guide"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/quick_round_03"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_down"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_down"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;android.support.constraint.Group</span>
+        <span class="na">android:id=</span><span class="s">"@+id/group_quick_guide"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:visibility=</span><span class="s">"gone"</span>
+        <span class="na">app:constraint_referenced_ids=</span><span class="s">"image_share_guide,image_download_guide"</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/android.support.constraint.ConstraintLayout&gt;</span>
+</code></pre></div></div>
+
+<p>해당 이미지의 Layout 이다.
+가로 세로의 각각 GuideLine 을 설정 한 후 각 뷰는 부모의 뷰에서 몇 dp 만큼 떨어진게 아니라 기준점이 GuideLine 이 되는 것이다.
+쉽게 만들수 있다. 그리고 ConstraintGroup을 만들어서 referenceIds 에 뷰들이 GONE처리 되어야 하는 아이디들을 넣어 주면 된다.
+group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰들이 모두 적용된다.
+매우 편리하다!!ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-12-04T00:00:00+09:00"><a href="http://localhost:4000/android/android-locale/">December 04, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -297,26 +426,28 @@
 
 <p>해결 : Application Class 에서 다국어 관련 Locale 을 셋팅 하기 전 country 정보를 미리 SharedPreference 에 저장해 놓고 필요한 경우 가져 온다. 시스템 언어를 변경 할 경우 onConfigurationChanged 가 불리게 되어서 여기서 다시 지역 정보를 갱신 시켜 주어야 한다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="no">Application</span> <span class="no">Class</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Application Class
 
-    <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">();</span>
-        <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
-        <span class="p">.</span><span class="nf">edit</span><span class="p">()</span>
-        <span class="p">.</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="no">Locale</span><span class="p">.</span><span class="nf">getDefault</span><span class="p">().</span><span class="nf">getCountry</span><span class="p">())</span>
-        <span class="p">.</span><span class="nf">apply</span><span class="p">();</span>
-        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="n">getApplicationContext</span><span class="p">(),</span> <span class="no">SUPPORTED_LOCALES</span><span class="p">);</span>
-    <span class="p">}</span>
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        PreferenceManager.getDefaultSharedPreferences(this)
+        .edit()
+        .putString(getString(R.string.pref_key_system_country), Locale.getDefault().getCountry())
+        .apply();
+        LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
+    }
 
-      <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">void</span> <span class="n">onConfigurationChanged</span><span class="p">(</span><span class="no">Configuration</span> <span class="n">newConfig</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">(</span><span class="n">newConfig</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span> <span class="sr">//</span><span class="err">첫번째가</span> <span class="err">변경된</span> <span class="no">Locale</span> <span class="err">정보를</span> <span class="err">가진다</span><span class="o">.</span>
-            <span class="no">PreferenceManager</span><span class="p">.</span><span class="nf">getDefaultSharedPreferences</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">edit</span><span class="p">().</span><span class="nf">putString</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">pref_key_system_country</span><span class="p">),</span> <span class="n">newConfig</span><span class="p">.</span><span class="nf">getLocales</span><span class="p">().</span><span class="nf">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nf">getCountry</span><span class="p">()).</span><span class="nf">apply</span><span class="p">();</span>
-        <span class="p">}</span>
-        <span class="no">LocaleChanger</span><span class="p">.</span><span class="nf">onConfigurationChanged</span><span class="p">();</span>
-    <span class="p">}</span></code></pre></figure>
+      @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.getLocales().get(0) != null) { //첫번째가 변경된 Locale 정보를 가진다.
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.pref_key_system_country), newConfig.getLocales().get(0).getCountry()).apply();
+        }
+        LocaleChanger.onConfigurationChanged();
+    }
+
+</code></pre></div></div>
 
       
   </div><!-- /.entry-content -->
@@ -354,21 +485,21 @@
 </ol>
 
 <p>1.NotificationManager 얻어옴</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">val</span> <span class="ss">notificationManager: </span><span class="no">NotificationManager</span> <span class="o">=</span> <span class="n">getSystemService</span><span class="p">(</span><span class="no">Context</span><span class="o">.</span><span class="no">NOTIFICATION_SERVICE</span><span class="p">)</span> <span class="n">as</span> <span class="no">NotificationManager</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+</code></pre></div></div>
 
 <p>2.오레오 버전 이상이면 Channel 생성 아니면 패스</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">     <span class="k">if</span> <span class="p">(</span><span class="no">Build</span><span class="o">.</span><span class="no">VERSION</span><span class="o">.</span><span class="no">SDK_INT</span> <span class="o">&gt;=</span> <span class="no">Build</span><span class="o">.</span><span class="no">VERSION_CODES</span><span class="o">.</span><span class="no">O</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">val</span> <span class="n">channel</span> <span class="o">=</span> <span class="no">NotificationChannel</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">),</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">),</span> <span class="no">NotificationManager</span><span class="o">.</span><span class="no">IMPORTANCE_HIGH</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">description</span> <span class="o">=</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">enableLights</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">lightColor</span> <span class="o">=</span> <span class="no">Color</span><span class="o">.</span><span class="no">BLUE</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">enableVibration</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">vibrationPattern</span> <span class="o">=</span> <span class="n">longArrayOf</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">lockscreenVisibility</span> <span class="o">=</span> <span class="no">NotificationCompat</span><span class="o">.</span><span class="no">VISIBILITY_PUBLIC</span>
-                <span class="n">notificationManager</span><span class="p">.</span><span class="nf">createNotificationChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
-            <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(getString(R.string.app_name) + getString(R.string.priority_high), getString(R.string.app_name) + getString(R.string.priority_high), NotificationManager.IMPORTANCE_HIGH)
+                channel.description = getString(R.string.app_name) + getString(R.string.priority_high)
+                channel.enableLights(true)
+                channel.lightColor = Color.BLUE
+                channel.enableVibration(true)
+                channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
+                channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+                notificationManager.createNotificationChannel(channel)
+            }
+</code></pre></div></div>
 
 <p>Channel 생성 시 IMPORTANCE 설정에 따라 알림이 다르다.
 NotificationManager.IMPORTANCE_HIGH :소리 및 팝업 (헤드업 알림)
@@ -377,63 +508,64 @@ NotificationManager.IMPORTANCE_LOW : 소리 없음  <br />
 NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
 
 <p>3.PendingIntent생성</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="n">val</span> <span class="n">intent</span> <span class="o">=</span> <span class="no">Intent</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="no">MainActivity</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="nf">java</span><span class="p">)</span>
-            <span class="n">remoteMessage</span><span class="p">.</span><span class="nf">data?</span><span class="p">.</span><span class="nf">apply</span> <span class="p">{</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">JSON_LETTER</span><span class="p">,</span> <span class="n">get</span><span class="p">(</span><span class="no">JSON_LETTER</span><span class="p">))</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">,</span> <span class="n">get</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">))</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">addFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TOP</span><span class="p">)</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">addFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_SINGLE_TOP</span><span class="p">)</span>
-            <span class="p">}</span>
-   <span class="n">val</span> <span class="n">pendingIntent</span> <span class="o">=</span> <span class="no">PendingIntent</span><span class="p">.</span><span class="nf">getActivity</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">intent</span><span class="p">,</span> <span class="no">PendingIntent</span><span class="o">.</span><span class="no">FLAG_UPDATE_CURRENT</span><span class="p">)</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val intent = Intent(applicationContext, MainActivity::class.java)
+            remoteMessage.data?.apply {
+                intent.putExtra(JSON_LETTER, get(JSON_LETTER))
+                intent.putExtra(JSON_ANSWER, get(JSON_ANSWER))
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
+   val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+</code></pre></div></div>
 
 <p>알림 팝업을 누르게 되면 PendingIntent 에 실어 두었던 Intent 정보를 가져와서 사용할 수 있다.</p>
 
 <p>4.NotificationCompat 생성</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="n">val</span> <span class="n">builder</span> <span class="o">=</span> <span class="no">NotificationCompat</span><span class="o">.</span><span class="no">Builder</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">))</span>
-                    <span class="p">.</span><span class="nf">setSmallIcon</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">mipmap</span><span class="p">.</span><span class="nf">ic_launcher</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setContentTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setContentText</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setDefaults</span><span class="p">(</span><span class="no">Notification</span><span class="o">.</span><span class="no">DEFAULT_VIBRATE</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setPriority</span><span class="p">(</span><span class="no">NotificationCompat</span><span class="o">.</span><span class="no">PRIORITY_HIGH</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setAutoCancel</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setContentIntent</span><span class="p">(</span><span class="n">pendingIntent</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setVisibility</span><span class="p">(</span><span class="no">NotificationCompat</span><span class="o">.</span><span class="no">VISIBILITY_PUBLIC</span><span class="p">)</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val builder = NotificationCompat.Builder(applicationContext, getString(R.string.app_name) + getString(R.string.priority_high))
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setDefaults(Notification.DEFAULT_VIBRATE)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+</code></pre></div></div>
 
 <p>5.빌드한 Notification을 notificationManager에 붙여주면 끝!</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">notificationManager</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">builder</span><span class="p">.</span><span class="nf">build</span><span class="p">())</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notificationManager.notify(1, builder.build())
+</code></pre></div></div>
 
 <p>6.Notification 클릭 시 핸들</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">override</span> <span class="n">fun</span> <span class="n">onNewIntent</span><span class="p">(</span><span class="ss">intent: </span><span class="no">Intent</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onNewIntent</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span>
-        <span class="n">intent?</span><span class="p">.</span><span class="nf">apply</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">intent</span><span class="p">.</span><span class="nf">extras</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">)</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">val</span> <span class="n">jsonLetter</span> <span class="o">=</span> <span class="n">intent</span><span class="p">.</span><span class="nf">extras</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">JSON_LETTER</span><span class="p">)</span>
-                <span class="n">val</span> <span class="n">jsonAnswer</span> <span class="o">=</span> <span class="n">intent</span><span class="p">.</span><span class="nf">extras</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">,</span> <span class="no">EMPTY</span><span class="p">)</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">supportFragmentManager</span><span class="p">.</span><span class="nf">backStackEntryCount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">jsonLetter</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">val</span> <span class="n">answer</span> <span class="o">=</span> <span class="no">Gson</span><span class="p">().</span><span class="nf">fromJson</span><span class="p">(</span><span class="n">jsonAnswer</span><span class="p">,</span> <span class="no">Answer</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="nf">java</span><span class="p">)</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
-                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">jsonLetter</span><span class="p">,</span> <span class="n">jsonAnswer</span><span class="p">)</span>
-                    <span class="p">}</span>
-                    <span class="k">return</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="n">openHome</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">jsonLetter</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">val</span> <span class="n">answer</span> <span class="o">=</span> <span class="no">Gson</span><span class="p">().</span><span class="nf">fromJson</span><span class="p">(</span><span class="n">jsonAnswer</span><span class="p">,</span> <span class="no">Answer</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="nf">java</span><span class="p">)</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
-                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">jsonLetter</span><span class="p">,</span> <span class="n">jsonAnswer</span><span class="p">)</span>
-                    <span class="p">}</span>
-                    <span class="k">return</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.apply {
+            if (intent.extras.getString(JSON_ANSWER) != null) {
+                val jsonLetter = intent.extras.getString(JSON_LETTER)
+                val jsonAnswer = intent.extras.getString(JSON_ANSWER, EMPTY)
+                if (supportFragmentManager.backStackEntryCount &gt; 0) {
+                    if (jsonLetter == null) {
+                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
+                        openReAnswers(answer)
+                    } else {
+                        openReAnswers(jsonLetter, jsonAnswer)
+                    }
+                    return
+                } else {
+                    openHome()
+                    if (jsonLetter == null) {
+                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
+                        openReAnswers(answer)
+                    } else {
+                        openReAnswers(jsonLetter, jsonAnswer)
+                    }
+                    return
+                }
+            }
+        }
+    }
+</code></pre></div></div>
 
 <p>Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.</p>
 
@@ -492,18 +624,19 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
 
 <h3 id="body-raw-applicationjson">Body raw (application/json)</h3>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">{</span>
-    <span class="s2">"to"</span><span class="ss">:"받을 사람 firebase token key"</span><span class="p">,</span>
-    <span class="s2">"notification"</span><span class="p">:{</span>
-      <span class="s2">"title"</span><span class="ss">:"제목"</span><span class="p">,</span>
-      <span class="s2">"body"</span><span class="ss">:"바디"</span>
-      <span class="o">...</span>
-    <span class="p">},</span>
-    <span class="s2">"data"</span> <span class="p">:</span> <span class="p">{</span>
-      <span class="s2">"letterId"</span> <span class="p">:</span> <span class="s2">"CUXbq8XrXOBOw8bWfMkz"</span>
-      <span class="o">...</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "to":"받을 사람 firebase token key",
+    "notification":{
+      "title":"제목",
+      "body":"바디"
+      ...
+    },
+    "data" : {
+      "letterId" : "CUXbq8XrXOBOw8bWfMkz"
+      ...
+    }
+}
+</code></pre></div></div>
 
 <p>보내면 push 가 성공적으로 200 떨어진다.</p>
 
@@ -532,72 +665,30 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
       <h1 id="빌드-타입-별-스트링-관리">빌드 타입 별 스트링 관리</h1>
 
 <p>페이스북 소셜 연동 시 다음과 같은 facebook 앱 아이디 정보가 필요하다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">meta</span><span class="o">-</span><span class="n">data</span>
-    <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"com.facebook.sdk.ApplicationId"</span>
-    <span class="n">android</span><span class="ss">:value</span><span class="o">=</span><span class="s2">"@string/facebook_app_id"</span> <span class="o">/&gt;</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;meta-data
+    android:name="com.facebook.sdk.ApplicationId"
+    android:value="@string/facebook_app_id" /&gt;
+</code></pre></div></div>
 
 <p>페이스북 소셜 연동 시 live , dev , stage 세가지로 나눠서 작업을 하고 있는데 facebook_app_id 가 각각 build Type 별로 다르기 때문에 type이 바뀔 때 마다 동적으로 변경 되어야 하는 문제가 생겼다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="n">buildTypes</span> <span class="p">{</span>
-        <span class="n">release</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-        <span class="n">staging</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-        <span class="n">dev</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   buildTypes {
+        release {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+        staging {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+        dev {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+    }
+</code></pre></div></div>
 
 <p>buildType 별로 facebook_app_id , fb_login_protocol_scheme 각각 string 정보에 설정한 값이 들어가게 된다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
-
-<p>외부공유 소스</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">title</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">plainContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">plain_content</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">htmlContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">html_content</span><span class="p">);</span>
-
-<span class="no">Intent</span> <span class="n">shareIntent</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">ACTION_SEND</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">setType</span><span class="p">(</span><span class="s2">"text/plain"</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_SUBJECT</span><span class="p">,</span> <span class="n">title</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_TEXT</span><span class="p">,</span> <span class="n">plainContent</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_HTML_TEXT</span><span class="p">,</span> <span class="n">htmlContent</span><span class="p">);</span>
-<span class="n">context</span><span class="p">.</span><span class="nf">startActivity</span><span class="p">(</span><span class="no">Intent</span><span class="p">.</span><span class="nf">createChooser</span><span class="p">(</span><span class="n">shareIntent</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">share_text</span><span class="p">)));</span></code></pre></figure>
-
-<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
-앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
-Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
-HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
-G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
 
       
   </div><!-- /.entry-content -->

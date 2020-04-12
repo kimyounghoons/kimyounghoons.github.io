@@ -292,90 +292,91 @@ RelativeLayout을 사용하게 되면 만들기가 쉽지 않다.
 
 <p>여기서 키워드는 GuideLine 과 ConstraintGroup 이다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">ConstraintLayout</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
-    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
-    <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
-    <span class="n">android</span><span class="ss">:animateLayoutChanges</span><span class="o">=</span><span class="s2">"true"</span><span class="o">&gt;</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;android.support.constraint.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">android:animateLayoutChanges=</span><span class="s">"true"</span><span class="nt">&gt;</span>
 
-    <span class="o">&lt;</span><span class="no">View</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/bottom_background"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"80dp"</span>
-        <span class="n">android</span><span class="ss">:background</span><span class="o">=</span><span class="s2">"@color/take_bottom_black"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"parent"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;View</span>
+        <span class="na">android:id=</span><span class="s">"@+id/bottom_background"</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"80dp"</span>
+        <span class="na">android:background=</span><span class="s">"@color/take_bottom_black"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintGuide_end</span><span class="o">=</span><span class="s2">"40dp"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;android.support.constraint.Guideline</span>
+        <span class="na">android:id=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"1dp"</span>
+        <span class="na">android:orientation=</span><span class="s">"horizontal"</span>
+        <span class="na">app:layout_constraintGuide_end=</span><span class="s">"40dp"</span> <span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.33333"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;android.support.constraint.Guideline</span>
+        <span class="na">android:id=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">android:layout_width=</span><span class="s">"1dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+        <span class="na">android:orientation=</span><span class="s">"vertical"</span>
+        <span class="na">app:layout_constraintGuide_percent=</span><span class="s">"0.33333"</span> <span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Guideline</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"match_parent"</span>
-        <span class="n">android</span><span class="ss">:orientation</span><span class="o">=</span><span class="s2">"vertical"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintGuide_percent</span><span class="o">=</span><span class="s2">"0.666666"</span><span class="o">/&gt;</span>
+    <span class="nt">&lt;android.support.constraint.Guideline</span>
+        <span class="na">android:id=</span><span class="s">"@+id/guideline_down"</span>
+        <span class="na">android:layout_width=</span><span class="s">"1dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+        <span class="na">android:orientation=</span><span class="s">"vertical"</span>
+        <span class="na">app:layout_constraintGuide_percent=</span><span class="s">"0.666666"</span><span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/share_button"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/share_button"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/take_btn_finish_share"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/down_button"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/take_btn_finish_save"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/down_button"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/take_btn_finish_save"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_down"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_down"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
 
 
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_share_guide"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_share"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/image_share_guide"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/quick_round_03"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_share"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_share"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="no">ImageView</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/image_download_guide"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:src</span><span class="o">=</span><span class="s2">"@drawable/quick_round_03"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintBottom_toBottomOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintEnd_toEndOf</span><span class="o">=</span><span class="s2">"@+id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintStart_toStartOf</span><span class="o">=</span><span class="s2">"@id/guideline_down"</span>
-        <span class="n">app</span><span class="ss">:layout_constraintTop_toTopOf</span><span class="o">=</span><span class="s2">"@+id/guideline_bottom_center_horizontal"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;ImageView</span>
+        <span class="na">android:id=</span><span class="s">"@+id/image_download_guide"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:src=</span><span class="s">"@drawable/quick_round_03"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_down"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_down"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">android</span><span class="p">.</span><span class="nf">support</span><span class="p">.</span><span class="nf">constraint</span><span class="o">.</span><span class="no">Group</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/group_quick_guide"</span>
-        <span class="n">android</span><span class="ss">:layout_width</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:layout_height</span><span class="o">=</span><span class="s2">"wrap_content"</span>
-        <span class="n">android</span><span class="ss">:visibility</span><span class="o">=</span><span class="s2">"gone"</span>
-        <span class="n">app</span><span class="ss">:constraint_referenced_ids</span><span class="o">=</span><span class="s2">"image_share_guide,image_download_guide"</span> <span class="o">/&gt;</span>
+    <span class="nt">&lt;android.support.constraint.Group</span>
+        <span class="na">android:id=</span><span class="s">"@+id/group_quick_guide"</span>
+        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+        <span class="na">android:visibility=</span><span class="s">"gone"</span>
+        <span class="na">app:constraint_referenced_ids=</span><span class="s">"image_share_guide,image_download_guide"</span> <span class="nt">/&gt;</span>
 
-<span class="o">&lt;</span><span class="sr">/android.support.constraint.ConstraintLayout&gt;</span></code></pre></figure>
+<span class="nt">&lt;/android.support.constraint.ConstraintLayout&gt;</span>
+</code></pre></div></div>
 
 <p>해당 이미지의 Layout 이다.
 가로 세로의 각각 GuideLine 을 설정 한 후 각 뷰는 부모의 뷰에서 몇 dp 만큼 떨어진게 아니라 기준점이 GuideLine 이 되는 것이다.
@@ -454,20 +455,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-locale/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

@@ -280,17 +280,17 @@
       <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
 
 <p>외부공유 소스</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>String title = context.getString(R.string.title);
+String plainContent = context.getString(R.string.plain_content);
+String htmlContent = context.getString(R.string.html_content);
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">title</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">plainContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">plain_content</span><span class="p">);</span>
-<span class="no">String</span> <span class="n">htmlContent</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">html_content</span><span class="p">);</span>
-
-<span class="no">Intent</span> <span class="n">shareIntent</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Intent</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">ACTION_SEND</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">setType</span><span class="p">(</span><span class="s2">"text/plain"</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_SUBJECT</span><span class="p">,</span> <span class="n">title</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_TEXT</span><span class="p">,</span> <span class="n">plainContent</span><span class="p">);</span>
-<span class="n">shareIntent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">EXTRA_HTML_TEXT</span><span class="p">,</span> <span class="n">htmlContent</span><span class="p">);</span>
-<span class="n">context</span><span class="p">.</span><span class="nf">startActivity</span><span class="p">(</span><span class="no">Intent</span><span class="p">.</span><span class="nf">createChooser</span><span class="p">(</span><span class="n">shareIntent</span><span class="p">,</span> <span class="n">context</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">share_text</span><span class="p">)));</span></code></pre></figure>
+Intent shareIntent = new Intent(Intent.ACTION_SEND);
+shareIntent.setType("text/plain");
+shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+shareIntent.putExtra(Intent.EXTRA_TEXT, plainContent);
+shareIntent.putExtra(Intent.EXTRA_HTML_TEXT, htmlContent);
+context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_text)));
+</code></pre></div></div>
 
 <p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
 앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
@@ -369,20 +369,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-firestore-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

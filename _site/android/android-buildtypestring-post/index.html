@@ -280,27 +280,28 @@
       <h1 id="빌드-타입-별-스트링-관리">빌드 타입 별 스트링 관리</h1>
 
 <p>페이스북 소셜 연동 시 다음과 같은 facebook 앱 아이디 정보가 필요하다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="n">meta</span><span class="o">-</span><span class="n">data</span>
-    <span class="n">android</span><span class="ss">:name</span><span class="o">=</span><span class="s2">"com.facebook.sdk.ApplicationId"</span>
-    <span class="n">android</span><span class="ss">:value</span><span class="o">=</span><span class="s2">"@string/facebook_app_id"</span> <span class="o">/&gt;</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;meta-data
+    android:name="com.facebook.sdk.ApplicationId"
+    android:value="@string/facebook_app_id" /&gt;
+</code></pre></div></div>
 
 <p>페이스북 소셜 연동 시 live , dev , stage 세가지로 나눠서 작업을 하고 있는데 facebook_app_id 가 각각 build Type 별로 다르기 때문에 type이 바뀔 때 마다 동적으로 변경 되어야 하는 문제가 생겼다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="n">buildTypes</span> <span class="p">{</span>
-        <span class="n">release</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-        <span class="n">staging</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-        <span class="n">dev</span> <span class="p">{</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"facebook_app_id"</span><span class="p">,</span><span class="s2">"페이스북 앱 아이디"</span>
-            <span class="n">resValue</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"fb_login_protocol_scheme"</span><span class="p">,</span><span class="s2">"fb페이스북 앱 아이디"</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   buildTypes {
+        release {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+        staging {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+        dev {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+    }
+</code></pre></div></div>
 
 <p>buildType 별로 facebook_app_id , fb_login_protocol_scheme 각각 string 정보에 설정한 값이 들어가게 된다.</p>
 
@@ -375,20 +376,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-share-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

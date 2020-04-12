@@ -279,14 +279,15 @@
       <h1 class="post-title entry-title">ActionBar Menu in Fragment</h1>
       <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">menu</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
-    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/menu_answer_letter"</span>
-        <span class="n">android</span><span class="ss">:title</span><span class="o">=</span><span class="s2">"@string/answer"</span>
-        <span class="n">app</span><span class="ss">:showAsAction</span><span class="o">=</span><span class="s2">"always"</span><span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/menu&gt;</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;menu</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;item</span>
+        <span class="na">android:id=</span><span class="s">"@+id/menu_answer_letter"</span>
+        <span class="na">android:title=</span><span class="s">"@string/answer"</span>
+        <span class="na">app:showAsAction=</span><span class="s">"always"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/menu&gt;</span>
+</code></pre></div></div>
 
 <p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
 
@@ -296,22 +297,24 @@
 
 <p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreateOptionsMenu</span><span class="p">(</span><span class="ss">menu: </span><span class="no">Menu</span><span class="p">?,</span> <span class="ss">inflater: </span><span class="no">MenuInflater</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">inflater</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">menu</span><span class="p">.</span><span class="nf">menu_detail_letter</span><span class="p">,</span> <span class="n">menu</span><span class="p">)</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onCreateOptionsMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">,</span> <span class="n">inflater</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail_letter, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+</code></pre></div></div>
 
 <p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">){</span>
-       <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_answer_letter</span> <span class="o">-&gt;</span><span class="p">{</span>
-           <span class="n">locateListener?</span><span class="p">.</span><span class="nf">openAnswer</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
-           <span class="kp">true</span>
-       <span class="p">}</span>
-        <span class="k">else</span> <span class="o">-&gt;</span><span class="p">{</span>
-            <span class="kp">false</span>
-        <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
+       R.id.menu_answer_letter -&gt;{
+           locateListener?.openAnswer(letter)
+           true
+       }
+        else -&gt;{
+            false
+        }
+}
+</code></pre></div></div>
 
 <p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
 
@@ -386,20 +389,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/wirelessbuild-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

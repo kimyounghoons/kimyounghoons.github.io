@@ -276,6 +276,90 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-04-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">April 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" rel="bookmark" title="Decorator Pattern (디자인 패턴 3장)" itemprop="url">Decorator Pattern (디자인 패턴 3장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h4 id="정의">정의</h4>
+<p>주어진 상황 및 용도에 따라 어떤 객체에 책임을 덧붙이는 패턴으로, 기능 확장이 필요할 때 서브클래싱 대신 쓸 수 있는 유연한 대안이 될 수 있다.</p>
+
+<h4 id="디자인-원칙">디자인 원칙</h4>
+<p>확장에는 열려있고 변경에는 닫혀 있어야 한다는 원칙이다.(OCP - Open Close Principle)</p>
+
+<figure>
+	<img src="/images/2020-04-10-android-decorator-pattern.png" alt="" />
+</figure>
+
+<p>카페에 가면 커피를 주문하고 추가적으로 밀크나 모카 휘핑을 추가 하게 되는데 이부분에서 요금이 추가 된다고 가정한다.<br />
+HouseBlend,DarkRoast,Espresso 의 기본 클래스에 밀크,모카,휘핑 등을 필요할때 추가 해서 요금을 정산 할 수 있다.<br />
+아래의 코드를 보자.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Test
+fun decoratorPatternTest() {
+    val houseBlend = HouseBlend()
+    println("houseBlend 가격 : ${houseBlend.cost()}원")
+    val houseBlendWithWhip = Whip(houseBlend)
+    println("HouseBlend + Whip 가격 : ${houseBlendWithWhip.cost()}원")
+    val houseBlendWithWhipAndMilk = Milk(houseBlendWithWhip)
+    println("HouseBlend + Whip + Milk 가격 : ${houseBlendWithWhipAndMilk.cost()}원")
+}
+
+abstract class Beverage {
+    abstract fun cost(): Long
+}
+
+class HouseBlend : Beverage() {
+    override fun cost(): Long {
+        return 5000
+    }
+}
+
+abstract class BeverageDecorator(protected val beverage: Beverage) : Beverage()
+
+class Whip(beverage: Beverage) : BeverageDecorator(beverage) {
+    override fun cost(): Long {
+        return beverage.cost() + 500
+    }
+}
+
+class Milk(beverage: Beverage) : BeverageDecorator(beverage) {
+    override fun cost(): Long {
+        return beverage.cost() + 1000
+    }
+}
+
+</code></pre></div></div>
+<p>Whip 과 Milk 가 Beverage 를 상속 받아서 만들게 되면 Whip과 Milk 가 Beverage 인지 Decorator 인지 바로 알기 힘들다.<br />
+BeverageDecorator 클래스를 만든건 Whip 과 Milk 가 Decorator 를 상속 받아서 장식인걸 바로 알수 있고 HouseBlend 는 Beverage 를 상속 받아 음료 종류 라는걸 바로 알 수 있다.</p>
+
+<p>테스트 결과는 아래 사진과 같다.</p>
+<figure>
+	<img src="/images/2020-04-10-android-decorator-pattern-02.png" alt="" />
+</figure>
+
+<p>밀크가 두번 이상,모카 두번 이상,휘핑 두번 이상이 들어 가더라도 추가적인 객체를 생성하지 않고 기능을 확장해서 사용할 수 있는 장점이 있다.<br />
+하지만 데코레이터가 많아지면 해당 객체를 감싸는 클래스들이 많아지고 디버깅하기가 힘들어 질 수 있는 단점이 있다.<br />
+그리고 실제 마지막 반환 되는 객체가 원래의 HouseBlend , DarkRoast , Espresso 가 아니라 마지막 Decorator 라는 것을 알고 있어야 한다.<br />
+이미지 참조 링크 
+http://nsnotification.blogspot.com/2013/01/decorator-pattern.html</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-03-25T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-observer-pattern/">March 25, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -481,16 +565,16 @@ implementation ‘com.android.support:design:28.0.0’
 버전은 현재의 최신 버전으로 설정 했다.</p>
 
 <p>Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    private fun setBadge() {
+        val bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+        val bottomNavigationItemView  = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">private</span> <span class="n">fun</span> <span class="n">setBadge</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">val</span> <span class="ss">bottomNavigationMenuView: </span><span class="no">BottomNavigationMenuView</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">getChildAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">as</span> <span class="no">BottomNavigationMenuView</span>
-        <span class="n">val</span> <span class="n">bottomNavigationItemView</span>  <span class="o">=</span> <span class="n">bottomNavigationMenuView</span><span class="p">.</span><span class="nf">getChildAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">as</span> <span class="no">BottomNavigationItemView</span>
-
-        <span class="n">val</span> <span class="n">badgeContainer</span> <span class="o">=</span> <span class="no">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">view_badge</span><span class="p">,</span> <span class="n">bottomNavigationMenuView</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
-        <span class="n">val</span> <span class="ss">firstBadgeCountText: </span><span class="no">TextView</span> <span class="o">=</span> <span class="n">badgeContainer</span><span class="p">.</span><span class="nf">findViewById</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">count</span><span class="p">)</span>
-        <span class="n">firstBadgeCountText</span><span class="p">.</span><span class="nf">text</span> <span class="o">=</span> <span class="s2">"99"</span>
-        <span class="n">bottomNavigationItemView</span><span class="p">.</span><span class="nf">addView</span><span class="p">(</span><span class="n">badgeContainer</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></figure>
+        val badgeContainer = LayoutInflater.from(this).inflate(R.layout.view_badge, bottomNavigationMenuView, false)
+        val firstBadgeCountText: TextView = badgeContainer.findViewById(R.id.count)
+        firstBadgeCountText.text = "99"
+        bottomNavigationItemView.addView(badgeContainer)
+    }
+</code></pre></div></div>
 
 <p>BottomNavigationView의 getChildAt 0부터 첫번째 BottomNavigationItemView 다.
 inflate 한 view 를 bottomNavigationItemView에 추가해서 사용하면 됨.</p>
@@ -504,29 +588,31 @@ implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
 
 <p>사용방법은 Badge 구현 빼고는 Support BottomNavigationView 와 비슷했다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">public</span> <span class="n">void</span> <span class="n">updateFirstBadge</span><span class="p">(</span><span class="n">int</span> <span class="n">count</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">removeBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="no">BadgeDrawable</span> <span class="n">badgeDrawable</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">showBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setBackgroundColor</span><span class="p">(</span><span class="n">getResources</span><span class="p">().</span><span class="nf">getColor</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">color</span><span class="p">.</span><span class="nf">red</span><span class="p">));</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setNumber</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
+            if (count &lt;= 0) {
+                bottomNavigationView.removeBadge(R.id.title_first);
+            } else {
+                BadgeDrawable badgeDrawable = bottomNavigationView.showBadge(R.id.title_first);
+                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
+                badgeDrawable.setNumber(count);
+            }
+        }
+</code></pre></div></div>
 
 <p>2020년 03 월 12일 기준 최신 버전
 implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.<br />
 적용하면 아래와 같다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">public</span> <span class="n">void</span> <span class="n">updateFirstBadge</span><span class="p">(</span><span class="n">int</span> <span class="n">count</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">removeBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="no">BadgeDrawable</span> <span class="n">badgeDrawable</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">getOrCreateBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setBackgroundColor</span><span class="p">(</span><span class="n">getResources</span><span class="p">().</span><span class="nf">getColor</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">color</span><span class="p">.</span><span class="nf">red</span><span class="p">));</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setNumber</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
+            if (count &lt;= 0) {
+                bottomNavigationView.removeBadge(R.id.title_first);
+            } else {
+                BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.title_first);
+                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
+                badgeDrawable.setNumber(count);
+            }
+        }
+</code></pre></div></div>
 
       
   </div><!-- /.entry-content -->
@@ -628,119 +714,6 @@ buildTypes {
 </code></pre></div></div>
 
 <p>이번에 Github Actions 를 사용해서 Appcenter Distribute 에 apk 배포하는걸 자동화해서 작업을 했는데 그부분은 다음 글에서 올림.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-02-27T00:00:00+09:00"><a href="http://localhost:4000/android/android-throttle_first_click/">February 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-throttle_first_click/" rel="bookmark" title="안드로이드 다중 클릭 방지(Prevent Multiple Click)" itemprop="url">안드로이드 다중 클릭 방지(Prevent Multiple Click)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>화면 이동이나 특정 API 호출을 할 때 안드로이드 자체에서 다중 클릭을 막아 주지 않기 때문에 따로 처리가 필요하다.<br />
-그래서 회사 팀원들과 같이 의견을 조금씩 반영하다 보니 좋은 결과물이 나온것 같다. ㅎㅎ<br />
-소스는 아래와 같다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var isClicked = false
-
-//데이터 바인딩에서 사용하기 위한 fun
-@BindingAdapter("app:onThrottleFirstClick", "app:onThrottleInterval", requireAll = false)
-fun onThrottleFirstClick(
-    view: View,
-    onClickListener: View.OnClickListener,
-    isWithoutInterval: Boolean = false
-) {
-    view.setOnClickListener { v -&gt;
-        if (isClicked.not()) {
-            isClicked = true
-            v?.run {
-                if (isWithoutInterval) {
-                    isClicked = false
-                    onClickListener.onClick(v)
-                } else {
-                    postDelayed({
-                        isClicked = false
-                    }, 350L)
-                    onClickListener.onClick(v)
-                }
-            }
-        }
-    }
-}
-
-//일반 뷰에서 사용할 수 있는 Kotlin Extension
-fun View.onThrottleFirstClick(interval: Long = 350L, action: (v: View) -&gt; Unit) {
-    setOnClickListener { v -&gt;
-        if (isClicked.not()) {
-            isClicked = true
-            v?.run {
-                postDelayed({
-                    isClicked = false
-                }, interval)
-                action(v)
-            }
-        }
-    }
-}
-
-</code></pre></div></div>
-
-<h3 id="xml-layout-코드before">xml Layout 코드(Before)</h3>
-<p>기존 onClick 구현 방식</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:onClick="@{(v)-&gt; 어떤 처리}"
-    android:text="일반 클릭"
-/&gt;
-</code></pre></div></div>
-
-<p>위와 같이 onClick을 사용하면 다중 클릭을 막을 수 없고 버튼을 여러번 클릭 하는 경우 어떤 처리가 여러번 처리 된다.<br />
-아래 다중클릭이 방지된 BindingAdapter 를 사용하게 되면 여러번 클릭을 막을 수 있다.<br />
-onThrottleInterval 은 싱글 클릭이 필요 없는 경우에만 넣어주면 된다.<br />
-예를 들어 옵션의 카운트 갯수를 올려주는 행위에 사용하면 된다.</p>
-
-<h3 id="xml-layout-코드after">xml Layout 코드(After)</h3>
-<p>변경된 방식</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="싱글 클릭"
-        app:onThrottleInterval="@{불린값}"
-        app:onThrottleFirstClick="@{(v) -&gt; 어떤 처리}"
-        /&gt;
-</code></pre></div></div>
-
-<h3 id="button을-가지고-있는-클래스before">button을 가지고 있는 클래스(Before)</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.setOnClickListener {
-    //어떤 처리
-}
-</code></pre></div></div>
-
-<h3 id="button을-가지고-있는-클래스after">button을 가지고 있는 클래스(After)</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.onThrottleFirstClick {
-    //어떤 처리
-}
-</code></pre></div></div>
-
-<p>사용법도 크게 차이가 없어서 편하게 사용할 수 있게 만들어진 것 같다.</p>
 
       
   </div><!-- /.entry-content -->

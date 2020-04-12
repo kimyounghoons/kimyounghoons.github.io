@@ -283,16 +283,16 @@ implementation ‘com.android.support:design:28.0.0’
 버전은 현재의 최신 버전으로 설정 했다.</p>
 
 <p>Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    private fun setBadge() {
+        val bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+        val bottomNavigationItemView  = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">private</span> <span class="n">fun</span> <span class="n">setBadge</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">val</span> <span class="ss">bottomNavigationMenuView: </span><span class="no">BottomNavigationMenuView</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">getChildAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">as</span> <span class="no">BottomNavigationMenuView</span>
-        <span class="n">val</span> <span class="n">bottomNavigationItemView</span>  <span class="o">=</span> <span class="n">bottomNavigationMenuView</span><span class="p">.</span><span class="nf">getChildAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">as</span> <span class="no">BottomNavigationItemView</span>
-
-        <span class="n">val</span> <span class="n">badgeContainer</span> <span class="o">=</span> <span class="no">LayoutInflater</span><span class="p">.</span><span class="nf">from</span><span class="p">(</span><span class="n">this</span><span class="p">).</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">view_badge</span><span class="p">,</span> <span class="n">bottomNavigationMenuView</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
-        <span class="n">val</span> <span class="ss">firstBadgeCountText: </span><span class="no">TextView</span> <span class="o">=</span> <span class="n">badgeContainer</span><span class="p">.</span><span class="nf">findViewById</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">count</span><span class="p">)</span>
-        <span class="n">firstBadgeCountText</span><span class="p">.</span><span class="nf">text</span> <span class="o">=</span> <span class="s2">"99"</span>
-        <span class="n">bottomNavigationItemView</span><span class="p">.</span><span class="nf">addView</span><span class="p">(</span><span class="n">badgeContainer</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></figure>
+        val badgeContainer = LayoutInflater.from(this).inflate(R.layout.view_badge, bottomNavigationMenuView, false)
+        val firstBadgeCountText: TextView = badgeContainer.findViewById(R.id.count)
+        firstBadgeCountText.text = "99"
+        bottomNavigationItemView.addView(badgeContainer)
+    }
+</code></pre></div></div>
 
 <p>BottomNavigationView의 getChildAt 0부터 첫번째 BottomNavigationItemView 다.
 inflate 한 view 를 bottomNavigationItemView에 추가해서 사용하면 됨.</p>
@@ -306,29 +306,31 @@ implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
 
 <p>사용방법은 Badge 구현 빼고는 Support BottomNavigationView 와 비슷했다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">public</span> <span class="n">void</span> <span class="n">updateFirstBadge</span><span class="p">(</span><span class="n">int</span> <span class="n">count</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">removeBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="no">BadgeDrawable</span> <span class="n">badgeDrawable</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">showBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setBackgroundColor</span><span class="p">(</span><span class="n">getResources</span><span class="p">().</span><span class="nf">getColor</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">color</span><span class="p">.</span><span class="nf">red</span><span class="p">));</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setNumber</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
+            if (count &lt;= 0) {
+                bottomNavigationView.removeBadge(R.id.title_first);
+            } else {
+                BadgeDrawable badgeDrawable = bottomNavigationView.showBadge(R.id.title_first);
+                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
+                badgeDrawable.setNumber(count);
+            }
+        }
+</code></pre></div></div>
 
 <p>2020년 03 월 12일 기준 최신 버전
 implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.<br />
 적용하면 아래와 같다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">    <span class="kp">public</span> <span class="n">void</span> <span class="n">updateFirstBadge</span><span class="p">(</span><span class="n">int</span> <span class="n">count</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">removeBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="no">BadgeDrawable</span> <span class="n">badgeDrawable</span> <span class="o">=</span> <span class="n">bottomNavigationView</span><span class="p">.</span><span class="nf">getOrCreateBadge</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">title_first</span><span class="p">);</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setBackgroundColor</span><span class="p">(</span><span class="n">getResources</span><span class="p">().</span><span class="nf">getColor</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">color</span><span class="p">.</span><span class="nf">red</span><span class="p">));</span>
-                <span class="n">badgeDrawable</span><span class="p">.</span><span class="nf">setNumber</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
+            if (count &lt;= 0) {
+                bottomNavigationView.removeBadge(R.id.title_first);
+            } else {
+                BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.title_first);
+                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
+                badgeDrawable.setNumber(count);
+            }
+        }
+</code></pre></div></div>
 
     </div><!-- /.entry-content -->
     
@@ -401,20 +403,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-appcenter/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-appcenter/" title="AppCenter Distribute">AppCenter Distribute</a></h4>
-        <span>Published on March 03, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

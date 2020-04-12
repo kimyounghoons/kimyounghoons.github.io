@@ -283,9 +283,8 @@
 TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.<br />
 해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.<br />
 EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에서 주는 Editable s 을 s.clear 와 s.append 를 통해 추가 해 주었고</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">android</span><span class="ss">:inputType</span><span class="o">=</span><span class="s2">"number|textNoSuggestions"</span></code></pre></figure>
-
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android:inputType="number|textNoSuggestions"
+</code></pre></div></div>
 <p>inputType 을 number 에서 위와 같이 변경 해 준뒤 해당 이슈를 수정 할 수 있었고 변경 시 빠르게 변경할 수 있었다.</p>
 
     </div><!-- /.entry-content -->
@@ -359,20 +358,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-resconfig/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

@@ -281,18 +281,21 @@
 
 <p>DrawerLayout 사용하는 layout 에서의 구조</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span> 
-        <span class="err">메인</span> <span class="err">뷰</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+&lt;DrawerLayout&gt;
+    &lt;ConstraintLayout&gt; 
+        메인 뷰
+    &lt;/ConstraintLayout&gt;
 
     &lt;NavigationView&gt;  
-    &lt;/</span><span class="no">NavigationView</span><span class="o">&gt;</span>
+    &lt;/NavigationView&gt;
 
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
-        <span class="err">딤처리</span> <span class="err">팝업</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
-&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
+    &lt;ConstraintLayout&gt;  
+        딤처리 팝업
+    &lt;/ConstraintLayout&gt;
+&lt;/DrawerLayout&gt;
+
+</code></pre></div></div>
 
 <p>이런식으로 구성 했다.</p>
 
@@ -304,19 +307,22 @@
 
 <p>하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
-        <span class="err">메인</span> <span class="err">뷰</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+&lt;DrawerLayout&gt;
+    &lt;ConstraintLayout&gt;  
+        메인 뷰
+    &lt;/ConstraintLayout&gt;
 
     &lt;ConstraintLayout&gt;  
         딤처리 팝업
-    &lt;/</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>
+    &lt;/ConstraintLayout&gt;
 
-    <span class="o">&lt;</span><span class="no">NavigationView</span><span class="o">&gt;</span>  
-    <span class="o">&lt;</span><span class="sr">/NavigationView&gt;
+    &lt;NavigationView&gt;  
+    &lt;/NavigationView&gt;
 
-&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
+&lt;/DrawerLayout&gt;
+
+</code></pre></div></div>
 
 <p>그렇게 처리하니 이슈가 사라짐!!</p>
 <div class="redText">
@@ -394,20 +400,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

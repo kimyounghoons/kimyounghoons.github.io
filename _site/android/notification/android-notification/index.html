@@ -291,21 +291,21 @@
 </ol>
 
 <p>1.NotificationManager 얻어옴</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">val</span> <span class="ss">notificationManager: </span><span class="no">NotificationManager</span> <span class="o">=</span> <span class="n">getSystemService</span><span class="p">(</span><span class="no">Context</span><span class="o">.</span><span class="no">NOTIFICATION_SERVICE</span><span class="p">)</span> <span class="n">as</span> <span class="no">NotificationManager</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+</code></pre></div></div>
 
 <p>2.오레오 버전 이상이면 Channel 생성 아니면 패스</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">     <span class="k">if</span> <span class="p">(</span><span class="no">Build</span><span class="o">.</span><span class="no">VERSION</span><span class="o">.</span><span class="no">SDK_INT</span> <span class="o">&gt;=</span> <span class="no">Build</span><span class="o">.</span><span class="no">VERSION_CODES</span><span class="o">.</span><span class="no">O</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">val</span> <span class="n">channel</span> <span class="o">=</span> <span class="no">NotificationChannel</span><span class="p">(</span><span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">),</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">),</span> <span class="no">NotificationManager</span><span class="o">.</span><span class="no">IMPORTANCE_HIGH</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">description</span> <span class="o">=</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">enableLights</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">lightColor</span> <span class="o">=</span> <span class="no">Color</span><span class="o">.</span><span class="no">BLUE</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">enableVibration</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">vibrationPattern</span> <span class="o">=</span> <span class="n">longArrayOf</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-                <span class="n">channel</span><span class="p">.</span><span class="nf">lockscreenVisibility</span> <span class="o">=</span> <span class="no">NotificationCompat</span><span class="o">.</span><span class="no">VISIBILITY_PUBLIC</span>
-                <span class="n">notificationManager</span><span class="p">.</span><span class="nf">createNotificationChannel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
-            <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(getString(R.string.app_name) + getString(R.string.priority_high), getString(R.string.app_name) + getString(R.string.priority_high), NotificationManager.IMPORTANCE_HIGH)
+                channel.description = getString(R.string.app_name) + getString(R.string.priority_high)
+                channel.enableLights(true)
+                channel.lightColor = Color.BLUE
+                channel.enableVibration(true)
+                channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
+                channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+                notificationManager.createNotificationChannel(channel)
+            }
+</code></pre></div></div>
 
 <p>Channel 생성 시 IMPORTANCE 설정에 따라 알림이 다르다.
 NotificationManager.IMPORTANCE_HIGH :소리 및 팝업 (헤드업 알림)
@@ -314,63 +314,64 @@ NotificationManager.IMPORTANCE_LOW : 소리 없음  <br />
 NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
 
 <p>3.PendingIntent생성</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="n">val</span> <span class="n">intent</span> <span class="o">=</span> <span class="no">Intent</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="no">MainActivity</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="nf">java</span><span class="p">)</span>
-            <span class="n">remoteMessage</span><span class="p">.</span><span class="nf">data?</span><span class="p">.</span><span class="nf">apply</span> <span class="p">{</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">JSON_LETTER</span><span class="p">,</span> <span class="n">get</span><span class="p">(</span><span class="no">JSON_LETTER</span><span class="p">))</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">putExtra</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">,</span> <span class="n">get</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">))</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">addFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_CLEAR_TOP</span><span class="p">)</span>
-                <span class="n">intent</span><span class="p">.</span><span class="nf">addFlags</span><span class="p">(</span><span class="no">Intent</span><span class="o">.</span><span class="no">FLAG_ACTIVITY_SINGLE_TOP</span><span class="p">)</span>
-            <span class="p">}</span>
-   <span class="n">val</span> <span class="n">pendingIntent</span> <span class="o">=</span> <span class="no">PendingIntent</span><span class="p">.</span><span class="nf">getActivity</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">intent</span><span class="p">,</span> <span class="no">PendingIntent</span><span class="o">.</span><span class="no">FLAG_UPDATE_CURRENT</span><span class="p">)</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val intent = Intent(applicationContext, MainActivity::class.java)
+            remoteMessage.data?.apply {
+                intent.putExtra(JSON_LETTER, get(JSON_LETTER))
+                intent.putExtra(JSON_ANSWER, get(JSON_ANSWER))
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
+   val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+</code></pre></div></div>
 
 <p>알림 팝업을 누르게 되면 PendingIntent 에 실어 두었던 Intent 정보를 가져와서 사용할 수 있다.</p>
 
 <p>4.NotificationCompat 생성</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="n">val</span> <span class="n">builder</span> <span class="o">=</span> <span class="no">NotificationCompat</span><span class="o">.</span><span class="no">Builder</span><span class="p">(</span><span class="n">applicationContext</span><span class="p">,</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">app_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">getString</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">string</span><span class="p">.</span><span class="nf">priority_high</span><span class="p">))</span>
-                    <span class="p">.</span><span class="nf">setSmallIcon</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">mipmap</span><span class="p">.</span><span class="nf">ic_launcher</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setContentTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setContentText</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setDefaults</span><span class="p">(</span><span class="no">Notification</span><span class="o">.</span><span class="no">DEFAULT_VIBRATE</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setPriority</span><span class="p">(</span><span class="no">NotificationCompat</span><span class="o">.</span><span class="no">PRIORITY_HIGH</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setAutoCancel</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setContentIntent</span><span class="p">(</span><span class="n">pendingIntent</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nf">setVisibility</span><span class="p">(</span><span class="no">NotificationCompat</span><span class="o">.</span><span class="no">VISIBILITY_PUBLIC</span><span class="p">)</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val builder = NotificationCompat.Builder(applicationContext, getString(R.string.app_name) + getString(R.string.priority_high))
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setDefaults(Notification.DEFAULT_VIBRATE)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+</code></pre></div></div>
 
 <p>5.빌드한 Notification을 notificationManager에 붙여주면 끝!</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">notificationManager</span><span class="p">.</span><span class="nf">notify</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">builder</span><span class="p">.</span><span class="nf">build</span><span class="p">())</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notificationManager.notify(1, builder.build())
+</code></pre></div></div>
 
 <p>6.Notification 클릭 시 핸들</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">override</span> <span class="n">fun</span> <span class="n">onNewIntent</span><span class="p">(</span><span class="ss">intent: </span><span class="no">Intent</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onNewIntent</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span>
-        <span class="n">intent?</span><span class="p">.</span><span class="nf">apply</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">intent</span><span class="p">.</span><span class="nf">extras</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">)</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">val</span> <span class="n">jsonLetter</span> <span class="o">=</span> <span class="n">intent</span><span class="p">.</span><span class="nf">extras</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">JSON_LETTER</span><span class="p">)</span>
-                <span class="n">val</span> <span class="n">jsonAnswer</span> <span class="o">=</span> <span class="n">intent</span><span class="p">.</span><span class="nf">extras</span><span class="p">.</span><span class="nf">getString</span><span class="p">(</span><span class="no">JSON_ANSWER</span><span class="p">,</span> <span class="no">EMPTY</span><span class="p">)</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">supportFragmentManager</span><span class="p">.</span><span class="nf">backStackEntryCount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">jsonLetter</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">val</span> <span class="n">answer</span> <span class="o">=</span> <span class="no">Gson</span><span class="p">().</span><span class="nf">fromJson</span><span class="p">(</span><span class="n">jsonAnswer</span><span class="p">,</span> <span class="no">Answer</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="nf">java</span><span class="p">)</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
-                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">jsonLetter</span><span class="p">,</span> <span class="n">jsonAnswer</span><span class="p">)</span>
-                    <span class="p">}</span>
-                    <span class="k">return</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                    <span class="n">openHome</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">jsonLetter</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">val</span> <span class="n">answer</span> <span class="o">=</span> <span class="no">Gson</span><span class="p">().</span><span class="nf">fromJson</span><span class="p">(</span><span class="n">jsonAnswer</span><span class="p">,</span> <span class="no">Answer</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="nf">java</span><span class="p">)</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
-                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                        <span class="n">openReAnswers</span><span class="p">(</span><span class="n">jsonLetter</span><span class="p">,</span> <span class="n">jsonAnswer</span><span class="p">)</span>
-                    <span class="p">}</span>
-                    <span class="k">return</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.apply {
+            if (intent.extras.getString(JSON_ANSWER) != null) {
+                val jsonLetter = intent.extras.getString(JSON_LETTER)
+                val jsonAnswer = intent.extras.getString(JSON_ANSWER, EMPTY)
+                if (supportFragmentManager.backStackEntryCount &gt; 0) {
+                    if (jsonLetter == null) {
+                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
+                        openReAnswers(answer)
+                    } else {
+                        openReAnswers(jsonLetter, jsonAnswer)
+                    }
+                    return
+                } else {
+                    openHome()
+                    if (jsonLetter == null) {
+                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
+                        openReAnswers(answer)
+                    } else {
+                        openReAnswers(jsonLetter, jsonAnswer)
+                    }
+                    return
+                }
+            }
+        }
+    }
+</code></pre></div></div>
 
 <p>Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.</p>
 
@@ -445,20 +446,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/firebase/firebase-push/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

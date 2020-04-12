@@ -306,38 +306,41 @@
 <h3 id="let-applyrun-with-차이점">let, apply,run, with 차이점</h3>
 <p>let : 이 함수를 호출한 객체를 이어지는 함수 블록의 인자로 전달한다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">getPadding</span><span class="p">().</span><span class="nf">let</span> <span class="p">{</span>
-        <span class="n">it</span> <span class="err">은</span> <span class="err">패딩</span> <span class="err">값</span>
-        <span class="n">setPadding</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getPadding().let {
+        it 은 패딩 값
+        setPadding(it, 0, it, 0)
+    }
+</code></pre></div></div>
 
 <p>apply : 이 함수를 호출한 객체를 이어지는 함수 블록의 리시버로 전달한다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">params</span><span class="p">.</span><span class="nf">apply</span> <span class="p">{</span>
-        <span class="n">weight</span> <span class="o">=</span> <span class="mi">1</span><span class="n">f</span>     <span class="n">params</span><span class="err">를</span> <span class="err">리시버로</span> <span class="err">전달</span> <span class="err">받았기</span> <span class="err">때문에</span> <span class="n">params</span><span class="p">.</span><span class="nf">weight</span> <span class="err">이나</span> <span class="n">params</span><span class="p">.</span><span class="nf">topMargin</span> <span class="err">바로사용</span>
-        <span class="n">topMargin</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>params.apply {
+        weight = 1f     params를 리시버로 전달 받았기 때문에 params.weight 이나 params.topMargin 바로사용
+        topMargin = 100
+    }
+</code></pre></div></div>
 
 <p>with : 인자로 받은 객체를 이어지는 함수 블록의 리시버로 전달, block 함수의 결과를 반환</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">with</span><span class="p">(</span><span class="n">textView</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="s2">"textView!!!"</span>
-        <span class="n">gravity</span> <span class="o">=</span> <span class="no">Gravity</span><span class="o">.</span><span class="no">CENTER_HORIZONTAL</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with(textView) {
+        text = "textView!!!"
+        gravity = Gravity.CENTER_HORIZONTAL
+    }
+</code></pre></div></div>
 
 <p>run : 인자가 없는 익명 함수처럼 사용하는 형태와 객체에서 호출하는 형태 제공
 함수형 인자 block 을 호출하고 결과반환 또는 호출한 객체를 함수형 인자 block의 리시버로 전달하고 그 결과를 반환한다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val AplusB = run {
+      val a = 1
+      val b = 2
+      a + b
+  }
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">val</span> <span class="no">AplusB</span> <span class="o">=</span> <span class="n">run</span> <span class="p">{</span>
-      <span class="n">val</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-      <span class="n">val</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
-      <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-  <span class="p">}</span>
-
-<span class="n">textView?</span><span class="p">.</span><span class="nf">run</span> <span class="p">{</span>  <span class="n">with</span> <span class="err">와</span> <span class="err">비슷하지만</span> <span class="n">textView</span> <span class="err">의</span> <span class="err">널체크를</span> <span class="err">해야</span> <span class="err">하는경우</span> <span class="err">사용하면</span> <span class="err">좋다</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="s2">"textView!!!"</span>
-        <span class="n">gravity</span> <span class="o">=</span> <span class="no">Gravity</span><span class="o">.</span><span class="no">CENTER_HORIZONTAL</span>
-    <span class="p">}</span></code></pre></figure>
+textView?.run {  with 와 비슷하지만 textView 의 널체크를 해야 하는경우 사용하면 좋다
+        text = "textView!!!"
+        gravity = Gravity.CENTER_HORIZONTAL
+    }
+</code></pre></div></div>
 
 <h3 id="kotlin-samsingle-abstract-method-질문">kotlin SAM(Single Abstract Method) 질문</h3>
 <p>선언부가 Java에 있고 ,Kotlin에서 호출 할 경우 SAM 이 동작
@@ -424,12 +427,11 @@ lazy를 사용하는 경우 기본 synchronized 로 동작한다.</p>
 
 <h3 id="viewmodel-rotate-상황에서-파기-왜-안되는지-과정-">viewModel rotate 상황에서 파기 왜 안되는지 과정 ?</h3>
 <p>ViewModelStoreOwner 인터페이스를 가지고 있는 Activity 또는 Fragment 는 viewModelStore를 가지고 있다. rotate 될 때 onDestroy 가 불리게 되는데</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">      <span class="n">boolean</span> <span class="n">isChangingConfigurations</span> <span class="o">=</span> <span class="n">activity</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="n">activity</span><span class="p">.</span><span class="nf">isChangingConfigurations</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">mViewModelStore</span> <span class="o">!=</span> <span class="n">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">isChangingConfigurations</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">this</span><span class="p">.</span><span class="nf">mViewModelStore</span><span class="p">.</span><span class="nf">clear</span><span class="p">();</span>
-        <span class="p">}</span></code></pre></figure>
-
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      boolean isChangingConfigurations = activity != null &amp;&amp; activity.isChangingConfigurations();
+        if (this.mViewModelStore != null &amp;&amp; !isChangingConfigurations) {
+            this.mViewModelStore.clear();
+        }
+</code></pre></div></div>
 <p>viewModelStore 가 null 이 아니고 configuration변화가 없을때 clear 를 불러 주기 때문에 rotate상황에서 viewModel이 clear 되지 않는다.</p>
 
 <h3 id="multi-dex">Multi dex</h3>
@@ -587,20 +589,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/sample/sample-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

@@ -276,6 +276,69 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/actionbar_menu-post/" rel="bookmark" title="ActionBar Menu in Fragment" itemprop="url">ActionBar Menu in Fragment</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;menu</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;item</span>
+        <span class="na">android:id=</span><span class="s">"@+id/menu_answer_letter"</span>
+        <span class="na">android:title=</span><span class="s">"@string/answer"</span>
+        <span class="na">app:showAsAction=</span><span class="s">"always"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/menu&gt;</span>
+</code></pre></div></div>
+
+<p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
+
+<p>Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.</p>
+
+<p>위치는 OnCreateView 안에 넣어주면 됨.</p>
+
+<p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail_letter, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+</code></pre></div></div>
+
+<p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
+       R.id.menu_answer_letter -&gt;{
+           locateListener?.openAnswer(letter)
+           true
+       }
+        else -&gt;{
+            false
+        }
+}
+</code></pre></div></div>
+
+<p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-05T00:00:00+09:00"><a href="http://localhost:4000/android/wirelessbuild-post/">November 05, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -337,18 +400,21 @@ adb tcpip 5555 치면</p>
 
 <p>DrawerLayout 사용하는 layout 에서의 구조</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span> 
-        <span class="err">메인</span> <span class="err">뷰</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+&lt;DrawerLayout&gt;
+    &lt;ConstraintLayout&gt; 
+        메인 뷰
+    &lt;/ConstraintLayout&gt;
 
     &lt;NavigationView&gt;  
-    &lt;/</span><span class="no">NavigationView</span><span class="o">&gt;</span>
+    &lt;/NavigationView&gt;
 
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
-        <span class="err">딤처리</span> <span class="err">팝업</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
-&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
+    &lt;ConstraintLayout&gt;  
+        딤처리 팝업
+    &lt;/ConstraintLayout&gt;
+&lt;/DrawerLayout&gt;
+
+</code></pre></div></div>
 
 <p>이런식으로 구성 했다.</p>
 
@@ -360,19 +426,22 @@ adb tcpip 5555 치면</p>
 
 <p>하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="no">DrawerLayout</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>  
-        <span class="err">메인</span> <span class="err">뷰</span>
-    <span class="o">&lt;</span><span class="sr">/ConstraintLayout&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+&lt;DrawerLayout&gt;
+    &lt;ConstraintLayout&gt;  
+        메인 뷰
+    &lt;/ConstraintLayout&gt;
 
     &lt;ConstraintLayout&gt;  
         딤처리 팝업
-    &lt;/</span><span class="no">ConstraintLayout</span><span class="o">&gt;</span>
+    &lt;/ConstraintLayout&gt;
 
-    <span class="o">&lt;</span><span class="no">NavigationView</span><span class="o">&gt;</span>  
-    <span class="o">&lt;</span><span class="sr">/NavigationView&gt;
+    &lt;NavigationView&gt;  
+    &lt;/NavigationView&gt;
 
-&lt;/</span><span class="no">DrawerLayout</span><span class="o">&gt;</span></code></pre></figure>
+&lt;/DrawerLayout&gt;
+
+</code></pre></div></div>
 
 <p>그렇게 처리하니 이슈가 사라짐!!</p>
 <div class="redText">
@@ -459,57 +528,26 @@ adb uninstall <패키지명></패키지명></패키지명></p>
 <p>image selector
 image_selector.xml 파일 만들기</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">drawable</span><span class="o">=</span><span class="s2">"@drawable/image_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:drawable</span><span class="o">=</span><span class="s2">"@drawable/image_default"</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">"@drawable/image_pressed"</span> <span class="na">android:state_pressed=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">"@drawable/image_default"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/selector&gt;</span>
+</code></pre></div></div>
 
 <p>사용 : android:src=”@drawable/image_selector”</p>
 
 <p>text selector</p>
 
 <p>text_selector.xml 파일 만들기</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">selector</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/color_pressed"</span> <span class="n">android</span><span class="ss">:state_pressed</span><span class="o">=</span><span class="s2">"true"</span><span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span> <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/color_default"</span> <span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/selector&gt;</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;item</span> <span class="na">android:color=</span><span class="s">"@color/color_pressed"</span> <span class="na">android:state_pressed=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;item</span> <span class="na">android:color=</span><span class="s">"@color/color_default"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/selector&gt;</span>
+</code></pre></div></div>
 
 <p>사용 : android:textColor=”@drawable/text_selector”</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00+09:00"><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/">October 30, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" rel="bookmark" title="Visual Studio Code app 환경변수 설정" itemprop="url">Visual Studio Code app 환경변수 설정</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="환경변수-설정">환경변수 설정</h2>
-
-<p>bash_profile 을 열어준다.</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">nano</span> <span class="o">~/</span><span class="nc">.bash_profile</span></code></pre></figure>
-
-<p>bash_profile 에 alias 설정을 해주면 code로 앱을 실행 시킬수 있다.</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">alias</span> <span class="nt">code</span><span class="o">=</span><span class="s1">"open -a /Applications/Visual\ Studio\ Code.app/"</span></code></pre></figure>
 
       
   </div><!-- /.entry-content -->

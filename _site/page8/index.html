@@ -276,6 +276,49 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
+
+<p>외부공유 소스</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>String title = context.getString(R.string.title);
+String plainContent = context.getString(R.string.plain_content);
+String htmlContent = context.getString(R.string.html_content);
+
+Intent shareIntent = new Intent(Intent.ACTION_SEND);
+shareIntent.setType("text/plain");
+shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+shareIntent.putExtra(Intent.EXTRA_TEXT, plainContent);
+shareIntent.putExtra(Intent.EXTRA_HTML_TEXT, htmlContent);
+context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_text)));
+</code></pre></div></div>
+
+<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
+앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
+Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
+HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
+G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-firestore-post/">November 12, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -330,20 +373,21 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
 
 <p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">boolean</span> <span class="n">onTouch</span><span class="p">(</span><span class="no">View</span> <span class="n">v</span><span class="p">,</span> <span class="no">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   @Override
+    public boolean onTouch(View v, MotionEvent event) {
 
-        <span class="n">switch</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="nf">getAction</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_DOWN</span><span class="p">:</span>
-                <span class="n">v</span><span class="p">.</span><span class="nf">setAlpha</span><span class="p">((</span><span class="n">float</span><span class="p">)</span> <span class="mf">0.5</span><span class="p">);</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_UP</span><span class="p">:</span>
-            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_CANCEL</span><span class="p">:</span>
-                <span class="n">v</span><span class="p">.</span><span class="nf">setAlpha</span><span class="p">((</span><span class="n">float</span><span class="p">)</span> <span class="mi">1</span><span class="p">);</span>
-                <span class="k">break</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
-    <span class="p">}</span></code></pre></figure>
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                v.setAlpha((float) 0.5);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                v.setAlpha((float) 1);
+                break;
+        }
+        return false;
+    }
+</code></pre></div></div>
 
 <p>ACTION_DOWN 상태에서는 Pressed 상태 
 ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
@@ -376,28 +420,30 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
   <div class="entry-content">
       <p>우선 자바 소스</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">boolean</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="no">MenuItem</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">switch</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">getItemId</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span><span class="p">:</span>
-                <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
-                <span class="k">return</span> <span class="kp">true</span><span class="p">;</span>
-            <span class="ss">default: 
-                </span><span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_write_letter:
+                obtainViewModel().sendLetter()
+                return true;
+            default: 
+                return false;
+        }
+    }
+</code></pre></div></div>
 
 <p>아래는 코틀린</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">)</span> <span class="p">{</span>
-        <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_write_letter</span> <span class="o">-&gt;</span> <span class="p">{</span>
-            <span class="n">obtainViewModel</span><span class="p">().</span><span class="nf">sendLetter</span><span class="p">()</span>
-            <span class="kp">true</span>
-        <span class="p">}</span>
-        <span class="k">else</span> <span class="o">-&gt;</span> <span class="p">{</span>
-            <span class="kp">false</span>
-        <span class="p">}</span>
-    <span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menu_write_letter -&gt; {
+            obtainViewModel().sendLetter()
+            true
+        }
+        else -&gt; {
+            false
+        }
+    }
+</code></pre></div></div>
 
 <p>코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.</p>
 
@@ -411,20 +457,22 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 
 <p>1번 예를 한번 보면</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">when</span><span class="p">(</span><span class="n">view</span><span class="p">){</span>
-    <span class="n">is</span> <span class="no">TextView</span> <span class="o">-&gt;</span> <span class="n">toast</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="nf">text</span><span class="p">)</span>
-    <span class="k">else</span> <span class="o">-&gt;</span> 
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>when(view){
+    is TextView -&gt; toast(view.text)
+    else -&gt; 
+}
+</code></pre></div></div>
 
 <p>is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.</p>
 
 <p>2번 예를 한번 보면</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">val</span> <span class="n">str</span> <span class="o">=</span> <span class="k">when</span><span class="p">{</span>
-    <span class="n">x</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span> <span class="o">-&gt;</span> <span class="s2">"cheap"</span>
-    <span class="n">s</span><span class="p">.</span><span class="nf">contains</span><span class="p">(</span><span class="s2">"money"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"Welcome"</span>
-    <span class="k">else</span> <span class="o">-&gt;</span> <span class="s2">""</span>
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val str = when{
+    x in 1..5 -&gt; "cheap"
+    s.contains("money") -&gt; "Welcome"
+    else -&gt; ""
+}
+</code></pre></div></div>
 
 <p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
 
@@ -454,21 +502,22 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 
 <p>drawable/파일명.xml 만들어 준다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">shape</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span><span class="o">&gt;</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;shape</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">solid</span> <span class="n">android</span><span class="p">:</span><span class="n">color</span><span class="o">=</span><span class="s2">"@color/white"</span><span class="o">/&gt;</span>
+    <span class="nt">&lt;solid</span> <span class="na">android:color=</span><span class="s">"@color/white"</span><span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">stroke</span> <span class="n">android</span><span class="ss">:width</span><span class="o">=</span><span class="s2">"1dp"</span>
-        <span class="n">android</span><span class="ss">:color</span><span class="o">=</span><span class="s2">"@color/gray"</span><span class="o">/&gt;</span>
+    <span class="nt">&lt;stroke</span> <span class="na">android:width=</span><span class="s">"1dp"</span>
+        <span class="na">android:color=</span><span class="s">"@color/gray"</span><span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">padding</span> <span class="n">android</span><span class="ss">:bottom</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:left</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:right</span><span class="o">=</span><span class="s2">"10dp"</span>
-        <span class="n">android</span><span class="ss">:top</span><span class="o">=</span><span class="s2">"10dp"</span><span class="o">/&gt;</span>
+    <span class="nt">&lt;padding</span> <span class="na">android:bottom=</span><span class="s">"10dp"</span>
+        <span class="na">android:left=</span><span class="s">"10dp"</span>
+        <span class="na">android:right=</span><span class="s">"10dp"</span>
+        <span class="na">android:top=</span><span class="s">"10dp"</span><span class="nt">/&gt;</span>
 
-    <span class="o">&lt;</span><span class="n">corners</span> <span class="n">android</span><span class="ss">:radius</span><span class="o">=</span><span class="s2">"7dp"</span><span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/shape&gt;</span></code></pre></figure>
+    <span class="nt">&lt;corners</span> <span class="na">android:radius=</span><span class="s">"7dp"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/shape&gt;</span>
+</code></pre></div></div>
 
 <p>solid 안에 컬러는 도형의 내부 색상</p>
 
@@ -477,66 +526,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 <p>padding 은 도형 안쪽 여백</p>
 
 <p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/actionbar_menu-post/" rel="bookmark" title="ActionBar Menu in Fragment" itemprop="url">ActionBar Menu in Fragment</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">?</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="n">menu</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">android</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res/android"</span>
-    <span class="n">xmlns</span><span class="p">:</span><span class="n">app</span><span class="o">=</span><span class="s2">"http://schemas.android.com/apk/res-auto"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">item</span>
-        <span class="n">android</span><span class="ss">:id</span><span class="o">=</span><span class="s2">"@+id/menu_answer_letter"</span>
-        <span class="n">android</span><span class="ss">:title</span><span class="o">=</span><span class="s2">"@string/answer"</span>
-        <span class="n">app</span><span class="ss">:showAsAction</span><span class="o">=</span><span class="s2">"always"</span><span class="o">/&gt;</span>
-<span class="o">&lt;</span><span class="sr">/menu&gt;</span></code></pre></figure>
-
-<p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
-
-<p>Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.</p>
-
-<p>위치는 OnCreateView 안에 넣어주면 됨.</p>
-
-<p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreateOptionsMenu</span><span class="p">(</span><span class="ss">menu: </span><span class="no">Menu</span><span class="p">?,</span> <span class="ss">inflater: </span><span class="no">MenuInflater</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">inflater</span><span class="p">.</span><span class="nf">inflate</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">menu</span><span class="p">.</span><span class="nf">menu_detail_letter</span><span class="p">,</span> <span class="n">menu</span><span class="p">)</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onCreateOptionsMenu</span><span class="p">(</span><span class="n">menu</span><span class="p">,</span> <span class="n">inflater</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></figure>
-
-<p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">override</span> <span class="n">fun</span> <span class="n">onOptionsItemSelected</span><span class="p">(</span><span class="ss">item: </span><span class="no">MenuItem</span><span class="p">):</span> <span class="no">Boolean</span> <span class="o">=</span> <span class="k">when</span> <span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="nf">itemId</span><span class="p">){</span>
-       <span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">menu_answer_letter</span> <span class="o">-&gt;</span><span class="p">{</span>
-           <span class="n">locateListener?</span><span class="p">.</span><span class="nf">openAnswer</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
-           <span class="kp">true</span>
-       <span class="p">}</span>
-        <span class="k">else</span> <span class="o">-&gt;</span><span class="p">{</span>
-            <span class="kp">false</span>
-        <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
 
       
   </div><!-- /.entry-content -->

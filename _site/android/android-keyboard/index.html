@@ -281,48 +281,52 @@
 
 <p>키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"> <span class="kp">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">showKeyboard</span><span class="p">(</span><span class="no">EditText</span> <span class="n">editText</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">editText</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="n">editText</span><span class="p">.</span><span class="nf">requestFocus</span><span class="p">();</span>
-        <span class="n">mInputMethodManager</span><span class="p">.</span><span class="nf">showSoftInput</span><span class="p">(</span><span class="n">editText</span><span class="p">,</span> <span class="no">InputMethodManager</span><span class="o">.</span><span class="no">SHOW_FORCED</span> <span class="o">|</span> <span class="no">InputMethodManager</span><span class="o">.</span><span class="no">HIDE_IMPLICIT_ONLY</span><span class="p">);</span>
- <span class="p">}</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ public static void showKeyboard(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+        editText.requestFocus();
+        mInputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED | InputMethodManager.HIDE_IMPLICIT_ONLY);
+ }
 
- <span class="kp">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">clearFocus</span><span class="p">(</span><span class="no">Activity</span> <span class="n">activity</span><span class="p">)</span> <span class="p">{</span>
-        <span class="no">View</span> <span class="n">v</span> <span class="o">=</span> <span class="n">activity</span><span class="p">.</span><span class="nf">getCurrentFocus</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="no">InputMethodManager</span> <span class="n">imm</span> <span class="o">=</span> <span class="p">(</span><span class="no">InputMethodManager</span><span class="p">)</span> <span class="n">activity</span><span class="p">.</span><span class="nf">getSystemService</span><span class="p">(</span><span class="no">Context</span><span class="o">.</span><span class="no">INPUT_METHOD_SERVICE</span><span class="p">);</span>
-        <span class="n">imm</span><span class="p">.</span><span class="nf">hideSoftInputFromWindow</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="nf">getWindowToken</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
-        <span class="n">v</span><span class="p">.</span><span class="nf">clearFocus</span><span class="p">();</span>
-        <span class="n">activity</span><span class="p">.</span><span class="nf">getWindow</span><span class="p">().</span><span class="nf">setSoftInputMode</span><span class="p">(</span><span class="no">WindowManager</span><span class="o">.</span><span class="no">LayoutParams</span><span class="o">.</span><span class="no">SOFT_INPUT_STATE_ALWAYS_HIDDEN</span><span class="p">);</span>
- <span class="p">}</span></code></pre></figure>
+ public static void clearFocus(Activity activity) {
+        View v = activity.getCurrentFocus();
+        if (v == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        v.clearFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+ }
+
+</code></pre></div></div>
 
 <p>키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.<br />
 editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">int</span> <span class="n">lastHeightDiff</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">boolean</span> <span class="n">isOpenKeyboard</span> <span class="o">=</span> <span class="kp">false</span><span class="p">;</span>
-    <span class="kp">private</span> <span class="n">final</span> <span class="no">ViewTreeObserver</span><span class="o">.</span><span class="no">OnGlobalLayoutListener</span> <span class="n">mOnGlobalLayoutListener</span> <span class="o">=</span> <span class="n">new</span> <span class="no">ViewTreeObserver</span><span class="o">.</span><span class="no">OnGlobalLayoutListener</span><span class="p">()</span> <span class="p">{</span>
-        <span class="vi">@Override</span>
-        <span class="n">synchronized</span> <span class="kp">public</span> <span class="n">void</span> <span class="n">onGlobalLayout</span><span class="p">()</span> <span class="p">{</span>
-            <span class="no">View</span> <span class="n">activityRootView</span> <span class="o">=</span> <span class="n">mActivity</span><span class="p">.</span><span class="nf">getWindow</span><span class="p">().</span><span class="nf">getDecorView</span><span class="p">().</span><span class="nf">findViewById</span><span class="p">(</span><span class="n">android</span><span class="o">.</span><span class="no">R</span><span class="p">.</span><span class="nf">id</span><span class="p">.</span><span class="nf">content</span><span class="p">);</span>
-            <span class="n">int</span> <span class="n">heightDiff</span> <span class="o">=</span> <span class="n">activityRootView</span><span class="p">.</span><span class="nf">getRootView</span><span class="p">().</span><span class="nf">getHeight</span><span class="p">()</span> <span class="o">-</span> <span class="n">activityRootView</span><span class="p">.</span><span class="nf">getHeight</span><span class="p">();</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">lastHeightDiff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">lastHeightDiff</span> <span class="o">=</span> <span class="n">heightDiff</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">heightDiff</span> <span class="o">&gt;</span> <span class="n">lastHeightDiff</span><span class="p">)</span> <span class="p">{</span> <span class="sr">//</span><span class="n">keyboard</span> <span class="n">show</span>
-                <span class="n">isOpenKeyboard</span> <span class="o">=</span> <span class="kp">true</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="sr">//</span><span class="n">keyboard</span> <span class="n">hide</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">isOpenKeyboard</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">clearFocus</span><span class="p">();</span>
-                    <span class="n">isOpenKeyboard</span> <span class="o">=</span> <span class="kp">false</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">};</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int lastHeightDiff = 0;
+    boolean isOpenKeyboard = false;
+    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        synchronized public void onGlobalLayout() {
+            View activityRootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
+            int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+            if (lastHeightDiff == 0) {
+                lastHeightDiff = heightDiff;
+            }
+            if (heightDiff &gt; lastHeightDiff) { //keyboard show
+                isOpenKeyboard = true;
+            } else {//keyboard hide
+                if (isOpenKeyboard) {
+                    clearFocus();
+                    isOpenKeyboard = false;
+                }
+            }
+        }
+    };
+</code></pre></div></div>
 
 <p>해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.<br />
 한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.</p>
@@ -398,20 +402,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-edittext_typing_slow/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

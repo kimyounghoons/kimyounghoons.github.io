@@ -291,27 +291,27 @@
 <p>첫번째 : 나는 한번만 실행 하고 싶은데 스크롤 시 계속 애니메이션 실행 되는 이슈가 있었다.<br />
 라이브러리 내부 코드를 보니 애니메이션이 다 끝나기 전에 해당 뷰가 Detach 되는 경우 Attach 될 때 강제로 animation을 실행 시키고 있었다.<br />
 그래서 다음과 같이 Detach 될때 애니메이션을 강제로 취소시켰다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Override
+public void onViewDetachedFromWindow(@NonNull ViewHolderGeneric holder) {
+    super.onViewDetachedFromWindow(holder);
+    if (holder instanceof LottieViewHolder) {
+        ((LottieViewHolder) holder).cancelLottieAnimation(); //아래에 LottieViewHolder method 
+    }
+}
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@Override</span>
-<span class="kp">public</span> <span class="n">void</span> <span class="n">onViewDetachedFromWindow</span><span class="p">(</span><span class="vi">@NonNull</span> <span class="no">ViewHolderGeneric</span> <span class="n">holder</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">super</span><span class="p">.</span><span class="nf">onViewDetachedFromWindow</span><span class="p">(</span><span class="n">holder</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">holder</span> <span class="n">instanceof</span> <span class="no">LottieViewHolder</span><span class="p">)</span> <span class="p">{</span>
-        <span class="p">((</span><span class="no">LottieViewHolder</span><span class="p">)</span> <span class="n">holder</span><span class="p">).</span><span class="nf">cancelLottieAnimation</span><span class="p">();</span> <span class="sr">//</span><span class="err">아래에</span> <span class="no">LottieViewHolder</span> <span class="nb">method</span> 
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="sr">//me</span><span class="n">thod</span> <span class="k">in</span> <span class="no">LottieViewHolder</span>
-<span class="kp">public</span> <span class="n">void</span> <span class="n">cancelLottieAnimation</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">isAnimating</span><span class="p">())</span> <span class="p">{</span>
-        <span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">cancelAnimation</span><span class="p">();</span>
-        <span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">setProgress</span><span class="p">(</span><span class="mi">1</span><span class="n">f</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+//method in LottieViewHolder
+public void cancelLottieAnimation() {
+    if (lottieAnimation.isAnimating()) {
+        lottieAnimation.cancelAnimation();
+        lottieAnimation.setProgress(1f);
+    }
+}
+</code></pre></div></div>
 
 <p>두번째 : 핸들러 사용 하지 않으면 playAnimation 정상 작동 하지 않는 이슈.<br />
 아래와 같이 처리해주었다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">new</span> <span class="no">Handler</span><span class="p">().</span><span class="nf">post</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">lottieAnimation</span><span class="p">.</span><span class="nf">playAnimation</span><span class="p">());</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new Handler().post(() -&gt; lottieAnimation.playAnimation());
+</code></pre></div></div>
 
 <p>이제는 편하게 애니메이션 적용해보자~!ㅎㅎ</p>
 
@@ -386,20 +386,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-rxjava-debounce/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Decorator Pattern (디자인 패턴 3장)",
+      "category" : "",
+      "tags"     : "Decorator Pattern",
+      "url"      : "http://localhost:4000/java/kotlin/android-decorator-pattern/",
+      "date"     : "2020-04-10 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "Observer Pattern (디자인 패턴 2장)",
       "category" : "",
       "tags"     : "Observer Pattern",

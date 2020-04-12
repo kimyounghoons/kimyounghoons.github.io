@@ -281,20 +281,21 @@
 
 <p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="vi">@Override</span>
-    <span class="kp">public</span> <span class="n">boolean</span> <span class="n">onTouch</span><span class="p">(</span><span class="no">View</span> <span class="n">v</span><span class="p">,</span> <span class="no">MotionEvent</span> <span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   @Override
+    public boolean onTouch(View v, MotionEvent event) {
 
-        <span class="n">switch</span> <span class="p">(</span><span class="n">event</span><span class="p">.</span><span class="nf">getAction</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_DOWN</span><span class="p">:</span>
-                <span class="n">v</span><span class="p">.</span><span class="nf">setAlpha</span><span class="p">((</span><span class="n">float</span><span class="p">)</span> <span class="mf">0.5</span><span class="p">);</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_UP</span><span class="p">:</span>
-            <span class="k">case</span> <span class="no">MotionEvent</span><span class="o">.</span><span class="no">ACTION_CANCEL</span><span class="p">:</span>
-                <span class="n">v</span><span class="p">.</span><span class="nf">setAlpha</span><span class="p">((</span><span class="n">float</span><span class="p">)</span> <span class="mi">1</span><span class="p">);</span>
-                <span class="k">break</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="kp">false</span><span class="p">;</span>
-    <span class="p">}</span></code></pre></figure>
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                v.setAlpha((float) 0.5);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                v.setAlpha((float) 1);
+                break;
+        }
+        return false;
+    }
+</code></pre></div></div>
 
 <p>ACTION_DOWN 상태에서는 Pressed 상태 
 ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
@@ -374,20 +375,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/kotlin/kotlin-when-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

@@ -280,53 +280,54 @@
       <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
 RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="no">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainActivity : AppCompatActivity() {
 
-    <span class="n">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">val</span> <span class="ss">compositeDisposable: </span><span class="no">CompositeDisposable</span> <span class="o">=</span> <span class="no">CompositeDisposable</span><span class="p">()</span>
-    <span class="n">var</span> <span class="ss">publishSubject: </span><span class="no">PublishSubject</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="no">PublishSubject</span><span class="p">.</span><span class="nf">create</span><span class="p">()</span>
+    var count = 0
+    val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    var publishSubject: PublishSubject&lt;String&gt; = PublishSubject.create()
 
-    <span class="n">override</span> <span class="n">fun</span> <span class="n">onCreate</span><span class="p">(</span><span class="ss">savedInstanceState: </span><span class="no">Bundle</span><span class="p">?)</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
-        <span class="n">setContentView</span><span class="p">(</span><span class="no">R</span><span class="p">.</span><span class="nf">layout</span><span class="p">.</span><span class="nf">activity_main</span><span class="p">)</span>
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        <span class="n">button</span><span class="p">.</span><span class="nf">setOnClickListener</span> <span class="p">{</span>
-            <span class="n">textView</span><span class="p">.</span><span class="nf">text</span> <span class="o">=</span> <span class="p">(</span><span class="o">++</span><span class="n">count</span><span class="p">).</span><span class="nf">toString</span><span class="p">()</span>
-            <span class="n">publishSubject</span><span class="p">.</span><span class="nf">onNext</span><span class="p">(</span><span class="n">count</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span>
-            <span class="no">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="s2">"kyh"</span><span class="p">,</span> <span class="s2">"count : $count"</span><span class="p">)</span>
-        <span class="p">}</span>
+        button.setOnClickListener {
+            textView.text = (++count).toString()
+            publishSubject.onNext(count.toString())
+            Log.d("kyh", "count : $count")
+        }
 
-        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">publishSubject</span>
-            <span class="p">.</span><span class="nf">debounce</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="no">TimeUnit</span><span class="o">.</span><span class="no">MILLISECONDS</span><span class="p">)</span>
-            <span class="p">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="no">AndroidSchedulers</span><span class="p">.</span><span class="nf">mainThread</span><span class="p">())</span>
-            <span class="p">.</span><span class="nf">doOnError</span> <span class="p">{</span>
-                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">it</span><span class="p">.</span><span class="nf">message</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
-            <span class="p">}</span>
-            <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">string</span> <span class="o">-&gt;</span>
-                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="s2">"publishSubject 사용~! api에 보낼 카운트 : $string"</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
-            <span class="p">})</span>
+        compositeDisposable.add(publishSubject
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+            .subscribe { string -&gt;
+                Toast.makeText(this, "publishSubject 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
+            })
 
-        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="no">RxTextView</span><span class="p">.</span><span class="nf">textChanges</span><span class="p">(</span><span class="n">textView</span><span class="p">)</span>
-            <span class="p">.</span><span class="nf">debounce</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="no">TimeUnit</span><span class="o">.</span><span class="no">MILLISECONDS</span><span class="p">)</span>
-            <span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">charSequence</span> <span class="o">-&gt;</span> <span class="n">charSequence</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">}</span>
-            <span class="p">.</span><span class="nf">filter</span> <span class="p">{</span>
-                <span class="o">!</span><span class="n">it</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"Hello World!"</span><span class="p">)</span>
-            <span class="p">}</span>
-            <span class="p">.</span><span class="nf">observeOn</span><span class="p">(</span><span class="no">AndroidSchedulers</span><span class="p">.</span><span class="nf">mainThread</span><span class="p">())</span>
-            <span class="p">.</span><span class="nf">doOnError</span> <span class="p">{</span>
-                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">it</span><span class="p">.</span><span class="nf">message</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
-            <span class="p">}</span>
-            <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">string</span> <span class="o">-&gt;</span>
-                <span class="no">Toast</span><span class="p">.</span><span class="nf">makeText</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="s2">"RxBinding 사용~! api에 보낼 카운트 : $string"</span><span class="p">,</span> <span class="no">Toast</span><span class="o">.</span><span class="no">LENGTH_LONG</span><span class="p">).</span><span class="nf">show</span><span class="p">()</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-    <span class="p">}</span>
+        compositeDisposable.add(RxTextView.textChanges(textView)
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .map { charSequence -&gt; charSequence.toString() }
+            .filter {
+                !it.equals("Hello World!")
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+            .subscribe { string -&gt;
+                Toast.makeText(this, "RxBinding 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
+            }
+        )
+    }
 
-    <span class="n">override</span> <span class="n">fun</span> <span class="n">onDestroy</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">.</span><span class="nf">onDestroy</span><span class="p">()</span>
-        <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">dispose</span><span class="p">()</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+}
+</code></pre></div></div>
 
 <p>debounce 를 사용하면 편하게 처리할 수 있다.
 위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
@@ -416,20 +417,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/android-keyboard/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

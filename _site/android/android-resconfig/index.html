@@ -280,10 +280,10 @@
       <h3 id="buildgradle-에서-resconfig">build.gradle 에서 resConfig</h3>
 
 <p>빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">dev</span> <span class="p">{</span>
-   <span class="n">resConfigs</span> <span class="s2">"ko"</span><span class="p">,</span> <span class="s2">"xxxhdpi"</span>
-<span class="p">}</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dev {
+   resConfigs "ko", "xxxhdpi"
+}
+</code></pre></div></div>
 
 <p>주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
 locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
@@ -361,20 +361,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/android/singletask/flag/android-post/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h3>
-      <p>Observer Pattern (디자인 패턴 2장) <a href="http://localhost:4000/java/kotlin/android-observer-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-bottom_navigation_view/" title="BottomNavigationView">BottomNavigationView</a></h4>
-        <span>Published on March 12, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
