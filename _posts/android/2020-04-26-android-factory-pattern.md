@@ -84,7 +84,7 @@ class FactoryMethodPatternTest {
 
 #### 추상팩토리 정의
 추상 팩토리 패턴에서는 인터페이스를 이용하여 서로 연관된 또는 의존하는 객체인 구상 클래스를 지정하지 않고도 생성할 수 있다.  
-Android Architecture Component 에 있는 ViewModel 을 들여다 보자.  
+Android Architecture Component 에 있는 ViewModel 을 보자.  
 
 ```java
 val viewModel = ViewModelProviders.of(this).get(MemoViewModel::class.java)
@@ -201,7 +201,7 @@ public interface Factory {
 }
 ```
 
-소스가 좀 길지만 필요한 부분만 짤랐다.  
+소스가 좀 길지만 필요한 부분만 편집했다.  
 mFactory 는 AndroidViewModelFactory 이다.  
 Factory 라는 인터페이스로 인해 구상 클래스를 지정하지 않고도 생성할 수 있다.  
 mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 아니면 Factory에 의해 생성되게 된다.  
