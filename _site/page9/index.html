@@ -276,6 +276,57 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-07T00:00:00+09:00"><a href="http://localhost:4000/android/shape-post/">November 07, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/shape-post/" rel="bookmark" title="Shape" itemprop="url">Shape</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>꼭지점 두루뭉실한 사각형 만들기</p>
+
+<p>drawable/파일명.xml 만들어 준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;shape</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;solid</span> <span class="na">android:color=</span><span class="s">"@color/white"</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;stroke</span> <span class="na">android:width=</span><span class="s">"1dp"</span>
+        <span class="na">android:color=</span><span class="s">"@color/gray"</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;padding</span> <span class="na">android:bottom=</span><span class="s">"10dp"</span>
+        <span class="na">android:left=</span><span class="s">"10dp"</span>
+        <span class="na">android:right=</span><span class="s">"10dp"</span>
+        <span class="na">android:top=</span><span class="s">"10dp"</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;corners</span> <span class="na">android:radius=</span><span class="s">"7dp"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/shape&gt;</span>
+</code></pre></div></div>
+
+<p>solid 안에 컬러는 도형의 내부 색상</p>
+
+<p>stroke 바깥 선 색상과 두께</p>
+
+<p>padding 은 도형 안쪽 여백</p>
+
+<p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -500,54 +551,6 @@ adb uninstall <패키지명></패키지명></패키지명></p>
 <p>다음부터는 uninstall 안되면 보안폴더부터 보게 될거 같음..</p>
 
 <p>삽질이었지만 보안폴더의 보안은 좋았던걸로 하고 끝..</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-10-31T00:00:00+09:00"><a href="http://localhost:4000/android/android-post/">October 31, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-post/" rel="bookmark" title="selector drawable" itemprop="url">selector drawable</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="selector">selector</h2>
-
-<p>image selector
-image_selector.xml 파일 만들기</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">"@drawable/image_pressed"</span> <span class="na">android:state_pressed=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">"@drawable/image_default"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/selector&gt;</span>
-</code></pre></div></div>
-
-<p>사용 : android:src=”@drawable/image_selector”</p>
-
-<p>text selector</p>
-
-<p>text_selector.xml 파일 만들기</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:color=</span><span class="s">"@color/color_pressed"</span> <span class="na">android:state_pressed=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:color=</span><span class="s">"@color/color_default"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/selector&gt;</span>
-</code></pre></div></div>
-
-<p>사용 : android:textColor=”@drawable/text_selector”</p>
 
       
   </div><!-- /.entry-content -->

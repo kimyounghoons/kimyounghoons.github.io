@@ -276,6 +276,118 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-03-16T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 16, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>직사각형 나머지 한 좌표 구하기 !!</p>
+
+<p>직사각형을 만드는 데 필요한 4개의 점 중 3개의 좌표가 주어질 때, 나머지 한 점의 좌표를 구하려고 합니다. 점 3개의 좌표가 들어있는 배열 v가 매개변수로 주어질 때, 직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 return 하도록 solution 함수를 완성해주세요. 단, 직사각형의 각 변은 x축, y축에 평행하며, 반드시 직사각형을 만들 수 있는 경우만 입력으로 주어집니다.</p>
+
+<p>v는 세 점의 좌표가 들어있는 2차원 배열입니다.
+v의 각 원소는 점의 좌표를 나타내며, 좌표는 [x축 좌표, y축 좌표] 순으로 주어집니다.
+좌표값은 1 이상 10억 이하의 자연수입니다.
+직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 [x축 좌표, y축 좌표] 순으로 담아 return 해주세요.</p>
+
+<p>입출력 예 설명
+입출력 예 #1
+세 점이 [1, 4], [3, 4], [3, 10] 위치에 있을 때, [1, 10]에 점이 위치하면 직사각형이 됩니다.</p>
+
+<p>입출력 예 #2
+세 점이 [1, 1], [2, 2], [1, 2] 위치에 있을 때, [2, 1]에 점이 위치하면 직사각형이 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="o">.</span><span class="no">HashMap</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+    <span class="kp">public</span> <span class="n">int</span><span class="p">[]</span> <span class="n">solution</span><span class="p">(</span><span class="n">int</span><span class="p">[][]</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+         <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">xHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">yHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">xHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+            <span class="n">yHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">xHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">yHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">new</span> <span class="n">int</span><span class="p">[]{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>==========================================================</p>
+
+<p>앞뒤를 뒤집어도 똑같은 문자를 palindrome(팰린드롬)이라고 합니다. 예를 들어 12321은 팰린드롬이며, 21453은 팰린드롬이 아닙니다.</p>
+
+<p>자연수 n이 매개변수로 주어질 때, n이 팰린드롬이면 true를, 아니면 false를 반환하도록 함수 solution 을 완성하세요.</p>
+
+<p>제한사항
+n은 231 - 1 보다 작거나 같은 자연수입니다.</p>
+
+<p>입출력 예
+n	result
+12321	true
+21453	false
+입출력 예 설명
+입출력 예 #1
+12321을 뒤집으면 12321이 되어 팰린드롬입니다.</p>
+
+<p>입출력 예 #2
+21453을 뒤집으면 35412가 되어 팰린드롬이 아닙니다.</p>
+
+<p>class Solution {
+    public boolean solution(int n) {
+         int length = String.valueOf(n).length();
+        String[] values = String.valueOf(n).split(“”);</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (length % 2 == 0) {
+        int center = (length / 2);
+        for (int i = 0; i &lt; center; i++) {
+            if (!values[i].equals(values[length -i - 1])) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        int center = (length / 2) + 1;
+        for (int i = 0; i &lt; center; i++) {
+            if (!values[i].equals(values[length -i - 1])) {
+                return false;
+            }
+        }
+        return true;
+    }
+} }
+</code></pre></div></div>
+
+<p>출처 : https://programmers.co.kr/tryouts/3923/challenges/11576</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-03-11T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 11, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -502,35 +614,6 @@ destroy 될때 등록되어 있던 observer를 제거 시켜준다.</p>
 </code></pre></div></div>
 
 <p>사용법 참 쉽구먼 ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00"><a href="http://localhost:4000/git/sourcetree/require-accountinfo-post/">December 18, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/git/sourcetree/require-accountinfo-post/" rel="bookmark" title="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우" itemprop="url">SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>Window 사용할때는 이런일 없었는데 맥북 쓰면서 SourceTree 에서 계정 입력 요청이 계속 떠서 구글링 해서 해결 방법을 찾았다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">config</span> <span class="n">credential</span><span class="p">.</span><span class="nf">helper</span> <span class="n">store</span>    </code></pre></figure>
-
-<p>입력해주면 해결완료!
-그다음부터는 계정 요청을 하지않는다.</p>
 
       
   </div><!-- /.entry-content -->

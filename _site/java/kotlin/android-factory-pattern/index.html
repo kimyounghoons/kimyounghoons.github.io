@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>기록하고 기억하자! &#8211; 영훈 블로그</title>
-<meta name="description" content="Describe this nonsense.">
-<meta name="keywords" content="Jekyll, theme, themes, responsive, blog, modern">
+<title>Factory Pattern (디자인 패턴 4장) &#8211; 영훈 블로그</title>
+<meta name="description" content="Factory Pattern (디자인 패턴 4장)">
+<meta name="keywords" content="Factory Pattern">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="기록하고 기억하자!">
-<meta property="og:description" content="Describe this nonsense.">
-<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:title" content="Factory Pattern (디자인 패턴 4장)">
+<meta property="og:description" content="Factory Pattern (디자인 패턴 4장)">
+<meta property="og:url" content="http://localhost:4000/java/kotlin/android-factory-pattern/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/">
+<link rel="canonical" href="http://localhost:4000/java/kotlin/android-factory-pattern/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -63,7 +63,7 @@
 
 </head>
 
-<body id="post-index">
+<body id="post" >
 
 <!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
 
@@ -173,15 +173,17 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>기록하고 기억하자!</h1>
+      <h1>Factory Pattern (디자인 패턴 4장)</h1>
       
-        <h2><span class="entry-date"><time>&nbsp;</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-04-26T00:00:00+09:00">April 26, 2020</time></span></h2>
       
 
       
-          <p class="entry-reading-time">
-            &nbsp;
-          </p><!-- /.entry-reading-time -->
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~3 minutes
+        </p><!-- /.entry-reading-time -->
       
     </div><!-- /.header-title-wrap -->
   </div><!-- /.header-title -->
@@ -271,25 +273,10 @@
 
 
 <div id="main" role="main">
-  
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-04-26T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/">April 26, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
+  <article class="hentry">
+    <div class="entry-content">
         
-        Reading time ~3 minutes
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/" rel="bookmark" title="Factory Pattern (디자인 패턴 4장)" itemprop="url">Factory Pattern (디자인 패턴 4장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
+      <h1 class="post-title entry-title">Factory Pattern (디자인 패턴 4장)</h1>
       <h3 id="팩토리-메소드-패턴과-추상-팩토리-패턴">팩토리 메소드 패턴과 추상 팩토리 패턴</h3>
 
 <h4 id="팩토리-메소드-정의">팩토리 메소드 정의</h4>
@@ -489,408 +476,9 @@ mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 �
 <p>간단한 로직의 객체 생성이라면 팩토리 메소드를 사용해도 괜찮을것 같고 Android Architecture Component 처럼 구상 클래스를 지정하고 싶지 않을때는
 추상 팩토리 패턴을 사용하면 좋을것 같다.</p>
 
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
+    </div><!-- /.entry-content -->
     
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-04-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">April 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" rel="bookmark" title="Decorator Pattern (디자인 패턴 3장)" itemprop="url">Decorator Pattern (디자인 패턴 3장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h4 id="정의">정의</h4>
-<p>주어진 상황 및 용도에 따라 어떤 객체에 책임을 덧붙이는 패턴으로, 기능 확장이 필요할 때 서브클래싱 대신 쓸 수 있는 유연한 대안이 될 수 있다.</p>
-
-<h4 id="디자인-원칙">디자인 원칙</h4>
-<p>확장에는 열려있고 변경에는 닫혀 있어야 한다는 원칙이다.(OCP - Open Close Principle)</p>
-
-<figure>
-	<img src="/images/2020-04-10-android-decorator-pattern.png" alt="" />
-</figure>
-
-<p>카페에 가면 커피를 주문하고 추가적으로 밀크나 모카 휘핑을 추가 하게 되는데 이부분에서 요금이 추가 된다고 가정한다.<br />
-HouseBlend,DarkRoast,Espresso 의 기본 클래스에 밀크,모카,휘핑 등을 필요할때 추가 해서 요금을 정산 할 수 있다.<br />
-아래의 코드를 보자.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Test
-fun decoratorPatternTest() {
-    val houseBlend = HouseBlend()
-    println("houseBlend 가격 : ${houseBlend.cost()}원")
-    val houseBlendWithWhip = Whip(houseBlend)
-    println("HouseBlend + Whip 가격 : ${houseBlendWithWhip.cost()}원")
-    val houseBlendWithWhipAndMilk = Milk(houseBlendWithWhip)
-    println("HouseBlend + Whip + Milk 가격 : ${houseBlendWithWhipAndMilk.cost()}원")
-}
-
-abstract class Beverage {
-    abstract fun cost(): Long
-}
-
-class HouseBlend : Beverage() {
-    override fun cost(): Long {
-        return 5000
-    }
-}
-
-abstract class BeverageDecorator(protected val beverage: Beverage) : Beverage()
-
-class Whip(beverage: Beverage) : BeverageDecorator(beverage) {
-    override fun cost(): Long {
-        return beverage.cost() + 500
-    }
-}
-
-class Milk(beverage: Beverage) : BeverageDecorator(beverage) {
-    override fun cost(): Long {
-        return beverage.cost() + 1000
-    }
-}
-
-</code></pre></div></div>
-<p>Whip 과 Milk 가 Beverage 를 상속 받아서 만들게 되면 Whip과 Milk 가 Beverage 인지 Decorator 인지 바로 알기 힘들다.<br />
-BeverageDecorator 클래스를 만든건 Whip 과 Milk 가 Decorator 를 상속 받아서 장식인걸 바로 알수 있고 HouseBlend 는 Beverage 를 상속 받아 음료 종류 라는걸 바로 알 수 있다.</p>
-
-<p>테스트 결과는 아래 사진과 같다.</p>
-<figure>
-	<img src="/images/2020-04-10-android-decorator-pattern-02.png" alt="" />
-</figure>
-
-<p>밀크가 두번 이상,모카 두번 이상,휘핑 두번 이상이 들어 가더라도 추가적인 객체를 생성하지 않고 기능을 확장해서 사용할 수 있는 장점이 있다.<br />
-하지만 데코레이터가 많아지면 해당 객체를 감싸는 클래스들이 많아지고 디버깅하기가 힘들어 질 수 있는 단점이 있다.<br />
-그리고 실제 마지막 반환 되는 객체가 원래의 HouseBlend , DarkRoast , Espresso 가 아니라 마지막 Decorator 라는 것을 알고 있어야 한다.<br />
-이미지 참조 링크 
-http://nsnotification.blogspot.com/2013/01/decorator-pattern.html</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-25T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-observer-pattern/">March 25, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" rel="bookmark" title="Observer Pattern (디자인 패턴 2장)" itemprop="url">Observer Pattern (디자인 패턴 2장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h4 id="정의">정의</h4>
-<p>한 객체의 상태가 바뀌면 그 객체에 의존하는 다른 객체들한테 연락이 가고 자동으로 내용이 갱신되는 방식으로 일대다(one-to-many) 의존성을 정의함.</p>
-
-<h4 id="디자인-원칙">디자인 원칙</h4>
-<p>서로 상호작용을 하는 객체 사이에서는 가능하면 느슨하게 결합하는 디자인을 사용해야 한다.</p>
-
-<figure>
-	<img src="/images/2020-03-25-android-observer-pattern.png" alt="" />
-</figure>
-
-<p>위의 사진은 위키백과에서 가져온 이미지이다.<br />
-Subject 에 Observer를 등록 시키고 Subeject 의 데이터가 변경 되었을때 Observer 에게 알려주는 내용이다.</p>
-
-<p>이번에는 옵저버패턴 예시를 위해 TextView를 살펴 보자.<br />
-전체 소스는 많기 때문에 필요한 부분만 짤라서 요약함.<br />
-Subject 는 TextView 이고 Observer 는 TextWatcher 라고 생각하면 될것 같다.<br />
-아래를 보면 TextView(Subject)에서 Observer 를 관리 하기위해 ArrayList<TextWatcher> 로 가지고 있는걸 볼수 있다.</TextWatcher></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextView</span> <span class="kd">extends</span> <span class="n">View</span> <span class="kd">implements</span> <span class="n">ViewTreeObserver</span><span class="o">.</span><span class="na">OnPreDrawListener</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">mListeners</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">mListeners</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;();</span>
-        <span class="o">}</span>
-        <span class="n">mListeners</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">mListeners</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kt">void</span> <span class="nf">sendOnTextChanged</span><span class="o">(</span><span class="n">CharSequence</span> <span class="n">text</span><span class="o">,</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">before</span><span class="o">,</span> <span class="kt">int</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">;</span>
-            <span class="kd">final</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">onTextChanged</span><span class="o">(</span><span class="n">text</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mEditor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">mEditor</span><span class="o">.</span><span class="na">sendOnTextChanged</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="o">...</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 이다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">LogTextWacher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경후"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경전"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경할때"</span><span class="o">)</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nc">PrintTextWatcher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경후"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경전"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경할때"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 를 TextView(Subject)에 등록</p>
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">initTextView</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="nc">Context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">val</span> <span class="py">textView</span> <span class="p">=</span> <span class="n">TextView</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
-    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">LogTextWacher</span><span class="p">())</span>
-    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">PrintTextWatcher</span><span class="p">())</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>TextView 의 text 가 변경 될 때마다 Log 와 Print 가 찍히게 된다.<br />
-하지만 유의해야하는것은 같은 옵저버를 두번 등록 하지않게 해야한다.<br />
-두번 등록 하게 될 경우 Log 와 Print 를 한번씩만 호출되길 원하는데 두번씩 호출 될 수 있다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-15T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/">March 15, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" rel="bookmark" title="Strategy Pattern (디자인 패턴 1장)" itemprop="url">Strategy Pattern (디자인 패턴 1장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="strategy-pattern-에-대해-알아보자">Strategy Pattern 에 대해 알아보자.</h3>
-
-<p>알고리즘군을 정의하고 각각을 캡슐화하여 교환해서 사용할 수 있도록 만든다.<br />
-스트래티지를 활용하면 알고리즘을 사용하는 클라이언트와는 독릭적으로 알고리즘을 변경할 수 있다.</p>
-
-<p>1장에서는 다음과 같은 3가지 디자인 원칙이 나온다.</p>
-
-<ol>
-  <li>애플리케이션에서 달라지는 부분을 찾아내고, 달라지지 않는 부분으로부터 분리시킨다.</li>
-  <li>구현이 아닌 인터페이스에 맞춰서 프로그래밍한다.</li>
-  <li>상속보다는 구성을 활용한다.</li>
-</ol>
-
-<p>디자인 패턴책에서는 오리의 예제를 들었는데 안드로이드 부분에서 찾아 보았다.<br />
-얼마전 AppCenter 를 사용하면서 사용된 스트래티지패턴의 예제를 보려고 한다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InAppUpdateListener : DistributeListener {
-    override fun onReleaseAvailable(
-        activity: Activity?,
-        releaseDetails: ReleaseDetails
-    ): Boolean {
-        activity?.apply {
-            val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setTitle(R.string.in_app_update)
-            dialogBuilder.setMessage(R.string.msg_download_latest_version)
-            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&gt;
-                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
-            }
-            dialogBuilder.setCancelable(false)
-            dialogBuilder.create()
-                .show()
-            return true
-        }
-        return false
-    }
-}
-
-Distribute.setListener(InAppUpdateListener())
-</code></pre></div></div>
-
-<p>위의 코드는 업데이트할 버전이 있을때 onReleaseAvailable 가 불려서 다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다.<br />
-Distribute 에는 DistributeListener 인터페이스를 구성했다.</p>
-
-<p>다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다. 라는 알고리즘을 캡슐화해서 사용하였고 InAppUpdateListener를 다른 DistributeListener로 교환해서 사용할 수 있다.<br />
-그렇기 때문에 이 코드도 strategy pattern 으로 볼 수 있다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-bottom_navigation_view/">March 12, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bottom_navigation_view/" rel="bookmark" title="BottomNavigationView" itemprop="url">BottomNavigationView</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="bottomnavigationview-in-design-supportlibrary-">BottomNavigationView in Design SupportLibrary :</h3>
-<p>사용 하기 위해서는 다음과 같은 dependency 가 필요 하다.
-implementation ‘com.android.support:design:28.0.0’
-버전은 현재의 최신 버전으로 설정 했다.</p>
-
-<p>Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    private fun setBadge() {
-        val bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
-        val bottomNavigationItemView  = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
-
-        val badgeContainer = LayoutInflater.from(this).inflate(R.layout.view_badge, bottomNavigationMenuView, false)
-        val firstBadgeCountText: TextView = badgeContainer.findViewById(R.id.count)
-        firstBadgeCountText.text = "99"
-        bottomNavigationItemView.addView(badgeContainer)
-    }
-</code></pre></div></div>
-
-<p>BottomNavigationView의 getChildAt 0부터 첫번째 BottomNavigationItemView 다.
-inflate 한 view 를 bottomNavigationItemView에 추가해서 사용하면 됨.</p>
-
-<h3 id="bottomnavigationview-in-material-">BottomNavigationView in Material :</h3>
-<p>사용하기 위해서는 다음과 같은 dependency 가 필요 하다.
-implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
-
-<p>이 버전에서는 BadgeDrawable 이 BottomNavigationView 안에 구현 되어 있어서 showBadge, removeBadge api를 통해 간편하게 사용 할 수 있다.
-1.1.0-alpha05 이하 버전에서는 BadgeDrawable 이 구현 되어 있지 않아 showBadge, removeBadge 를 사용할 수 없는 걸 확인 했다.</p>
-
-<p>사용방법은 Badge 구현 빼고는 Support BottomNavigationView 와 비슷했다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
-            if (count &lt;= 0) {
-                bottomNavigationView.removeBadge(R.id.title_first);
-            } else {
-                BadgeDrawable badgeDrawable = bottomNavigationView.showBadge(R.id.title_first);
-                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
-                badgeDrawable.setNumber(count);
-            }
-        }
-</code></pre></div></div>
-
-<p>2020년 03 월 12일 기준 최신 버전
-implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.<br />
-적용하면 아래와 같다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
-            if (count &lt;= 0) {
-                bottomNavigationView.removeBadge(R.id.title_first);
-            } else {
-                BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.title_first);
-                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
-                badgeDrawable.setNumber(count);
-            }
-        }
-</code></pre></div></div>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-
-
-<div class="pagination">
-  <ul class="inline-list">
-    
-    
-
-    
-    
-      <li><strong class="current-page">1</strong></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page2/">2</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page3/">3</a></li>
-      
-    
-
-    
-    
-      <li>…</li>
-    
-
-    
-      <li><a href="http://localhost:4000/page12/">12</a></li>
-    
-
-    
-    
-      <li><a href="http://localhost:4000/page2/" class="btn">Next</a></li>
-    
-  </ul>
-</div>
-
-
+  </article>
 </div><!-- /#main -->
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -914,7 +502,27 @@ implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서�
 </script>
 
 
+<div id="disqus_thread"></div>
+<script>
 
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://kimyounghoons.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
 
 
 <script type="text/javascript">
@@ -932,13 +540,30 @@ implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서�
   gtag('config', 'UA-154716591-1');
 </script>
 
-
-<div class="footer-wrapper">
-  <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
-
-  </footer>
-</div><!-- /.footer-wrapper -->
-
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
+      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
+        <span>Published on March 15, 2020</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
 </body>
 </html>
