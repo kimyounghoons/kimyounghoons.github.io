@@ -276,6 +276,67 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-02-22T00:00:00+09:00"><a href="http://localhost:4000/android/aac/android-lifecycle/">February 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/aac/android-lifecycle/" rel="bookmark" title="Lifecycle" itemprop="url">Lifecycle</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>문제점 : 뎁스가 깊어질때 CustomVideoView가 가지고 있는 mediaplayer 메모리가 제대로 해제 되지 않는 문제</p>
+
+<p>해결 : life cycle 사용해서 Stop 시 mediaplayer release 처리</p>
+
+<p>VideoView 는 LifecycleObserver 인터페이스를 가지고 있다.
+우선 뷰 생성시 라이프 사이클 옵저버 등록</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     public VideoView(Context context) {
+        super(context);
+        initialize(context);
+    }
+
+    private void initialize(Context context) {
+        if (context instanceof AppCompatActivity) {
+            ((AppCompatActivity) context).getLifecycle().addObserver(this);
+        }
+    }
+</code></pre></div></div>
+
+<p>@OnLifecycleEvent 종류에 따라 life cycle 콜백이 불리게 되는데 stop 되었을때 release 
+destroy 될때 등록되어 있던 observer를 제거 시켜준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    public void onLifecycleStop() {
+        stop();
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    public void onLifecycleDestroy() {
+        if (getContext() != null) {
+            if (getContext() instanceof AppCompatActivity) {
+                ((AppCompatActivity) getContext()).getLifecycle().removeObserver(this);
+            }
+        }
+    }
+</code></pre></div></div>
+
+<p>사용법 참 쉽구먼 ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00"><a href="http://localhost:4000/git/sourcetree/require-accountinfo-post/">December 18, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -597,77 +658,6 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
 </code></pre></div></div>
 
 <p>Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-20T00:00:00+09:00"><a href="http://localhost:4000/firebase/firebase-push/">November 20, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/firebase/firebase-push/" rel="bookmark" title="Firebase Push Test in Postman" itemprop="url">Firebase Push Test in Postman</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="포스트맨에서-파이어베이스-푸시-테스트">포스트맨에서 파이어베이스 푸시 테스트!!</h1>
-
-<p>POST 형식 url : https://fcm.googleapis.com/fcm/send</p>
-
-<h3 id="headers">Headers</h3>
-
-<table rules="groups">
-  <thead>
-    <tr>
-      <th style="text-align: left">KEY</th>
-      <th style="text-align: center">VALUE</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">Authorization</td>
-      <td style="text-align: center">key= server key</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Content-Type</td>
-      <td style="text-align: center">application/json</td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="body-raw-applicationjson">Body raw (application/json)</h3>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "to":"받을 사람 firebase token key",
-    "notification":{
-      "title":"제목",
-      "body":"바디"
-      ...
-    },
-    "data" : {
-      "letterId" : "CUXbq8XrXOBOw8bWfMkz"
-      ...
-    }
-}
-</code></pre></div></div>
-
-<p>보내면 push 가 성공적으로 200 떨어진다.</p>
 
       
   </div><!-- /.entry-content -->

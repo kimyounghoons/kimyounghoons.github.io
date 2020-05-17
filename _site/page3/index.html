@@ -276,6 +276,82 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-01-16T00:00:00+09:00"><a href="http://localhost:4000/android/android-bluetooth-android10/">January 16, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bluetooth-android10/" rel="bookmark" title="안드로이드 10(29) 블루투스 연결 대응" itemprop="url">안드로이드 10(29) 블루투스 연결 대응</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="문제점">문제점</h1>
+<h2 id="bluetoothadapterstartdiscovery-return-false-">bluetoothAdapter.startDiscovery() return false !!!</h2>
+
+<p>true로 반환 되어야 하는데 false 로 반환 되어 블루투스 검색을 할 수 없음</p>
+
+<p>안드로이드 10 버전에서 위치 관련 보안이 강화 되었는데 블루투스 검색 할때 위치 관련 퍼미션이 필요하기 때문에 일어난 퍼미션 관련 이슈였습니다.</p>
+
+<p>버전 별로 블루투스 검색 및 연결 관련 퍼미션을 알아보겠습니다.</p>
+
+<p>기본적으로 블루투스 기능 ON , 위치 기능 ON 상태 여야 합니다.</p>
+
+<p>블루투스 기능 OFF 상태일 때는 사용 가능 하게 팝업 띄어 주고 위치 기능 OFF 상태일때는 체크 해서 설정 화면으로 보내면됩니다.</p>
+
+<h2 id="targetsdkversion-29-미만인-경우">targetSdkVersion 29 미만인 경우</h2>
+
+<p>AndroidManifest.xml 파일</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
+&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
+</code></pre></div></div>
+
+<p>29 미만인 경우 위치 관련 퍼미션이 적용 되어 있을 경우 아래 퍼미션이 자동으로 추가 됩니다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
+</code></pre></div></div>
+
+<p>아래 퍼미션은 런타임 퍼미션 적용<br />
+Manifest.permission.ACCESS_COARSE_LOCATION</p>
+
+<h2 id="targetsdkversion-29-인-경우">targetSdkVersion 29 인 경우</h2>
+
+<p>AndroidManifest.xml 파일 </p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
+&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
+</code></pre></div></div>
+
+<p>아래 퍼미션은 런타임 퍼미션 적용</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Manifest.permission.ACCESS_COARSE_LOCATION,
+Manifest.permission.ACCESS_FINE_LOCATION,
+Manifest.permission.ACCESS_BACKGROUND_LOCATION
+</code></pre></div></div>
+<p>퍼미션 승인 후 bluetoothAdapter. startDiscovery() 이 true로 반환되는걸 확인 할 수 있었습니다.</p>
+
+<p>아래 이미지는 블루투스 연결 버튼 클릭 시 플로우 차트</p>
+<figure>
+	<img src="/images/2020-01-17-bluetooth-flow-chart.png" alt="" />
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-01-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-centerLoadingProgress/">January 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -563,94 +639,6 @@ ObservableSource 갯수 제한은 9개 까지로 확인했다.<br />
     }
 }
 </code></pre></div></div>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-11-27T00:00:00+09:00"><a href="http://localhost:4000/android/android-diffUtil/">November 27, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-diffUtil/" rel="bookmark" title="RecyclerView DiffUtil" itemprop="url">RecyclerView DiffUtil</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>oldList 와 newList 리스트의 차이를 계산하고 oldList를 newList로 변환하는 업데이트 작업 목록을 출력 할 수있는 유틸리티 클래스이다.<br />
-업데이트 작업 목록은 newList 가 Insert , Remove , Update 다 포함 된다.</p>
-
-<h3 id="리스트-아이템이-변경-되는-갯수-마다의-시간-데이터">리스트 아이템이 변경 되는 갯수 마다의 시간 데이터</h3>
-
-<ul>
-  <li>100 items and 10 modifications: avg: 0.39 ms, median: 0.35 ms</li>
-  <li>100 items and 100 modifications: 3.82 ms, median: 3.75 ms</li>
-  <li>100 items and 100 modifications without moves: 2.09 ms, median: 2.06 ms</li>
-  <li>1000 items and 50 modifications: avg: 4.67 ms, median: 4.59 ms</li>
-  <li>1000 items and 50 modifications without moves: avg: 3.59 ms, median: 3.50 ms</li>
-  <li>1000 items and 200 modifications: 27.07 ms, median: 26.92 ms</li>
-  <li>1000 items and 200 modifications without moves: 13.54 ms, median: 13.36 ms</li>
-</ul>
-
-<p>Eugene W. Myers 의 difference algorithm 을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.</p>
-
-<p>사용법을 알아보자~!</p>
-
-<p>우선 아래와 같이 DiffUtil.Callback 을 상속받는 DiffCallback 클래스를 만들고 비교할 대상을 지정 해준다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class DiffCallback(
-		private val oldData: AdapterData,
-		private val newData: AdapterData
-	) : DiffUtil.Callback() {
-
-	override fun getOldListSize() = oldData.size
-
-	override fun getNewListSize() = newData.size
-
-	override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int)
-     = oldData[oldItemPosition].id == newData[newItemPosition].id
-
-	override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int)
-     = oldData[oldItemPosition] == newData[newItemPosition]
-
-}
-</code></pre></div></div>
-
-<p>다음으로는 RecyclerView Adapter 클래스의 setData 를 보자</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fun setData(newData: AdapterData) {
-	val diffResult = DiffUtil.calculateDiff(DiffCallback(data, newData))
-	data = newData
-	diffResult.dispatchUpdatesTo(this)
-}
-</code></pre></div></div>
-
-<p>DiffUtil.calculateDiff 는 DiffCallback 을 인자로 받고 결과 값으로 DiffUtil.DiffResult 를 반환 한다.<br />
-그 다음 RecyclerView Adapter 의 아이템을 대체 시켜 주고 dispatchUpdatesTo 를 호출한다.  여기서 this는 RecyclerView Adapter 이다.<br />
-RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispatchUpdatesTo 를 호출 하는 순간 뷰가 갱신 된다.<br />
-그렇기 때문에 다음 4가지 중 한가지를 호출 하기 위해서라고 판단 된다.</p>
-<ul>
-  <li>mAdapter.notifyItemRangeInserted(position, count);</li>
-  <li>mAdapter.notifyItemRangeRemoved(position, count);</li>
-  <li>mAdapter.notifyItemMoved(fromPosition, toPosition);</li>
-  <li>mAdapter.notifyItemRangeChanged(position, count, payload);</li>
-</ul>
-
-<p>기존 방식은 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 DiffUtil 을 사용하면 개발자가 신경 쓰지 않아도 편리하게 수정 할수 있어서 좋은 것 같다.</p>
-
-<h3 id="주의-사항">주의 사항</h3>
-<ol>
-  <li>리스트 사이즈가 큰 경우는 DiffResult를 가져올때 Background Thread 에서 실행 하고 뷰 갱신 할때만 메인스레드에서 실행 시켜야한다.</li>
-  <li>DiffUtil 사용 할 때 리스트의 Max Size 는 2^26 이다.</li>
-</ol>
 
       
   </div><!-- /.entry-content -->

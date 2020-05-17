@@ -276,6 +276,77 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-20T00:00:00+09:00"><a href="http://localhost:4000/firebase/firebase-push/">November 20, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/firebase/firebase-push/" rel="bookmark" title="Firebase Push Test in Postman" itemprop="url">Firebase Push Test in Postman</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="포스트맨에서-파이어베이스-푸시-테스트">포스트맨에서 파이어베이스 푸시 테스트!!</h1>
+
+<p>POST 형식 url : https://fcm.googleapis.com/fcm/send</p>
+
+<h3 id="headers">Headers</h3>
+
+<table rules="groups">
+  <thead>
+    <tr>
+      <th style="text-align: left">KEY</th>
+      <th style="text-align: center">VALUE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Authorization</td>
+      <td style="text-align: center">key= server key</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Content-Type</td>
+      <td style="text-align: center">application/json</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: center"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="body-raw-applicationjson">Body raw (application/json)</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "to":"받을 사람 firebase token key",
+    "notification":{
+      "title":"제목",
+      "body":"바디"
+      ...
+    },
+    "data" : {
+      "letterId" : "CUXbq8XrXOBOw8bWfMkz"
+      ...
+    }
+}
+</code></pre></div></div>
+
+<p>보내면 push 가 성공적으로 200 떨어진다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-19T00:00:00+09:00"><a href="http://localhost:4000/android/android-buildtypestring-post/">November 19, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -445,86 +516,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 에서 각각 Action을 가진다.</p>
 
 <p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-08T00:00:00+09:00"><a href="http://localhost:4000/kotlin/kotlin-when-post/">November 08, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/kotlin/kotlin-when-post/" rel="bookmark" title="how to use `when` in kotlin" itemprop="url">how to use `when` in kotlin</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>우선 자바 소스</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_write_letter:
-                obtainViewModel().sendLetter()
-                return true;
-            default: 
-                return false;
-        }
-    }
-</code></pre></div></div>
-
-<p>아래는 코틀린</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menu_write_letter -&gt; {
-            obtainViewModel().sendLetter()
-            true
-        }
-        else -&gt; {
-            false
-        }
-    }
-</code></pre></div></div>
-
-<p>코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.</p>
-
-<p>when은 switch랑 비슷한것 같은데 뭐가 차이가 날까 ~ 궁금해서 구글링 해서 찾아보니~</p>
-
-<p>2가지가 있었다.</p>
-
-<p>1.Auto-casting</p>
-
-<p>2.when without arguments</p>
-
-<p>1번 예를 한번 보면</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>when(view){
-    is TextView -&gt; toast(view.text)
-    else -&gt; 
-}
-</code></pre></div></div>
-
-<p>is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.</p>
-
-<p>2번 예를 한번 보면</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val str = when{
-    x in 1..5 -&gt; "cheap"
-    s.contains("money") -&gt; "Welcome"
-    else -&gt; ""
-}
-</code></pre></div></div>
-
-<p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
 
       
   </div><!-- /.entry-content -->

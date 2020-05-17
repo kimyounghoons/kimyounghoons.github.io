@@ -276,6 +276,66 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-10-07T00:00:00+09:00"><a href="http://localhost:4000/android/android-lottie/">October 07, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-lottie/" rel="bookmark" title="애니메이션 UI 대응 로티 라이브러리" itemprop="url">애니메이션 UI 대응 로티 라이브러리</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>UI 작업을 하다보면 애니메이션 효과는 피할래야 피할수 없다.<br />
+하지만 처음 디자인팀으로부터 전달 받는 경우 여러 효과가 있을 때 각 효과에 대해 정확한 데이터를 받는 경우는 드물다.<br />
+그렇기 때문에 우선 작업하고 디자인QA 를 거치는 경우가 많다.<br />
+하지만 이 lottie 라이브러리를 사용하게 되면 개발자와 디자인 작업자 모두 행복해 질 수 있다.<br />
+안드로이드 뿐만아니라 IOS , React Native , Web , Window 다 지원하기 때문에 Json파일만 있으면 모두 동일한 애니메이션을 만들 수 있다.</p>
+
+<p>디자인팀에 해당 애니메이션을 json 파일로 보내달라고 요청하면 받을 수 있는데 해당 파일만 있으면 Ok!</p>
+
+<p>사용법은 쉽기 때문에 업로드 하지 않는다.<br />
+하지만 사용하면서 RecyclerView 에서 사용하는 경우 2가지 이슈를 발견 했다.</p>
+
+<p>첫번째 : 나는 한번만 실행 하고 싶은데 스크롤 시 계속 애니메이션 실행 되는 이슈가 있었다.<br />
+라이브러리 내부 코드를 보니 애니메이션이 다 끝나기 전에 해당 뷰가 Detach 되는 경우 Attach 될 때 강제로 animation을 실행 시키고 있었다.<br />
+그래서 다음과 같이 Detach 될때 애니메이션을 강제로 취소시켰다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Override
+public void onViewDetachedFromWindow(@NonNull ViewHolderGeneric holder) {
+    super.onViewDetachedFromWindow(holder);
+    if (holder instanceof LottieViewHolder) {
+        ((LottieViewHolder) holder).cancelLottieAnimation(); //아래에 LottieViewHolder method 
+    }
+}
+
+//method in LottieViewHolder
+public void cancelLottieAnimation() {
+    if (lottieAnimation.isAnimating()) {
+        lottieAnimation.cancelAnimation();
+        lottieAnimation.setProgress(1f);
+    }
+}
+</code></pre></div></div>
+
+<p>두번째 : 핸들러 사용 하지 않으면 playAnimation 정상 작동 하지 않는 이슈.<br />
+아래와 같이 처리해주었다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new Handler().post(() -&gt; lottieAnimation.playAnimation());
+</code></pre></div></div>
+
+<p>이제는 편하게 애니메이션 적용해보자~!ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxjava-debounce/">August 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -501,50 +561,6 @@ EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에
 locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
 
 <p>이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-18T00:00:00+09:00"><a href="http://localhost:4000/android/singletask/flag/android-post/">March 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/singletask/flag/android-post/" rel="bookmark" title="singleTask Activity 사용 시 이슈" itemprop="url">singleTask Activity 사용 시 이슈</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="문제점-">문제점 :</h3>
-<p>A(Standard) Activity -&gt; B(Single Task) Activity -&gt;A(Standard)Activity Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK  FLAG로 startActivity 할 때 앱 강제 종료되는 문제</p>
-
-<h3 id="해결-">해결 :</h3>
-<p>SingleTask 는 하나의 Activity만 생성되고 다중 인스턴스를 가질 수 없다. 그리고 이미 존재하는 경우 시스템은 새 인스턴스 대신 onNewIntent() 메서드를 호출하여 인텐트를 기존 인스턴스로 라우팅한다.</p>
-
-<p>플로우가 수정 되면서 해당 이슈가 발생 되었는데 해결 방법은 생각 해본 건 대충 3가지로 정리</p>
-
-<p>1.액티비티 외에 다른 곳에서 호출 될 일이 있을까 하는 부분. Intent.FLAG_ACTIVITY_NEW_TASK 을 제거 하고 사용해도 무관한지 찾아 보는 것이다. 회원가입을 하거나 했을 때 뒤로가기 시 그대로 Task에 남게 되는 이슈가 있다. 이런 경우가 없을 시에는 FLAG_ACTIVITY_NEW_TASK를 제거하면 해결 가능하다.</p>
-
-<p>2.singleTask 액티비티에서만 Intent.FLAG_ACTIVITY_CLEAR_TASK 사용하고 NEW_TASK 는 사용하지 않는다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (context instanceof Bactivity) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        } else {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        }
-</code></pre></div></div>
-<p>3.굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.</p>
-
-<p>현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.</p>
 
       
   </div><!-- /.entry-content -->

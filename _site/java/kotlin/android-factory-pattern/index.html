@@ -353,7 +353,7 @@
 
 <h4 id="추상팩토리-정의">추상팩토리 정의</h4>
 <p>추상 팩토리 패턴에서는 인터페이스를 이용하여 서로 연관된 또는 의존하는 객체인 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
-Android Architecture Component 에 있는 ViewModel 을 들여다 보자.</p>
+Android Architecture Component 에 있는 ViewModel 을 보자.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">viewModel</span> <span class="o">=</span> <span class="n">ViewModelProviders</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="nl">MemoViewModel:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
 </code></pre></div></div>
@@ -468,7 +468,7 @@ ViewModelProvider를 자세히 살펴 보자.</p>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>소스가 좀 길지만 필요한 부분만 짤랐다.<br />
+<p>소스가 좀 길지만 필요한 부분만 편집했다.<br />
 mFactory 는 AndroidViewModelFactory 이다.<br />
 Factory 라는 인터페이스로 인해 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
 mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 아니면 Factory에 의해 생성되게 된다.</p>
@@ -547,20 +547,20 @@ s.setAttribute('data-timestamp', +new Date());
       <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h3>
-      <p>Decorator Pattern (디자인 패턴 3장) <a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/" title="Singleton Pattern (디자인 패턴 5장)">Singleton Pattern (디자인 패턴 5장)</a></h3>
+      <p>Singleton Pattern (디자인 패턴 5장) <a href="http://localhost:4000/java/kotlin/android-singleton-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
-        <span>Published on March 25, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" title="Decorator Pattern (디자인 패턴 3장)">Decorator Pattern (디자인 패턴 3장)</a></h4>
+        <span>Published on April 10, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" title="Strategy Pattern (디자인 패턴 1장)">Strategy Pattern (디자인 패턴 1장)</a></h4>
-        <span>Published on March 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" title="Observer Pattern (디자인 패턴 2장)">Observer Pattern (디자인 패턴 2장)</a></h4>
+        <span>Published on March 25, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
