@@ -149,5 +149,5 @@ class CommandPatternTest {
 리모트컨트롤에서 Command 를 추가 해서 on,off 버튼을 사용할 수 있고 unDoCommand 를 통해 마지막 실행한 명령을 되돌릴 수 있다.
 아래는 테스트 결과 이미지이다.
 <figure>
-	<img src="/images/2020-04-26-android-command-pattern.png" alt="">
+	<img src="/images/2020-05-28-android-command-pattern.png" alt="">
 </figure>

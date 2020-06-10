@@ -276,6 +276,79 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-06-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/">June 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" rel="bookmark" title="Iterator Pattern (디자인 패턴 7장)" itemprop="url">Iterator Pattern (디자인 패턴 7장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="이터레이터-패턴-정의">이터레이터 패턴 정의</h3>
+<p>컬렉션 구현 방법을 노출시키지 않으면서도 그 집합체 안에 들어있는 모든 항목에 접글할 수 있는 방법을 제공한다.</p>
+
+<p>컬렉션 종류가 다양하고 항목을 접근하는 방식도 조금씩 다르기 때문에 대응하기가 까다롭거나 코드가 지저분해질 수 있다.<br />
+Iterator 패턴을 사용해서 해결해보자.<br />
+CustomDialogView 라는 임의의 클래스를 만들어서 iterator 매개변수로 받는 생성자를 하나 만들고 printAll 이라는 함수를 만들어서 
+모든 항목에 접근해 print 하도록 만들었다.</p>
+
+<p>아래의 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">IteratorPatternTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrayOf</span><span class="o">(</span><span class="s">"first"</span><span class="o">,</span> <span class="s">"second"</span><span class="o">,</span> <span class="s">"third"</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">arrayList</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="n">hashMap</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">(</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"one"</span><span class="o">),</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"two"</span><span class="o">),</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s">"three"</span><span class="o">)</span>
+        <span class="o">)</span>
+        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">hashMap</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">CustomDialogView</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">iterator:</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;)</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">printAll</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">val</span> <span class="n">any</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">any</span> <span class="n">is</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;*,</span> <span class="o">*&gt;)</span> <span class="o">{</span>
+                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">.</span><span class="na">value</span><span class="o">)</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">)</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>hasNext 는 더 꺼낼 항목 여부에 따라 boolean 을 return 하고 next 는 해당 항목을 return 한다.
+array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 쉽게 구현할 수 있다.</p>
+
+<p>아래 사진을 보면 모두 이상 없이 프린트 된 결과를 볼 수 있다.</p>
+<figure>
+	<img src="/images/2020-06-10-android-iterator_pattern.png" alt="" />
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-05-27T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-command-pattern/">May 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -431,7 +504,7 @@
 <p>리모트컨트롤에서 Command 를 추가 해서 on,off 버튼을 사용할 수 있고 unDoCommand 를 통해 마지막 실행한 명령을 되돌릴 수 있다.
 아래는 테스트 결과 이미지이다.</p>
 <figure>
-	<img src="/images/2020-04-26-android-command-pattern.png" alt="" />
+	<img src="/images/2020-05-28-android-command-pattern.png" alt="" />
 </figure>
 
       
@@ -861,123 +934,6 @@ BeverageDecorator 클래스를 만든건 Whip 과 Milk 가 Decorator 를 상속 
 그리고 실제 마지막 반환 되는 객체가 원래의 HouseBlend , DarkRoast , Espresso 가 아니라 마지막 Decorator 라는 것을 알고 있어야 한다.<br />
 이미지 참조 링크 
 http://nsnotification.blogspot.com/2013/01/decorator-pattern.html</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-25T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-observer-pattern/">March 25, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" rel="bookmark" title="Observer Pattern (디자인 패턴 2장)" itemprop="url">Observer Pattern (디자인 패턴 2장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h4 id="정의">정의</h4>
-<p>한 객체의 상태가 바뀌면 그 객체에 의존하는 다른 객체들한테 연락이 가고 자동으로 내용이 갱신되는 방식으로 일대다(one-to-many) 의존성을 정의함.</p>
-
-<h4 id="디자인-원칙">디자인 원칙</h4>
-<p>서로 상호작용을 하는 객체 사이에서는 가능하면 느슨하게 결합하는 디자인을 사용해야 한다.</p>
-
-<figure>
-	<img src="/images/2020-03-25-android-observer-pattern.png" alt="" />
-</figure>
-
-<p>위의 사진은 위키백과에서 가져온 이미지이다.<br />
-Subject 에 Observer를 등록 시키고 Subeject 의 데이터가 변경 되었을때 Observer 에게 알려주는 내용이다.</p>
-
-<p>이번에는 옵저버패턴 예시를 위해 TextView를 살펴 보자.<br />
-전체 소스는 많기 때문에 필요한 부분만 짤라서 요약함.<br />
-Subject 는 TextView 이고 Observer 는 TextWatcher 라고 생각하면 될것 같다.<br />
-아래를 보면 TextView(Subject)에서 Observer 를 관리 하기위해 ArrayList<TextWatcher> 로 가지고 있는걸 볼수 있다.</TextWatcher></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextView</span> <span class="kd">extends</span> <span class="n">View</span> <span class="kd">implements</span> <span class="n">ViewTreeObserver</span><span class="o">.</span><span class="na">OnPreDrawListener</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">mListeners</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">mListeners</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;();</span>
-        <span class="o">}</span>
-        <span class="n">mListeners</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">mListeners</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kt">void</span> <span class="nf">sendOnTextChanged</span><span class="o">(</span><span class="n">CharSequence</span> <span class="n">text</span><span class="o">,</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">before</span><span class="o">,</span> <span class="kt">int</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">;</span>
-            <span class="kd">final</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">onTextChanged</span><span class="o">(</span><span class="n">text</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mEditor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">mEditor</span><span class="o">.</span><span class="na">sendOnTextChanged</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="o">...</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 이다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">LogTextWacher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경후"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경전"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경할때"</span><span class="o">)</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nc">PrintTextWatcher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경후"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경전"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경할때"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 를 TextView(Subject)에 등록</p>
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">initTextView</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="nc">Context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">val</span> <span class="py">textView</span> <span class="p">=</span> <span class="n">TextView</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
-    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">LogTextWacher</span><span class="p">())</span>
-    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">PrintTextWatcher</span><span class="p">())</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>TextView 의 text 가 변경 될 때마다 Log 와 Print 가 찍히게 된다.<br />
-하지만 유의해야하는것은 같은 옵저버를 두번 등록 하지않게 해야한다.<br />
-두번 등록 하게 될 경우 Log 와 Print 를 한번씩만 호출되길 원하는데 두번씩 호출 될 수 있다.</p>
 
       
   </div><!-- /.entry-content -->

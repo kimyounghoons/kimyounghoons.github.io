@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>애니메이션 UI 대응 로티 라이브러리 &#8211; 영훈 블로그</title>
-<meta name="description" content="애니메이션 UI 대응 로티 라이브러리">
-<meta name="keywords" content="animation, lottie">
+<title>Iterator Pattern (디자인 패턴 7장) &#8211; 영훈 블로그</title>
+<meta name="description" content="Iterator Pattern (디자인 패턴 7장)">
+<meta name="keywords" content="Iterator Pattern">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="애니메이션 UI 대응 로티 라이브러리">
-<meta property="og:description" content="애니메이션 UI 대응 로티 라이브러리">
-<meta property="og:url" content="http://localhost:4000/android/android-lottie/">
+<meta property="og:title" content="Iterator Pattern (디자인 패턴 7장)">
+<meta property="og:description" content="Iterator Pattern (디자인 패턴 7장)">
+<meta property="og:url" content="http://localhost:4000/java/kotlin/android-iterator_pattern/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-lottie/">
+<link rel="canonical" href="http://localhost:4000/java/kotlin/android-iterator_pattern/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -173,9 +173,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>애니메이션 UI 대응 로티 라이브러리</h1>
+      <h1>Iterator Pattern (디자인 패턴 7장)</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2019-10-07T00:00:00+09:00">October 07, 2019</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-06-10T00:00:00+09:00">June 10, 2020</time></span></h2>
       
 
       
@@ -276,44 +276,57 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">애니메이션 UI 대응 로티 라이브러리</h1>
-      <p>UI 작업을 하다보면 애니메이션 효과는 피할래야 피할수 없다.<br />
-하지만 처음 디자인팀으로부터 전달 받는 경우 여러 효과가 있을 때 각 효과에 대해 정확한 데이터를 받는 경우는 드물다.<br />
-그렇기 때문에 우선 작업하고 디자인QA 를 거치는 경우가 많다.<br />
-하지만 이 lottie 라이브러리를 사용하게 되면 개발자와 디자인 작업자 모두 행복해 질 수 있다.<br />
-안드로이드 뿐만아니라 IOS , React Native , Web , Window 다 지원하기 때문에 Json파일만 있으면 모두 동일한 애니메이션을 만들 수 있다.</p>
+      <h1 class="post-title entry-title">Iterator Pattern (디자인 패턴 7장)</h1>
+      <h3 id="이터레이터-패턴-정의">이터레이터 패턴 정의</h3>
+<p>컬렉션 구현 방법을 노출시키지 않으면서도 그 집합체 안에 들어있는 모든 항목에 접글할 수 있는 방법을 제공한다.</p>
 
-<p>디자인팀에 해당 애니메이션을 json 파일로 보내달라고 요청하면 받을 수 있는데 해당 파일만 있으면 Ok!</p>
+<p>컬렉션 종류가 다양하고 항목을 접근하는 방식도 조금씩 다르기 때문에 대응하기가 까다롭거나 코드가 지저분해질 수 있다.<br />
+Iterator 패턴을 사용해서 해결해보자.<br />
+CustomDialogView 라는 임의의 클래스를 만들어서 iterator 매개변수로 받는 생성자를 하나 만들고 printAll 이라는 함수를 만들어서 
+모든 항목에 접근해 print 하도록 만들었다.</p>
 
-<p>사용법은 쉽기 때문에 업로드 하지 않는다.<br />
-하지만 사용하면서 RecyclerView 에서 사용하는 경우 2가지 이슈를 발견 했다.</p>
+<p>아래의 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">IteratorPatternTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrayOf</span><span class="o">(</span><span class="s">"first"</span><span class="o">,</span> <span class="s">"second"</span><span class="o">,</span> <span class="s">"third"</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
 
-<p>첫번째 : 나는 한번만 실행 하고 싶은데 스크롤 시 계속 애니메이션 실행 되는 이슈가 있었다.<br />
-라이브러리 내부 코드를 보니 애니메이션이 다 끝나기 전에 해당 뷰가 Detach 되는 경우 Attach 될 때 강제로 animation을 실행 시키고 있었다.<br />
-그래서 다음과 같이 Detach 될때 애니메이션을 강제로 취소시켰다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Override
-public void onViewDetachedFromWindow(@NonNull ViewHolderGeneric holder) {
-    super.onViewDetachedFromWindow(holder);
-    if (holder instanceof LottieViewHolder) {
-        ((LottieViewHolder) holder).cancelLottieAnimation(); //아래에 LottieViewHolder method 
-    }
-}
+        <span class="n">val</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">arrayList</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
 
-//method in LottieViewHolder
-public void cancelLottieAnimation() {
-    if (lottieAnimation.isAnimating()) {
-        lottieAnimation.cancelAnimation();
-        lottieAnimation.setProgress(1f);
-    }
-}
+        <span class="n">val</span> <span class="n">hashMap</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">(</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"one"</span><span class="o">),</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"two"</span><span class="o">),</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s">"three"</span><span class="o">)</span>
+        <span class="o">)</span>
+        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">hashMap</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">CustomDialogView</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">iterator:</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;)</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">printAll</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">val</span> <span class="n">any</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">any</span> <span class="n">is</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;*,</span> <span class="o">*&gt;)</span> <span class="o">{</span>
+                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">.</span><span class="na">value</span><span class="o">)</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">)</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div></div>
+<p>hasNext 는 더 꺼낼 항목 여부에 따라 boolean 을 return 하고 next 는 해당 항목을 return 한다.
+array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 쉽게 구현할 수 있다.</p>
 
-<p>두번째 : 핸들러 사용 하지 않으면 playAnimation 정상 작동 하지 않는 이슈.<br />
-아래와 같이 처리해주었다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new Handler().post(() -&gt; lottieAnimation.playAnimation());
-</code></pre></div></div>
-
-<p>이제는 편하게 애니메이션 적용해보자~!ㅎㅎ</p>
+<p>아래 사진을 보면 모두 이상 없이 프린트 된 결과를 볼 수 있다.</p>
+<figure>
+	<img src="/images/2020-06-10-android-iterator_pattern.png" alt="" />
+</figure>
 
     </div><!-- /.entry-content -->
     
@@ -383,23 +396,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-rxjava-debounce/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/java/kotlin/android-command-pattern/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" title="Iterator Pattern (디자인 패턴 7장)">Iterator Pattern (디자인 패턴 7장)</a></h3>
-      <p>Iterator Pattern (디자인 패턴 7장) <a href="http://localhost:4000/java/kotlin/android-iterator_pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-command-pattern/" title="Command Pattern (디자인 패턴 6장)">Command Pattern (디자인 패턴 6장)</a></h3>
+      <p>Command Pattern (디자인 패턴 6장) <a href="http://localhost:4000/java/kotlin/android-command-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-command-pattern/" title="Command Pattern (디자인 패턴 6장)">Command Pattern (디자인 패턴 6장)</a></h4>
-        <span>Published on May 27, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/" title="Singleton Pattern (디자인 패턴 5장)">Singleton Pattern (디자인 패턴 5장)</a></h4>
+        <span>Published on May 17, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/" title="Singleton Pattern (디자인 패턴 5장)">Singleton Pattern (디자인 패턴 5장)</a></h4>
-        <span>Published on May 17, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-factory-pattern/" title="Factory Pattern (디자인 패턴 4장)">Factory Pattern (디자인 패턴 4장)</a></h4>
+        <span>Published on April 26, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
