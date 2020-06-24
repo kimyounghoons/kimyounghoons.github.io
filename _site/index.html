@@ -276,6 +276,136 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-06-24T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/">June 24, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/" rel="bookmark" title="Adapter Pattern (디자인 패턴 8장)" itemprop="url">Adapter Pattern (디자인 패턴 8장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="어댑터-패턴-정의">어댑터 패턴 정의</h3>
+
+<p>한 클래스의 인터페이스를 클라이언트에서 사용하고자 하는 다른 인터페이스로 변환합니다.<br />
+어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있습니다.</p>
+
+<h3 id="어댑터-패턴-언제-사용할까">어댑터 패턴 언제 사용할까!?</h3>
+<p>예를 들어 기존 NormalPager 를 사용하고 있는데 LibPager 를 같이 사용해야 하는 상황이 생겼다고 가정 함.<br />
+근데 LibPageListener 는 PageListener 와 다르게 같은 기능인데 다른 메소드명을 가지고 있다.<br />
+그리고 LibPageListener 에는 없는 기능(onDoubleNextPage,onDoublePreviousPage)이 PageListener에는 존재 한다.<br />
+LibPagerAdapter 를 통해서 해결해보자!!</p>
+
+<p>아래의 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">class</span> <span class="nc">AdapterPattern</span> <span class="o">{</span>
+
+    <span class="kd">interface</span> <span class="nc">PageListener</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">NormalPager</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">LibPager</span> <span class="o">:</span> <span class="n">LibPageListener</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onPrevious"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onNext"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">interface</span> <span class="nc">LibPageListener</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">LibPagerAdapter</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">libPageListener:</span> <span class="n">LibPageListener</span><span class="o">)</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+	<span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">normalPager</span> <span class="o">=</span> <span class="n">NormalPager</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="n">libPager</span> <span class="o">=</span> <span class="n">LibPager</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">libPagerAdapter</span> <span class="o">=</span> <span class="n">LibPagerAdapter</span><span class="o">(</span><span class="n">libPager</span><span class="o">)</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>위의 코드를 보면 onDoublePreviousPage,onDoubleNextPage 는 LibPageListener 없지만 같은 기능을 하게 만들어 주었다.</p>
+
+<p>아래의 결과를 보면 동일하다.</p>
+
+<figure>
+	<img src="/images/2020-06-24-android-adapter-pattern.png" alt="" />
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-06-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/">June 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -850,90 +980,6 @@ mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 �
 
 <p>간단한 로직의 객체 생성이라면 팩토리 메소드를 사용해도 괜찮을것 같고 Android Architecture Component 처럼 구상 클래스를 지정하고 싶지 않을때는
 추상 팩토리 패턴을 사용하면 좋을것 같다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-04-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">April 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" rel="bookmark" title="Decorator Pattern (디자인 패턴 3장)" itemprop="url">Decorator Pattern (디자인 패턴 3장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h4 id="정의">정의</h4>
-<p>주어진 상황 및 용도에 따라 어떤 객체에 책임을 덧붙이는 패턴으로, 기능 확장이 필요할 때 서브클래싱 대신 쓸 수 있는 유연한 대안이 될 수 있다.</p>
-
-<h4 id="디자인-원칙">디자인 원칙</h4>
-<p>확장에는 열려있고 변경에는 닫혀 있어야 한다는 원칙이다.(OCP - Open Close Principle)</p>
-
-<figure>
-	<img src="/images/2020-04-10-android-decorator-pattern.png" alt="" />
-</figure>
-
-<p>카페에 가면 커피를 주문하고 추가적으로 밀크나 모카 휘핑을 추가 하게 되는데 이부분에서 요금이 추가 된다고 가정한다.<br />
-HouseBlend,DarkRoast,Espresso 의 기본 클래스에 밀크,모카,휘핑 등을 필요할때 추가 해서 요금을 정산 할 수 있다.<br />
-아래의 코드를 보자.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Test
-fun decoratorPatternTest() {
-    val houseBlend = HouseBlend()
-    println("houseBlend 가격 : ${houseBlend.cost()}원")
-    val houseBlendWithWhip = Whip(houseBlend)
-    println("HouseBlend + Whip 가격 : ${houseBlendWithWhip.cost()}원")
-    val houseBlendWithWhipAndMilk = Milk(houseBlendWithWhip)
-    println("HouseBlend + Whip + Milk 가격 : ${houseBlendWithWhipAndMilk.cost()}원")
-}
-
-abstract class Beverage {
-    abstract fun cost(): Long
-}
-
-class HouseBlend : Beverage() {
-    override fun cost(): Long {
-        return 5000
-    }
-}
-
-abstract class BeverageDecorator(protected val beverage: Beverage) : Beverage()
-
-class Whip(beverage: Beverage) : BeverageDecorator(beverage) {
-    override fun cost(): Long {
-        return beverage.cost() + 500
-    }
-}
-
-class Milk(beverage: Beverage) : BeverageDecorator(beverage) {
-    override fun cost(): Long {
-        return beverage.cost() + 1000
-    }
-}
-
-</code></pre></div></div>
-<p>Whip 과 Milk 가 Beverage 를 상속 받아서 만들게 되면 Whip과 Milk 가 Beverage 인지 Decorator 인지 바로 알기 힘들다.<br />
-BeverageDecorator 클래스를 만든건 Whip 과 Milk 가 Decorator 를 상속 받아서 장식인걸 바로 알수 있고 HouseBlend 는 Beverage 를 상속 받아 음료 종류 라는걸 바로 알 수 있다.</p>
-
-<p>테스트 결과는 아래 사진과 같다.</p>
-<figure>
-	<img src="/images/2020-04-10-android-decorator-pattern-02.png" alt="" />
-</figure>
-
-<p>밀크가 두번 이상,모카 두번 이상,휘핑 두번 이상이 들어 가더라도 추가적인 객체를 생성하지 않고 기능을 확장해서 사용할 수 있는 장점이 있다.<br />
-하지만 데코레이터가 많아지면 해당 객체를 감싸는 클래스들이 많아지고 디버깅하기가 힘들어 질 수 있는 단점이 있다.<br />
-그리고 실제 마지막 반환 되는 객체가 원래의 HouseBlend , DarkRoast , Espresso 가 아니라 마지막 Decorator 라는 것을 알고 있어야 한다.<br />
-이미지 참조 링크 
-http://nsnotification.blogspot.com/2013/01/decorator-pattern.html</p>
 
       
   </div><!-- /.entry-content -->

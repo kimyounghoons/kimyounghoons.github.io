@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우 &#8211; 영훈 블로그</title>
-<meta name="description" content="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우">
-<meta name="keywords" content="Git, SourceTree">
+<title>Adapter Pattern (디자인 패턴 8장) &#8211; 영훈 블로그</title>
+<meta name="description" content="Adapter Pattern (디자인 패턴 8장)">
+<meta name="keywords" content="Adapter Pattern">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우">
-<meta property="og:description" content="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우">
-<meta property="og:url" content="http://localhost:4000/git/sourcetree/require-accountinfo-post/">
+<meta property="og:title" content="Adapter Pattern (디자인 패턴 8장)">
+<meta property="og:description" content="Adapter Pattern (디자인 패턴 8장)">
+<meta property="og:url" content="http://localhost:4000/java/kotlin/android-adapter-pattern/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/git/sourcetree/require-accountinfo-post/">
+<link rel="canonical" href="http://localhost:4000/java/kotlin/android-adapter-pattern/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -173,9 +173,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우</h1>
+      <h1>Adapter Pattern (디자인 패턴 8장)</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00">December 18, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-06-24T00:00:00+09:00">June 24, 2020</time></span></h2>
       
 
       
@@ -276,13 +276,114 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우</h1>
-      <p>Window 사용할때는 이런일 없었는데 맥북 쓰면서 SourceTree 에서 계정 입력 요청이 계속 떠서 구글링 해서 해결 방법을 찾았다.</p>
+      <h1 class="post-title entry-title">Adapter Pattern (디자인 패턴 8장)</h1>
+      <h3 id="어댑터-패턴-정의">어댑터 패턴 정의</h3>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">config</span> <span class="n">credential</span><span class="p">.</span><span class="nf">helper</span> <span class="n">store</span>    </code></pre></figure>
+<p>한 클래스의 인터페이스를 클라이언트에서 사용하고자 하는 다른 인터페이스로 변환합니다.<br />
+어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있습니다.</p>
 
-<p>입력해주면 해결완료!
-그다음부터는 계정 요청을 하지않는다.</p>
+<h3 id="어댑터-패턴-언제-사용할까">어댑터 패턴 언제 사용할까!?</h3>
+<p>예를 들어 기존 NormalPager 를 사용하고 있는데 LibPager 를 같이 사용해야 하는 상황이 생겼다고 가정 함.<br />
+근데 LibPageListener 는 PageListener 와 다르게 같은 기능인데 다른 메소드명을 가지고 있다.<br />
+그리고 LibPageListener 에는 없는 기능(onDoubleNextPage,onDoublePreviousPage)이 PageListener에는 존재 한다.<br />
+LibPagerAdapter 를 통해서 해결해보자!!</p>
+
+<p>아래의 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">class</span> <span class="nc">AdapterPattern</span> <span class="o">{</span>
+
+    <span class="kd">interface</span> <span class="nc">PageListener</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">NormalPager</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">LibPager</span> <span class="o">:</span> <span class="n">LibPageListener</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onPrevious"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onNext"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">interface</span> <span class="nc">LibPageListener</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">LibPagerAdapter</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">libPageListener:</span> <span class="n">LibPageListener</span><span class="o">)</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+	<span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">normalPager</span> <span class="o">=</span> <span class="n">NormalPager</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="n">libPager</span> <span class="o">=</span> <span class="n">LibPager</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">libPagerAdapter</span> <span class="o">=</span> <span class="n">LibPagerAdapter</span><span class="o">(</span><span class="n">libPager</span><span class="o">)</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>위의 코드를 보면 onDoublePreviousPage,onDoubleNextPage 는 LibPageListener 없지만 같은 기능을 하게 만들어 주었다.</p>
+
+<p>아래의 결과를 보면 동일하다.</p>
+
+<figure>
+	<img src="/images/2020-06-24-android-adapter-pattern.png" alt="" />
+</figure>
 
     </div><!-- /.entry-content -->
     
@@ -352,23 +453,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/constraintlayout-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/" title="Adapter Pattern (디자인 패턴 8장)">Adapter Pattern (디자인 패턴 8장)</a></h3>
-      <p>Adapter Pattern (디자인 패턴 8장) <a href="http://localhost:4000/java/kotlin/android-adapter-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" title="Iterator Pattern (디자인 패턴 7장)">Iterator Pattern (디자인 패턴 7장)</a></h3>
+      <p>Iterator Pattern (디자인 패턴 7장) <a href="http://localhost:4000/java/kotlin/android-iterator_pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" title="Iterator Pattern (디자인 패턴 7장)">Iterator Pattern (디자인 패턴 7장)</a></h4>
-        <span>Published on June 10, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-command-pattern/" title="Command Pattern (디자인 패턴 6장)">Command Pattern (디자인 패턴 6장)</a></h4>
+        <span>Published on May 27, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-command-pattern/" title="Command Pattern (디자인 패턴 6장)">Command Pattern (디자인 패턴 6장)</a></h4>
-        <span>Published on May 27, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/" title="Singleton Pattern (디자인 패턴 5장)">Singleton Pattern (디자인 패턴 5장)</a></h4>
+        <span>Published on May 17, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
