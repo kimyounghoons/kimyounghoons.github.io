@@ -276,6 +276,43 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-11-18T00:00:00+09:00"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/">November 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/" rel="bookmark" title="두두(dodo) 개인정보 취급방침" itemprop="url">두두(dodo) 개인정보 취급방침</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>두두(dodo)는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법,사업법 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하겠습니다.</p>
+
+<p>두두(dodo)는 사용자 개인정보를 수집 하지 않습니다.</p>
+
+<p>앱 관리자<br />
+이름: 김영훈(Davis)<br />
+직위: 두두(DoDo) Android Developer<br />
+연락처: kimyh8496@gmail.com</p>
+
+<p>고지의 의무
+두두(DoDo) 법률이나 서비스의 변경사항을 반영하기 위한 목적 등으로 개인정보 취급방침을 수정할 수 있습니다. 개인정보 취급방침이 변경되는 경우 두두(DoDo)는 변경 사항을 게시하며, 변경된 개인정보 취급방침은 게시한 날로부터 7일 후부터 효력이 발생합니다.</p>
+
+<p>공고일자: 2019년 11월 18일<br />
+시행일자: 2019년 12월 25일</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-barcode/">November 13, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -486,97 +523,6 @@ public void cancelLottieAnimation() {
 </code></pre></div></div>
 
 <p>이제는 편하게 애니메이션 적용해보자~!ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxjava-debounce/">August 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxjava-debounce/" rel="bookmark" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황" itemprop="url">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
-RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainActivity : AppCompatActivity() {
-
-    var count = 0
-    val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    var publishSubject: PublishSubject&lt;String&gt; = PublishSubject.create()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        button.setOnClickListener {
-            textView.text = (++count).toString()
-            publishSubject.onNext(count.toString())
-            Log.d("kyh", "count : $count")
-        }
-
-        compositeDisposable.add(publishSubject
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            }
-            .subscribe { string -&gt;
-                Toast.makeText(this, "publishSubject 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
-            })
-
-        compositeDisposable.add(RxTextView.textChanges(textView)
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .map { charSequence -&gt; charSequence.toString() }
-            .filter {
-                !it.equals("Hello World!")
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            }
-            .subscribe { string -&gt;
-                Toast.makeText(this, "RxBinding 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
-            }
-        )
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
-    }
-}
-</code></pre></div></div>
-
-<p>debounce 를 사용하면 편하게 처리할 수 있다.
-위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
-
-<p>둘중 마음에 드는 걸로 사용하면 됨</p>
-
-<p>rx 문서에서는 debounce 를 <br />
-only emit an item from an Observable if a particular timespan has passed without it emitting another item  <br />
-라고 소개 한다.</p>
-
-<p>아이템이 들어오다가 지정한 시간동안 아이템이 들어오지 않는 경우 마지막 아이템을 subscribe 를 통해 값을 보내준다.
-rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으로 이해가 잘됨.</p>
-
-<figure>
-	<img src="/images/2019-08-22-android-rxjava-debounce.png" alt="" />
-	<figcaption>출처 http://reactivex.io/documentation/operators/debounce.html</figcaption>
-</figure>
 
       
   </div><!-- /.entry-content -->

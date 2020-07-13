@@ -4,13 +4,105 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-06-24T23:16:42+09:00</updated>
+<updated>2020-07-13T22:32:21+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Facade Pattern (디자인 패턴 9장)]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/java/kotlin/android-facade-pattern/" />
+  <id>http://localhost:4000/java/kotlin/android-facade-pattern</id>
+  <updated>2020-07-13T00:00:00-00:00</updated>
+  <published>2020-07-13T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;퍼사드-패턴-정의&quot;&gt;퍼사드 패턴 정의&lt;/h3&gt;
+&lt;p&gt;어떤 서브시스템의 일련의 인터페이스에 대한 통합된 인터페이스를 제공합니다.&lt;br /&gt;
+퍼사드에서 고수준 인터페이스를 정의하기 때문에 서브시스템을 더 쉽게 사용할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;디자인 원칙 
+최소 지식 원칙 - 정말 친한 친구하고만 얘기하라.&lt;/p&gt;
+
+&lt;h3 id=&quot;퍼사드-패턴-언제-사용할까&quot;&gt;퍼사드 패턴 언제 사용할까!?&lt;/h3&gt;
+
+&lt;p&gt;아래의 코드를 보자.&lt;/p&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FacadePattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;computerFacade&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComputerFacade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Monitor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Speaker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;computerFacade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;----------------------------------&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;computerFacade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ComputerFacade&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;monitor:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Monitor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;speaker:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Speaker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;monitor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;speaker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;speaker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;volume&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;speaker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;volume&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;speaker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;monitor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Monitor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Monitor on&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Monitor off&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Speaker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;volume&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;volume set : $value&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;field&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Speaker on&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Speaker off&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;위의 코드를 보면 클라이언트 입장에서 ComputerFacade 만 알고 있으면 컴퓨터를 키고 끄는데 문제가 없다.&lt;br /&gt;
+위의 클래스들은 간단하게 구현 했기때문에 쉽게 보일 수 있지만 컴퓨터가 부팅 되는 과정 까지 모두 포함된 내용을 클라이언트에서 알아야 한다면!?&lt;br /&gt;
+클라이언트 입장에서 컴퓨터를 키는 도중에 지쳐서 그만둘지도 모른다.&lt;br /&gt;
+이런 과정들을 최소한으로만 알게 하기 위해 퍼사드 패턴을 사용한다.&lt;br /&gt;
+아래의 결과를 보면 동일하다.&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2020-07-13-android-facade-pattern.png&quot; alt=&quot;&quot; /&gt;
+&lt;/figure&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/java/kotlin/android-facade-pattern/&quot;&gt;Facade Pattern (디자인 패턴 9장)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on July 13, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1906,39 +1998,6 @@ RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispat
 &lt;/ol&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-diffUtil/&quot;&gt;RecyclerView DiffUtil&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 27, 2019.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[두두(dodo) 개인정보 취급방침]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/" />
-  <id>http://localhost:4000/applicationinfo/dodo-app-privacy_policy</id>
-  <updated>2018-11-28T00:00:00-00:00</updated>
-  <published>2019-11-18T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;두두(dodo)는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법,사업법 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하겠습니다.&lt;/p&gt;
-
-&lt;p&gt;두두(dodo)는 사용자 개인정보를 수집 하지 않습니다.&lt;/p&gt;
-
-&lt;p&gt;앱 관리자&lt;br /&gt;
-이름: 김영훈(Davis)&lt;br /&gt;
-직위: 두두(DoDo) Android Developer&lt;br /&gt;
-연락처: kimyh8496@gmail.com&lt;/p&gt;
-
-&lt;p&gt;고지의 의무
-두두(DoDo) 법률이나 서비스의 변경사항을 반영하기 위한 목적 등으로 개인정보 취급방침을 수정할 수 있습니다. 개인정보 취급방침이 변경되는 경우 두두(DoDo)는 변경 사항을 게시하며, 변경된 개인정보 취급방침은 게시한 날로부터 7일 후부터 효력이 발생합니다.&lt;/p&gt;
-
-&lt;p&gt;공고일자: 2019년 11월 18일&lt;br /&gt;
-시행일자: 2019년 12월 25일&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/applicationinfo/dodo-app-privacy_policy/&quot;&gt;두두(dodo) 개인정보 취급방침&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 18, 2019.&lt;/p&gt;
   </content>
 </entry>
 

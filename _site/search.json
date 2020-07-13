@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Facade Pattern (디자인 패턴 9장)",
+      "category" : "",
+      "tags"     : "Facade Pattern",
+      "url"      : "http://localhost:4000/java/kotlin/android-facade-pattern/",
+      "date"     : "2020-07-13 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "Adapter Pattern (디자인 패턴 8장)",
       "category" : "",
       "tags"     : "Adapter Pattern",
