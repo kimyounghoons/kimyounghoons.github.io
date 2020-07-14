@@ -276,6 +276,83 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-03-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-bottom_navigation_view/">March 12, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bottom_navigation_view/" rel="bookmark" title="BottomNavigationView" itemprop="url">BottomNavigationView</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="bottomnavigationview-in-design-supportlibrary-">BottomNavigationView in Design SupportLibrary :</h3>
+<p>사용 하기 위해서는 다음과 같은 dependency 가 필요 하다.
+implementation ‘com.android.support:design:28.0.0’
+버전은 현재의 최신 버전으로 설정 했다.</p>
+
+<p>Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    private fun setBadge() {
+        val bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
+        val bottomNavigationItemView  = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
+
+        val badgeContainer = LayoutInflater.from(this).inflate(R.layout.view_badge, bottomNavigationMenuView, false)
+        val firstBadgeCountText: TextView = badgeContainer.findViewById(R.id.count)
+        firstBadgeCountText.text = "99"
+        bottomNavigationItemView.addView(badgeContainer)
+    }
+</code></pre></div></div>
+
+<p>BottomNavigationView의 getChildAt 0부터 첫번째 BottomNavigationItemView 다.
+inflate 한 view 를 bottomNavigationItemView에 추가해서 사용하면 됨.</p>
+
+<h3 id="bottomnavigationview-in-material-">BottomNavigationView in Material :</h3>
+<p>사용하기 위해서는 다음과 같은 dependency 가 필요 하다.
+implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
+
+<p>이 버전에서는 BadgeDrawable 이 BottomNavigationView 안에 구현 되어 있어서 showBadge, removeBadge api를 통해 간편하게 사용 할 수 있다.
+1.1.0-alpha05 이하 버전에서는 BadgeDrawable 이 구현 되어 있지 않아 showBadge, removeBadge 를 사용할 수 없는 걸 확인 했다.</p>
+
+<p>사용방법은 Badge 구현 빼고는 Support BottomNavigationView 와 비슷했다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
+            if (count &lt;= 0) {
+                bottomNavigationView.removeBadge(R.id.title_first);
+            } else {
+                BadgeDrawable badgeDrawable = bottomNavigationView.showBadge(R.id.title_first);
+                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
+                badgeDrawable.setNumber(count);
+            }
+        }
+</code></pre></div></div>
+
+<p>2020년 03 월 12일 기준 최신 버전
+implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.<br />
+적용하면 아래와 같다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
+            if (count &lt;= 0) {
+                bottomNavigationView.removeBadge(R.id.title_first);
+            } else {
+                BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.title_first);
+                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
+                badgeDrawable.setNumber(count);
+            }
+        }
+</code></pre></div></div>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-03-03T00:00:00+09:00"><a href="http://localhost:4000/android/android-appcenter/">March 03, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -721,82 +798,6 @@ class KotlinLambdaCollectionTest {
 </code></pre></div></div>
 
 <p>test1 과 test4 를 비교 했을때 코드 양도 많이 줄고 훨씬 가독성이 많이 올라간걸 볼 수 있다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-01-16T00:00:00+09:00"><a href="http://localhost:4000/android/android-bluetooth-android10/">January 16, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bluetooth-android10/" rel="bookmark" title="안드로이드 10(29) 블루투스 연결 대응" itemprop="url">안드로이드 10(29) 블루투스 연결 대응</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="문제점">문제점</h1>
-<h2 id="bluetoothadapterstartdiscovery-return-false-">bluetoothAdapter.startDiscovery() return false !!!</h2>
-
-<p>true로 반환 되어야 하는데 false 로 반환 되어 블루투스 검색을 할 수 없음</p>
-
-<p>안드로이드 10 버전에서 위치 관련 보안이 강화 되었는데 블루투스 검색 할때 위치 관련 퍼미션이 필요하기 때문에 일어난 퍼미션 관련 이슈였습니다.</p>
-
-<p>버전 별로 블루투스 검색 및 연결 관련 퍼미션을 알아보겠습니다.</p>
-
-<p>기본적으로 블루투스 기능 ON , 위치 기능 ON 상태 여야 합니다.</p>
-
-<p>블루투스 기능 OFF 상태일 때는 사용 가능 하게 팝업 띄어 주고 위치 기능 OFF 상태일때는 체크 해서 설정 화면으로 보내면됩니다.</p>
-
-<h2 id="targetsdkversion-29-미만인-경우">targetSdkVersion 29 미만인 경우</h2>
-
-<p>AndroidManifest.xml 파일</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
-&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
-</code></pre></div></div>
-
-<p>29 미만인 경우 위치 관련 퍼미션이 적용 되어 있을 경우 아래 퍼미션이 자동으로 추가 됩니다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
-</code></pre></div></div>
-
-<p>아래 퍼미션은 런타임 퍼미션 적용<br />
-Manifest.permission.ACCESS_COARSE_LOCATION</p>
-
-<h2 id="targetsdkversion-29-인-경우">targetSdkVersion 29 인 경우</h2>
-
-<p>AndroidManifest.xml 파일 </p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
-&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
-</code></pre></div></div>
-
-<p>아래 퍼미션은 런타임 퍼미션 적용</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Manifest.permission.ACCESS_COARSE_LOCATION,
-Manifest.permission.ACCESS_FINE_LOCATION,
-Manifest.permission.ACCESS_BACKGROUND_LOCATION
-</code></pre></div></div>
-<p>퍼미션 승인 후 bluetoothAdapter. startDiscovery() 이 true로 반환되는걸 확인 할 수 있었습니다.</p>
-
-<p>아래 이미지는 블루투스 연결 버튼 클릭 시 플로우 차트</p>
-<figure>
-	<img src="/images/2020-01-17-bluetooth-flow-chart.png" alt="" />
-</figure>
 
       
   </div><!-- /.entry-content -->

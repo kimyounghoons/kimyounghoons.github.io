@@ -4,13 +4,135 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-07-13T22:32:21+09:00</updated>
+<updated>2020-07-15T01:33:07+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Template Pattern (디자인 패턴 10장)]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/java/kotlin/android-template-method-pattern/" />
+  <id>http://localhost:4000/java/kotlin/android-template-method-pattern</id>
+  <updated>2020-07-15T00:00:00-00:00</updated>
+  <published>2020-07-15T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;템플릿-메소드-패턴-정의&quot;&gt;템플릿 메소드 패턴 정의&lt;/h3&gt;
+&lt;p&gt;메소드에서 알고리즘의 골격을 정의한다.&lt;br /&gt;
+알고리즘의 여러 단계 중 일부는 서브클래스에서 구현할 수 있습니다.&lt;br /&gt;
+템플릿 메소드를 이용하면 알고리즘의 구조는 그대로 유지하면서 서브클래스에서 특정 단계를 재정의할 수 있습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;헐리우드-원칙디자인-원칙&quot;&gt;헐리우드 원칙(디자인 원칙)&lt;/h4&gt;
+&lt;p&gt;먼저 연락하지 마세요. 저희가 연락 드리겠습니다.
+-&amp;gt; 의존성 부패를 방지 할 수 있다.&lt;/p&gt;
+
+&lt;h4 id=&quot;의존성-부패란&quot;&gt;의존성 부패란?&lt;/h4&gt;
+&lt;p&gt;고수준 구성요소가 저수준 구성요소에 의존하고 그 저수준 구성요소는 다시 고수준 구성요소에 의존하게 된다면 서로에게 의존성이 있다는걸 알 수 있다.&lt;br /&gt;
+이런걸 의존성 부패라고 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;템플릿-패턴-언제-사용할까&quot;&gt;템플릿 패턴 언제 사용할까!?&lt;/h3&gt;
+&lt;p&gt;CustomActionBar&lt;br /&gt;
+왼쪽 뒤로가기 메뉴 버튼&lt;br /&gt;
+타이틀&lt;br /&gt;
+흰색 배경&lt;/p&gt;
+
+&lt;p&gt;SecondCustomActionBar&lt;br /&gt;
+왼쪽 뒤로가기 메뉴 버튼&lt;br /&gt;
+타이틀&lt;br /&gt;
+분홍색 배경&lt;br /&gt;
+오른쪽 즐겨찾기 버튼(CustomActionBar 에는 없음)&lt;/p&gt;
+
+&lt;p&gt;두개의 CustomActionBar 가 있다고 가정하고 공통된 부분을 찾아보자.&lt;br /&gt;
+왼쪽 뒤로가기 메뉴 버튼은 완전 동일 하고 타이틀과 배경을 셋팅 하는 부분은 타이틀과 배경색은 다르지만 셋팅하는 부분은 공통된 부분이다.&lt;br /&gt;
+그리고 오른쪽 즐겨찾기 버튼은 CustomActionBar 에는 존재하지 않는다. 이부분은 hook를 통해서 처리 한다.&lt;/p&gt;
+
+&lt;p&gt;아래의 코드를 보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;TemplateMethodPattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;customActionBar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CustomActionBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;customActionBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;prepare&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;----------------------------------------------&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secondActionBar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SecondCustomActionBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;secondActionBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;prepare&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+
+    &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ActionBar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;prepare&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;initTitle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;initBackButtonView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;setBackground&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initTitle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+
+        &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initBackButtonView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;뒤로가기 버튼 셋팅&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setBackground&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;open&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomActionBar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ActionBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//왼쪽 뒤로가기 메뉴 버튼&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//타이틀 셋팅&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//흰색 배경&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initTitle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Title: CustomActionBar&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setBackground&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;흰색 배경&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SecondCustomActionBar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ActionBar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//왼쪽 뒤로가기 메뉴 버튼&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//타이틀 셋팅&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//분홍색 배경&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//오른쪽 즐겨찾기 버튼(CustomActionBar 에는 없음)&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initTitle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Title : SecondCustomActionBar&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setBackground&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;분홍색 배경&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hook&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;오른쪽 즐겨찾기 버튼 셋팅&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;아래는 테스트 결과이다.&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2020-07-15-android-template-pattern.png&quot; alt=&quot;&quot; /&gt;
+&lt;/figure&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/java/kotlin/android-template-method-pattern/&quot;&gt;Template Pattern (디자인 패턴 10장)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on July 15, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -94,7 +216,7 @@
 위의 클래스들은 간단하게 구현 했기때문에 쉽게 보일 수 있지만 컴퓨터가 부팅 되는 과정 까지 모두 포함된 내용을 클라이언트에서 알아야 한다면!?&lt;br /&gt;
 클라이언트 입장에서 컴퓨터를 키는 도중에 지쳐서 그만둘지도 모른다.&lt;br /&gt;
 이런 과정들을 최소한으로만 알게 하기 위해 퍼사드 패턴을 사용한다.&lt;br /&gt;
-아래의 결과를 보면 동일하다.&lt;/p&gt;
+아래는 테스트 결과 이다.&lt;/p&gt;
 
 &lt;figure&gt;
 	&lt;img src=&quot;/images/2020-07-13-android-facade-pattern.png&quot; alt=&quot;&quot; /&gt;
@@ -1914,90 +2036,6 @@ ObservableSource 갯수 제한은 9개 까지로 확인했다.&lt;br /&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-debug-signingkey/&quot;&gt;디버그 용 서명 키 만들기&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on December 09, 2019.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[RecyclerView DiffUtil]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-diffUtil/" />
-  <id>http://localhost:4000/android/android-diffUtil</id>
-  <updated>2019-11-27T00:00:00-00:00</updated>
-  <published>2019-11-27T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;oldList 와 newList 리스트의 차이를 계산하고 oldList를 newList로 변환하는 업데이트 작업 목록을 출력 할 수있는 유틸리티 클래스이다.&lt;br /&gt;
-업데이트 작업 목록은 newList 가 Insert , Remove , Update 다 포함 된다.&lt;/p&gt;
-
-&lt;h3 id=&quot;리스트-아이템이-변경-되는-갯수-마다의-시간-데이터&quot;&gt;리스트 아이템이 변경 되는 갯수 마다의 시간 데이터&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;100 items and 10 modifications: avg: 0.39 ms, median: 0.35 ms&lt;/li&gt;
-  &lt;li&gt;100 items and 100 modifications: 3.82 ms, median: 3.75 ms&lt;/li&gt;
-  &lt;li&gt;100 items and 100 modifications without moves: 2.09 ms, median: 2.06 ms&lt;/li&gt;
-  &lt;li&gt;1000 items and 50 modifications: avg: 4.67 ms, median: 4.59 ms&lt;/li&gt;
-  &lt;li&gt;1000 items and 50 modifications without moves: avg: 3.59 ms, median: 3.50 ms&lt;/li&gt;
-  &lt;li&gt;1000 items and 200 modifications: 27.07 ms, median: 26.92 ms&lt;/li&gt;
-  &lt;li&gt;1000 items and 200 modifications without moves: 13.54 ms, median: 13.36 ms&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Eugene W. Myers 의 difference algorithm 을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.&lt;/p&gt;
-
-&lt;p&gt;사용법을 알아보자~!&lt;/p&gt;
-
-&lt;p&gt;우선 아래와 같이 DiffUtil.Callback 을 상속받는 DiffCallback 클래스를 만들고 비교할 대상을 지정 해준다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class DiffCallback(
-		private val oldData: AdapterData,
-		private val newData: AdapterData
-	) : DiffUtil.Callback() {
-
-	override fun getOldListSize() = oldData.size
-
-	override fun getNewListSize() = newData.size
-
-	override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int)
-     = oldData[oldItemPosition].id == newData[newItemPosition].id
-
-	override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int)
-     = oldData[oldItemPosition] == newData[newItemPosition]
-
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;다음으로는 RecyclerView Adapter 클래스의 setData 를 보자&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fun setData(newData: AdapterData) {
-	val diffResult = DiffUtil.calculateDiff(DiffCallback(data, newData))
-	data = newData
-	diffResult.dispatchUpdatesTo(this)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;DiffUtil.calculateDiff 는 DiffCallback 을 인자로 받고 결과 값으로 DiffUtil.DiffResult 를 반환 한다.&lt;br /&gt;
-그 다음 RecyclerView Adapter 의 아이템을 대체 시켜 주고 dispatchUpdatesTo 를 호출한다.  여기서 this는 RecyclerView Adapter 이다.&lt;br /&gt;
-RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispatchUpdatesTo 를 호출 하는 순간 뷰가 갱신 된다.&lt;br /&gt;
-그렇기 때문에 다음 4가지 중 한가지를 호출 하기 위해서라고 판단 된다.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;mAdapter.notifyItemRangeInserted(position, count);&lt;/li&gt;
-  &lt;li&gt;mAdapter.notifyItemRangeRemoved(position, count);&lt;/li&gt;
-  &lt;li&gt;mAdapter.notifyItemMoved(fromPosition, toPosition);&lt;/li&gt;
-  &lt;li&gt;mAdapter.notifyItemRangeChanged(position, count, payload);&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;기존 방식은 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 DiffUtil 을 사용하면 개발자가 신경 쓰지 않아도 편리하게 수정 할수 있어서 좋은 것 같다.&lt;/p&gt;
-
-&lt;h3 id=&quot;주의-사항&quot;&gt;주의 사항&lt;/h3&gt;
-&lt;ol&gt;
-  &lt;li&gt;리스트 사이즈가 큰 경우는 DiffResult를 가져올때 Background Thread 에서 실행 하고 뷰 갱신 할때만 메인스레드에서 실행 시켜야한다.&lt;/li&gt;
-  &lt;li&gt;DiffUtil 사용 할 때 리스트의 Max Size 는 2^26 이다.&lt;/li&gt;
-&lt;/ol&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-diffUtil/&quot;&gt;RecyclerView DiffUtil&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 27, 2019.&lt;/p&gt;
   </content>
 </entry>
 
