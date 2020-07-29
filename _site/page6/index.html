@@ -276,6 +276,47 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-10-15T00:00:00+09:00"><a href="http://localhost:4000/android/android-notifyDataSetChanged/">October 15, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-notifyDataSetChanged/" rel="bookmark" title="notifyDataSetChanged()" itemprop="url">notifyDataSetChanged()</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h2 id="문제">문제</h2>
+<p>notifyDataSetChanged() 호출 시 RecyclerView 리스트가 갱신이 되지 않는 문제</p>
+
+<h2 id="문제-해결">문제 해결</h2>
+<p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()">https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()</a></p>
+
+<p>LayoutManagers will be forced to fully rebind and relayout all visible views.</p>
+
+<p>문서에 의하면 뷰가 Gone 상태 일때는 갱신이 일어나지 않는다.</p>
+
+<p>그래서 Invisible 상태로 두고 갱신시켜 줘서 해결 함.</p>
+
+<h2 id="회고">회고</h2>
+<p>처음에는 data 가 제대로 들어가 있지 않은것 같아서 확인 했는데 정상적으로 들어가 있었고<br />
+두번째는 adapter 의 data list 의 참조 문제를 의심해서 한 곳에서 list 를 만들고 해당 리스트를 다른곳에서도 같이 바라보게 했지만 그대로 문제가 발생<br />
+세번째는 뷰가 바인딩 되지 않는 것을 보고 이상하게 생각해서 뷰를 가리지 않고 그대로 하니 잘 나옴..<br />
+뷰의 visible 상태에 뭔가 문제가 있다고 생각해서 다큐먼트를 찾아 보니.. 위의 글이 있었다.<br />
+좀 더 정확히 알고 사용하는 버릇을 들여야 할 것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-10-07T00:00:00+09:00"><a href="http://localhost:4000/android/android-lottie/">October 07, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -531,41 +572,6 @@ EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-07-24T00:00:00+09:00"><a href="http://localhost:4000/android/android-resconfig/">July 24, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-resconfig/" rel="bookmark" title="resConfig(Build.Gradle)" itemprop="url">resConfig(Build.Gradle)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="buildgradle-에서-resconfig">build.gradle 에서 resConfig</h3>
-
-<p>빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dev {
-   resConfigs "ko", "xxxhdpi"
-}
-</code></pre></div></div>
-
-<p>주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
-locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
-
-<p>이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -633,7 +639,7 @@ locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
     
 
     
-      <li><a href="http://localhost:4000/page13/">13</a></li>
+      <li><a href="http://localhost:4000/page14/">14</a></li>
     
 
     

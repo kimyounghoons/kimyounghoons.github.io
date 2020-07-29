@@ -276,6 +276,39 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-02-23T00:00:00+09:00"><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/">February 23, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/" rel="bookmark" title="RxKotlin Single" itemprop="url">RxKotlin Single</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>Rx 공부한지 별로 되진않았지만 확실히 매력있는 친구다.ㅎㅎ</p>
+
+<p>Single 에 대해 궁금증이 생겼다.</p>
+
+<p>Single은 onSuccess 나 onError 중 하나가 불리게 되면 dispose 가 된다.
+하지만 오픈 소스들을 보면 CompositeDisposible 에 차곡차곡 쌓고 dispose 시켜준다.
+이렇게 되면 중복으로 처리하는게 아닌가 ?? 
+왜 그러지 라는생각이 듬..</p>
+
+<p>이유는 구독중 onSuccess 또는 onError 가 불리기 전에 이슈가 발생할 우려가 높기 때문에 추가해주고 dispose시켜주는것 같음.ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-02-22T00:00:00+09:00"><a href="http://localhost:4000/android/aac/android-lifecycle/">February 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -543,126 +576,6 @@ group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰�
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-27T00:00:00+09:00"><a href="http://localhost:4000/android/notification/android-notification/">November 27, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/notification/android-notification/" rel="bookmark" title="Notification" itemprop="url">Notification</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="안드로이드-푸시-팝업">안드로이드 푸시 팝업</h1>
-
-<p>순서</p>
-
-<ol>
-  <li>NotificationManager 얻어옴</li>
-  <li>오레오 버전 이상이면 Channel 생성 아니면 패스</li>
-  <li>PendingIntent생성</li>
-  <li>NotificationCompat 생성</li>
-  <li>빌드한 Notification을 notificationManager에 붙여주면 끝!</li>
-  <li>Notification 클릭 시 핸들</li>
-</ol>
-
-<p>1.NotificationManager 얻어옴</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-</code></pre></div></div>
-
-<p>2.오레오 버전 이상이면 Channel 생성 아니면 패스</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(getString(R.string.app_name) + getString(R.string.priority_high), getString(R.string.app_name) + getString(R.string.priority_high), NotificationManager.IMPORTANCE_HIGH)
-                channel.description = getString(R.string.app_name) + getString(R.string.priority_high)
-                channel.enableLights(true)
-                channel.lightColor = Color.BLUE
-                channel.enableVibration(true)
-                channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
-                channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
-                notificationManager.createNotificationChannel(channel)
-            }
-</code></pre></div></div>
-
-<p>Channel 생성 시 IMPORTANCE 설정에 따라 알림이 다르다.
-NotificationManager.IMPORTANCE_HIGH :소리 및 팝업 (헤드업 알림)
-NotificationManager.IMPORTANCE_DEFAULT : 소리
-NotificationManager.IMPORTANCE_LOW : 소리 없음  <br />
-NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
-
-<p>3.PendingIntent생성</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val intent = Intent(applicationContext, MainActivity::class.java)
-            remoteMessage.data?.apply {
-                intent.putExtra(JSON_LETTER, get(JSON_LETTER))
-                intent.putExtra(JSON_ANSWER, get(JSON_ANSWER))
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            }
-   val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-</code></pre></div></div>
-
-<p>알림 팝업을 누르게 되면 PendingIntent 에 실어 두었던 Intent 정보를 가져와서 사용할 수 있다.</p>
-
-<p>4.NotificationCompat 생성</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val builder = NotificationCompat.Builder(applicationContext, getString(R.string.app_name) + getString(R.string.priority_high))
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(title)
-                    .setContentText(body)
-                    .setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent)
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-</code></pre></div></div>
-
-<p>5.빌드한 Notification을 notificationManager에 붙여주면 끝!</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notificationManager.notify(1, builder.build())
-</code></pre></div></div>
-
-<p>6.Notification 클릭 시 핸들</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.apply {
-            if (intent.extras.getString(JSON_ANSWER) != null) {
-                val jsonLetter = intent.extras.getString(JSON_LETTER)
-                val jsonAnswer = intent.extras.getString(JSON_ANSWER, EMPTY)
-                if (supportFragmentManager.backStackEntryCount &gt; 0) {
-                    if (jsonLetter == null) {
-                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
-                        openReAnswers(answer)
-                    } else {
-                        openReAnswers(jsonLetter, jsonAnswer)
-                    }
-                    return
-                } else {
-                    openHome()
-                    if (jsonLetter == null) {
-                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
-                        openReAnswers(answer)
-                    } else {
-                        openReAnswers(jsonLetter, jsonAnswer)
-                    }
-                    return
-                }
-            }
-        }
-    }
-</code></pre></div></div>
-
-<p>Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -730,7 +643,7 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
     
 
     
-      <li><a href="http://localhost:4000/page13/">13</a></li>
+      <li><a href="http://localhost:4000/page14/">14</a></li>
     
 
     

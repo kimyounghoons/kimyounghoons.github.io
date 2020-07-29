@@ -276,6 +276,111 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-07-29T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-composite-pattern/">July 29, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-composite-pattern/" rel="bookmark" title="Composite Pattern (디자인 패턴 11장)" itemprop="url">Composite Pattern (디자인 패턴 11장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="컴포지트-패턴-정의">컴포지트 패턴 정의</h3>
+<p>객체들을 트리 구조로 구성하여 부분과 전체를 나타내는 계층구조로 만들 수 있습니다.<br />
+이 패턴을 이용하면 클라이언트에서 개별 객체와 다른 객체들로 구성된 복합 객체를 똑같은 방법으로 다룰 수 있다.</p>
+
+<figure>
+	<img src="/images/2020-07-29-android-composite-pattern-02.png" alt="" />
+</figure>
+
+<h3 id="컴포지트-패턴-언제-사용할까">컴포지트 패턴 언제 사용할까!?</h3>
+<p>식당에 메뉴가 있는데 아침 메뉴 점심 메뉴 저녁메뉴가 있을 수 있고 또 다른 디저트 메뉴 혹은 디저트 메뉴 안에서도 또 다른 메뉴로 나뉘어 질 수 있다.<br />
+이런 식으로 계층 구조로 생각 해야 하는 경우 사용하면 유용하다.</p>
+
+<p>아래의 코드를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">class</span> <span class="nc">CompositePattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">allMenus</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"전체메뉴"</span><span class="o">)</span>
+
+        <span class="n">val</span> <span class="n">breakfastMenu</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"아침메뉴"</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"토스트"</span><span class="o">,</span> <span class="mi">3000</span><span class="o">))</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"삼겹살"</span><span class="o">,</span> <span class="mi">10000</span><span class="o">))</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"김밥"</span><span class="o">,</span> <span class="mi">2500</span><span class="o">))</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="n">val</span> <span class="n">lunchMenu</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"점심메뉴"</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"ㅄㅎㄱ"</span><span class="o">,</span> <span class="mi">10000</span><span class="o">))</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"ㅍㅇㅈ"</span><span class="o">,</span> <span class="mi">3500</span><span class="o">))</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="n">allMenus</span><span class="o">.</span><span class="na">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">add</span><span class="o">(</span><span class="n">breakfastMenu</span><span class="o">)</span>
+            <span class="n">add</span><span class="o">(</span><span class="n">lunchMenu</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">allMenus</span><span class="o">.</span><span class="na">print</span><span class="o">()</span>
+
+    <span class="o">}</span>
+
+    <span class="c1">//Component</span>
+    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">MenuComponent</span> <span class="o">{</span>
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Leaf</span>
+    <span class="kd">class</span> <span class="nf">MenuItem</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">,</span> <span class="kd">private</span> <span class="n">val</span> <span class="nl">price:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">:</span> <span class="n">MenuComponent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"name : $name , price : $price"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Composite</span>
+    <span class="kd">class</span> <span class="nf">Menu</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">)</span> <span class="o">:</span> <span class="n">MenuComponent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">menuComponents</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">&lt;</span><span class="n">MenuComponent</span><span class="o">&gt;()</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"name : $name"</span><span class="o">)</span>
+            <span class="n">val</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">menuComponents</span><span class="o">.</span><span class="na">iterator</span><span class="o">()</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">val</span> <span class="n">menuComponent</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
+                <span class="n">menuComponent</span><span class="o">.</span><span class="na">print</span><span class="o">()</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>Leaf 에서는 더 이상 메뉴를 추가,제거 할 수 없다.<br />
+Composite 에서만 가능</p>
+
+<p>아래는 테스트 결과이다.</p>
+<figure>
+	<img src="/images/2020-07-29-android-composite-pattern.png" alt="" />
+</figure>
+
+<p>[사진 자료 출처]
+(https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8_%ED%8C%A8%ED%84%B4#:~:text=%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8%20%ED%8C%A8%ED%84%B4(Composite%20pattern)%EC%9D%B4%EB%9E%80,%EB%8F%99%EC%9D%BC%ED%95%98%EA%B2%8C%20%EB%8B%A4%EB%A3%A8%EB%8F%84%EB%A1%9D%20%ED%95%9C%EB%8B%A4.)</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-07-15T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/">July 15, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -301,7 +406,7 @@
 
 <h4 id="의존성-부패란">의존성 부패란?</h4>
 <p>고수준 구성요소가 저수준 구성요소에 의존하고 그 저수준 구성요소는 다시 고수준 구성요소에 의존하게 된다면 서로에게 의존성이 있다는걸 알 수 있다.<br />
-이런걸 의존성 부패라고 한다.</p>
+이런 현상을 의존성 부패라고 한다.</p>
 
 <h3 id="템플릿-패턴-언제-사용할까">템플릿 패턴 언제 사용할까!?</h3>
 <p>CustomActionBar<br />
@@ -332,7 +437,6 @@
         <span class="n">val</span> <span class="n">secondActionBar</span> <span class="o">=</span> <span class="n">SecondCustomActionBar</span><span class="o">()</span>
         <span class="n">secondActionBar</span><span class="o">.</span><span class="na">prepare</span><span class="o">()</span>
     <span class="o">}</span>
-
 
     <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ActionBar</span> <span class="o">{</span>
         <span class="n">fun</span> <span class="nf">prepare</span><span class="o">()</span> <span class="o">{</span>
@@ -697,172 +801,6 @@ array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 �
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-05-27T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-command-pattern/">May 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-command-pattern/" rel="bookmark" title="Command Pattern (디자인 패턴 6장)" itemprop="url">Command Pattern (디자인 패턴 6장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="커맨드-패턴-정의">커맨드 패턴 정의</h3>
-<p>커맨드 패턴을 이용하면 요구 사항을 객체로 캡슐화 할 수 있으며, 매개변수를 써서 여러 가지 다른 요구 사항을 집어넣을 수도 있습니다.<br />
-또한 요청 내역을 큐에 저장하거나 로그로 기록할 수도 있으며, 작업취소 기능도 지원 가능합니다.</p>
-
-<p>아래의 코드를 보자.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CommandPatternTest</span> <span class="o">{</span>
-
-    <span class="kd">class</span> <span class="nc">RemoteControl</span> <span class="o">{</span>
-        <span class="kd">private</span> <span class="n">val</span> <span class="nl">onCommand:</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">,</span> <span class="n">Command</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">()</span>
-        <span class="kd">private</span> <span class="n">val</span> <span class="nl">offCommand:</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">,</span> <span class="n">Command</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">()</span>
-        <span class="kd">private</span> <span class="kt">var</span> <span class="nl">unDoCommand:</span> <span class="n">Command</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
-
-        <span class="n">fun</span> <span class="nf">addCommand</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">onCommand:</span> <span class="n">Command</span><span class="o">,</span> <span class="nl">offCommand:</span> <span class="n">Command</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">onCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]</span> <span class="o">=</span> <span class="n">onCommand</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">offCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]</span> <span class="o">=</span> <span class="n">offCommand</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">onButtonWasPushed</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">onCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]?.</span><span class="na">let</span> <span class="o">{</span>
-                <span class="n">it</span><span class="o">.</span><span class="na">execute</span><span class="o">()</span>
-                <span class="n">unDoCommand</span> <span class="o">=</span> <span class="n">it</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">offButtonWasPushed</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">offCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]?.</span><span class="na">let</span> <span class="o">{</span>
-                <span class="n">it</span><span class="o">.</span><span class="na">execute</span><span class="o">()</span>
-                <span class="n">unDoCommand</span> <span class="o">=</span> <span class="n">it</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">unDoButtonWasPushed</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">unDoCommand</span><span class="o">?.</span><span class="na">let</span> <span class="o">{</span>
-                <span class="n">it</span><span class="o">.</span><span class="na">undo</span><span class="o">()</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">interface</span> <span class="nc">Command</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">Light</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Light On"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Light Off"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">LightOffCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">light:</span> <span class="n">Light</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">LightOnCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">light:</span> <span class="n">Light</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">KitchenLight</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"KitchenLight On"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"KitchenLight Off"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">KitchenOffCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">kitchenLight:</span> <span class="n">KitchenLight</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">KitchenOnCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">kitchenLight:</span> <span class="n">KitchenLight</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">testRemoteControl</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">remoteControl</span> <span class="o">=</span> <span class="n">RemoteControl</span><span class="o">()</span>
-        <span class="n">val</span> <span class="n">light</span> <span class="o">=</span> <span class="n">Light</span><span class="o">()</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">addCommand</span><span class="o">(</span>
-            <span class="n">slot</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span>
-            <span class="n">onCommand</span> <span class="o">=</span> <span class="n">LightOnCommand</span><span class="o">(</span>
-                <span class="n">light</span>
-            <span class="o">),</span>
-            <span class="n">offCommand</span> <span class="o">=</span> <span class="n">LightOffCommand</span><span class="o">(</span>
-                <span class="n">light</span>
-            <span class="o">)</span>
-        <span class="o">)</span>
-
-        <span class="n">val</span> <span class="n">kitchenLight</span> <span class="o">=</span> <span class="n">KitchenLight</span><span class="o">()</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">addCommand</span><span class="o">(</span>
-            <span class="n">slot</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span>
-            <span class="n">onCommand</span> <span class="o">=</span> <span class="n">KitchenOnCommand</span><span class="o">(</span>
-                <span class="n">kitchenLight</span>
-            <span class="o">),</span>
-            <span class="n">offCommand</span> <span class="o">=</span> <span class="n">KitchenOffCommand</span><span class="o">(</span>
-                <span class="n">kitchenLight</span>
-            <span class="o">)</span>
-        <span class="o">)</span>
-
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">onButtonWasPushed</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">offButtonWasPushed</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">onButtonWasPushed</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">offButtonWasPushed</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">unDoButtonWasPushed</span><span class="o">()</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-<p>리모트컨트롤에서 Command 를 추가 해서 on,off 버튼을 사용할 수 있고 unDoCommand 를 통해 마지막 실행한 명령을 되돌릴 수 있다.
-아래는 테스트 결과 이미지이다.</p>
-<figure>
-	<img src="/images/2020-05-28-android-command-pattern.png" alt="" />
-</figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -904,7 +842,7 @@ array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 �
     
 
     
-      <li><a href="http://localhost:4000/page13/">13</a></li>
+      <li><a href="http://localhost:4000/page14/">14</a></li>
     
 
     

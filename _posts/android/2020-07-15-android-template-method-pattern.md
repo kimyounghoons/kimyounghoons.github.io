@@ -56,6 +56,7 @@ class TemplateMethodPattern {
             initTitle()
             initBackButtonView()
             setBackground()
+            hook()
         }
 
         abstract fun initTitle()

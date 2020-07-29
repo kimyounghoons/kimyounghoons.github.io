@@ -276,6 +276,55 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-touch-post/">November 09, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-touch-post/" rel="bookmark" title="view setAlpha in OnTouchListener" itemprop="url">view setAlpha in OnTouchListener</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>view pressed 상태 되었을 때 알파 50% 먹이기</p>
+
+<p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                v.setAlpha((float) 0.5);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                v.setAlpha((float) 1);
+                break;
+        }
+        return false;
+    }
+</code></pre></div></div>
+
+<p>ACTION_DOWN 상태에서는 Pressed 상태 
+ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
+ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
+에서 각각 Action을 가진다.</p>
+
+<p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-08T00:00:00+09:00"><a href="http://localhost:4000/kotlin/kotlin-when-post/">November 08, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -509,80 +558,6 @@ adb tcpip 5555 치면</p>
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-02T00:00:00+09:00"><a href="http://localhost:4000/android/drawerlayout-post/">November 02, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/drawerlayout-post/" rel="bookmark" title="drawerlayout navigationView 클릭 먹통" itemprop="url">drawerlayout navigationView 클릭 먹통</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>딤처리 된 팝업을 추가 할 일이 생겨 아래의 구조로 작성함</p>
-
-<p>DrawerLayout 사용하는 layout 에서의 구조</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-&lt;DrawerLayout&gt;
-    &lt;ConstraintLayout&gt; 
-        메인 뷰
-    &lt;/ConstraintLayout&gt;
-
-    &lt;NavigationView&gt;  
-    &lt;/NavigationView&gt;
-
-    &lt;ConstraintLayout&gt;  
-        딤처리 팝업
-    &lt;/ConstraintLayout&gt;
-&lt;/DrawerLayout&gt;
-
-</code></pre></div></div>
-
-<p>이런식으로 구성 했다.</p>
-
-<p>근데 딤처리 팝업 뜨고 나서만 NavigationView 에 있는 뷰들이 클릭을 먹지 않음…</p>
-
-<p>딤처리 팝업을 확인 누르면 VISIBLE -&gt; GONE 상태로 변경되서 상관이 없어야 할텐데 클릭이 되지 않는 문제..</p>
-
-<p>처음에는 문제 초점을 딤처리 팝업에서의 setClickable 에 뒀다.</p>
-
-<p>하지만 효과가 없고 구글링해서 찾아보니 DrawerLayout안에 NavigationView의 위치는 맨 마지막으로 와야한다고 나와있었다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-&lt;DrawerLayout&gt;
-    &lt;ConstraintLayout&gt;  
-        메인 뷰
-    &lt;/ConstraintLayout&gt;
-
-    &lt;ConstraintLayout&gt;  
-        딤처리 팝업
-    &lt;/ConstraintLayout&gt;
-
-    &lt;NavigationView&gt;  
-    &lt;/NavigationView&gt;
-
-&lt;/DrawerLayout&gt;
-
-</code></pre></div></div>
-
-<p>그렇게 처리하니 이슈가 사라짐!!</p>
-<div class="redText">
-기억하자 NavigationView의 위치는 맨 마지막에 와야함!!
-</div>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -643,12 +618,21 @@ adb tcpip 5555 치면</p>
         <li><a href="http://localhost:4000/page12/">12</a></li>
       
     
+      
+        
+        
+        
+        <li><a href="http://localhost:4000/page13/">13</a></li>
+      
+    
 
     
     
+      <li>…</li>
+    
 
     
-      <li><a href="http://localhost:4000/page13/">13</a></li>
+      <li><a href="http://localhost:4000/page14/">14</a></li>
     
 
     
