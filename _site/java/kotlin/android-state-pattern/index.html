@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Center Loading Progress &#8211; 영훈 블로그</title>
-<meta name="description" content="Center Loading Progress">
-<meta name="keywords" content="Center Loading Progress">
+<title>State Pattern (디자인 패턴 12장) &#8211; 영훈 블로그</title>
+<meta name="description" content="State Pattern (디자인 패턴 12장)">
+<meta name="keywords" content="State Pattern">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Center Loading Progress">
-<meta property="og:description" content="Center Loading Progress">
-<meta property="og:url" content="http://localhost:4000/android/android-centerLoadingProgress/">
+<meta property="og:title" content="State Pattern (디자인 패턴 12장)">
+<meta property="og:description" content="State Pattern (디자인 패턴 12장)">
+<meta property="og:url" content="http://localhost:4000/java/kotlin/android-state-pattern/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-centerLoadingProgress/">
+<link rel="canonical" href="http://localhost:4000/java/kotlin/android-state-pattern/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -173,9 +173,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Center Loading Progress</h1>
+      <h1>State Pattern (디자인 패턴 12장)</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2020-01-10T00:00:00+09:00">January 10, 2020</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-08-03T00:00:00+09:00">August 03, 2020</time></span></h2>
       
 
       
@@ -276,67 +276,111 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">Center Loading Progress</h1>
-      <p>API 호출 할 때 다른 터치를 막기 위해 센터 프로그레스를 보여주는 경우 여러 가지 방법이 있지만 그중 progressDialog 를 사용해보자~!</p>
+      <h1 class="post-title entry-title">State Pattern (디자인 패턴 12장)</h1>
+      <h3 id="스테이트-패턴-정의">스테이트 패턴 정의</h3>
+<p>객체의 내부 상태가 바뀜에 따라서 객체의 행동을 바꿀 수 있다.<br />
+객체의 클래스가 바뀌는 것과 같은 결과를 얻을 수 있다.</p>
 
-<p>BaseActivity 에서 progressDialog 를 가지고 있고 필요할 때 showProgress() , hideProgress() 를 통해 보여주거나 감출수 있다.</p>
+<figure>
+	<img src="/images/2020-08-03-android-state-pattern.png" alt="" />
+</figure>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract class BaseActivity : AppCompatActivity(){
-    private var progressDialog: AppCompatDialog? = null
+<h3 id="스테이트-패턴-언제-사용할까">스테이트 패턴 언제 사용할까!?</h3>
+<p>현재 기분 상태를 예를 들어 보자 
+Good , Bad , Normal 상태가 있다.<br />
+그리고 rain (비가 옴), clear (맑음) , vacation (휴가)  메소드가 있다.<br />
+비가 옴 , 맑음 , 휴가 일때 상태가 변경 된다.<br />
+아래의 코드를 보자.</p>
 
-    fun showProgress() {
-        if (this == null || isFinishing) {
-            return
-        }
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">StatePattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">stateContext</span> <span class="o">=</span> <span class="n">StateContext</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">BadState</span><span class="o">(</span><span class="n">stateContext</span><span class="o">)</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">clear</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">rain</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">vacation</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">rain</span><span class="o">()</span>
+    <span class="o">}</span>
 
-        progressDialog?.apply {
-            dismiss()
-        }
+    <span class="kd">interface</span> <span class="nc">State</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span>
+    <span class="o">}</span>
 
-        progressDialog = AppCompatDialog(this)
-        progressDialog?.apply {
-            setCancelable(false)
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setContentView(R.layout.progress_center_loading)
-            show()
-        }
-    }
+    <span class="kd">class</span> <span class="nf">GoodState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가와서 기분 좋음에서 보통으로"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">normalState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 좋지만 최상의 상태"</span><span class="o">)</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 하지만 최상의 상태"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    fun hideProgress() {
-        progressDialog?.dismiss()
-    }
-}
+    <span class="kd">class</span> <span class="nf">NormalState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가와서 기분 보통에서 나쁨으로"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">badState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 보통에서 좋음 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 기분 보통에서 좋음 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">BadState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가 오지만 이보다 더 안좋을 수 없다."</span><span class="o">)</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 안좋음에서 보통으로 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">normalState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 기분 안좋음에서 좋음으로 두단계 업!!"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">class</span> <span class="nc">StateContext</span> <span class="o">{</span>
+        <span class="kt">var</span> <span class="nl">state:</span> <span class="n">State</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+        <span class="kt">var</span> <span class="n">goodState</span> <span class="o">=</span> <span class="n">GoodState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">normalState</span> <span class="o">=</span> <span class="n">NormalState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">badState</span> <span class="o">=</span> <span class="n">BadState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">rain</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">clear</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">vacation</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
-<p>아래는 layout 코드</p>
+<p>얼핏 보면 스트레티지 패턴과 동일하다고 볼 수 있겠지만 차이점이 있다.<br />
+스트레티지 패턴의 경우는 어떤 알고리즘의 행동 자체를 건네주는 반면 스테이트 패턴의 경우는 비슷하긴 하지만 미리 정해진 상태 전환 규칙을 바탕으로 알아서 자기 상태를 변경하는 점이 다르다.<br />
+구조가 비슷하긴 하지만 용도나 목적이 완전 다르다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-    <span class="na">android:clickable=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+<p>아래는 테스트 결과이다.</p>
+<figure>
+	<img src="/images/2020-08-03-android-state-pattern-02.png" alt="" />
+</figure>
 
-    <span class="nt">&lt;ProgressBar</span>
-        <span class="na">style=</span><span class="s">"?android:attr/indeterminateDrawable"</span>
-        <span class="na">android:layout_width=</span><span class="s">"34dp"</span>
-        <span class="na">android:layout_height=</span><span class="s">"34dp"</span>
-        <span class="na">android:indeterminate=</span><span class="s">"true"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
-</code></pre></div></div>
-
-<p>이 경우 장점은 
-BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.</p>
-
-<p>그리고 액티비티 layout에서 위의 layout 코드를 포함 하고 있지 않아도 된다.</p>
-
-<p>단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있을 수 있다.</p>
-
-<p>다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.</p>
+<p>참조 링크
+https://en.wikipedia.org/wiki/State_pattern</p>
 
     </div><!-- /.entry-content -->
     
@@ -406,23 +450,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/android/android-bindingadapter/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/java/kotlin/android-composite-pattern/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-state-pattern/" title="State Pattern (디자인 패턴 12장)">State Pattern (디자인 패턴 12장)</a></h3>
-      <p>State Pattern (디자인 패턴 12장) <a href="http://localhost:4000/java/kotlin/android-state-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-composite-pattern/" title="Composite Pattern (디자인 패턴 11장)">Composite Pattern (디자인 패턴 11장)</a></h3>
+      <p>Composite Pattern (디자인 패턴 11장) <a href="http://localhost:4000/java/kotlin/android-composite-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-composite-pattern/" title="Composite Pattern (디자인 패턴 11장)">Composite Pattern (디자인 패턴 11장)</a></h4>
-        <span>Published on July 29, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/" title="Template Pattern (디자인 패턴 10장)">Template Pattern (디자인 패턴 10장)</a></h4>
+        <span>Published on July 15, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/" title="Template Pattern (디자인 패턴 10장)">Template Pattern (디자인 패턴 10장)</a></h4>
-        <span>Published on July 15, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-facade-pattern/" title="Facade Pattern (디자인 패턴 9장)">Facade Pattern (디자인 패턴 9장)</a></h4>
+        <span>Published on July 13, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
