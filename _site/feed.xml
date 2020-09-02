@@ -4,13 +4,86 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-08-04T02:32:44+09:00</updated>
+<updated>2020-09-02T16:35:19+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Proxy Pattern (디자인 패턴 13장)]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/java/kotlin/android-proxy-pattern/" />
+  <id>http://localhost:4000/java/kotlin/android-proxy-pattern</id>
+  <updated>2020-08-05T00:00:00-00:00</updated>
+  <published>2020-08-05T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h3 id=&quot;프록시-패턴-정의&quot;&gt;프록시 패턴 정의&lt;/h3&gt;
+&lt;p&gt;어떤 객체에 대한 접근을 제어하기 위한 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴이다.&lt;/p&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2020-09-02-android-proxy-pattern.png&quot; alt=&quot;&quot; /&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;프록시-패턴-언제-사용할까&quot;&gt;프록시 패턴 언제 사용할까!?&lt;/h3&gt;
+&lt;p&gt;원격 프록시 , 가상 프록시 , 보호 프록시 여러가지가 있는데 가상 프록시를 다뤄보자.&lt;br /&gt;
+네트워크를 통해 이미지를 가져온다고 가정할 때 네트워크 상태와 인터넷 연결 속도에 따라서 시간 소요 되게 된다.&lt;br /&gt;
+이때 이미지를 불러 오는 동안 Proxy를 사용해서 임의의 이미지를 보여준 다음 실제 이미지를 보여줄 수 있다.&lt;br /&gt;
+아래 코드를 보자.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ProxyPattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ImageProxy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;showIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Icon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;showIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ImageIcon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Icon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;showIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ImageIcon 그림&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;download&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ImageIcon 다운로드&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ImageProxy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Icon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageIcon:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ImageIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;showIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ImageProxy 그림&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;imageIcon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ImageIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;imageIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;showIcon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;ImageProxy 를 통해 showIcon 메소드를 호출 하게 되면 프록시 임의의 그림을 보여주고 다운로드가 되었을때 실제 이미지 ImageIcon 그림을 보여줄 수 있다.&lt;/p&gt;
+
+&lt;p&gt;아래는 테스트 결과이다.&lt;/p&gt;
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2020-09-02-android-proxy-pattern-2.png&quot; alt=&quot;&quot; /&gt;
+&lt;/figure&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/java/kotlin/android-proxy-pattern/&quot;&gt;Proxy Pattern (디자인 패턴 13장)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on August 05, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -2059,72 +2132,6 @@ BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress �
 &lt;p&gt;다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-centerLoadingProgress/&quot;&gt;Center Loading Progress&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on January 10, 2020.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[DataBidning , BindingAdapter]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-bindingadapter/" />
-  <id>http://localhost:4000/android/android-bindingadapter</id>
-  <updated>2019-12-26T00:00:00-00:00</updated>
-  <published>2019-12-26T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;데이터 바인딩라이브러리는 레이아웃의 UI 구성 요소를 프로그래밍 방식이 아닌 선언적 형식을 사용하여 앱의 데이터 소스에 바인딩 할 수있는 지원 라이브러리다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;layout&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:android=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;xmlns:app=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;xmlns:bind=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://schemas.android.com/tools&quot;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;xmlns:tools=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://schemas.android.com/tools&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;data&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;import&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;android.view.View&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;lt;variable&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewModel&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;패키지경로.ExampleViewModel&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/data&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;androidx.constraintlayout.widget.ConstraintLayout&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:layout_height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;
-            &lt;span class=&quot;na&quot;&gt;android:background=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@{viewModel.isRedBackground ? @color/red : @color/white}&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/androidx.constraintlayout.widget.ConstraintLayout&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/layout&amp;gt;&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;예를 들어 API 호출을 하고 받아온 값이 빨간색 배경색을 가져야 한다면 viewModel.isRedBackground (ObservableField Boolean 값) 데이터 변경 만으로 뷰가 빨간색 또는 흰색으로 변경 된다. 하지만 상태값이 빨간색 흰색 그외 초록색이 필요하다면 BindingAdapter를 통해서 구현할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;android:background=”@{viewModel.isRedBackground ? @color/red : @color/white}”&lt;br /&gt;
-–&amp;gt; bind:status=”@{viewModel.status}”&lt;/p&gt;
-
-&lt;p&gt;위의 코드에서 해당 줄만 변경한다. 그 다음 BindingAdapter를 만들어준다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@BindingAdapter(&quot;bind:status&quot;)
-fun bindBuyingStatusText(imageView: ImageView, status: String?) {
-    when (status) {
-        &quot;빨간색&quot; -&amp;gt; {
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_red))
-        }
-        &quot;흰색&quot; -&amp;gt; {
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_white))
-        }
-        else -&amp;gt; {  //초록색
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_green))
-        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;상태값이 2가지만 있는경우에도 BindingAdapter 사용해서 처리할수 있지만 굳이 사용할 필요는 없을것 같다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-bindingadapter/&quot;&gt;DataBidning , BindingAdapter&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on December 26, 2019.&lt;/p&gt;
   </content>
 </entry>
 

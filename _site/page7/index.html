@@ -276,6 +276,82 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-08-20T00:00:00+09:00"><a href="http://localhost:4000/android/android-keyboard/">August 20, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-keyboard/" rel="bookmark" title="키보드 내려갈 때 특정 처리 하기" itemprop="url">키보드 내려갈 때 특정 처리 하기</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="키보드-내려갈-때-포커스-클리어-처리-하기">키보드 내려갈 때 포커스 클리어 처리 하기</h3>
+
+<p>키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ public static void showKeyboard(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+        editText.requestFocus();
+        mInputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED | InputMethodManager.HIDE_IMPLICIT_ONLY);
+ }
+
+ public static void clearFocus(Activity activity) {
+        View v = activity.getCurrentFocus();
+        if (v == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        v.clearFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+ }
+
+</code></pre></div></div>
+
+<p>키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.<br />
+editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int lastHeightDiff = 0;
+    boolean isOpenKeyboard = false;
+    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        synchronized public void onGlobalLayout() {
+            View activityRootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
+            int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+            if (lastHeightDiff == 0) {
+                lastHeightDiff = heightDiff;
+            }
+            if (heightDiff &gt; lastHeightDiff) { //keyboard show
+                isOpenKeyboard = true;
+            } else {//keyboard hide
+                if (isOpenKeyboard) {
+                    clearFocus();
+                    isOpenKeyboard = false;
+                }
+            }
+        }
+    };
+</code></pre></div></div>
+
+<p>해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.<br />
+한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-07-29T00:00:00+09:00"><a href="http://localhost:4000/android/android-edittext_typing_slow/">July 29, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -490,82 +566,6 @@ n	result
 </code></pre></div></div>
 
 <p>출처 : https://programmers.co.kr/tryouts/3923/challenges/11576</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-11T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 11, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>쇠막대기 알고리즘</p>
-
-<p>여러 개의 쇠막대기를 레이저로 절단하려고 합니다. 효율적인 작업을 위해서 쇠막대기를 아래에서 위로 겹쳐 놓고, 레이저를 위에서 수직으로 발사하여 쇠막대기들을 자릅니다. 쇠막대기와 레이저의 배치는 다음 조건을 만족합니다.</p>
-
-<ul>
-  <li>쇠막대기는 자신보다 긴 쇠막대기 위에만 놓일 수 있습니다.</li>
-  <li>쇠막대기를 다른 쇠막대기 위에 놓는 경우 완전히 포함되도록 놓되, 끝점은 겹치지 않도록 놓습니다.</li>
-  <li>각 쇠막대기를 자르는 레이저는 적어도 하나 존재합니다.</li>
-  <li>레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않습니다.</li>
-</ul>
-
-<p>(a) 레이저는 여는 괄호와 닫는 괄호의 인접한 쌍 ‘()’으로 표현합니다. 또한 모든 ‘()’는 반드시 레이저를 표현합니다.
-(b) 쇠막대기의 왼쪽 끝은 여는 괄호 ‘(‘로, 오른쪽 끝은 닫힌 괄호 ‘)’로 표현됩니다.</p>
-
-<p>위 예의 괄호 표현은 그림 위에 주어져 있습니다.
-쇠막대기는 레이저에 의해 몇 개의 조각으로 잘리는데, 위 예에서 가장 위에 있는 두 개의 쇠막대기는 각각 3개와 2개의 조각으로 잘리고, 이와 같은 방식으로 주어진 쇠막대기들은 총 17개의 조각으로 잘립니다.</p>
-
-<p>쇠막대기와 레이저의 배치를 표현한 문자열 arrangement가 매개변수로 주어질 때, 잘린 쇠막대기 조각의 총 개수를 return 하도록 solution 함수를 작성해주세요.</p>
-
-<p>제한사항
-arrangement의 길이는 최대 100,000입니다.
-arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="p">.</span><span class="nf">*</span><span class="p">;</span>
-<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="n">int</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span> <span class="n">arrangement</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="no">String</span><span class="p">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrangement</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
-        <span class="no">Stack</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Stack</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="no">String</span> <span class="n">character</span> <span class="p">:</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">character</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span>
-                <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="nf">peek</span><span class="p">().</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span><span class="sr">//</span><span class="err">레이저</span>
-                    <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                    <span class="o">--</span><span class="n">count</span><span class="p">;</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="n">count</span><span class="p">;</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="sr">//</span><span class="err">막대</span> <span class="err">끝</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-                    <span class="n">count</span><span class="o">--</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>여기서 포인트는  stack 을 사용하면서 레이저와 막대끝을 구분하는 것 같다 ㅎㅎ
-알고리즘하니깐 시간 잘 가네 ㅎㅎ</p>
-
-<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42585</p>
 
       
   </div><!-- /.entry-content -->

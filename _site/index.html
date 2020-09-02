@@ -276,6 +276,83 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-08-05T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/">August 05, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/" rel="bookmark" title="Proxy Pattern (디자인 패턴 13장)" itemprop="url">Proxy Pattern (디자인 패턴 13장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="프록시-패턴-정의">프록시 패턴 정의</h3>
+<p>어떤 객체에 대한 접근을 제어하기 위한 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴이다.</p>
+
+<figure>
+	<img src="/images/2020-09-02-android-proxy-pattern.png" alt="" />
+</figure>
+
+<h3 id="프록시-패턴-언제-사용할까">프록시 패턴 언제 사용할까!?</h3>
+<p>원격 프록시 , 가상 프록시 , 보호 프록시 여러가지가 있는데 가상 프록시를 다뤄보자.<br />
+네트워크를 통해 이미지를 가져온다고 가정할 때 네트워크 상태와 인터넷 연결 속도에 따라서 시간 소요 되게 된다.<br />
+이때 이미지를 불러 오는 동안 Proxy를 사용해서 임의의 이미지를 보여준 다음 실제 이미지를 보여줄 수 있다.<br />
+아래 코드를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">ProxyPattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">ImageProxy</span><span class="o">().</span><span class="na">showIcon</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">interface</span> <span class="nc">Icon</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">ImageIcon</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">download</span><span class="o">()</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 그림"</span><span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">download</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 다운로드"</span><span class="o">)</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">ImageProxy</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
+    <span class="kt">var</span> <span class="nl">imageIcon:</span> <span class="n">ImageIcon</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageProxy 그림"</span><span class="o">)</span>
+        <span class="n">imageIcon</span> <span class="o">=</span> <span class="n">ImageIcon</span><span class="o">()</span>
+        <span class="n">imageIcon</span><span class="o">?.</span><span class="na">showIcon</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>ImageProxy 를 통해 showIcon 메소드를 호출 하게 되면 프록시 임의의 그림을 보여주고 다운로드가 되었을때 실제 이미지 ImageIcon 그림을 보여줄 수 있다.</p>
+
+<p>아래는 테스트 결과이다.</p>
+<figure>
+	<img src="/images/2020-09-02-android-proxy-pattern-2.png" alt="" />
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-08-03T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-state-pattern/">August 03, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -720,136 +797,6 @@ Composite 에서만 가능</p>
 
 <figure>
 	<img src="/images/2020-07-13-android-facade-pattern.png" alt="" />
-</figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-06-24T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/">June 24, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/" rel="bookmark" title="Adapter Pattern (디자인 패턴 8장)" itemprop="url">Adapter Pattern (디자인 패턴 8장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="어댑터-패턴-정의">어댑터 패턴 정의</h3>
-
-<p>한 클래스의 인터페이스를 클라이언트에서 사용하고자 하는 다른 인터페이스로 변환합니다.<br />
-어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있습니다.</p>
-
-<h3 id="어댑터-패턴-언제-사용할까">어댑터 패턴 언제 사용할까!?</h3>
-<p>예를 들어 기존 NormalPager 를 사용하고 있는데 LibPager 를 같이 사용해야 하는 상황이 생겼다고 가정 함.<br />
-근데 LibPageListener 는 PageListener 와 다르게 같은 기능인데 다른 메소드명을 가지고 있다.<br />
-그리고 LibPageListener 에는 없는 기능(onDoubleNextPage,onDoublePreviousPage)이 PageListener에는 존재 한다.<br />
-LibPagerAdapter 를 통해서 해결해보자!!</p>
-
-<p>아래의 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kd">class</span> <span class="nc">AdapterPattern</span> <span class="o">{</span>
-
-    <span class="kd">interface</span> <span class="nc">PageListener</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">NormalPager</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">LibPager</span> <span class="o">:</span> <span class="n">LibPageListener</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onPrevious"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onNext"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-
-    <span class="kd">interface</span> <span class="nc">LibPageListener</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">LibPagerAdapter</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">libPageListener:</span> <span class="n">LibPageListener</span><span class="o">)</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-
-	<span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">normalPager</span> <span class="o">=</span> <span class="n">NormalPager</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="n">libPager</span> <span class="o">=</span> <span class="n">LibPager</span><span class="o">()</span>
-        <span class="n">val</span> <span class="n">libPagerAdapter</span> <span class="o">=</span> <span class="n">LibPagerAdapter</span><span class="o">(</span><span class="n">libPager</span><span class="o">)</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-
-</code></pre></div></div>
-<p>위의 코드를 보면 onDoublePreviousPage,onDoubleNextPage 는 LibPageListener 없지만 같은 기능을 하게 만들어 주었다.</p>
-
-<p>아래의 결과를 보면 동일하다.</p>
-
-<figure>
-	<img src="/images/2020-06-24-android-adapter-pattern.png" alt="" />
 </figure>
 
       

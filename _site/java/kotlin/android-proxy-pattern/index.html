@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>view setAlpha in OnTouchListener &#8211; 영훈 블로그</title>
-<meta name="description" content="view setAlpha in OnTouchListener">
-<meta name="keywords" content="android">
+<title>Proxy Pattern (디자인 패턴 13장) &#8211; 영훈 블로그</title>
+<meta name="description" content="Proxy Pattern (디자인 패턴 13장)">
+<meta name="keywords" content="Proxy Pattern">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="view setAlpha in OnTouchListener">
-<meta property="og:description" content="view setAlpha in OnTouchListener">
-<meta property="og:url" content="http://localhost:4000/android/android-touch-post/">
+<meta property="og:title" content="Proxy Pattern (디자인 패턴 13장)">
+<meta property="og:description" content="Proxy Pattern (디자인 패턴 13장)">
+<meta property="og:url" content="http://localhost:4000/java/kotlin/android-proxy-pattern/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/android/android-touch-post/">
+<link rel="canonical" href="http://localhost:4000/java/kotlin/android-proxy-pattern/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -173,9 +173,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>view setAlpha in OnTouchListener</h1>
+      <h1>Proxy Pattern (디자인 패턴 13장)</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2018-11-09T00:00:00+09:00">November 09, 2018</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-08-05T00:00:00+09:00">August 05, 2020</time></span></h2>
       
 
       
@@ -276,33 +276,61 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">view setAlpha in OnTouchListener</h1>
-      <p>view pressed 상태 되었을 때 알파 50% 먹이기</p>
+      <h1 class="post-title entry-title">Proxy Pattern (디자인 패턴 13장)</h1>
+      <h3 id="프록시-패턴-정의">프록시 패턴 정의</h3>
+<p>어떤 객체에 대한 접근을 제어하기 위한 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴이다.</p>
 
-<p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
+<figure>
+	<img src="/images/2020-09-02-android-proxy-pattern.png" alt="" />
+</figure>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   @Override
-    public boolean onTouch(View v, MotionEvent event) {
+<h3 id="프록시-패턴-언제-사용할까">프록시 패턴 언제 사용할까!?</h3>
+<p>원격 프록시 , 가상 프록시 , 보호 프록시 여러가지가 있는데 가상 프록시를 다뤄보자.<br />
+네트워크를 통해 이미지를 가져온다고 가정할 때 네트워크 상태와 인터넷 연결 속도에 따라서 시간 소요 되게 된다.<br />
+이때 이미지를 불러 오는 동안 Proxy를 사용해서 임의의 이미지를 보여준 다음 실제 이미지를 보여줄 수 있다.<br />
+아래 코드를 보자.</p>
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                v.setAlpha((float) 0.5);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                v.setAlpha((float) 1);
-                break;
-        }
-        return false;
-    }
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">ProxyPattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">ImageProxy</span><span class="o">().</span><span class="na">showIcon</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">interface</span> <span class="nc">Icon</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">ImageIcon</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">download</span><span class="o">()</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 그림"</span><span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">download</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 다운로드"</span><span class="o">)</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">ImageProxy</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
+    <span class="kt">var</span> <span class="nl">imageIcon:</span> <span class="n">ImageIcon</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageProxy 그림"</span><span class="o">)</span>
+        <span class="n">imageIcon</span> <span class="o">=</span> <span class="n">ImageIcon</span><span class="o">()</span>
+        <span class="n">imageIcon</span><span class="o">?.</span><span class="na">showIcon</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
-<p>ACTION_DOWN 상태에서는 Pressed 상태 
-ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
-ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
-에서 각각 Action을 가진다.</p>
+<p>ImageProxy 를 통해 showIcon 메소드를 호출 하게 되면 프록시 임의의 그림을 보여주고 다운로드가 되었을때 실제 이미지 ImageIcon 그림을 보여줄 수 있다.</p>
 
-<p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
+<p>아래는 테스트 결과이다.</p>
+<figure>
+	<img src="/images/2020-09-02-android-proxy-pattern-2.png" alt="" />
+</figure>
 
     </div><!-- /.entry-content -->
     
@@ -372,23 +400,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/kotlin/kotlin-when-post/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/java/kotlin/android-state-pattern/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/" title="Proxy Pattern (디자인 패턴 13장)">Proxy Pattern (디자인 패턴 13장)</a></h3>
-      <p>Proxy Pattern (디자인 패턴 13장) <a href="http://localhost:4000/java/kotlin/android-proxy-pattern/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/java/kotlin/android-state-pattern/" title="State Pattern (디자인 패턴 12장)">State Pattern (디자인 패턴 12장)</a></h3>
+      <p>State Pattern (디자인 패턴 12장) <a href="http://localhost:4000/java/kotlin/android-state-pattern/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-state-pattern/" title="State Pattern (디자인 패턴 12장)">State Pattern (디자인 패턴 12장)</a></h4>
-        <span>Published on August 03, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-composite-pattern/" title="Composite Pattern (디자인 패턴 11장)">Composite Pattern (디자인 패턴 11장)</a></h4>
+        <span>Published on July 29, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/java/kotlin/android-composite-pattern/" title="Composite Pattern (디자인 패턴 11장)">Composite Pattern (디자인 패턴 11장)</a></h4>
-        <span>Published on July 29, 2020</span>
+        <h4><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/" title="Template Pattern (디자인 패턴 10장)">Template Pattern (디자인 패턴 10장)</a></h4>
+        <span>Published on July 15, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->
