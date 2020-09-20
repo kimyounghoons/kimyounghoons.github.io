@@ -276,6 +276,110 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-09-20T00:00:00+09:00"><a href="http://localhost:4000/kotlin/android-kotlin-koin/">September 20, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/kotlin/android-kotlin-koin/" rel="bookmark" title="Koin (1편)" itemprop="url">Koin (1편)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="코인이란">코인이란?</h3>
+<p>코틀린 개발자를 위한 실용적인 경량 종속성 주입 프레임 워크이다.<br />
+코인은 도메인 특화 언어인 DSL(Domain Specific Language) 이다.</p>
+
+<h4 id="koin-dsl">Koin DSL</h4>
+<p>applicationContext : Koin 모듈 생성<br />
+factory : 매번 inject 할때마다 인스턴스를 생성<br />
+single : 싱글톤으로 생성<br />
+bind : 종속시킬 class 나 interface를 주입<br />
+get : 컴포넌트내에 알맞은 의존성 주입</p>
+
+<p>의존성 주입을 하기 위한 라이브러리는 대거2 도 있지만 코인은 좀 더 사용하기 쉽고 가볍게 만들어 졌기 때문에 러닝커브가 낮다고 할 수 있다.</p>
+
+<p>우선 코인을 사용하기 위해 앱 모듈 단에서 dependency를 추가 해준다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="c1">//현재 최신버전인 1.0.2 버전으로 사용하였다.</span>
+    <span class="n">implementation</span> <span class="s">"org.koin:koin-android:1.0.2"</span> 
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>다음 예제 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">TestApplication</span> <span class="o">:</span> <span class="n">Application</span><span class="o">()</span> <span class="o">{</span> <span class="c1">//Application 클래스에서 모듈과 startKoin을 호출 해준다.</span>
+
+    <span class="kd">private</span> <span class="n">val</span> <span class="n">goodsModule</span> <span class="o">=</span> <span class="n">module</span> <span class="o">{</span>
+        <span class="n">factory</span> <span class="o">{</span> <span class="n">GoodsData</span><span class="o">()</span> <span class="o">}</span> <span class="c1">//상품데이터 생성</span>
+        <span class="n">single</span> <span class="o">{</span> <span class="n">GoodsServiceImpl</span><span class="o">(</span><span class="n">get</span><span class="o">())</span> <span class="n">as</span> <span class="n">GoodsService</span> <span class="o">}</span> 
+        <span class="c1">//GoodsService는 싱글톤으로 생성 되고  get() 은 컴포넌트내에 알맞은 의존성 주입을 해준다.</span>
+        <span class="c1">//get() 은 GoodsData 라고 생각 하면 된다.</span>
+        <span class="n">factory</span> <span class="o">{</span>
+            <span class="c1">//FactoryData 가 생성 될 때마다 변경되는 값을 넣기 위해 현재시간(Long 타입)을 사용</span>
+            <span class="k">return</span><span class="nd">@factory</span> <span class="n">FactoryData</span><span class="o">(</span><span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">timeInMillis</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">()</span>
+        <span class="n">startKoin</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">listOf</span><span class="o">(</span><span class="n">goodsModule</span><span class="o">))</span> <span class="c1">//코인 시작!! listOf 에는 다른 모듈도 정의 한다면 뒤에 더 붙여서 사용</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="c1">//FactoryData 데이터 클래스</span>
+<span class="n">data</span> <span class="kd">class</span> <span class="nf">FactoryData</span><span class="o">(</span><span class="n">val</span> <span class="nl">timeInMillis:</span> <span class="n">Long</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">)</span>
+
+<span class="c1">//GoodsData 데이터 클래스</span>
+<span class="n">data</span> <span class="kd">class</span> <span class="nf">GoodsData</span><span class="o">(</span><span class="kt">var</span> <span class="n">name</span> <span class="o">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">"청바지"</span><span class="o">,</span> <span class="kt">var</span> <span class="n">price</span> <span class="o">:</span> <span class="n">Long</span> <span class="o">=</span> <span class="mi">30000</span><span class="o">)</span>
+
+<span class="kd">interface</span> <span class="nc">GoodsService</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">getGoodsInfo</span><span class="o">():</span> <span class="n">String</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nf">GoodsServiceImpl</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsData:</span> <span class="n">GoodsData</span><span class="o">)</span> <span class="o">:</span> <span class="n">GoodsService</span> <span class="o">{</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">getGoodsInfo</span><span class="o">():</span> <span class="n">String</span> <span class="o">{</span>
+        <span class="c1">//기본적으로 생성 되는 goodsData 정보는 상품명 청바지 , 가격 30000</span>
+        <span class="k">return</span> <span class="s">"상품명 : "</span> <span class="o">+</span> <span class="n">goodsData</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">"  가격 : "</span> <span class="o">+</span> <span class="n">goodsData</span><span class="o">.</span><span class="na">price</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">MainActivity</span> <span class="o">:</span> <span class="n">AppCompatActivity</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsService:</span> <span class="n">GoodsService</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span>  <span class="c1">//by inject() 를 사용해서 GoodsService 주입</span>
+    <span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsData:</span> <span class="n">GoodsData</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span> <span class="c1">//by inject() 를 사용해서 GoodsData 주입</span>
+    <span class="kd">private</span> <span class="n">val</span> <span class="nl">factoryData:</span> <span class="n">FactoryData</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span> <span class="c1">//by inject() 를 사용해서 FactoryData 주입</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nl">savedInstanceState:</span> <span class="n">Bundle</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">)</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="koin-사용-방법">Koin 사용 방법</h4>
+<ol>
+  <li>Application 부분에서 모듈 정의를 해주고 Application onCreate 시점에서 Startkoin을 호출 해주면서 사용 할 module 을 정의해준다.</li>
+  <li>module을 정의 할 때 데이터를 어떤 방식으로 생성할지 따로 정의를 해준다<br />
+ex) factory , single , bind, get</li>
+  <li>실제 사용 되는 부분에서 주입 하기 위해 by inject() 를 통해 주입한다.</li>
+</ol>
+
+<p>다음 편에서는 Android 에서 사용되는 ViewModel에 의존성 주입하는 방법을 알아보자.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-08-05T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/">August 05, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -701,102 +805,6 @@ Composite 에서만 가능</p>
 
 <figure>
 	<img src="/images/2020-07-15-android-template-pattern.png" alt="" />
-</figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-07-13T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-facade-pattern/">July 13, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-facade-pattern/" rel="bookmark" title="Facade Pattern (디자인 패턴 9장)" itemprop="url">Facade Pattern (디자인 패턴 9장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="퍼사드-패턴-정의">퍼사드 패턴 정의</h3>
-<p>어떤 서브시스템의 일련의 인터페이스에 대한 통합된 인터페이스를 제공합니다.<br />
-퍼사드에서 고수준 인터페이스를 정의하기 때문에 서브시스템을 더 쉽게 사용할 수 있습니다.</p>
-
-<p>디자인 원칙 
-최소 지식 원칙 - 정말 친한 친구하고만 얘기하라.</p>
-
-<h3 id="퍼사드-패턴-언제-사용할까">퍼사드 패턴 언제 사용할까!?</h3>
-
-<p>아래의 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kd">class</span> <span class="nc">FacadePattern</span> <span class="o">{</span>
-
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">computerFacade</span> <span class="o">=</span> <span class="n">ComputerFacade</span><span class="o">(</span><span class="n">Monitor</span><span class="o">(),</span> <span class="n">Speaker</span><span class="o">())</span>
-        <span class="n">computerFacade</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="n">println</span><span class="o">(</span><span class="s">"----------------------------------"</span><span class="o">)</span>
-        <span class="n">computerFacade</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">ComputerFacade</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">monitor:</span> <span class="n">Monitor</span><span class="o">,</span> <span class="kd">private</span> <span class="n">val</span> <span class="nl">speaker:</span> <span class="n">Speaker</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">monitor</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">volume</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">volume</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-            <span class="n">monitor</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">Monitor</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Monitor on"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Monitor off"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">Speaker</span> <span class="o">{</span>
-        <span class="kt">var</span> <span class="n">volume</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">set</span><span class="o">(</span><span class="n">value</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">println</span><span class="o">(</span><span class="s">"volume set : $value"</span><span class="o">)</span>
-                <span class="n">field</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Speaker on"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Speaker off"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-
-</code></pre></div></div>
-<p>위의 코드를 보면 클라이언트 입장에서 ComputerFacade 만 알고 있으면 컴퓨터를 키고 끄는데 문제가 없다.<br />
-위의 클래스들은 간단하게 구현 했기때문에 쉽게 보일 수 있지만 컴퓨터가 부팅 되는 과정 까지 모두 포함된 내용을 클라이언트에서 알아야 한다면!?<br />
-클라이언트 입장에서 컴퓨터를 키는 도중에 지쳐서 그만둘지도 모른다.<br />
-이런 과정들을 최소한으로만 알게 하기 위해 퍼사드 패턴을 사용한다.<br />
-아래는 테스트 결과 이다.</p>
-
-<figure>
-	<img src="/images/2020-07-13-android-facade-pattern.png" alt="" />
 </figure>
 
       

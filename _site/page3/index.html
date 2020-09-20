@@ -276,6 +276,227 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-04-26T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/">April 26, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~3 minutes
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/" rel="bookmark" title="Factory Pattern (디자인 패턴 4장)" itemprop="url">Factory Pattern (디자인 패턴 4장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="팩토리-메소드-패턴과-추상-팩토리-패턴">팩토리 메소드 패턴과 추상 팩토리 패턴</h3>
+
+<h4 id="팩토리-메소드-정의">팩토리 메소드 정의</h4>
+<p>객체를 생성하기 위한 인터페이스를 정의하는데, 어떤 클래스의 인스턴스를 만들지는 서브클래스에서 결정하게 한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">FactoryMethodPatternTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">testCreateModel</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">yellowMemo</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Yellow"</span><span class="o">)</span>
+        <span class="n">yellowMemo</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">blueMemo</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Blue"</span><span class="o">)</span>
+        <span class="n">blueMemo</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Else"</span><span class="o">)</span>
+        <span class="n">empty</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ModelFactory</span> <span class="o">{</span>
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">create</span><span class="o">(</span><span class="nl">className:</span> <span class="n">String</span><span class="o">):</span> <span class="n">Model</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">ClassFactory</span> <span class="o">:</span> <span class="n">ModelFactory</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">create</span><span class="o">(</span><span class="nl">className:</span> <span class="n">String</span><span class="o">):</span> <span class="n">Model</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nf">when</span> <span class="o">(</span><span class="n">className</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">())</span> <span class="o">{</span>
+                <span class="s">"yellow"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">YellowMemo</span><span class="o">()</span>
+                <span class="o">}</span>
+                <span class="s">"blue"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">BlueMemo</span><span class="o">()</span>
+                <span class="o">}</span>
+                <span class="k">else</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">Empty</span><span class="o">()</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Model</span> <span class="o">{</span>
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">YellowMemo</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"YellowMemo 클릭"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">BlueMemo</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"BlueMemo 클릭"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">Empty</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Empty 클릭"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+</code></pre></div></div>
+
+<p>위의 코드 테스트 결과이미지</p>
+<figure>
+	<img src="/images/2020-04-26-android-factory-pattern-01.png" alt="" />
+</figure>
+
+<p>추상클래스 ModelFactory 의 create fun 추상 메소드를 통해 모델을 만들고 각각을 클릭 했을 때 print 내용은 달라진다.<br />
+모델을 직접 만들지 않고 Factory 를 통해 만들어서 사용하였다.<br />
+하지만 이렇게 되면 create 될때 className 에 의해 모두 모델을 ClassFactory에서 만들어 주어야 한다.<br />
+모델이 셀수 없게 많아지고 해당 모델들을 관리 해야 한다면??<br />
+모든 모델들을 ClassFactory에 추가 해야하기 때문에 비효율적이다.<br />
+위의 문제점을 보완한 아래의 내용을 보자.</p>
+
+<h4 id="추상팩토리-정의">추상팩토리 정의</h4>
+<p>추상 팩토리 패턴에서는 인터페이스를 이용하여 서로 연관된 또는 의존하는 객체인 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
+Android Architecture Component 에 있는 ViewModel 을 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">viewModel</span> <span class="o">=</span> <span class="n">ViewModelProviders</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="nl">MemoViewModel:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>ViewModelProviders.of(this) 는 ViewModelProvider 를 반환 하고 get(MemoViewModel::class.java)을 통해 MemoViewModel 을 반환한다.<br />
+ViewModelProvider를 자세히 살펴 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ViewModelProvider</span> <span class="o">{</span>
+
+<span class="nd">@NonNull</span>
+<span class="nd">@MainThread</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">get</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">canonicalName</span> <span class="o">=</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">getCanonicalName</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">canonicalName</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"Local and anonymous classes can not be ViewModels"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="nf">get</span><span class="o">(</span><span class="n">DEFAULT_KEY</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">canonicalName</span><span class="o">,</span> <span class="n">modelClass</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="nd">@NonNull</span>
+<span class="nd">@MainThread</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">get</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ViewModel</span> <span class="n">viewModel</span> <span class="o">=</span> <span class="n">mViewModelStore</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">modelClass</span><span class="o">.</span><span class="na">isInstance</span><span class="o">(</span><span class="n">viewModel</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">viewModel</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">viewModel</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mFactory</span> <span class="k">instanceof</span> <span class="n">KeyedFactory</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">viewModel</span> <span class="o">=</span> <span class="o">((</span><span class="n">KeyedFactory</span><span class="o">)</span> <span class="o">(</span><span class="n">mFactory</span><span class="o">)).</span><span class="na">create</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">modelClass</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">viewModel</span> <span class="o">=</span> <span class="o">(</span><span class="n">mFactory</span><span class="o">).</span><span class="na">create</span><span class="o">(</span><span class="n">modelClass</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">mViewModelStore</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">viewModel</span><span class="o">);</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">viewModel</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="kd">abstract</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">KeyedFactory</span> <span class="kd">implements</span> <span class="n">Factory</span> <span class="o">{</span>
+    <span class="nd">@NonNull</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span>
+            <span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">);</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">UnsupportedOperationException</span><span class="o">(</span><span class="s">"create(String, Class&lt;?&gt;) must be called on "</span>
+                <span class="o">+</span> <span class="s">"implementaions of KeyedFactory"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">AndroidViewModelFactory</span> <span class="kd">extends</span> <span class="n">ViewModelProvider</span><span class="o">.</span><span class="na">NewInstanceFactory</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">AndroidViewModelFactory</span> <span class="n">sInstance</span><span class="o">;</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">AndroidViewModelFactory</span> <span class="nf">getInstance</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Application</span> <span class="n">application</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">sInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AndroidViewModelFactory</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">sInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Application</span> <span class="n">mApplication</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">AndroidViewModelFactory</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Application</span> <span class="n">application</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mApplication</span> <span class="o">=</span> <span class="n">application</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">AndroidViewModel</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">modelClass</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">getConstructor</span><span class="o">(</span><span class="n">Application</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">newInstance</span><span class="o">(</span><span class="n">mApplication</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">modelClass</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>	
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">NewInstanceFactory</span> <span class="kd">implements</span> <span class="n">Factory</span> <span class="o">{</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"ClassNewInstance"</span><span class="o">)</span>
+    <span class="nd">@NonNull</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Factory</span> <span class="o">{</span>
+    <span class="nd">@NonNull</span>
+    <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>소스가 좀 길지만 필요한 부분만 편집했다.<br />
+mFactory 는 AndroidViewModelFactory 이다.<br />
+Factory 라는 인터페이스로 인해 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
+mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 아니면 Factory에 의해 생성되게 된다.</p>
+
+<p>간단한 로직의 객체 생성이라면 팩토리 메소드를 사용해도 괜찮을것 같고 Android Architecture Component 처럼 구상 클래스를 지정하고 싶지 않을때는
+추상 팩토리 패턴을 사용하면 좋을것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-04-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">April 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -613,107 +834,6 @@ implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서�
             }
         }
 </code></pre></div></div>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-03T00:00:00+09:00"><a href="http://localhost:4000/android/android-appcenter/">March 03, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-appcenter/" rel="bookmark" title="AppCenter Distribute" itemprop="url">AppCenter Distribute</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>Firebase Distribute 를 사용하다가 배포된 apk 앱에서 최신 버전 유지가 필요해서 인앱업데이트 기능이 필요했다.<br />
-AppCenter 라는 Microsoft 에서 만든 sdk 가 있어서 이걸 사용해 보도록 했다.<br />
-Gradle Dependency 에는 다음과 같이 추가해 준다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dependencies {
-   def appCenterSdkVersion = '3.0.0'
-   implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
-}
-</code></pre></div></div>
-
-<p>그리고 인앱 업데이트 할 때 CustomDialog를 보여주기 위해 DistributeListener 인터페이스를 구현한 클래스를 하나만들어 준다.<br />
-클래스명은 임의로 InAppUpdateListener 라고 만들었다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InAppUpdateListener : DistributeListener {
-    override fun onReleaseAvailable(
-        activity: Activity?,
-        releaseDetails: ReleaseDetails
-    ): Boolean {
-        activity?.apply {
-            val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setTitle(R.string.in_app_update)
-            dialogBuilder.setMessage(R.string.msg_download_latest_version)
-            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&gt;
-                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
-            }
-            dialogBuilder.setCancelable(false)
-            dialogBuilder.create()
-                .show()
-            return true
-        }
-        return false
-    }
-}
-
-</code></pre></div></div>
-
-<p>Distribute.notifyUpdateAction(UpdateAction.UPDATE) 를 사용하게 되면 리턴을 true 로 셋팅 해준다.<br />
-return 을 false로 할 경우 액티비티 변경 될 때마다 콜백이 호출 될 수 있다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
-Distribute.setListener(InAppUpdateListener())
-AppCenter.start(application, BuildConfig.KEY_APP_CENTER_SECRET, Distribute::class.java)
-</code></pre></div></div>
-<p>테스트 그룹을 Private 으로 한 경우 첫번째줄 UpdateTrack 을 셋팅 해줘야 한다.<br />
-KEY_APP_CENTER_SECRET 는 앱의 시크릿 키 값이다. AppCenter Console -&gt; Settings 우측 상단 메뉴 버튼 클릭</p>
-<figure>
-	<img src="/images/2020-03-03-appcenter.png" alt="" />
-</figure>
-
-<p>앱 업데이트가 필요한 곳에서 다음과 같이 호출</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
-Distribute.setListener(InAppUpdateListener())
-AppCenter.start(application, BuildConfig.KEY_APPCENTER_SECRET, Distribute::class.java)
-</code></pre></div></div>
-
-<p>유의할 점은 해당 versionCode 가 Distribute 에 업로드 되어 있다는 전제하에 업데이트 할 버전이 있다면 InAppUpdateListener onReleaseAvailable 가 호출 된다.<br />
-현재 versionCode 가 1 이고 Distribute 에 있는 버전이 2 버전이라면 콜백이 호출 되지 않는다.<br />
-Distribute 에는 1,2 현재버전까지 포함되서 올라가 있어야 호출됨.<br />
-그리고 Distribute 셋팅은 AppCenter.start 가 호출 되기 전에 호출 되어야 한다. 순서가 바뀔 경우 제대로 동작하지 않을수 있음.<br />
-AppCenterSecret Key 는 노출 되면 안되기 떄문에 환경변수에 저장해서 사용했다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//앱 build.gradle
-
-buildTypes {
-        release {
-            ...
-        }
-
-        debug {
-            ...
-        }
-
-        buildTypes.each {
-            it.buildConfigField 'String', 'KEY_APP_CENTER_SECRET', "\"$System.env.KEY_APP_CENTER_SECRET\""
-        }
-}
-</code></pre></div></div>
-
-<p>이번에 Github Actions 를 사용해서 Appcenter Distribute 에 apk 배포하는걸 자동화해서 작업을 했는데 그부분은 다음 글에서 올림.</p>
 
       
   </div><!-- /.entry-content -->
