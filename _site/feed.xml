@@ -4,13 +4,76 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-09-20T13:36:52+09:00</updated>
+<updated>2020-09-26T11:33:10+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-communicator-activity-fragments/" />
+  <id>http://localhost:4000/android/android-communicator-activity-fragments</id>
+  <updated>2020-09-26T00:00:00-00:00</updated>
+  <published>2020-09-26T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;안드로이드 앱 개발을 하다 보면 Activity 와 Fragment 간의 데이터를 주고 받아야 할 때가 있다.
+기존 방식은 어떤 방식을 사용했고 새로운 방식은 또 어떤 방법으로 하는지 알아보자.&lt;/p&gt;
+
+&lt;h4 id=&quot;기존-방식&quot;&gt;기존 방식&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;h4 id=&quot;activity--fragment&quot;&gt;Activity → Fragment&lt;/h4&gt;
+    &lt;p&gt;데이터를 넘길 때 Fragment newInstance fuction 을 만들어 Bundle로 데이터를 넘김&lt;br /&gt;
+Fragment TAG 를 사용해서 Fragment 를 찾은 다음 Fragment 의 데이터 set&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;h4 id=&quot;fragment--activity&quot;&gt;Fragment ←→ Activity&lt;/h4&gt;
+    &lt;p&gt;Fragment 가 Activity 에 attach 되는 순간 context 를 통해서 Listener 구현해서 데이터 공유&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;h4 id=&quot;activity-내부-fragments-간의-데이터-공유&quot;&gt;Activity 내부 Fragments 간의 데이터 공유&lt;/h4&gt;
+    &lt;p&gt;One Fragment → Activity → Two Fragment&lt;br /&gt;
+이렇게 공유 했었다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;새로운-방식&quot;&gt;새로운 방식&lt;/h4&gt;
+&lt;p&gt;ViewModel 을 사용하면 데이터 공유가 더 쉬워 진다.&lt;/p&gt;
+
+&lt;p&gt;Activity&lt;/p&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ViewModelProvider&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;액티비티&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;액티비티&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;뷰모델명&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Fragment&lt;/p&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;activityViewModel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lazy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;//Fragment에서 ViewModelProvider을 생성 할 때 Fragment 를 넣는게 아니라 Activity 가 들어 가야 한다.  &lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ViewModelProvider&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requireActivity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;액티비티&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;뷰모델명&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Fragment 에서 ActivityViewModel 을 사용하기 때문에 데이터 공유가 훨씬 편해진다.&lt;br /&gt;
+LiveData 를 사용하면 더 사용하기 좋다.&lt;br /&gt;
+LiveData Observe 할 때는  ViewModelProvider 을 생성 할 때와 달리 각각의 라이프사이클에 맞춰서 셋팅 해주면 된다.&lt;/p&gt;
+
+&lt;p&gt;Activity → ActivityViewModel&lt;br /&gt;
+Fragment in Activity→ ActivityViewModel&lt;br /&gt;
+OtherFragment in Activity → ActivityViewModel&lt;/p&gt;
+
+&lt;p&gt;위와 같이 ActivityViewModel을 공유하기 때문에 데이터 공유가 자유로워 진다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-communicator-activity-fragments/&quot;&gt;Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on September 26, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -106,7 +169,7 @@ ex) factory , single , bind, get&lt;/li&gt;
   &lt;li&gt;실제 사용 되는 부분에서 주입 하기 위해 by inject() 를 통해 주입한다.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;다음 편에서는 Android 에서 사용되는 ViewModel에 의존성 주입하는 방법을 알아보자.&lt;/p&gt;
+&lt;h3 id=&quot;다음-편에서는-android-에서-사용되는-viewmodel에-의존성-주입하는-방법을-알아보자&quot;&gt;다음 편에서는 Android 에서 사용되는 ViewModel에 의존성 주입하는 방법을 알아보자.&lt;/h3&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/kotlin/android-kotlin-koin/&quot;&gt;Koin (1편)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on September 20, 2020.&lt;/p&gt;
   </content>
@@ -2081,78 +2144,6 @@ class KotlinLambdaCollectionTest {
 &lt;p&gt;test1 과 test4 를 비교 했을때 코드 양도 많이 줄고 훨씬 가독성이 많이 올라간걸 볼 수 있다.&lt;/p&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-collections/&quot;&gt;코틀린 람다 콜렉션(kotlin lambda collection)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on January 28, 2020.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[안드로이드 10(29) 블루투스 연결 대응]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-bluetooth-android10/" />
-  <id>http://localhost:4000/android/android-bluetooth-android10</id>
-  <updated>2020-01-16T00:00:00-00:00</updated>
-  <published>2020-01-16T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;h1 id=&quot;문제점&quot;&gt;문제점&lt;/h1&gt;
-&lt;h2 id=&quot;bluetoothadapterstartdiscovery-return-false-&quot;&gt;bluetoothAdapter.startDiscovery() return false !!!&lt;/h2&gt;
-
-&lt;p&gt;true로 반환 되어야 하는데 false 로 반환 되어 블루투스 검색을 할 수 없음&lt;/p&gt;
-
-&lt;p&gt;안드로이드 10 버전에서 위치 관련 보안이 강화 되었는데 블루투스 검색 할때 위치 관련 퍼미션이 필요하기 때문에 일어난 퍼미션 관련 이슈였습니다.&lt;/p&gt;
-
-&lt;p&gt;버전 별로 블루투스 검색 및 연결 관련 퍼미션을 알아보겠습니다.&lt;/p&gt;
-
-&lt;p&gt;기본적으로 블루투스 기능 ON , 위치 기능 ON 상태 여야 합니다.&lt;/p&gt;
-
-&lt;p&gt;블루투스 기능 OFF 상태일 때는 사용 가능 하게 팝업 띄어 주고 위치 기능 OFF 상태일때는 체크 해서 설정 화면으로 보내면됩니다.&lt;/p&gt;
-
-&lt;h2 id=&quot;targetsdkversion-29-미만인-경우&quot;&gt;targetSdkVersion 29 미만인 경우&lt;/h2&gt;
-
-&lt;p&gt;AndroidManifest.xml 파일&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot; /&amp;gt;
-&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot; /&amp;gt;
-&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot;/&amp;gt;
-&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;29 미만인 경우 위치 관련 퍼미션이 적용 되어 있을 경우 아래 퍼미션이 자동으로 추가 됩니다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot;/&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아래 퍼미션은 런타임 퍼미션 적용&lt;br /&gt;
-Manifest.permission.ACCESS_COARSE_LOCATION&lt;/p&gt;
-
-&lt;h2 id=&quot;targetsdkversion-29-인-경우&quot;&gt;targetSdkVersion 29 인 경우&lt;/h2&gt;
-
-&lt;p&gt;AndroidManifest.xml 파일 &lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot; /&amp;gt;
-&amp;lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot; /&amp;gt;
-&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot;/&amp;gt;
-&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&amp;gt;
-&amp;lt;uses-permission android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot;/&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아래 퍼미션은 런타임 퍼미션 적용&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Manifest.permission.ACCESS_COARSE_LOCATION,
-Manifest.permission.ACCESS_FINE_LOCATION,
-Manifest.permission.ACCESS_BACKGROUND_LOCATION
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;퍼미션 승인 후 bluetoothAdapter. startDiscovery() 이 true로 반환되는걸 확인 할 수 있었습니다.&lt;/p&gt;
-
-&lt;p&gt;아래 이미지는 블루투스 연결 버튼 클릭 시 플로우 차트&lt;/p&gt;
-&lt;figure&gt;
-	&lt;img src=&quot;/images/2020-01-17-bluetooth-flow-chart.png&quot; alt=&quot;&quot; /&gt;
-&lt;/figure&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-bluetooth-android10/&quot;&gt;안드로이드 10(29) 블루투스 연결 대응&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on January 16, 2020.&lt;/p&gt;
   </content>
 </entry>
 

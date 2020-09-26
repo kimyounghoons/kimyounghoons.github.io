@@ -89,6 +89,9 @@
             <ul class="header-submenu">
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Android">Android</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
               
                 
@@ -204,6 +207,9 @@
           <ul>
             
               
+                <li><a href="http://localhost:4000/categories/#Android">Android</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
             
               
@@ -272,6 +278,73 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-09-26T00:00:00+09:00"><a href="http://localhost:4000/android/android-communicator-activity-fragments/">September 26, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-communicator-activity-fragments/" rel="bookmark" title="Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유" itemprop="url">Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>안드로이드 앱 개발을 하다 보면 Activity 와 Fragment 간의 데이터를 주고 받아야 할 때가 있다.
+기존 방식은 어떤 방식을 사용했고 새로운 방식은 또 어떤 방법으로 하는지 알아보자.</p>
+
+<h4 id="기존-방식">기존 방식</h4>
+
+<ol>
+  <li>
+    <h4 id="activity--fragment">Activity → Fragment</h4>
+    <p>데이터를 넘길 때 Fragment newInstance fuction 을 만들어 Bundle로 데이터를 넘김<br />
+Fragment TAG 를 사용해서 Fragment 를 찾은 다음 Fragment 의 데이터 set</p>
+  </li>
+  <li>
+    <h4 id="fragment--activity">Fragment ←→ Activity</h4>
+    <p>Fragment 가 Activity 에 attach 되는 순간 context 를 통해서 Listener 구현해서 데이터 공유</p>
+  </li>
+  <li>
+    <h4 id="activity-내부-fragments-간의-데이터-공유">Activity 내부 Fragments 간의 데이터 공유</h4>
+    <p>One Fragment → Activity → Two Fragment<br />
+이렇게 공유 했었다.</p>
+  </li>
+</ol>
+
+<h4 id="새로운-방식">새로운 방식</h4>
+<p>ViewModel 을 사용하면 데이터 공유가 더 쉬워 진다.</p>
+
+<p>Activity</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ViewModelProvider</span><span class="o">(</span><span class="k">this</span><span class="o">(</span><span class="err">액티비티</span><span class="o">)).</span><span class="na">get</span><span class="o">(</span><span class="err">액티비티</span> <span class="err">뷰모델명</span><span class="o">::</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>Fragment</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="n">val</span> <span class="n">activityViewModel</span> <span class="n">by</span> <span class="n">lazy</span> <span class="o">{</span>
+        <span class="c1">//Fragment에서 ViewModelProvider을 생성 할 때 Fragment 를 넣는게 아니라 Activity 가 들어 가야 한다.  </span>
+        <span class="n">ViewModelProvider</span><span class="o">(</span><span class="n">requireActivity</span><span class="o">()).</span><span class="na">get</span><span class="o">(</span><span class="err">액티비티</span> <span class="err">뷰모델명</span><span class="o">::</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Fragment 에서 ActivityViewModel 을 사용하기 때문에 데이터 공유가 훨씬 편해진다.<br />
+LiveData 를 사용하면 더 사용하기 좋다.<br />
+LiveData Observe 할 때는  ViewModelProvider 을 생성 할 때와 달리 각각의 라이프사이클에 맞춰서 셋팅 해주면 된다.</p>
+
+<p>Activity → ActivityViewModel<br />
+Fragment in Activity→ ActivityViewModel<br />
+OtherFragment in Activity → ActivityViewModel</p>
+
+<p>위와 같이 ActivityViewModel을 공유하기 때문에 데이터 공유가 자유로워 진다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -370,7 +443,7 @@ ex) factory , single , bind, get</li>
   <li>실제 사용 되는 부분에서 주입 하기 위해 by inject() 를 통해 주입한다.</li>
 </ol>
 
-<p>다음 편에서는 Android 에서 사용되는 ViewModel에 의존성 주입하는 방법을 알아보자.</p>
+<h3 id="다음-편에서는-android-에서-사용되는-viewmodel에-의존성-주입하는-방법을-알아보자">다음 편에서는 Android 에서 사용되는 ViewModel에 의존성 주입하는 방법을 알아보자.</h3>
 
       
   </div><!-- /.entry-content -->
@@ -680,132 +753,6 @@ Composite 에서만 가능</p>
 
 <p>[사진 자료 출처]
 (https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8_%ED%8C%A8%ED%84%B4#:~:text=%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8%20%ED%8C%A8%ED%84%B4(Composite%20pattern)%EC%9D%B4%EB%9E%80,%EB%8F%99%EC%9D%BC%ED%95%98%EA%B2%8C%20%EB%8B%A4%EB%A3%A8%EB%8F%84%EB%A1%9D%20%ED%95%9C%EB%8B%A4.)</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-07-15T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/">July 15, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/" rel="bookmark" title="Template Pattern (디자인 패턴 10장)" itemprop="url">Template Pattern (디자인 패턴 10장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="템플릿-메소드-패턴-정의">템플릿 메소드 패턴 정의</h3>
-<p>메소드에서 알고리즘의 골격을 정의한다.<br />
-알고리즘의 여러 단계 중 일부는 서브클래스에서 구현할 수 있습니다.<br />
-템플릿 메소드를 이용하면 알고리즘의 구조는 그대로 유지하면서 서브클래스에서 특정 단계를 재정의할 수 있습니다.</p>
-
-<h4 id="헐리우드-원칙디자인-원칙">헐리우드 원칙(디자인 원칙)</h4>
-<p>먼저 연락하지 마세요. 저희가 연락 드리겠습니다.
--&gt; 의존성 부패를 방지 할 수 있다.</p>
-
-<h4 id="의존성-부패란">의존성 부패란?</h4>
-<p>고수준 구성요소가 저수준 구성요소에 의존하고 그 저수준 구성요소는 다시 고수준 구성요소에 의존하게 된다면 서로에게 의존성이 있다는걸 알 수 있다.<br />
-이런 현상을 의존성 부패라고 한다.</p>
-
-<h3 id="템플릿-패턴-언제-사용할까">템플릿 패턴 언제 사용할까!?</h3>
-<p>CustomActionBar<br />
-왼쪽 뒤로가기 메뉴 버튼<br />
-타이틀<br />
-흰색 배경</p>
-
-<p>SecondCustomActionBar<br />
-왼쪽 뒤로가기 메뉴 버튼<br />
-타이틀<br />
-분홍색 배경<br />
-오른쪽 즐겨찾기 버튼(CustomActionBar 에는 없음)</p>
-
-<p>두개의 CustomActionBar 가 있다고 가정하고 공통된 부분을 찾아보자.<br />
-왼쪽 뒤로가기 메뉴 버튼은 완전 동일 하고 타이틀과 배경을 셋팅 하는 부분은 타이틀과 배경색은 다르지만 셋팅하는 부분은 공통된 부분이다.<br />
-그리고 오른쪽 즐겨찾기 버튼은 CustomActionBar 에는 존재하지 않는다. 이부분은 hook를 통해서 처리 한다.</p>
-
-<p>아래의 코드를 보자.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">TemplateMethodPattern</span> <span class="o">{</span>
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">customActionBar</span> <span class="o">=</span> <span class="n">CustomActionBar</span><span class="o">()</span>
-        <span class="n">customActionBar</span><span class="o">.</span><span class="na">prepare</span><span class="o">()</span>
-
-        <span class="n">println</span><span class="o">(</span><span class="s">"----------------------------------------------"</span><span class="o">)</span>
-
-        <span class="n">val</span> <span class="n">secondActionBar</span> <span class="o">=</span> <span class="n">SecondCustomActionBar</span><span class="o">()</span>
-        <span class="n">secondActionBar</span><span class="o">.</span><span class="na">prepare</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ActionBar</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">prepare</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">initTitle</span><span class="o">()</span>
-            <span class="n">initBackButtonView</span><span class="o">()</span>
-            <span class="n">setBackground</span><span class="o">()</span>
-            <span class="n">hook</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">initTitle</span><span class="o">()</span>
-
-        <span class="kd">private</span> <span class="n">fun</span> <span class="nf">initBackButtonView</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"뒤로가기 버튼 셋팅"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">setBackground</span><span class="o">()</span>
-
-        <span class="n">open</span> <span class="n">fun</span> <span class="nf">hook</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">CustomActionBar</span> <span class="o">:</span> <span class="n">ActionBar</span><span class="o">()</span> <span class="o">{</span>
-        <span class="c1">//왼쪽 뒤로가기 메뉴 버튼</span>
-        <span class="c1">//타이틀 셋팅</span>
-        <span class="c1">//흰색 배경</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">initTitle</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Title: CustomActionBar"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">setBackground</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"흰색 배경"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">SecondCustomActionBar</span> <span class="o">:</span> <span class="n">ActionBar</span><span class="o">()</span> <span class="o">{</span>
-        <span class="c1">//왼쪽 뒤로가기 메뉴 버튼</span>
-        <span class="c1">//타이틀 셋팅</span>
-        <span class="c1">//분홍색 배경</span>
-        <span class="c1">//오른쪽 즐겨찾기 버튼(CustomActionBar 에는 없음)</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">initTitle</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Title : SecondCustomActionBar"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">setBackground</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"분홍색 배경"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">hook</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"오른쪽 즐겨찾기 버튼 셋팅"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-<p>아래는 테스트 결과이다.</p>
-
-<figure>
-	<img src="/images/2020-07-15-android-template-pattern.png" alt="" />
-</figure>
 
       
   </div><!-- /.entry-content -->
