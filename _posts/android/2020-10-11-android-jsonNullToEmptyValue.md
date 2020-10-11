@@ -11,7 +11,7 @@ categories: [Android, Kotlin]
 Kotlin 언어를 사용할 때 nullable 타입인지 아닌지 구분해서 필드를 만들 수 있는데 이 경우는 예상하지 못하기 때문에 무조건 nullable 형태로 사용해야 한다.  
 이렇게 사용하면 뭔가 깔끔하지 못한 느낌이 들어서 다른 해결 방안을 생각해 보았다.  
 
-이 문제를 해결한 방법은 gsonFactory 생성 시 Deserializer 를 커스텀 해서 사용하는 방법이었다.
+이 문제를 해결한 방법은 gson 생성 시 TypeAdapter 를 커스텀해서 사용하는 방법이었다.
 
 우선 array 배열에 [null] 형식으로 오는 값과 필드(Boolean , Long , String)가 null 로 오는 두 케이스를 다뤘다.
 
@@ -66,7 +66,6 @@ class GsonHelperTest {
     )
 }
 
-
 class NonNullListDeserializer<T> : JsonDeserializer<ArrayList<T>> {
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ArrayList<T> {
@@ -78,7 +77,6 @@ class NonNullListDeserializer<T> : JsonDeserializer<ArrayList<T>> {
             }
             val list: ArrayList<T> = ArrayList(size)
             for (i in 0 until size) {
-                // get element type
                 val elementType: Type = `$Gson$Types`.getCollectionElementType(typeOfT, ArrayList::class.java)
                 val value: T = context.deserialize(array[i], elementType)
                 if (value != null) {
