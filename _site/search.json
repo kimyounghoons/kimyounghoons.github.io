@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "Json field null 에서 empty 값 변경",
+      "category" : "",
+      "tags"     : "Android, Kotlin",
+      "url"      : "http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/",
+      "date"     : "2020-10-11 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유",
       "category" : "",
       "tags"     : "Android",

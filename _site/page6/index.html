@@ -95,6 +95,9 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
               
                 
@@ -213,6 +216,9 @@
                 <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
             
               
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
             
               
@@ -278,6 +284,67 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-12-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-debug-signingkey/">December 09, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-debug-signingkey/" rel="bookmark" title="디버그 용 서명 키 만들기" itemprop="url">디버그 용 서명 키 만들기</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>기본적으로 Android Studio 에서 프로젝트를 만들게 되면 기본적으로 Build Variants가 Debug 로 셋팅 되어 있다.</p>
+
+<p>Android SDK 도구에서 생성된 디버그 인증서를 사용하여 앱에 자동으로 서명하기 때문이다.</p>
+
+<p>안드로이드 앱을 출시 하기 위해서는 Release KeyStore 를 통해 서명 된 앱이 필요하다.</p>
+
+<p>Release KeyStore 를 생성해서 서명한 앱을 출시 하고 난 뒤, Release 용 apk 가 설치 된 앱에서 Debug 모드로 빌드하게 되면 빌드 실패가 뜨고 삭제 후 설치 하시겠습니까? 라는 팝업이 뜬다.</p>
+
+<p>이 이유는 Release apk 와 Debug apk 인증 정보가 다르기 때문이다.</p>
+
+<p>이렇게 되면 삭제 후 설치는 할 수 있지만 Build Variants 가 변경될 때마다 다시 설치해야하는 번거러움도 있고 삭제하지 않고 디버깅 하고 싶은 상황에서 할 수 없게 된다.</p>
+
+<p>이 상황을 해결 하기 위해서는 Release Keystore 로부터 Debug Keystore 를 만들면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>keytool -importkeystore -v -srckeystore 릴리즈용 키스토어 파일이름 및 경로 -destkeystore 디버그용 키스토어 파일이름 및 경로 -srcstorepass 릴리즈용 키스토어 비밀번호 -deststorepass android -srcalias alias이름 -destalias androiddebugkey -srckeypass alias비밀번호 -destkeypass android
+</code></pre></div></div>
+
+<p>새로 만드는 Debug Keystore 를 Android Studio 기본 제공해주는 Debug Keystore 와 매칭 시켜주는 작업이다.<br />
+-destalias androiddebugkey , -deskkeypass android  는 Android SDK 도구에서 생성된 디버그 인증 정보와 동일하게 해서 나중에 별도 셋팅이 필요없다.</p>
+
+<p>build.gradle 셋팅은 아래와 같이 하면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android {
+ signingConfigs {
+        release {
+            storeFile file('릴리즈 키스토어 경로')
+            storePassword '패스워드'
+            keyAlias '릴리즈 alias'
+            keyPassword '패스워드'
+        }
+
+        debug {
+            storeFile file('디버그 키스토어 경로')
+            //따로 정보 필요 없음
+        }
+    }
+}
+</code></pre></div></div>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -521,47 +588,6 @@ rladudgns0837 내용을 스캔한경우 김영훈0837 이런식으로 입력되�
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-10-15T00:00:00+09:00"><a href="http://localhost:4000/android/android-notifyDataSetChanged/">October 15, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-notifyDataSetChanged/" rel="bookmark" title="notifyDataSetChanged()" itemprop="url">notifyDataSetChanged()</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="문제">문제</h2>
-<p>notifyDataSetChanged() 호출 시 RecyclerView 리스트가 갱신이 되지 않는 문제</p>
-
-<h2 id="문제-해결">문제 해결</h2>
-<p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()">https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()</a></p>
-
-<p>LayoutManagers will be forced to fully rebind and relayout all visible views.</p>
-
-<p>문서에 의하면 뷰가 Gone 상태 일때는 갱신이 일어나지 않는다.</p>
-
-<p>그래서 Invisible 상태로 두고 갱신시켜 줘서 해결 함.</p>
-
-<h2 id="회고">회고</h2>
-<p>처음에는 data 가 제대로 들어가 있지 않은것 같아서 확인 했는데 정상적으로 들어가 있었고<br />
-두번째는 adapter 의 data list 의 참조 문제를 의심해서 한 곳에서 list 를 만들고 해당 리스트를 다른곳에서도 같이 바라보게 했지만 그대로 문제가 발생<br />
-세번째는 뷰가 바인딩 되지 않는 것을 보고 이상하게 생각해서 뷰를 가리지 않고 그대로 하니 잘 나옴..<br />
-뷰의 visible 상태에 뭔가 문제가 있다고 생각해서 다큐먼트를 찾아 보니.. 위의 글이 있었다.<br />
-좀 더 정확히 알고 사용하는 버릇을 들여야 할 것 같다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -629,7 +655,7 @@ rladudgns0837 내용을 스캔한경우 김영훈0837 이런식으로 입력되�
     
 
     
-      <li><a href="http://localhost:4000/page14/">14</a></li>
+      <li><a href="http://localhost:4000/page15/">15</a></li>
     
 
     

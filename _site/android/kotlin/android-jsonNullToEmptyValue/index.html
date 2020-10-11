@@ -1,0 +1,511 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Json field null 에서 empty 값 변경 &#8211; 영훈 블로그</title>
+<meta name="description" content="Json field null 에서 empty 값 변경">
+<meta name="keywords" content="Android, Kotlin">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Json field null 에서 empty 값 변경">
+<meta property="og:description" content="Json field null 에서 empty 값 변경">
+<meta property="og:url" content="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/">
+<meta property="og:site_name" content="영훈 블로그">
+<meta property="og:image" content="http://localhost:4000/images/images/logo.png">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.mmenu.all.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.floating-social-share.min.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+
+
+<div class="header-menu header-menu-top">
+    <ul class="header-item-container">
+      <li class="header-item-title header-toggle "><a href="#menu"><h2><i class="fa fa-bars"></i></h2></a></li>
+      <li class="header-item-title">
+        <a href="http://localhost:4000/">
+          
+            <img class="logo" src="http://localhost:4000/images/logo.png" alt="영훈 블로그">
+          
+          <a href="http://localhost:4000/" class="title"> 영훈 블로그</a>
+        </a>
+      </li>
+      
+        
+        
+
+        
+          <li class="header-item "><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+            <ul class="header-submenu">
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Android">Android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Single">Single</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#aac">aac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#android">android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#flag">flag</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#interview">interview</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#java">java</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#notification">notification</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#sample">sample</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#자바">자바</a></li>
+              
+            </ul>
+          </li>
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+            
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+            
+        
+      
+      <li class="header-item"><a href="http://localhost:4000/search"><h3><i class="fa fa-search"></i></h3></a></li>
+    </ul>
+  </div>
+<div class="entry-header">
+  <div class="header-title">
+    <div class="header-title-wrap">
+      <h1>Json field null 에서 empty 값 변경</h1>
+      
+        <h2><span class="entry-date date published updated"><time datetime="2020-10-11T00:00:00+09:00">October 11, 2020</time></span></h2>
+      
+
+      
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
+      
+    </div><!-- /.header-title-wrap -->
+  </div><!-- /.header-title -->
+</div><!-- /.entry-header -->
+
+
+<nav id="menu" style="display: none">
+  <ul>
+    
+      
+        <li><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+          <ul>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Android">Android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Single">Single</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#aac">aac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#android">android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#flag">flag</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#interview">interview</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#java">java</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#notification">notification</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#sample">sample</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#자바">자바</a></li>
+            
+          </ul>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <div class="entry-content">
+        
+      <h1 class="post-title entry-title">Json field null 에서 empty 값 변경</h1>
+      <p>서버와 데이터를 주고 받을 때 Json 형식으로 주고 받는데 서버에서 내려주는 데이터 field 가 가끔씩 의도하지 않은 null 값이 내려올 때가 있다.<br />
+Kotlin 언어를 사용할 때 nullable 타입인지 아닌지 구분해서 필드를 만들 수 있는데 이 경우는 예상하지 못하기 때문에 무조건 nullable 형태로 사용해야 한다.<br />
+이렇게 사용하면 뭔가 깔끔하지 못한 느낌이 들어서 다른 해결 방안을 생각해 보았다.</p>
+
+<p>이 문제를 해결한 방법은 gsonFactory 생성 시 Deserializer 를 커스텀 해서 사용하는 방법이었다.</p>
+
+<p>우선 array 배열에 [null] 형식으로 오는 값과 필드(Boolean , Long , String)가 null 로 오는 두 케이스를 다뤘다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GsonHelperTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="err">`</span><span class="n">Null</span> <span class="n">to</span> <span class="n">Empty</span> <span class="n">Value</span><span class="err">`</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">jsonString</span> <span class="o">=</span> <span class="s">"{\n"</span> <span class="o">+</span>
+                <span class="s">"\"stringValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"timestamp\": \"1602158882721\",\n"</span> <span class="o">+</span>
+                <span class="s">"\"longValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"intValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"booleanValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"items\": [null]\n"</span> <span class="o">+</span>
+                <span class="s">"    }"</span>
+
+        <span class="n">val</span> <span class="n">gson</span> <span class="o">=</span> <span class="n">GsonBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">create</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="nl">nonNullData:</span> <span class="n">NonNullData</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">jsonString</span><span class="o">,</span> <span class="nl">NonNullData:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">timestamp</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">size</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">longValue</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">intValue</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">booleanValue</span><span class="o">)</span>
+
+        <span class="k">assert</span><span class="o">(</span>
+                <span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span>
+        <span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="n">data</span> <span class="kd">class</span> <span class="nf">NonNullData</span><span class="o">(</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"stringValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">stringValue:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"timestamp"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">timestamp:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"items"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">items:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(),</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"longValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">longValue:</span> <span class="n">Long</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1L</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"intValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">intValue:</span> <span class="n">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"booleanValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">booleanValue:</span> <span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="o">)</span>
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">JsonDeserializer</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+    <span class="nd">@Throws</span><span class="o">(</span><span class="nl">JsonParseException:</span><span class="o">:</span><span class="kd">class</span><span class="err">)</span>
+    <span class="nc">override</span> <span class="n">fun</span> <span class="nf">deserialize</span><span class="o">(</span><span class="nl">json:</span> <span class="n">JsonElement</span><span class="o">,</span> <span class="nl">typeOfT:</span> <span class="n">Type</span><span class="o">,</span> <span class="nl">context:</span> <span class="n">JsonDeserializationContext</span><span class="o">):</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">json</span> <span class="n">is</span> <span class="n">JsonArray</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">json</span>
+            <span class="n">val</span> <span class="n">size</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">size</span><span class="o">()</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
+            <span class="o">}</span>
+            <span class="n">val</span> <span class="nl">list:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">size</span><span class="o">)</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// get element type</span>
+                <span class="n">val</span> <span class="nl">elementType:</span> <span class="n">Type</span> <span class="o">=</span> <span class="err">`</span><span class="n">$Gson$Types</span><span class="err">`</span><span class="o">.</span><span class="na">getCollectionElementType</span><span class="o">(</span><span class="n">typeOfT</span><span class="o">,</span> <span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+                <span class="n">val</span> <span class="nl">value:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">deserialize</span><span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">elementType</span><span class="o">)</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value</span><span class="o">)</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">list</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">StringTypeAdapter</span> <span class="o">:</span> <span class="n">TypeAdapter</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">out:</span> <span class="n">JsonWriter</span><span class="o">,</span> <span class="nl">value:</span> <span class="n">String</span><span class="o">?)</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">read</span><span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">:</span> <span class="n">JsonReader</span><span class="o">):</span> <span class="n">String</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">===</span> <span class="n">JsonToken</span><span class="o">.</span><span class="na">NULL</span><span class="o">)</span> <span class="o">{</span>
+            <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextNull</span><span class="o">()</span>
+            <span class="k">return</span> <span class="s">""</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextString</span><span class="o">()</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="n">Booelan</span><span class="o">,</span> <span class="n">Long</span> <span class="n">Type</span> <span class="n">Adapter</span> <span class="err">는</span> <span class="err">같은</span> <span class="err">구조라</span> <span class="err">생략</span>
+</code></pre></div></div>
+
+<p>NonNullListDeserializer 를 사용해서 items: [null] 식으로 오는 데이터를 items [] 로 변환 할 수 있고 StringTypeAdapter 를 사용해서 String 으로 보내주는 경우인데 null 값으로 보내주는 경우 null 값이 아닌 “” 빈값 으로 변경 시켜 줄 수 있다.</p>
+
+<p>아래는 테스트 결과 이다.</p>
+
+<figure>
+	<img src="/images/2020-10-11-android-json-response.png" alt="" />
+</figure>
+
+<p>Retrofit 에 적용 시키는 경우에는 아래와 같이 적용하면 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">createRetrofitClient</span><span class="o">(</span><span class="nl">okHttpClient:</span> <span class="n">OkHttpClient</span><span class="o">):</span> <span class="n">Retrofit</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">Retrofit</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">baseUrl</span><span class="o">(</span><span class="n">baseUrl</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">addCallAdapterFactory</span><span class="o">(</span><span class="n">rxJava2CallAdapterFactory</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">GsonConverterFactory</span><span class="o">.</span><span class="na">create</span><span class="o">(</span>
+                        <span class="n">GsonBuilder</span><span class="o">().</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
+                                <span class="o">.</span><span class="na">create</span><span class="o">())</span>
+                <span class="o">)</span>
+                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">enumConverterFactory</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">client</span><span class="o">(</span><span class="n">okHttpClient</span><span class="o">).</span><span class="na">build</span><span class="o">()</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+
+    </div><!-- /.entry-content -->
+    
+  </article>
+</div><!-- /#main -->
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script type="text/javascript" src="http://localhost:4000/assets/js/scripts.min.js"></script>
+<script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-154716591-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+</script>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://kimyounghoons.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+<script type="text/javascript">
+    sharing();
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154716591-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154716591-1');
+</script>
+
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/android/android-communicator-activity-fragments/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/android-communicator-activity-fragments/" title="Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유">Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유</a></h3>
+      <p>Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유 <a href="http://localhost:4000/android/android-communicator-activity-fragments/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/kotlin/android-kotlin-koin/" title="Koin (1편)">Koin (1편)</a></h4>
+        <span>Published on September 20, 2020</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/" title="Proxy Pattern (디자인 패턴 13장)">Proxy Pattern (디자인 패턴 13장)</a></h4>
+        <span>Published on August 05, 2020</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+</body>
+</html>

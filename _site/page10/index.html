@@ -95,6 +95,9 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
               
                 
@@ -213,6 +216,9 @@
                 <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
             
               
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
             
               
@@ -278,6 +284,126 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-27T00:00:00+09:00"><a href="http://localhost:4000/android/notification/android-notification/">November 27, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/notification/android-notification/" rel="bookmark" title="Notification" itemprop="url">Notification</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="안드로이드-푸시-팝업">안드로이드 푸시 팝업</h1>
+
+<p>순서</p>
+
+<ol>
+  <li>NotificationManager 얻어옴</li>
+  <li>오레오 버전 이상이면 Channel 생성 아니면 패스</li>
+  <li>PendingIntent생성</li>
+  <li>NotificationCompat 생성</li>
+  <li>빌드한 Notification을 notificationManager에 붙여주면 끝!</li>
+  <li>Notification 클릭 시 핸들</li>
+</ol>
+
+<p>1.NotificationManager 얻어옴</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+</code></pre></div></div>
+
+<p>2.오레오 버전 이상이면 Channel 생성 아니면 패스</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(getString(R.string.app_name) + getString(R.string.priority_high), getString(R.string.app_name) + getString(R.string.priority_high), NotificationManager.IMPORTANCE_HIGH)
+                channel.description = getString(R.string.app_name) + getString(R.string.priority_high)
+                channel.enableLights(true)
+                channel.lightColor = Color.BLUE
+                channel.enableVibration(true)
+                channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
+                channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+                notificationManager.createNotificationChannel(channel)
+            }
+</code></pre></div></div>
+
+<p>Channel 생성 시 IMPORTANCE 설정에 따라 알림이 다르다.
+NotificationManager.IMPORTANCE_HIGH :소리 및 팝업 (헤드업 알림)
+NotificationManager.IMPORTANCE_DEFAULT : 소리
+NotificationManager.IMPORTANCE_LOW : 소리 없음  <br />
+NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
+
+<p>3.PendingIntent생성</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val intent = Intent(applicationContext, MainActivity::class.java)
+            remoteMessage.data?.apply {
+                intent.putExtra(JSON_LETTER, get(JSON_LETTER))
+                intent.putExtra(JSON_ANSWER, get(JSON_ANSWER))
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
+   val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+</code></pre></div></div>
+
+<p>알림 팝업을 누르게 되면 PendingIntent 에 실어 두었던 Intent 정보를 가져와서 사용할 수 있다.</p>
+
+<p>4.NotificationCompat 생성</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val builder = NotificationCompat.Builder(applicationContext, getString(R.string.app_name) + getString(R.string.priority_high))
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title)
+                    .setContentText(body)
+                    .setDefaults(Notification.DEFAULT_VIBRATE)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+</code></pre></div></div>
+
+<p>5.빌드한 Notification을 notificationManager에 붙여주면 끝!</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notificationManager.notify(1, builder.build())
+</code></pre></div></div>
+
+<p>6.Notification 클릭 시 핸들</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.apply {
+            if (intent.extras.getString(JSON_ANSWER) != null) {
+                val jsonLetter = intent.extras.getString(JSON_LETTER)
+                val jsonAnswer = intent.extras.getString(JSON_ANSWER, EMPTY)
+                if (supportFragmentManager.backStackEntryCount &gt; 0) {
+                    if (jsonLetter == null) {
+                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
+                        openReAnswers(answer)
+                    } else {
+                        openReAnswers(jsonLetter, jsonAnswer)
+                    }
+                    return
+                } else {
+                    openHome()
+                    if (jsonLetter == null) {
+                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
+                        openReAnswers(answer)
+                    } else {
+                        openReAnswers(jsonLetter, jsonAnswer)
+                    }
+                    return
+                }
+            }
+        }
+    }
+</code></pre></div></div>
+
+<p>Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -478,55 +604,6 @@ letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인�
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-touch-post/">November 09, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-touch-post/" rel="bookmark" title="view setAlpha in OnTouchListener" itemprop="url">view setAlpha in OnTouchListener</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>view pressed 상태 되었을 때 알파 50% 먹이기</p>
-
-<p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                v.setAlpha((float) 0.5);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                v.setAlpha((float) 1);
-                break;
-        }
-        return false;
-    }
-</code></pre></div></div>
-
-<p>ACTION_DOWN 상태에서는 Pressed 상태 
-ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
-ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
-에서 각각 Action을 가진다.</p>
-
-<p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -587,13 +664,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
         <li><a href="http://localhost:4000/page12/">12</a></li>
       
     
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page13/">13</a></li>
-      
-    
 
     
     
@@ -601,7 +671,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
     
 
     
-      <li><a href="http://localhost:4000/page14/">14</a></li>
+      <li><a href="http://localhost:4000/page15/">15</a></li>
     
 
     

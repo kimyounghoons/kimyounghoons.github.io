@@ -95,6 +95,9 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
               
                 
@@ -213,6 +216,9 @@
                 <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
             
               
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
             
               
@@ -278,6 +284,74 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-03-15T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/">March 15, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" rel="bookmark" title="Strategy Pattern (디자인 패턴 1장)" itemprop="url">Strategy Pattern (디자인 패턴 1장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="strategy-pattern-에-대해-알아보자">Strategy Pattern 에 대해 알아보자.</h3>
+
+<p>알고리즘군을 정의하고 각각을 캡슐화하여 교환해서 사용할 수 있도록 만든다.<br />
+스트래티지를 활용하면 알고리즘을 사용하는 클라이언트와는 독릭적으로 알고리즘을 변경할 수 있다.</p>
+
+<p>1장에서는 다음과 같은 3가지 디자인 원칙이 나온다.</p>
+
+<ol>
+  <li>애플리케이션에서 달라지는 부분을 찾아내고, 달라지지 않는 부분으로부터 분리시킨다.</li>
+  <li>구현이 아닌 인터페이스에 맞춰서 프로그래밍한다.</li>
+  <li>상속보다는 구성을 활용한다.</li>
+</ol>
+
+<p>디자인 패턴책에서는 오리의 예제를 들었는데 안드로이드 부분에서 찾아 보았다.<br />
+얼마전 AppCenter 를 사용하면서 사용된 스트래티지패턴의 예제를 보려고 한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InAppUpdateListener : DistributeListener {
+    override fun onReleaseAvailable(
+        activity: Activity?,
+        releaseDetails: ReleaseDetails
+    ): Boolean {
+        activity?.apply {
+            val dialogBuilder = AlertDialog.Builder(activity)
+            dialogBuilder.setTitle(R.string.in_app_update)
+            dialogBuilder.setMessage(R.string.msg_download_latest_version)
+            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&gt;
+                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
+            }
+            dialogBuilder.setCancelable(false)
+            dialogBuilder.create()
+                .show()
+            return true
+        }
+        return false
+    }
+}
+
+Distribute.setListener(InAppUpdateListener())
+</code></pre></div></div>
+
+<p>위의 코드는 업데이트할 버전이 있을때 onReleaseAvailable 가 불려서 다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다.<br />
+Distribute 에는 DistributeListener 인터페이스를 구성했다.</p>
+
+<p>다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다. 라는 알고리즘을 캡슐화해서 사용하였고 InAppUpdateListener를 다른 DistributeListener로 교환해서 사용할 수 있다.<br />
+그렇기 때문에 이 코드도 strategy pattern 으로 볼 수 있다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -679,136 +753,6 @@ Arguments 클래스 내부에서 키 값 관리 하면 됨.</li>
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-01-28T00:00:00+09:00"><a href="http://localhost:4000/android/android-collections/">January 28, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-collections/" rel="bookmark" title="코틀린 람다 콜렉션(kotlin lambda collection)" itemprop="url">코틀린 람다 콜렉션(kotlin lambda collection)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="todo--선택된-아이템-알파벳들을-콤마로-구분해서-string-으로-만들기">TODO : 선택된 아이템 알파벳들을 콤마로 구분해서 String 으로 만들기</h3>
-
-<p>사용 된 함수는 filterIsInstance , filter , map , joinToString<br />
-선언형 프로그래밍 -&gt; 함수형 프로그래밍 방식으로 변경 하는 과정을 코딩</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/**
- * Created by kimyounghoon on 2020-01-29.
- */
-class KotlinLambdaCollectionTest {
-    open class BaseItem(var id: String)
-
-    class Item(id: String, val alphabet: String, val isSelected: Boolean) : BaseItem(id)
-
-    lateinit var items: ArrayList&lt;BaseItem&gt;
-
-    @Before
-    fun before() {  //테스트 시작 되기 전에 불린다. 리스트 셋팅!!
-        items =
-            arrayListOf(
-                Item("1", "a", false),
-                Item("2", "b", true),
-                Item("3", "c", true),
-                Item("4", "d", true),
-                Item("5", "e", false),
-                Item("6", "f", false),
-                Item("7", "g", false)
-            )
-    }
-
-
-   /*
-    *  test1 은 명령형 프로그래밍 2,3,4 함수형 프로그래밍으로 변환하는 작업입니다.
-    * */
-    @Test
-    fun test1() {
-        var alphabets = ""                  
-        val filterItems = arrayListOf&lt;Item&gt;()
-        for (item in items) {
-            if (item is Item &amp;&amp; item.isSelected) {
-                filterItems.add(item)
-            }
-        }
-
-        for (index in 0 until filterItems.size) {
-            if (index == filterItems.size - 1) {
-                alphabets += filterItems[index].alphabet
-            } else {
-                alphabets += filterItems[index].alphabet + ","
-            }
-        }
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-
-    /*
-    *  filter 를 사용해서 Item 으로만 걸렀기 때문에 as List&lt;Item&gt; 으로 캐스팅. 뭔가 아쉽다.
-    * */
-    @Test
-    fun test2() {
-        var alphabets = ""
-        (items.filter {
-            (it is Item &amp;&amp; it.isSelected)
-        } as List&lt;Item&gt;).let {
-            for (index in 0 until it.size) {
-                if (index == it.size - 1) {
-                    alphabets += it[index].alphabet
-                } else {
-                    alphabets += it[index].alphabet + ","
-                }
-            }
-        }
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-
-    /*
-    * filter 와 map , joinToString 을 사용하니 함수형 프로그래밍으로 바뀌고
-    * 가독성도 많이 좋아졌는데 map 에서 한번더 캐스팅 해서 써야하는게 불편해서 구글링 한번더!!
-    * */
-    @Test
-    fun test3() {
-        val alphabets = items.filter {
-            (it is Item &amp;&amp; it.isSelected)
-        }.map {
-            (it as Item).alphabet
-        }.joinToString(",")
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-
-    /*
-    * filterIsInstance 를 사용하면 Item 만 필터 되어서 Item 형태로 반환 되기때문에 캐스팅이 필요 없다.
-    * */
-    @Test
-    fun test4() {
-        val alphabets = items.filterIsInstance&lt;Item&gt;().filter {
-            it.isSelected
-        }.map {
-            it.alphabet
-        }.joinToString(",")
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-}
-</code></pre></div></div>
-
-<p>test1 과 test4 를 비교 했을때 코드 양도 많이 줄고 훨씬 가독성이 많이 올라간걸 볼 수 있다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -872,7 +816,7 @@ class KotlinLambdaCollectionTest {
     
 
     
-      <li><a href="http://localhost:4000/page14/">14</a></li>
+      <li><a href="http://localhost:4000/page15/">15</a></li>
     
 
     

@@ -95,6 +95,9 @@
                   <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
               
                 
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
                   <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
               
                 
@@ -213,6 +216,9 @@
                 <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
             
               
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
                 <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
             
               
@@ -278,6 +284,157 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-10-11T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/">October 11, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" rel="bookmark" title="Json field null 에서 empty 값 변경" itemprop="url">Json field null 에서 empty 값 변경</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>서버와 데이터를 주고 받을 때 Json 형식으로 주고 받는데 서버에서 내려주는 데이터 field 가 가끔씩 의도하지 않은 null 값이 내려올 때가 있다.<br />
+Kotlin 언어를 사용할 때 nullable 타입인지 아닌지 구분해서 필드를 만들 수 있는데 이 경우는 예상하지 못하기 때문에 무조건 nullable 형태로 사용해야 한다.<br />
+이렇게 사용하면 뭔가 깔끔하지 못한 느낌이 들어서 다른 해결 방안을 생각해 보았다.</p>
+
+<p>이 문제를 해결한 방법은 gsonFactory 생성 시 Deserializer 를 커스텀 해서 사용하는 방법이었다.</p>
+
+<p>우선 array 배열에 [null] 형식으로 오는 값과 필드(Boolean , Long , String)가 null 로 오는 두 케이스를 다뤘다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GsonHelperTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="err">`</span><span class="n">Null</span> <span class="n">to</span> <span class="n">Empty</span> <span class="n">Value</span><span class="err">`</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">jsonString</span> <span class="o">=</span> <span class="s">"{\n"</span> <span class="o">+</span>
+                <span class="s">"\"stringValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"timestamp\": \"1602158882721\",\n"</span> <span class="o">+</span>
+                <span class="s">"\"longValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"intValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"booleanValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"items\": [null]\n"</span> <span class="o">+</span>
+                <span class="s">"    }"</span>
+
+        <span class="n">val</span> <span class="n">gson</span> <span class="o">=</span> <span class="n">GsonBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">create</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="nl">nonNullData:</span> <span class="n">NonNullData</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">jsonString</span><span class="o">,</span> <span class="nl">NonNullData:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">timestamp</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">size</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">longValue</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">intValue</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">booleanValue</span><span class="o">)</span>
+
+        <span class="k">assert</span><span class="o">(</span>
+                <span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span>
+        <span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="n">data</span> <span class="kd">class</span> <span class="nf">NonNullData</span><span class="o">(</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"stringValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">stringValue:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"timestamp"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">timestamp:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"items"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">items:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(),</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"longValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">longValue:</span> <span class="n">Long</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1L</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"intValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">intValue:</span> <span class="n">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"booleanValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">booleanValue:</span> <span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="o">)</span>
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">JsonDeserializer</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+    <span class="nd">@Throws</span><span class="o">(</span><span class="nl">JsonParseException:</span><span class="o">:</span><span class="kd">class</span><span class="err">)</span>
+    <span class="nc">override</span> <span class="n">fun</span> <span class="nf">deserialize</span><span class="o">(</span><span class="nl">json:</span> <span class="n">JsonElement</span><span class="o">,</span> <span class="nl">typeOfT:</span> <span class="n">Type</span><span class="o">,</span> <span class="nl">context:</span> <span class="n">JsonDeserializationContext</span><span class="o">):</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">json</span> <span class="n">is</span> <span class="n">JsonArray</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">json</span>
+            <span class="n">val</span> <span class="n">size</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">size</span><span class="o">()</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
+            <span class="o">}</span>
+            <span class="n">val</span> <span class="nl">list:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">size</span><span class="o">)</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// get element type</span>
+                <span class="n">val</span> <span class="nl">elementType:</span> <span class="n">Type</span> <span class="o">=</span> <span class="err">`</span><span class="n">$Gson$Types</span><span class="err">`</span><span class="o">.</span><span class="na">getCollectionElementType</span><span class="o">(</span><span class="n">typeOfT</span><span class="o">,</span> <span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+                <span class="n">val</span> <span class="nl">value:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">deserialize</span><span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">elementType</span><span class="o">)</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value</span><span class="o">)</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">list</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">StringTypeAdapter</span> <span class="o">:</span> <span class="n">TypeAdapter</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">out:</span> <span class="n">JsonWriter</span><span class="o">,</span> <span class="nl">value:</span> <span class="n">String</span><span class="o">?)</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">read</span><span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">:</span> <span class="n">JsonReader</span><span class="o">):</span> <span class="n">String</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">===</span> <span class="n">JsonToken</span><span class="o">.</span><span class="na">NULL</span><span class="o">)</span> <span class="o">{</span>
+            <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextNull</span><span class="o">()</span>
+            <span class="k">return</span> <span class="s">""</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextString</span><span class="o">()</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="n">Booelan</span><span class="o">,</span> <span class="n">Long</span> <span class="n">Type</span> <span class="n">Adapter</span> <span class="err">는</span> <span class="err">같은</span> <span class="err">구조라</span> <span class="err">생략</span>
+</code></pre></div></div>
+
+<p>NonNullListDeserializer 를 사용해서 items: [null] 식으로 오는 데이터를 items [] 로 변환 할 수 있고 StringTypeAdapter 를 사용해서 String 으로 보내주는 경우인데 null 값으로 보내주는 경우 null 값이 아닌 “” 빈값 으로 변경 시켜 줄 수 있다.</p>
+
+<p>아래는 테스트 결과 이다.</p>
+
+<figure>
+	<img src="/images/2020-10-11-android-json-response.png" alt="" />
+</figure>
+
+<p>Retrofit 에 적용 시키는 경우에는 아래와 같이 적용하면 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">createRetrofitClient</span><span class="o">(</span><span class="nl">okHttpClient:</span> <span class="n">OkHttpClient</span><span class="o">):</span> <span class="n">Retrofit</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">Retrofit</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">baseUrl</span><span class="o">(</span><span class="n">baseUrl</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">addCallAdapterFactory</span><span class="o">(</span><span class="n">rxJava2CallAdapterFactory</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">GsonConverterFactory</span><span class="o">.</span><span class="na">create</span><span class="o">(</span>
+                        <span class="n">GsonBuilder</span><span class="o">().</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
+                                <span class="o">.</span><span class="na">create</span><span class="o">())</span>
+                <span class="o">)</span>
+                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">enumConverterFactory</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">client</span><span class="o">(</span><span class="n">okHttpClient</span><span class="o">).</span><span class="na">build</span><span class="o">()</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     
@@ -653,111 +810,6 @@ https://en.wikipedia.org/wiki/State_pattern</p>
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-07-29T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-composite-pattern/">July 29, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-composite-pattern/" rel="bookmark" title="Composite Pattern (디자인 패턴 11장)" itemprop="url">Composite Pattern (디자인 패턴 11장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="컴포지트-패턴-정의">컴포지트 패턴 정의</h3>
-<p>객체들을 트리 구조로 구성하여 부분과 전체를 나타내는 계층구조로 만들 수 있습니다.<br />
-이 패턴을 이용하면 클라이언트에서 개별 객체와 다른 객체들로 구성된 복합 객체를 똑같은 방법으로 다룰 수 있다.</p>
-
-<figure>
-	<img src="/images/2020-07-29-android-composite-pattern-02.png" alt="" />
-</figure>
-
-<h3 id="컴포지트-패턴-언제-사용할까">컴포지트 패턴 언제 사용할까!?</h3>
-<p>식당에 메뉴가 있는데 아침 메뉴 점심 메뉴 저녁메뉴가 있을 수 있고 또 다른 디저트 메뉴 혹은 디저트 메뉴 안에서도 또 다른 메뉴로 나뉘어 질 수 있다.<br />
-이런 식으로 계층 구조로 생각 해야 하는 경우 사용하면 유용하다.</p>
-
-<p>아래의 코드를 보자.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kd">class</span> <span class="nc">CompositePattern</span> <span class="o">{</span>
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">allMenus</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"전체메뉴"</span><span class="o">)</span>
-
-        <span class="n">val</span> <span class="n">breakfastMenu</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"아침메뉴"</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
-            <span class="n">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
-                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"토스트"</span><span class="o">,</span> <span class="mi">3000</span><span class="o">))</span>
-                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"삼겹살"</span><span class="o">,</span> <span class="mi">10000</span><span class="o">))</span>
-                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"김밥"</span><span class="o">,</span> <span class="mi">2500</span><span class="o">))</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">val</span> <span class="n">lunchMenu</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"점심메뉴"</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
-            <span class="n">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
-                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"ㅄㅎㄱ"</span><span class="o">,</span> <span class="mi">10000</span><span class="o">))</span>
-                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"ㅍㅇㅈ"</span><span class="o">,</span> <span class="mi">3500</span><span class="o">))</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">allMenus</span><span class="o">.</span><span class="na">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
-            <span class="n">add</span><span class="o">(</span><span class="n">breakfastMenu</span><span class="o">)</span>
-            <span class="n">add</span><span class="o">(</span><span class="n">lunchMenu</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">allMenus</span><span class="o">.</span><span class="na">print</span><span class="o">()</span>
-
-    <span class="o">}</span>
-
-    <span class="c1">//Component</span>
-    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">MenuComponent</span> <span class="o">{</span>
-        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="c1">//Leaf</span>
-    <span class="kd">class</span> <span class="nf">MenuItem</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">,</span> <span class="kd">private</span> <span class="n">val</span> <span class="nl">price:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">:</span> <span class="n">MenuComponent</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"name : $name , price : $price"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="c1">//Composite</span>
-    <span class="kd">class</span> <span class="nf">Menu</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">)</span> <span class="o">:</span> <span class="n">MenuComponent</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">menuComponents</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">&lt;</span><span class="n">MenuComponent</span><span class="o">&gt;()</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"name : $name"</span><span class="o">)</span>
-            <span class="n">val</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">menuComponents</span><span class="o">.</span><span class="na">iterator</span><span class="o">()</span>
-            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-                <span class="n">val</span> <span class="n">menuComponent</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
-                <span class="n">menuComponent</span><span class="o">.</span><span class="na">print</span><span class="o">()</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-</code></pre></div></div>
-<p>Leaf 에서는 더 이상 메뉴를 추가,제거 할 수 없다.<br />
-Composite 에서만 가능</p>
-
-<p>아래는 테스트 결과이다.</p>
-<figure>
-	<img src="/images/2020-07-29-android-composite-pattern.png" alt="" />
-</figure>
-
-<p>[사진 자료 출처]
-(https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8_%ED%8C%A8%ED%84%B4#:~:text=%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8%20%ED%8C%A8%ED%84%B4(Composite%20pattern)%EC%9D%B4%EB%9E%80,%EB%8F%99%EC%9D%BC%ED%95%98%EA%B2%8C%20%EB%8B%A4%EB%A3%A8%EB%8F%84%EB%A1%9D%20%ED%95%9C%EB%8B%A4.)</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 
 <div class="pagination">
@@ -799,7 +851,7 @@ Composite 에서만 가능</p>
     
 
     
-      <li><a href="http://localhost:4000/page14/">14</a></li>
+      <li><a href="http://localhost:4000/page15/">15</a></li>
     
 
     
