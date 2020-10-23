@@ -5,18 +5,18 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Adapter Pattern (디자인 패턴 8장) &#8211; 영훈 블로그</title>
-<meta name="description" content="Adapter Pattern (디자인 패턴 8장)">
-<meta name="keywords" content="Adapter Pattern">
+<title>토스 금액 입력창 애니메이션 클론 코딩 &#8211; 영훈 블로그</title>
+<meta name="description" content="토스 금액 입력창 애니메이션 클론 코딩">
+<meta name="keywords" content="Android, Kotlin">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Adapter Pattern (디자인 패턴 8장)">
-<meta property="og:description" content="Adapter Pattern (디자인 패턴 8장)">
-<meta property="og:url" content="http://localhost:4000/java/kotlin/android-adapter-pattern/">
+<meta property="og:title" content="토스 금액 입력창 애니메이션 클론 코딩">
+<meta property="og:description" content="토스 금액 입력창 애니메이션 클론 코딩">
+<meta property="og:url" content="http://localhost:4000/android/kotlin/android-tosscustomview/">
 <meta property="og:site_name" content="영훈 블로그">
 <meta property="og:image" content="http://localhost:4000/images/images/logo.png">
 
@@ -24,7 +24,7 @@
 
 
 
-<link rel="canonical" href="http://localhost:4000/java/kotlin/android-adapter-pattern/">
+<link rel="canonical" href="http://localhost:4000/android/kotlin/android-tosscustomview/">
 <link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
 
 <!-- http://t.co/dKP3o1e -->
@@ -179,9 +179,9 @@
 <div class="entry-header">
   <div class="header-title">
     <div class="header-title-wrap">
-      <h1>Adapter Pattern (디자인 패턴 8장)</h1>
+      <h1>토스 금액 입력창 애니메이션 클론 코딩</h1>
       
-        <h2><span class="entry-date date published updated"><time datetime="2020-06-24T00:00:00+09:00">June 24, 2020</time></span></h2>
+        <h2><span class="entry-date date published updated"><time datetime="2020-10-23T00:00:00+09:00">October 23, 2020</time></span></h2>
       
 
       
@@ -288,114 +288,48 @@
   <article class="hentry">
     <div class="entry-content">
         
-      <h1 class="post-title entry-title">Adapter Pattern (디자인 패턴 8장)</h1>
-      <h3 id="어댑터-패턴-정의">어댑터 패턴 정의</h3>
-
-<p>한 클래스의 인터페이스를 클라이언트에서 사용하고자 하는 다른 인터페이스로 변환합니다.<br />
-어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있습니다.</p>
-
-<h3 id="어댑터-패턴-언제-사용할까">어댑터 패턴 언제 사용할까!?</h3>
-<p>예를 들어 기존 NormalPager 를 사용하고 있는데 LibPager 를 같이 사용해야 하는 상황이 생겼다고 가정 함.<br />
-근데 LibPageListener 는 PageListener 와 다르게 같은 기능인데 다른 메소드명을 가지고 있다.<br />
-그리고 LibPageListener 에는 없는 기능(onDoubleNextPage,onDoublePreviousPage)이 PageListener에는 존재 한다.<br />
-LibPagerAdapter 를 통해서 해결해보자!!</p>
-
-<p>아래의 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kd">class</span> <span class="nc">AdapterPattern</span> <span class="o">{</span>
-
-    <span class="kd">interface</span> <span class="nc">PageListener</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">NormalPager</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">LibPager</span> <span class="o">:</span> <span class="n">LibPageListener</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onPrevious"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onNext"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-
-    <span class="kd">interface</span> <span class="nc">LibPageListener</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">LibPagerAdapter</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">libPageListener:</span> <span class="n">LibPageListener</span><span class="o">)</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-
-	<span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">normalPager</span> <span class="o">=</span> <span class="n">NormalPager</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="n">libPager</span> <span class="o">=</span> <span class="n">LibPager</span><span class="o">()</span>
-        <span class="n">val</span> <span class="n">libPagerAdapter</span> <span class="o">=</span> <span class="n">LibPagerAdapter</span><span class="o">(</span><span class="n">libPager</span><span class="o">)</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-
-</code></pre></div></div>
-<p>위의 코드를 보면 onDoublePreviousPage,onDoubleNextPage 는 LibPageListener 없지만 같은 기능을 하게 만들어 주었다.</p>
-
-<p>아래의 결과를 보면 동일하다.</p>
-
-<figure>
-	<img src="/images/2020-06-24-android-adapter-pattern.png" alt="" />
+      <h1 class="post-title entry-title">토스 금액 입력창 애니메이션 클론 코딩</h1>
+      <figure>
+    <p align="center">
+	    <img src="/images/2020-10-23-android-toss-animation.gif" alt="" width="200" height="350" />
+	</p>
 </figure>
+
+<p>토스 금액 입력창 애니메이션을 봤는데 생각보다 더 복잡한 애니메이션이 들어가 있었다.</p>
+
+<p>애니메이션 종류는 다음과 같았다.</p>
+
+<h3 id="입력-할-때-애니메이션">입력 할 때 애니메이션</h3>
+<ol>
+  <li>위에서 아래로 내려 감</li>
+  <li>위에서 아래로 내려 갈때 투명도 변경</li>
+  <li>금액이기 떄문에 콤마가 찍히는데 콤마는 생길 때 fade in</li>
+</ol>
+
+<h3 id="제거-할-때-애니메이션">제거 할 때 애니메이션</h3>
+<ol>
+  <li>원래 위치에서 내려감</li>
+  <li>원래 위치에서 내려갈때 투명도 변경</li>
+  <li>콤마 제거 될 때 fade out</li>
+</ol>
+
+<h3 id="예정-금액-보다-많을-때-진동과-함께-좌우-흔들리는-애니메이션">예정 금액 보다 많을 때 진동과 함께 좌우 흔들리는 애니메이션</h3>
+
+<h3 id="총-7가지-애니메이션이-존재-했다">총 7가지 애니메이션이 존재 했다.</h3>
+
+<p>처음 생각한 방법은 EditText 에서 onDraw 를 커스텀 해서 사용하는 방법이었다.</p>
+
+<p>onDraw 에서 코드로 모두 그리려고 하니 너무 복잡해지는 것 같아 좀 더 간단한 방법이 없을까 고민을 하기 시작함…</p>
+
+<p>어차피 입력은 오른쪽에서부터 쌓이니까 LinearLayout 으로 ViewGroup 을 만들고 텍스트 하나당 TextView 하나를 LinearLayout 으로 쌓아가는 방식으로 만들고 애니메이션을 각각의 뷰에 먹여주면 어떨까!?라는 생각을 하게 되었다.</p>
+
+<p>이 방법을 사용해보니 좀 더 코드가 깔끔해지고 가독성도 많이 좋아 졌다.</p>
+
+<p>예전부터 오픈소스 라이브러리를 만들어보고 싶었는데 도전!!</p>
+
+<p>아래 링크를 타고 들어가보자~!</p>
+
+<p><a href="https://github.com/kimyounghoons/PriceAnimationTextView">https://github.com/kimyounghoons/PriceAnimationTextView</a></p>
 
     </div><!-- /.entry-content -->
     
@@ -465,23 +399,23 @@ s.setAttribute('data-timestamp', +new Date());
    <div class="read-more">
   
     <div class="read-more-header">
-      <a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" class="read-more-btn">Read More</a>
+      <a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" class="read-more-btn">Read More</a>
     </div><!-- /.read-more-header -->
     <div class="read-more-content">
-      <h3><a href="http://localhost:4000/android/kotlin/android-tosscustomview/" title="토스 금액 입력창 애니메이션 클론 코딩">토스 금액 입력창 애니메이션 클론 코딩</a></h3>
-      <p>토스 금액 입력창 애니메이션 클론 코딩 <a href="http://localhost:4000/android/kotlin/android-tosscustomview/">Continue reading</a></p>
+      <h3><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" title="Json field null 에서 empty 값 변경">Json field null 에서 empty 값 변경</a></h3>
+      <p>Json field null 에서 empty 값 변경 <a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/">Continue reading</a></p>
     </div><!-- /.read-more-content -->
   
   <div class="read-more-list">
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" title="Json field null 에서 empty 값 변경">Json field null 에서 empty 값 변경</a></h4>
-        <span>Published on October 11, 2020</span>
+        <h4><a href="http://localhost:4000/android/android-communicator-activity-fragments/" title="Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유">Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유</a></h4>
+        <span>Published on September 26, 2020</span>
       </div><!-- /.list-item -->
     
       <div class="list-item">
-        <h4><a href="http://localhost:4000/android/android-communicator-activity-fragments/" title="Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유">Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유</a></h4>
-        <span>Published on September 26, 2020</span>
+        <h4><a href="http://localhost:4000/kotlin/android-kotlin-koin/" title="Koin (1편)">Koin (1편)</a></h4>
+        <span>Published on September 20, 2020</span>
       </div><!-- /.list-item -->
     
   </div><!-- /.read-more-list -->

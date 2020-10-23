@@ -288,6 +288,133 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-08-03T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-state-pattern/">August 03, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-state-pattern/" rel="bookmark" title="State Pattern (디자인 패턴 12장)" itemprop="url">State Pattern (디자인 패턴 12장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="스테이트-패턴-정의">스테이트 패턴 정의</h3>
+<p>객체의 내부 상태가 바뀜에 따라서 객체의 행동을 바꿀 수 있다.<br />
+객체의 클래스가 바뀌는 것과 같은 결과를 얻을 수 있다.</p>
+
+<figure>
+	<img src="/images/2020-08-03-android-state-pattern.png" alt="" />
+</figure>
+
+<h3 id="스테이트-패턴-언제-사용할까">스테이트 패턴 언제 사용할까!?</h3>
+<p>현재 기분 상태를 예를 들어 보자 
+Good , Bad , Normal 상태가 있다.<br />
+그리고 rain (비가 옴), clear (맑음) , vacation (휴가)  메소드가 있다.<br />
+비가 옴 , 맑음 , 휴가 일때 상태가 변경 된다.<br />
+아래의 코드를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">StatePattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">stateContext</span> <span class="o">=</span> <span class="n">StateContext</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">BadState</span><span class="o">(</span><span class="n">stateContext</span><span class="o">)</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">clear</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">rain</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">vacation</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">rain</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">interface</span> <span class="nc">State</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">GoodState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가와서 기분 좋음에서 보통으로"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">normalState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 좋지만 최상의 상태"</span><span class="o">)</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 하지만 최상의 상태"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">NormalState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가와서 기분 보통에서 나쁨으로"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">badState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 보통에서 좋음 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 기분 보통에서 좋음 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">BadState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가 오지만 이보다 더 안좋을 수 없다."</span><span class="o">)</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 안좋음에서 보통으로 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">normalState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 기분 안좋음에서 좋음으로 두단계 업!!"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">class</span> <span class="nc">StateContext</span> <span class="o">{</span>
+        <span class="kt">var</span> <span class="nl">state:</span> <span class="n">State</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+        <span class="kt">var</span> <span class="n">goodState</span> <span class="o">=</span> <span class="n">GoodState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">normalState</span> <span class="o">=</span> <span class="n">NormalState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">badState</span> <span class="o">=</span> <span class="n">BadState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">rain</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">clear</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">vacation</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>얼핏 보면 스트레티지 패턴과 동일하다고 볼 수 있겠지만 차이점이 있다.<br />
+스트레티지 패턴의 경우는 어떤 알고리즘의 행동 자체를 건네주는 반면 스테이트 패턴의 경우는 비슷하긴 하지만 미리 정해진 상태 전환 규칙을 바탕으로 알아서 자기 상태를 변경하는 점이 다르다.<br />
+구조가 비슷하긴 하지만 용도나 목적이 완전 다르다.</p>
+
+<p>아래는 테스트 결과이다.</p>
+<figure>
+	<img src="/images/2020-08-03-android-state-pattern-02.png" alt="" />
+</figure>
+
+<p>참조 링크
+https://en.wikipedia.org/wiki/State_pattern</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-07-29T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-composite-pattern/">July 29, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -735,79 +862,6 @@ LibPagerAdapter 를 통해서 해결해보자!!</p>
 
 <figure>
 	<img src="/images/2020-06-24-android-adapter-pattern.png" alt="" />
-</figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-06-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/">June 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" rel="bookmark" title="Iterator Pattern (디자인 패턴 7장)" itemprop="url">Iterator Pattern (디자인 패턴 7장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="이터레이터-패턴-정의">이터레이터 패턴 정의</h3>
-<p>컬렉션 구현 방법을 노출시키지 않으면서도 그 집합체 안에 들어있는 모든 항목에 접글할 수 있는 방법을 제공한다.</p>
-
-<p>컬렉션 종류가 다양하고 항목을 접근하는 방식도 조금씩 다르기 때문에 대응하기가 까다롭거나 코드가 지저분해질 수 있다.<br />
-Iterator 패턴을 사용해서 해결해보자.<br />
-CustomDialogView 라는 임의의 클래스를 만들어서 iterator 매개변수로 받는 생성자를 하나 만들고 printAll 이라는 함수를 만들어서 
-모든 항목에 접근해 print 하도록 만들었다.</p>
-
-<p>아래의 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">IteratorPatternTest</span> <span class="o">{</span>
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrayOf</span><span class="o">(</span><span class="s">"first"</span><span class="o">,</span> <span class="s">"second"</span><span class="o">,</span> <span class="s">"third"</span><span class="o">)</span>
-        <span class="kt">var</span> <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
-        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
-        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">arrayList</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
-        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="n">hashMap</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">(</span>
-            <span class="n">Pair</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"one"</span><span class="o">),</span>
-            <span class="n">Pair</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"two"</span><span class="o">),</span>
-            <span class="n">Pair</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s">"three"</span><span class="o">)</span>
-        <span class="o">)</span>
-        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">hashMap</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
-        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">CustomDialogView</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">iterator:</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;)</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">printAll</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-                <span class="n">val</span> <span class="n">any</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">any</span> <span class="n">is</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;*,</span> <span class="o">*&gt;)</span> <span class="o">{</span>
-                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">.</span><span class="na">value</span><span class="o">)</span>
-                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">)</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>hasNext 는 더 꺼낼 항목 여부에 따라 boolean 을 return 하고 next 는 해당 항목을 return 한다.
-array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 쉽게 구현할 수 있다.</p>
-
-<p>아래 사진을 보면 모두 이상 없이 프린트 된 결과를 볼 수 있다.</p>
-<figure>
-	<img src="/images/2020-06-10-android-iterator_pattern.png" alt="" />
 </figure>
 
       

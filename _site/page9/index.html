@@ -288,6 +288,71 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-03-07T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 07, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>알고리즘 공부 시작!!!</p>
+
+<p>문제 설명
+수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.</p>
+
+<p>마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.</p>
+
+<p>제한사항
+마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
+completion의 길이는 participant의 길이보다 1 작습니다.
+참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
+참가자 중에는 동명이인이 있을 수 있습니다.</p>
+
+<p>입출력 예 설명
+예제 #1
+leo는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
+
+<p>예제 #2
+vinko는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
+
+<p>예제 #3
+mislav는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+    <span class="kp">public</span> <span class="no">String</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span><span class="p">[]</span> <span class="n">participant</span><span class="p">,</span> <span class="no">String</span><span class="p">[]</span> <span class="n">completion</span><span class="p">)</span> <span class="p">{</span>
+        <span class="no">Arrays</span><span class="p">.</span><span class="nf">sort</span><span class="p">(</span><span class="n">participant</span><span class="p">);</span>
+        <span class="no">Arrays</span><span class="p">.</span><span class="nf">sort</span><span class="p">(</span><span class="n">completion</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">completion</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">equals</span><span class="p">(</span><span class="n">completion</span><span class="p">[</span><span class="n">i</span><span class="p">])){</span>
+                <span class="k">return</span> <span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>처음 문제 풀었을 때 정확성은 100 인데 효율성이 꽝이라 고민을 많이 하게 되었다.. 
+O(N) 으로 풀어야 하는 문제였다.
+해시맵 문제 였는데 맵을 사용안하고 품.. 이래도 되는건가 우선 정확성과 효율성은 잘 통과 됨 
+두 배열을 sort 하고 참여자와 완주자가 다른 순간 값을 리턴시켜주면 되는 문제.</p>
+
+<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42576?language=java</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-02-23T00:00:00+09:00"><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/">February 23, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -531,58 +596,6 @@ RelativeLayout을 사용하게 되면 만들기가 쉽지 않다.
 쉽게 만들수 있다. 그리고 ConstraintGroup을 만들어서 referenceIds 에 뷰들이 GONE처리 되어야 하는 아이디들을 넣어 주면 된다.
 group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰들이 모두 적용된다.
 매우 편리하다!!ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-12-04T00:00:00+09:00"><a href="http://localhost:4000/android/android-locale/">December 04, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-locale/" rel="bookmark" title="Locale" itemprop="url">Locale</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>문제점 : 다국어 지원 앱
-다국어 지원을 위한 라이브러리를 사용해서 앱을 실행할 때 다국어 지원 관련 셋팅을 하게 된다.
-간체,번체의 경우 language 와 country 두가지 모두 사용해서 구분을 하게 된다.
-하지만 지역별로 이벤트를 설정 할 경우 locale 지역 정보를 가져올때 시스템에 설정된 지역 정보가 아닌 앱에서 설정된 지역을 가져오기때문에 문제</p>
-
-<p>해결 : Application Class 에서 다국어 관련 Locale 을 셋팅 하기 전 country 정보를 미리 SharedPreference 에 저장해 놓고 필요한 경우 가져 온다. 시스템 언어를 변경 할 경우 onConfigurationChanged 가 불리게 되어서 여기서 다시 지역 정보를 갱신 시켜 주어야 한다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Application Class
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        PreferenceManager.getDefaultSharedPreferences(this)
-        .edit()
-        .putString(getString(R.string.pref_key_system_country), Locale.getDefault().getCountry())
-        .apply();
-        LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
-    }
-
-      @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.getLocales().get(0) != null) { //첫번째가 변경된 Locale 정보를 가진다.
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.pref_key_system_country), newConfig.getLocales().get(0).getCountry()).apply();
-        }
-        LocaleChanger.onConfigurationChanged();
-    }
-
-</code></pre></div></div>
 
       
   </div><!-- /.entry-content -->

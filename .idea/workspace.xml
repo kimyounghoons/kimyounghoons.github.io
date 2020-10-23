@@ -4,45 +4,108 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3c2d897-5a92-4019-827b-a918243920b9" name="Default" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
+    <list default="true" id="e3c2d897-5a92-4019-827b-a918243920b9" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/kimyounghoons.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/_posts/android/2020-10-23-android-tosscustomview.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/2020-10-23-android-toss-animation.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/aac/android-lifecycle/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/aac/android-lifecycle/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/actionbar_menu-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/actionbar_menu-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-FragmentStatePagerAdapter/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-FragmentStatePagerAdapter/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-appcenter/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-appcenter/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-barcode/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-barcode/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-bindingadapter/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-bindingadapter/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-bluetooth-android10/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-bluetooth-android10/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-bottom_navigation_view/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-bottom_navigation_view/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-buildtypestring-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-buildtypestring-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-centerLoadingProgress/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-centerLoadingProgress/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-collections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-collections/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-communicator-activity-fragments/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-communicator-activity-fragments/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-debug-signingkey/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-debug-signingkey/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-diffUtil/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-diffUtil/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-edittext_typing_slow/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-edittext_typing_slow/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-firestore-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-firestore-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-intent/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-intent/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-keyboard/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-keyboard/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-locale/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-locale/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-lottie/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-lottie/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-notifyDataSetChanged/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-notifyDataSetChanged/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-resconfig/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-resconfig/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-rxjava-debounce/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-rxjava-debounce/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-rxkotlin_combineLatest/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-rxkotlin_combineLatest/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-share-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-share-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-throttle_first_click/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-throttle_first_click/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/android-touch-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-touch-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/constraintlayout-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/constraintlayout-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/drawerlayout-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/drawerlayout-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/interview/android-interview/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/interview/android-interview/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/kotlin/android-jsonNullToEmptyValue/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/kotlin/android-jsonNullToEmptyValue/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/notification/android-notification/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/notification/android-notification/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/shape-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/shape-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/singletask/flag/android-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/singletask/flag/android-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/wirelessbuild-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/wirelessbuild-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/applicationinfo/app-agreement/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/applicationinfo/app-agreement/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/applicationinfo/app-privacy-policy/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/applicationinfo/app-privacy-policy/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/applicationinfo/dodo-app-privacy_policy/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/applicationinfo/dodo-app-privacy_policy/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/blog/blog-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/blog/blog-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/categories/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/categories/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/dark-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/dark-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/feed.xml" beforeDir="false" afterPath="$PROJECT_DIR$/_site/feed.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/firebase/firebase-push/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/firebase/firebase-push/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/git/sourcetree/require-accountinfo-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/git/sourcetree/require-accountinfo-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-adapter-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-adapter-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-command-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-command-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-composite-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-composite-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-decorator-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-decorator-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-facade-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-facade-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-factory-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-factory-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-iterator_pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-iterator_pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-observer-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-observer-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-proxy-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-proxy-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-singleton-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-singleton-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-state-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-state-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-strategy-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-strategy-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/java/kotlin/android-template-method-pattern/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/java/kotlin/android-template-method-pattern/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/kotlin/android-kotlin-koin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/kotlin/android-kotlin-koin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/kotlin/kotlin-when-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/kotlin/kotlin-when-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/mac/맥-사용-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/mac/맥-사용-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page10/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page10/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page11/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page11/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page12/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page12/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page13/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page13/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page14/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page14/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page15/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page15/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page2/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page2/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page3/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page3/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page4/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page4/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page5/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page5/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page6/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page6/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page7/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page7/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page8/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page8/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/page9/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/page9/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/posts/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/posts/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/rxkotlin/single/android-rxkotlin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/rxkotlin/single/android-rxkotlin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/sample/background-image/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/background-image/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/sample/code-highlighting-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/code-highlighting-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/sample/sample-link-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/sample-link-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/sample/sample-post-images/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/sample-post-images/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/sample/sample-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/sample-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/sample/video-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/video-post/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/search.json" beforeDir="false" afterPath="$PROJECT_DIR$/_site/search.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/tags/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/tags/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/알고리즘/자바/algorithm-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/알고리즘/자바/algorithm-post/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="2019-02-23-android-rxkotlin.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/_posts/android/2019-02-23-android-rxkotlin.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2018-10-30-android-post.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/_posts/android/2018-10-30-android-post.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/_posts/android/2019-02-23-android-rxkotlin.md" />
-      </list>
-    </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
@@ -50,96 +113,41 @@
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
+  <component name="ProjectId" id="1jHG2zRryHSYVDLQgSgZYKrdIMX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="kimyounghoons.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kimyounghoons.github.io" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kimyounghoons.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kimyounghoons.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="_posts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kimyounghoons.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kimyounghoons.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="_posts" type="462c0819:PsiDirectoryNode" />
-              <item name="android" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="foldersAlwaysOnTop" value="false" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/images" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <properties />
-      <listeners />
-    </configuration>
     <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
   </component>
   <component name="SvnConfiguration">
@@ -155,94 +163,14 @@
     </task>
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info id="Captures" order="2" weight="0.25" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
-    </layout>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/_posts/android/2019-02-23-android-rxkotlin.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/android/2018-10-30-android-post.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/android/2019-02-23-android-rxkotlin.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/android/2018-10-30-android-post.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/android/2019-02-23-android-rxkotlin.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/android/2018-10-30-android-post.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="41" lean-forward="true" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/android/2019-02-23-android-rxkotlin.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_posts/android/2018-10-30-android-post.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="438" y="308" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603453441425">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state x="438" y="308" key="#com.intellij.fileTypes.FileTypeChooser/1680.23.2560.1417/0.23.1680.947@0.23.1680.947" timestamp="1603453441425" />
+    <state x="493" y="254" width="693" height="488" key="find.popup" timestamp="1603455104408">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state x="493" y="254" width="693" height="488" key="find.popup/1680.23.2560.1417/0.23.1680.947@0.23.1680.947" timestamp="1603455104408" />
   </component>
 </project>
