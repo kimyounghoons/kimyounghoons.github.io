@@ -1,0 +1,444 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Save State for CustomView &#8211; 영훈 블로그</title>
+<meta name="description" content="커스텀뷰 상태 저장(Save State for CustomView)">
+<meta name="keywords" content="Android, Kotlin">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Save State for CustomView">
+<meta property="og:description" content="커스텀뷰 상태 저장(Save State for CustomView)">
+<meta property="og:url" content="http://localhost:4000/android/kotlin/android-save-data-customview/">
+<meta property="og:site_name" content="영훈 블로그">
+<meta property="og:image" content="http://localhost:4000/images/images/logo.png">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/android/kotlin/android-save-data-customview/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.mmenu.all.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.floating-social-share.min.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+
+
+<div class="header-menu header-menu-top">
+    <ul class="header-item-container">
+      <li class="header-item-title header-toggle "><a href="#menu"><h2><i class="fa fa-bars"></i></h2></a></li>
+      <li class="header-item-title">
+        <a href="http://localhost:4000/">
+          
+            <img class="logo" src="http://localhost:4000/images/logo.png" alt="영훈 블로그">
+          
+          <a href="http://localhost:4000/" class="title"> 영훈 블로그</a>
+        </a>
+      </li>
+      
+        
+        
+
+        
+          <li class="header-item "><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+            <ul class="header-submenu">
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Android">Android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Single">Single</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#aac">aac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#android">android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#flag">flag</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#interview">interview</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#java">java</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#notification">notification</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#sample">sample</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#자바">자바</a></li>
+              
+            </ul>
+          </li>
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+            
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+            
+        
+      
+      <li class="header-item"><a href="http://localhost:4000/search"><h3><i class="fa fa-search"></i></h3></a></li>
+    </ul>
+  </div>
+<div class="entry-header">
+  <div class="header-title">
+    <div class="header-title-wrap">
+      <h1>Save State for CustomView</h1>
+      
+        <h2><span class="entry-date date published updated"><time datetime="2020-11-06T00:00:00+09:00">November 06, 2020</time></span></h2>
+      
+
+      
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
+      
+    </div><!-- /.header-title-wrap -->
+  </div><!-- /.header-title -->
+</div><!-- /.entry-header -->
+
+
+<nav id="menu" style="display: none">
+  <ul>
+    
+      
+        <li><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+          <ul>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Android">Android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Single">Single</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#aac">aac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#android">android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#flag">flag</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#interview">interview</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#java">java</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#notification">notification</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#sample">sample</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#자바">자바</a></li>
+            
+          </ul>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <div class="entry-content">
+        
+      <h1 class="post-title entry-title">Save State for CustomView</h1>
+      <h2 id="커스텀뷰-상태-저장">커스텀뷰 상태 저장</h2>
+<p>커스텀뷰가 그려지고 메모리 부족 등으로 인해 다시 그려지는 순간 데이터를 저장한후 다시 가져와야 화면에 그대로 보여줄수 있다.</p>
+
+<p>개발자 모드에서 활동 유지 안함을 활성화 한 후 테스트해야 한다.</p>
+
+<p>아래는 커스텀뷰 상태 저장을 하지 않은 상태이다.</p>
+
+<figure>
+    <p align="center">
+	    <img src="/images/2020-11-06-android-save-data-customview-01.gif" alt="" width="200" height="350" />
+	</p>
+</figure>
+
+<p>이제부터 데이터 저장을 해보자~!</p>
+
+<p>이때 필요한 메소드는 onSaveInstanceState , onRestoreInstanceState 두개이다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">override</span> <span class="n">fun</span> <span class="nf">onSaveInstanceState</span><span class="o">():</span> <span class="n">Parcelable</span><span class="o">?</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">Bundle</span><span class="o">().</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">putParcelable</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">,</span> <span class="kd">super</span><span class="o">.</span><span class="na">onSaveInstanceState</span><span class="o">())</span>
+            <span class="n">putStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">,</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">textViewArrayList</span><span class="o">.</span><span class="na">map</span> <span class="o">{</span>
+                <span class="n">it</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span>
+            <span class="o">}))</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">override</span> <span class="n">fun</span> <span class="nf">onRestoreInstanceState</span><span class="o">(</span><span class="nl">state:</span> <span class="n">Parcelable</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="n">is</span> <span class="n">Bundle</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">)</span> <span class="n">as</span> <span class="n">Parcelable</span><span class="o">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="na">getStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">)?.</span><span class="na">let</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="n">removeAllViews</span><span class="o">()</span>
+                    <span class="n">it</span><span class="o">.</span><span class="na">filter</span> <span class="o">{</span> <span class="n">originContent</span> <span class="o">-&gt;</span>
+                        <span class="n">originContent</span> <span class="o">!=</span> <span class="s">","</span> <span class="o">&amp;&amp;</span> <span class="n">originContent</span> <span class="o">!=</span> <span class="n">endText</span>
+                    <span class="o">}.</span><span class="na">forEach</span> <span class="o">{</span> <span class="n">filteredContent</span> <span class="o">-&gt;</span>
+                        <span class="n">addText</span><span class="o">(</span><span class="n">filteredContent</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">)</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>활동 유지 안함을 하게 되면 Activity 가 종료된 후 다시 생성되게 되는데 이때 뷰의 onSaveInstanceState 가 호출 된다.</p>
+
+<p>위와같이 StringArrayList 를 onSaveInstanceState 에서 저장하고 다시 생성 될 때 onRestoreInstanceState 가 호출되고 onSaveInstanceState 에서 return 해준 Bundle 이 state 로 넘어온다.</p>
+
+<p>이때 주의 해야하는 점은 super.onRestoreInstanceState()를 호출 해줄 때 super.onSaveInstanceState() 를 저장한 값 그대로 넣어줘야 한다.</p>
+
+<p>아래는 커스텀뷰 상태 저장을 한 상태이다.</p>
+
+<figure>
+    <p align="center">
+	    <img src="/images/2020-11-06-android-save-data-customview-02.gif" alt="" width="200" height="350" />
+	</p>
+</figure>
+
+<p>데이터 상태를 저장 한 후 다시 불러 왔기때문에 금액 입력이 보이지 않고 원래 적었던 금액이 보이게 된다.</p>
+
+<p>완성도 높은 CustomView 를 만들게 되면 이부분은 필수적인 부분이라고 볼 수 있다.</p>
+
+    </div><!-- /.entry-content -->
+    
+  </article>
+</div><!-- /#main -->
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script type="text/javascript" src="http://localhost:4000/assets/js/scripts.min.js"></script>
+<script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-154716591-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+</script>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://kimyounghoons.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+<script type="text/javascript">
+    sharing();
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154716591-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154716591-1');
+</script>
+
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/android/kotlin/android-tosscustomview/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/kotlin/android-saving-ui-state/" title="Saving UI States">Saving UI States</a></h3>
+      <p>UI 상태 저장(Saving UI States) <a href="http://localhost:4000/android/kotlin/android-saving-ui-state/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/android-tosscustomview/" title="토스 금액 입력창 애니메이션 클론 코딩">토스 금액 입력창 애니메이션 클론 코딩</a></h4>
+        <span>Published on October 23, 2020</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" title="Json field null 에서 empty 값 변경">Json field null 에서 empty 값 변경</a></h4>
+        <span>Published on October 11, 2020</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+</body>
+</html>

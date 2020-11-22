@@ -4,13 +4,149 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml" />
 <link rel="alternate" type="text/html" href="http://localhost:4000" />
-<updated>2020-10-23T22:33:57+09:00</updated>
+<updated>2020-11-22T18:25:52+09:00</updated>
 <id>http://localhost:4000/</id>
 <author>
   <name>kimyounghoon</name>
   <uri>http://localhost:4000/</uri>
   <email>kimyh8496@gmail.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[Saving UI States]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/kotlin/android-saving-ui-state/" />
+  <id>http://localhost:4000/android/kotlin/android-saving-ui-state</id>
+  <updated>2020-11-22T00:00:00-00:00</updated>
+  <published>2020-11-22T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;p&gt;오늘은 UI 상태 저장에 대한 조금 더 깊은 이해와 어떤 옵션들이 있는지 그리고 각각의 옵션들의 장단점에 대해서 알아보려고 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;ui-상태를-유지-하기-위한-옵션&quot;&gt;UI 상태를 유지 하기 위한 옵션&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;ViewModel&lt;/li&gt;
+  &lt;li&gt;Saved instance state&lt;/li&gt;
+  &lt;li&gt;Persistent storage&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure&gt;
+	&lt;img src=&quot;/images/2020-11-22-save-ui-state.png&quot; alt=&quot;&quot; /&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;viewmodel&quot;&gt;ViewModel&lt;/h3&gt;
+&lt;p&gt;Android Architecture Components 에 속하는 Component 이다.&lt;br /&gt;
+메모리에 저장 되고 화면 가로 세로 변경같은 경우 데이터가 저장 되지만 프로세스에 의해 죽고 살아 나는 경우에 데이터는 다시 복구 되지 않는다.&lt;br /&gt;
+그리고 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.&lt;br /&gt;
+데이터 제한은 메모리에 저장 되기 때문에 사용가능한 메모리 내에서 가능하고 속도가 빠르다.&lt;/p&gt;
+
+&lt;h3 id=&quot;save-instance-state&quot;&gt;Save instance state&lt;/h3&gt;
+&lt;p&gt;저번 커스텀 뷰에서 상태 저장을 위한 onSaveInstanceState 를 사용해서 저장하는 방법이다.&lt;br /&gt;
+화면 가로 세로 변경 같은 경우, 프로세스 종료 된 이후에도 데이터가 저장 가능 하다.&lt;br /&gt;
+하지만 ViewModel 과 마찬가지로 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.&lt;br /&gt;
+데이터 제한은 직렬화되어 디스크에 저장 되기 때문에 primitive type 또는 심플하고 작은 object 만 가능 하다.&lt;br /&gt;
+직렬화는 데이터를 byte 형태로 변환 하는 것을 말한다.&lt;br /&gt;
+디스크에 접근하고 serialization , deserialization 을 거치기 때문에 ViewModel 보다 비교적 느리다.&lt;/p&gt;
+
+&lt;h3 id=&quot;persistent-storage&quot;&gt;Persistent storage&lt;/h3&gt;
+&lt;p&gt;Shared preferences,SQLite Database,Realm DB 기타 등등..!
+디스크에 저장 하거나 네트워크 통신을 통해 서버에 저장하는 것을 의미한다.&lt;br /&gt;
+이 경우는 모든 경우에 대비해서 데이터를 저장 할 수 있다.&lt;br /&gt;
+네트워크 통신을 통해 저장 하는 경우 다른 옵션들 보다 비교적 느리지만 데이터를 영구 저장하기에는 제일 좋다고 볼 수 있다.&lt;br /&gt;
+위와 같이 여러 타입의 UI 상태 저장 방법을 알아보고 비교하는 시간을 가져 보았다.&lt;/p&gt;
+
+&lt;p&gt;참고 문서
+https://developer.android.com/topic/libraries/architecture/saving-states&lt;/p&gt;
+
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/kotlin/android-saving-ui-state/&quot;&gt;Saving UI States&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 22, 2020.&lt;/p&gt;
+  </content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Save State for CustomView]]></title>
+ <link rel="alternate" type="text/html" href="http://localhost:4000/android/kotlin/android-save-data-customview/" />
+  <id>http://localhost:4000/android/kotlin/android-save-data-customview</id>
+  <updated>2020-11-06T00:00:00-00:00</updated>
+  <published>2020-11-06T00:00:00+09:00</published>
+  
+  <author>
+    <name>kimyounghoon</name>
+    <uri>http://localhost:4000</uri>
+    <email>kimyh8496@gmail.com</email>
+  </author>
+  <content type="html">
+    &lt;h2 id=&quot;커스텀뷰-상태-저장&quot;&gt;커스텀뷰 상태 저장&lt;/h2&gt;
+&lt;p&gt;커스텀뷰가 그려지고 메모리 부족 등으로 인해 다시 그려지는 순간 데이터를 저장한후 다시 가져와야 화면에 그대로 보여줄수 있다.&lt;/p&gt;
+
+&lt;p&gt;개발자 모드에서 활동 유지 안함을 활성화 한 후 테스트해야 한다.&lt;/p&gt;
+
+&lt;p&gt;아래는 커스텀뷰 상태 저장을 하지 않은 상태이다.&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;p align=&quot;center&quot;&gt;
+	    &lt;img src=&quot;/images/2020-11-06-android-save-data-customview-01.gif&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;350&quot; /&gt;
+	&lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;이제부터 데이터 저장을 해보자~!&lt;/p&gt;
+
+&lt;p&gt;이때 필요한 메소드는 onSaveInstanceState , onRestoreInstanceState 두개이다.&lt;/p&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onSaveInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;():&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Parcelable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Bundle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;apply&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;putParcelable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KEY_ON_SAVE_INSTANCES_TATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onSaveInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;putStringArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KEY_SAVE_DATA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textViewArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}))&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onRestoreInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;state:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Parcelable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bundle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onRestoreInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KEY_ON_SAVE_INSTANCES_TATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Parcelable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getStringArrayList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;KEY_SAVE_DATA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)?.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isNotEmpty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;removeAllViews&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;filter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;originContent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;originContent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;,&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;originContent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endText&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;forEach&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filteredContent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;addText&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filteredContent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;onRestoreInstanceState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;활동 유지 안함을 하게 되면 Activity 가 종료된 후 다시 생성되게 되는데 이때 뷰의 onSaveInstanceState 가 호출 된다.&lt;/p&gt;
+
+&lt;p&gt;위와같이 StringArrayList 를 onSaveInstanceState 에서 저장하고 다시 생성 될 때 onRestoreInstanceState 가 호출되고 onSaveInstanceState 에서 return 해준 Bundle 이 state 로 넘어온다.&lt;/p&gt;
+
+&lt;p&gt;이때 주의 해야하는 점은 super.onRestoreInstanceState()를 호출 해줄 때 super.onSaveInstanceState() 를 저장한 값 그대로 넣어줘야 한다.&lt;/p&gt;
+
+&lt;p&gt;아래는 커스텀뷰 상태 저장을 한 상태이다.&lt;/p&gt;
+
+&lt;figure&gt;
+    &lt;p align=&quot;center&quot;&gt;
+	    &lt;img src=&quot;/images/2020-11-06-android-save-data-customview-02.gif&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;350&quot; /&gt;
+	&lt;/p&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;데이터 상태를 저장 한 후 다시 불러 왔기때문에 금액 입력이 보이지 않고 원래 적었던 금액이 보이게 된다.&lt;/p&gt;
+
+&lt;p&gt;완성도 높은 CustomView 를 만들게 되면 이부분은 필수적인 부분이라고 볼 수 있다.&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/kotlin/android-save-data-customview/&quot;&gt;Save State for CustomView&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on November 06, 2020.&lt;/p&gt;
+  </content>
+</entry>
 
 
 <entry>
@@ -1912,212 +2048,6 @@ implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서�
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
     &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-bottom_navigation_view/&quot;&gt;BottomNavigationView&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on March 12, 2020.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[AppCenter Distribute]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-appcenter/" />
-  <id>http://localhost:4000/android/android-appcenter</id>
-  <updated>2020-03-03T00:00:00-00:00</updated>
-  <published>2020-03-03T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;Firebase Distribute 를 사용하다가 배포된 apk 앱에서 최신 버전 유지가 필요해서 인앱업데이트 기능이 필요했다.&lt;br /&gt;
-AppCenter 라는 Microsoft 에서 만든 sdk 가 있어서 이걸 사용해 보도록 했다.&lt;br /&gt;
-Gradle Dependency 에는 다음과 같이 추가해 준다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dependencies {
-   def appCenterSdkVersion = '3.0.0'
-   implementation &quot;com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}&quot;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;그리고 인앱 업데이트 할 때 CustomDialog를 보여주기 위해 DistributeListener 인터페이스를 구현한 클래스를 하나만들어 준다.&lt;br /&gt;
-클래스명은 임의로 InAppUpdateListener 라고 만들었다.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class InAppUpdateListener : DistributeListener {
-    override fun onReleaseAvailable(
-        activity: Activity?,
-        releaseDetails: ReleaseDetails
-    ): Boolean {
-        activity?.apply {
-            val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setTitle(R.string.in_app_update)
-            dialogBuilder.setMessage(R.string.msg_download_latest_version)
-            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&amp;gt;
-                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
-            }
-            dialogBuilder.setCancelable(false)
-            dialogBuilder.create()
-                .show()
-            return true
-        }
-        return false
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Distribute.notifyUpdateAction(UpdateAction.UPDATE) 를 사용하게 되면 리턴을 true 로 셋팅 해준다.&lt;br /&gt;
-return 을 false로 할 경우 액티비티 변경 될 때마다 콜백이 호출 될 수 있다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
-Distribute.setListener(InAppUpdateListener())
-AppCenter.start(application, BuildConfig.KEY_APP_CENTER_SECRET, Distribute::class.java)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;테스트 그룹을 Private 으로 한 경우 첫번째줄 UpdateTrack 을 셋팅 해줘야 한다.&lt;br /&gt;
-KEY_APP_CENTER_SECRET 는 앱의 시크릿 키 값이다. AppCenter Console -&amp;gt; Settings 우측 상단 메뉴 버튼 클릭&lt;/p&gt;
-&lt;figure&gt;
-	&lt;img src=&quot;/images/2020-03-03-appcenter.png&quot; alt=&quot;&quot; /&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;앱 업데이트가 필요한 곳에서 다음과 같이 호출&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
-Distribute.setListener(InAppUpdateListener())
-AppCenter.start(application, BuildConfig.KEY_APPCENTER_SECRET, Distribute::class.java)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;유의할 점은 해당 versionCode 가 Distribute 에 업로드 되어 있다는 전제하에 업데이트 할 버전이 있다면 InAppUpdateListener onReleaseAvailable 가 호출 된다.&lt;br /&gt;
-현재 versionCode 가 1 이고 Distribute 에 있는 버전이 2 버전이라면 콜백이 호출 되지 않는다.&lt;br /&gt;
-Distribute 에는 1,2 현재버전까지 포함되서 올라가 있어야 호출됨.&lt;br /&gt;
-그리고 Distribute 셋팅은 AppCenter.start 가 호출 되기 전에 호출 되어야 한다. 순서가 바뀔 경우 제대로 동작하지 않을수 있음.&lt;br /&gt;
-AppCenterSecret Key 는 노출 되면 안되기 떄문에 환경변수에 저장해서 사용했다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//앱 build.gradle
-
-buildTypes {
-        release {
-            ...
-        }
-
-        debug {
-            ...
-        }
-
-        buildTypes.each {
-            it.buildConfigField 'String', 'KEY_APP_CENTER_SECRET', &quot;\&quot;$System.env.KEY_APP_CENTER_SECRET\&quot;&quot;
-        }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이번에 Github Actions 를 사용해서 Appcenter Distribute 에 apk 배포하는걸 자동화해서 작업을 했는데 그부분은 다음 글에서 올림.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-appcenter/&quot;&gt;AppCenter Distribute&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on March 03, 2020.&lt;/p&gt;
-  </content>
-</entry>
-
-
-<entry>
-  <title type="html"><![CDATA[안드로이드 다중 클릭 방지(Prevent Multiple Click)]]></title>
- <link rel="alternate" type="text/html" href="http://localhost:4000/android/android-throttle_first_click/" />
-  <id>http://localhost:4000/android/android-throttle_first_click</id>
-  <updated>2020-02-27T00:00:00-00:00</updated>
-  <published>2020-02-27T00:00:00+09:00</published>
-  
-  <author>
-    <name>kimyounghoon</name>
-    <uri>http://localhost:4000</uri>
-    <email>kimyh8496@gmail.com</email>
-  </author>
-  <content type="html">
-    &lt;p&gt;화면 이동이나 특정 API 호출을 할 때 안드로이드 자체에서 다중 클릭을 막아 주지 않기 때문에 따로 처리가 필요하다.&lt;br /&gt;
-그래서 회사 팀원들과 같이 의견을 조금씩 반영하다 보니 좋은 결과물이 나온것 같다. ㅎㅎ&lt;br /&gt;
-소스는 아래와 같다.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var isClicked = false
-
-//데이터 바인딩에서 사용하기 위한 fun
-@BindingAdapter(&quot;app:onThrottleFirstClick&quot;, &quot;app:onThrottleInterval&quot;, requireAll = false)
-fun onThrottleFirstClick(
-    view: View,
-    onClickListener: View.OnClickListener,
-    isWithoutInterval: Boolean = false
-) {
-    view.setOnClickListener { v -&amp;gt;
-        if (isClicked.not()) {
-            isClicked = true
-            v?.run {
-                if (isWithoutInterval) {
-                    isClicked = false
-                    onClickListener.onClick(v)
-                } else {
-                    postDelayed({
-                        isClicked = false
-                    }, 350L)
-                    onClickListener.onClick(v)
-                }
-            }
-        }
-    }
-}
-
-//일반 뷰에서 사용할 수 있는 Kotlin Extension
-fun View.onThrottleFirstClick(interval: Long = 350L, action: (v: View) -&amp;gt; Unit) {
-    setOnClickListener { v -&amp;gt;
-        if (isClicked.not()) {
-            isClicked = true
-            v?.run {
-                postDelayed({
-                    isClicked = false
-                }, interval)
-                action(v)
-            }
-        }
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;xml-layout-코드before&quot;&gt;xml Layout 코드(Before)&lt;/h3&gt;
-&lt;p&gt;기존 onClick 구현 방식&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;Button
-    android:id=&quot;@+id/button&quot;
-    android:layout_width=&quot;wrap_content&quot;
-    android:layout_height=&quot;wrap_content&quot;
-    android:onClick=&quot;@{(v)-&amp;gt; 어떤 처리}&quot;
-    android:text=&quot;일반 클릭&quot;
-/&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위와 같이 onClick을 사용하면 다중 클릭을 막을 수 없고 버튼을 여러번 클릭 하는 경우 어떤 처리가 여러번 처리 된다.&lt;br /&gt;
-아래 다중클릭이 방지된 BindingAdapter 를 사용하게 되면 여러번 클릭을 막을 수 있다.&lt;br /&gt;
-onThrottleInterval 은 싱글 클릭이 필요 없는 경우에만 넣어주면 된다.&lt;br /&gt;
-예를 들어 옵션의 카운트 갯수를 올려주는 행위에 사용하면 된다.&lt;/p&gt;
-
-&lt;h3 id=&quot;xml-layout-코드after&quot;&gt;xml Layout 코드(After)&lt;/h3&gt;
-&lt;p&gt;변경된 방식&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;Button
-        android:id=&quot;@+id/button&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;싱글 클릭&quot;
-        app:onThrottleInterval=&quot;@{불린값}&quot;
-        app:onThrottleFirstClick=&quot;@{(v) -&amp;gt; 어떤 처리}&quot;
-        /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;button을-가지고-있는-클래스before&quot;&gt;button을 가지고 있는 클래스(Before)&lt;/h3&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;button.setOnClickListener {
-    //어떤 처리
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;button을-가지고-있는-클래스after&quot;&gt;button을 가지고 있는 클래스(After)&lt;/h3&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;button.onThrottleFirstClick {
-    //어떤 처리
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;사용법도 크게 차이가 없어서 편하게 사용할 수 있게 만들어진 것 같다.&lt;/p&gt;
-
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000/android/android-throttle_first_click/&quot;&gt;안드로이드 다중 클릭 방지(Prevent Multiple Click)&lt;/a&gt; was originally published by kimyounghoon at &lt;a href=&quot;http://localhost:4000&quot;&gt;영훈 블로그&lt;/a&gt; on February 27, 2020.&lt;/p&gt;
   </content>
 </entry>
 

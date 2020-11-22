@@ -288,6 +288,159 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-01-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-centerLoadingProgress/">January 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-centerLoadingProgress/" rel="bookmark" title="Center Loading Progress" itemprop="url">Center Loading Progress</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>API 호출 할 때 다른 터치를 막기 위해 센터 프로그레스를 보여주는 경우 여러 가지 방법이 있지만 그중 progressDialog 를 사용해보자~!</p>
+
+<p>BaseActivity 에서 progressDialog 를 가지고 있고 필요할 때 showProgress() , hideProgress() 를 통해 보여주거나 감출수 있다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract class BaseActivity : AppCompatActivity(){
+    private var progressDialog: AppCompatDialog? = null
+
+    fun showProgress() {
+        if (this == null || isFinishing) {
+            return
+        }
+
+        progressDialog?.apply {
+            dismiss()
+        }
+
+        progressDialog = AppCompatDialog(this)
+        progressDialog?.apply {
+            setCancelable(false)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setContentView(R.layout.progress_center_loading)
+            show()
+        }
+    }
+
+    fun hideProgress() {
+        progressDialog?.dismiss()
+    }
+}
+</code></pre></div></div>
+
+<p>아래는 layout 코드</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">android:clickable=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;ProgressBar</span>
+        <span class="na">style=</span><span class="s">"?android:attr/indeterminateDrawable"</span>
+        <span class="na">android:layout_width=</span><span class="s">"34dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"34dp"</span>
+        <span class="na">android:indeterminate=</span><span class="s">"true"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+</code></pre></div></div>
+
+<p>이 경우 장점은 
+BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.</p>
+
+<p>그리고 액티비티 layout에서 위의 layout 코드를 포함 하고 있지 않아도 된다.</p>
+
+<p>단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있을 수 있다.</p>
+
+<p>다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-12-26T00:00:00+09:00"><a href="http://localhost:4000/android/android-bindingadapter/">December 26, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bindingadapter/" rel="bookmark" title="DataBidning , BindingAdapter" itemprop="url">DataBidning , BindingAdapter</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>데이터 바인딩라이브러리는 레이아웃의 UI 구성 요소를 프로그래밍 방식이 아닌 선언적 형식을 사용하여 앱의 데이터 소스에 바인딩 할 수있는 지원 라이브러리다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;layout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">xmlns:bind=</span><span class="s">"http://schemas.android.com/tools"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;data&gt;</span>
+        <span class="nt">&lt;import</span> <span class="na">type=</span><span class="s">"android.view.View"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;variable</span>
+            <span class="na">name=</span><span class="s">"viewModel"</span>
+            <span class="na">type=</span><span class="s">"패키지경로.ExampleViewModel"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/data&gt;</span>
+    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+            <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+            <span class="na">android:background=</span><span class="s">"@{viewModel.isRedBackground ? @color/red : @color/white}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+<span class="nt">&lt;/layout&gt;</span>
+
+</code></pre></div></div>
+
+<p>예를 들어 API 호출을 하고 받아온 값이 빨간색 배경색을 가져야 한다면 viewModel.isRedBackground (ObservableField Boolean 값) 데이터 변경 만으로 뷰가 빨간색 또는 흰색으로 변경 된다. 하지만 상태값이 빨간색 흰색 그외 초록색이 필요하다면 BindingAdapter를 통해서 구현할 수 있다.</p>
+
+<p>android:background=”@{viewModel.isRedBackground ? @color/red : @color/white}”<br />
+–&gt; bind:status=”@{viewModel.status}”</p>
+
+<p>위의 코드에서 해당 줄만 변경한다. 그 다음 BindingAdapter를 만들어준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@BindingAdapter("bind:status")
+fun bindBuyingStatusText(imageView: ImageView, status: String?) {
+    when (status) {
+        "빨간색" -&gt; {
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_red))
+        }
+        "흰색" -&gt; {
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_white))
+        }
+        else -&gt; {  //초록색
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_green))
+        }
+    }
+}
+
+</code></pre></div></div>
+
+<p>상태값이 2가지만 있는경우에도 BindingAdapter 사용해서 처리할수 있지만 굳이 사용할 필요는 없을것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-12-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/">December 12, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -510,102 +663,6 @@ RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispat
   <li>리스트 사이즈가 큰 경우는 DiffResult를 가져올때 Background Thread 에서 실행 하고 뷰 갱신 할때만 메인스레드에서 실행 시켜야한다.</li>
   <li>DiffUtil 사용 할 때 리스트의 Max Size 는 2^26 이다.</li>
 </ol>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-11-18T00:00:00+09:00"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/">November 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/" rel="bookmark" title="두두(dodo) 개인정보 취급방침" itemprop="url">두두(dodo) 개인정보 취급방침</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>두두(dodo)는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법,사업법 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하겠습니다.</p>
-
-<p>두두(dodo)는 사용자 개인정보를 수집 하지 않습니다.</p>
-
-<p>앱 관리자<br />
-이름: 김영훈(Davis)<br />
-직위: 두두(DoDo) Android Developer<br />
-연락처: kimyh8496@gmail.com</p>
-
-<p>고지의 의무
-두두(DoDo) 법률이나 서비스의 변경사항을 반영하기 위한 목적 등으로 개인정보 취급방침을 수정할 수 있습니다. 개인정보 취급방침이 변경되는 경우 두두(DoDo)는 변경 사항을 게시하며, 변경된 개인정보 취급방침은 게시한 날로부터 7일 후부터 효력이 발생합니다.</p>
-
-<p>공고일자: 2019년 11월 18일<br />
-시행일자: 2019년 12월 25일</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-barcode/">November 13, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-barcode/" rel="bookmark" title="DS6 Barcode (Android 7.1 Nougat)" itemprop="url">DS6 Barcode (Android 7.1 Nougat)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="기기명--ds6-android-71-nougat">기기명 : DS6 (Android 7.1 Nougat)</h3>
-
-<p>기본적으로 바코드 트레이라는 앱이 설치 되어있습니다.<br />
-이 앱 안에서 스캔 설정을 할 수 있습니다.<br />
-스캔 타임, 데이터 수신 방식, 인식 성공시 알림 등등 여러가지가 있습니다.<br />
-여기서 중요한 데이터 수신 방식(3가지)에 대해 알아 보겠습니다.</p>
-
-<ol>
-  <li>INTERNET_EVENT</li>
-  <li>KEYBOARD_EVENT</li>
-  <li>CLIPBOARD_EVENT</li>
-</ol>
-
-<h3 id="internet_event-방식">INTERNET_EVENT 방식</h3>
-<p><strong>BroadcastReceiver</strong> 로 데이터를 받아 올 수 있습니다.</p>
-
-<p>ActionName : <strong>app.dsic.barcodetray.BARCODE_BR_DECODING_DATA</strong></p>
-
-<p>BarcodeData : <strong>EXTRA_BARCODE_DECODED_DATA</strong></p>
-
-<p>해당 액션이름으로 이벤트를 받을 수 있고 <strong>EXTRA_BARCODE_DECODED_DATA</strong> 키 값으로 intent 에 담겨 오는 데이터를 가져올 수 있습니다.</p>
-
-<p>이 방식으로 데이터를 받을 경우 EditText 에 포커스가 되어 있어도 브로드캐스트리시버로 데이터가 넘어 왔기 때문에 EditText 에 입력 되지 않습니다.</p>
-
-<h3 id="keyboard_event-방식">KEYBOARD_EVENT 방식</h3>
-<p>바코드 스캔 할 때 EditText 포커스 된 경우만 데이터가 셋팅 됩니다.</p>
-
-<p><span style="color:red">주의 사항</span><br />
-이 방식은 실제로 키보드 타이핑하는 방법과 같습니다.<br />
-키보드가 한글로 셋팅 되어 있을 경우 스캔한 내용이 영어일지라도 한글 키보드로 입력한것 처럼 됩니다.<br />
-rladudgns0837 내용을 스캔한경우 김영훈0837 이런식으로 입력되기 때문에 주의해야합니다.</p>
-
-<p>키보드가 안보일 경우도 똑같이 적용됩니다.</p>
-
-<h3 id="clipboard_event-방식">CLIPBOARD_EVENT 방식</h3>
-<p>바코드 스캔 할 때 클립보드에 복사되고 EditText에 포커스 되어 있을 경우만 데이터 셋팅 됩니다. 키보드 타이핑 방식은 아니기 때문에 키보드가 영어, 한국어 무관합니다.</p>
 
       
   </div><!-- /.entry-content -->

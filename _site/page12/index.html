@@ -288,6 +288,120 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-07T00:00:00+09:00"><a href="http://localhost:4000/android/shape-post/">November 07, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/shape-post/" rel="bookmark" title="Shape" itemprop="url">Shape</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>꼭지점 두루뭉실한 사각형 만들기</p>
+
+<p>drawable/파일명.xml 만들어 준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;shape</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;solid</span> <span class="na">android:color=</span><span class="s">"@color/white"</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;stroke</span> <span class="na">android:width=</span><span class="s">"1dp"</span>
+        <span class="na">android:color=</span><span class="s">"@color/gray"</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;padding</span> <span class="na">android:bottom=</span><span class="s">"10dp"</span>
+        <span class="na">android:left=</span><span class="s">"10dp"</span>
+        <span class="na">android:right=</span><span class="s">"10dp"</span>
+        <span class="na">android:top=</span><span class="s">"10dp"</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;corners</span> <span class="na">android:radius=</span><span class="s">"7dp"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/shape&gt;</span>
+</code></pre></div></div>
+
+<p>solid 안에 컬러는 도형의 내부 색상</p>
+
+<p>stroke 바깥 선 색상과 두께</p>
+
+<p>padding 은 도형 안쪽 여백</p>
+
+<p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/actionbar_menu-post/" rel="bookmark" title="ActionBar Menu in Fragment" itemprop="url">ActionBar Menu in Fragment</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;menu</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;item</span>
+        <span class="na">android:id=</span><span class="s">"@+id/menu_answer_letter"</span>
+        <span class="na">android:title=</span><span class="s">"@string/answer"</span>
+        <span class="na">app:showAsAction=</span><span class="s">"always"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/menu&gt;</span>
+</code></pre></div></div>
+
+<p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
+
+<p>Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.</p>
+
+<p>위치는 OnCreateView 안에 넣어주면 됨.</p>
+
+<p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail_letter, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+</code></pre></div></div>
+
+<p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
+       R.id.menu_answer_letter -&gt;{
+           locateListener?.openAnswer(letter)
+           true
+       }
+        else -&gt;{
+            false
+        }
+}
+</code></pre></div></div>
+
+<p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-05T00:00:00+09:00"><a href="http://localhost:4000/android/wirelessbuild-post/">November 05, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -449,88 +563,6 @@ adb uninstall <패키지명></패키지명></패키지명></p>
 <p>다음부터는 uninstall 안되면 보안폴더부터 보게 될거 같음..</p>
 
 <p>삽질이었지만 보안폴더의 보안은 좋았던걸로 하고 끝..</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-10-31T00:00:00+09:00"><a href="http://localhost:4000/android/android-post/">October 31, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-post/" rel="bookmark" title="selector drawable" itemprop="url">selector drawable</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="selector">selector</h2>
-
-<p>image selector
-image_selector.xml 파일 만들기</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">"@drawable/image_pressed"</span> <span class="na">android:state_pressed=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:drawable=</span><span class="s">"@drawable/image_default"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/selector&gt;</span>
-</code></pre></div></div>
-
-<p>사용 : android:src=”@drawable/image_selector”</p>
-
-<p>text selector</p>
-
-<p>text_selector.xml 파일 만들기</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;selector</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:color=</span><span class="s">"@color/color_pressed"</span> <span class="na">android:state_pressed=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;item</span> <span class="na">android:color=</span><span class="s">"@color/color_default"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/selector&gt;</span>
-</code></pre></div></div>
-
-<p>사용 : android:textColor=”@drawable/text_selector”</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-10-30T00:00:00+09:00"><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/">October 30, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/mac/%EB%A7%A5-%EC%82%AC%EC%9A%A9-post/" rel="bookmark" title="Visual Studio Code app 환경변수 설정" itemprop="url">Visual Studio Code app 환경변수 설정</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h2 id="환경변수-설정">환경변수 설정</h2>
-
-<p>bash_profile 을 열어준다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nano ~/.bash_profile
-</code></pre></div></div>
-
-<p>bash_profile 에 alias 설정을 해주면 code로 앱을 실행 시킬수 있다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alias code="open -a /Applications/Visual\ Studio\ Code.app/"
-</code></pre></div></div>
 
       
   </div><!-- /.entry-content -->

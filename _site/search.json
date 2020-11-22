@@ -1,6 +1,22 @@
 [
   
     {
+      "title"    : "Saving UI States",
+      "category" : "",
+      "tags"     : "Android, Kotlin",
+      "url"      : "http://localhost:4000/android/kotlin/android-saving-ui-state/",
+      "date"     : "2020-11-22 00:00:00 +0900"
+    } ,
+  
+    {
+      "title"    : "Save State for CustomView",
+      "category" : "",
+      "tags"     : "Android, Kotlin",
+      "url"      : "http://localhost:4000/android/kotlin/android-save-data-customview/",
+      "date"     : "2020-11-06 00:00:00 +0900"
+    } ,
+  
+    {
       "title"    : "토스 금액 입력창 애니메이션 클론 코딩",
       "category" : "",
       "tags"     : "Android, Kotlin",

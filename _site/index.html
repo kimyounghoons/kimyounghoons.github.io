@@ -288,6 +288,150 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-11-22T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-saving-ui-state/">November 22, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-saving-ui-state/" rel="bookmark" title="Saving UI States" itemprop="url">Saving UI States</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>오늘은 UI 상태 저장에 대한 조금 더 깊은 이해와 어떤 옵션들이 있는지 그리고 각각의 옵션들의 장단점에 대해서 알아보려고 한다.</p>
+
+<h2 id="ui-상태를-유지-하기-위한-옵션">UI 상태를 유지 하기 위한 옵션</h2>
+<ol>
+  <li>ViewModel</li>
+  <li>Saved instance state</li>
+  <li>Persistent storage</li>
+</ol>
+
+<figure>
+	<img src="/images/2020-11-22-save-ui-state.png" alt="" />
+</figure>
+
+<h3 id="viewmodel">ViewModel</h3>
+<p>Android Architecture Components 에 속하는 Component 이다.<br />
+메모리에 저장 되고 화면 가로 세로 변경같은 경우 데이터가 저장 되지만 프로세스에 의해 죽고 살아 나는 경우에 데이터는 다시 복구 되지 않는다.<br />
+그리고 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
+데이터 제한은 메모리에 저장 되기 때문에 사용가능한 메모리 내에서 가능하고 속도가 빠르다.</p>
+
+<h3 id="save-instance-state">Save instance state</h3>
+<p>저번 커스텀 뷰에서 상태 저장을 위한 onSaveInstanceState 를 사용해서 저장하는 방법이다.<br />
+화면 가로 세로 변경 같은 경우, 프로세스 종료 된 이후에도 데이터가 저장 가능 하다.<br />
+하지만 ViewModel 과 마찬가지로 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
+데이터 제한은 직렬화되어 디스크에 저장 되기 때문에 primitive type 또는 심플하고 작은 object 만 가능 하다.<br />
+직렬화는 데이터를 byte 형태로 변환 하는 것을 말한다.<br />
+디스크에 접근하고 serialization , deserialization 을 거치기 때문에 ViewModel 보다 비교적 느리다.</p>
+
+<h3 id="persistent-storage">Persistent storage</h3>
+<p>Shared preferences,SQLite Database,Realm DB 기타 등등..!
+디스크에 저장 하거나 네트워크 통신을 통해 서버에 저장하는 것을 의미한다.<br />
+이 경우는 모든 경우에 대비해서 데이터를 저장 할 수 있다.<br />
+네트워크 통신을 통해 저장 하는 경우 다른 옵션들 보다 비교적 느리지만 데이터를 영구 저장하기에는 제일 좋다고 볼 수 있다.<br />
+위와 같이 여러 타입의 UI 상태 저장 방법을 알아보고 비교하는 시간을 가져 보았다.</p>
+
+<p>참고 문서
+https://developer.android.com/topic/libraries/architecture/saving-states</p>
+
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-save-data-customview/">November 06, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-save-data-customview/" rel="bookmark" title="Save State for CustomView" itemprop="url">Save State for CustomView</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h2 id="커스텀뷰-상태-저장">커스텀뷰 상태 저장</h2>
+<p>커스텀뷰가 그려지고 메모리 부족 등으로 인해 다시 그려지는 순간 데이터를 저장한후 다시 가져와야 화면에 그대로 보여줄수 있다.</p>
+
+<p>개발자 모드에서 활동 유지 안함을 활성화 한 후 테스트해야 한다.</p>
+
+<p>아래는 커스텀뷰 상태 저장을 하지 않은 상태이다.</p>
+
+<figure>
+    <p align="center">
+	    <img src="/images/2020-11-06-android-save-data-customview-01.gif" alt="" width="200" height="350" />
+	</p>
+</figure>
+
+<p>이제부터 데이터 저장을 해보자~!</p>
+
+<p>이때 필요한 메소드는 onSaveInstanceState , onRestoreInstanceState 두개이다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">override</span> <span class="n">fun</span> <span class="nf">onSaveInstanceState</span><span class="o">():</span> <span class="n">Parcelable</span><span class="o">?</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">Bundle</span><span class="o">().</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">putParcelable</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">,</span> <span class="kd">super</span><span class="o">.</span><span class="na">onSaveInstanceState</span><span class="o">())</span>
+            <span class="n">putStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">,</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">textViewArrayList</span><span class="o">.</span><span class="na">map</span> <span class="o">{</span>
+                <span class="n">it</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span>
+            <span class="o">}))</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">override</span> <span class="n">fun</span> <span class="nf">onRestoreInstanceState</span><span class="o">(</span><span class="nl">state:</span> <span class="n">Parcelable</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="n">is</span> <span class="n">Bundle</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">)</span> <span class="n">as</span> <span class="n">Parcelable</span><span class="o">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="na">getStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">)?.</span><span class="na">let</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="n">removeAllViews</span><span class="o">()</span>
+                    <span class="n">it</span><span class="o">.</span><span class="na">filter</span> <span class="o">{</span> <span class="n">originContent</span> <span class="o">-&gt;</span>
+                        <span class="n">originContent</span> <span class="o">!=</span> <span class="s">","</span> <span class="o">&amp;&amp;</span> <span class="n">originContent</span> <span class="o">!=</span> <span class="n">endText</span>
+                    <span class="o">}.</span><span class="na">forEach</span> <span class="o">{</span> <span class="n">filteredContent</span> <span class="o">-&gt;</span>
+                        <span class="n">addText</span><span class="o">(</span><span class="n">filteredContent</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">)</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>활동 유지 안함을 하게 되면 Activity 가 종료된 후 다시 생성되게 되는데 이때 뷰의 onSaveInstanceState 가 호출 된다.</p>
+
+<p>위와같이 StringArrayList 를 onSaveInstanceState 에서 저장하고 다시 생성 될 때 onRestoreInstanceState 가 호출되고 onSaveInstanceState 에서 return 해준 Bundle 이 state 로 넘어온다.</p>
+
+<p>이때 주의 해야하는 점은 super.onRestoreInstanceState()를 호출 해줄 때 super.onSaveInstanceState() 를 저장한 값 그대로 넣어줘야 한다.</p>
+
+<p>아래는 커스텀뷰 상태 저장을 한 상태이다.</p>
+
+<figure>
+    <p align="center">
+	    <img src="/images/2020-11-06-android-save-data-customview-02.gif" alt="" width="200" height="350" />
+	</p>
+</figure>
+
+<p>데이터 상태를 저장 한 후 다시 불러 왔기때문에 금액 입력이 보이지 않고 원래 적었던 금액이 보이게 된다.</p>
+
+<p>완성도 높은 CustomView 를 만들게 되면 이부분은 필수적인 부분이라고 볼 수 있다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-10-23T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-tosscustomview/">October 23, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -560,187 +704,6 @@ Fragment in Activity→ ActivityViewModel<br />
 OtherFragment in Activity → ActivityViewModel</p>
 
 <p>위와 같이 ActivityViewModel을 공유하기 때문에 데이터 공유가 자유로워 진다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-09-20T00:00:00+09:00"><a href="http://localhost:4000/kotlin/android-kotlin-koin/">September 20, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/kotlin/android-kotlin-koin/" rel="bookmark" title="Koin (1편)" itemprop="url">Koin (1편)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="코인이란">코인이란?</h3>
-<p>코틀린 개발자를 위한 실용적인 경량 종속성 주입 프레임 워크이다.<br />
-코인은 도메인 특화 언어인 DSL(Domain Specific Language) 이다.</p>
-
-<h4 id="koin-dsl">Koin DSL</h4>
-<p>applicationContext : Koin 모듈 생성<br />
-factory : 매번 inject 할때마다 인스턴스를 생성<br />
-single : 싱글톤으로 생성<br />
-bind : 종속시킬 class 나 interface를 주입<br />
-get : 컴포넌트내에 알맞은 의존성 주입</p>
-
-<p>의존성 주입을 하기 위한 라이브러리는 대거2 도 있지만 코인은 좀 더 사용하기 쉽고 가볍게 만들어 졌기 때문에 러닝커브가 낮다고 할 수 있다.</p>
-
-<p>우선 코인을 사용하기 위해 앱 모듈 단에서 dependency를 추가 해준다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
-    <span class="c1">//현재 최신버전인 1.0.2 버전으로 사용하였다.</span>
-    <span class="n">implementation</span> <span class="s">"org.koin:koin-android:1.0.2"</span> 
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>다음 예제 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">TestApplication</span> <span class="o">:</span> <span class="n">Application</span><span class="o">()</span> <span class="o">{</span> <span class="c1">//Application 클래스에서 모듈과 startKoin을 호출 해준다.</span>
-
-    <span class="kd">private</span> <span class="n">val</span> <span class="n">goodsModule</span> <span class="o">=</span> <span class="n">module</span> <span class="o">{</span>
-        <span class="n">factory</span> <span class="o">{</span> <span class="n">GoodsData</span><span class="o">()</span> <span class="o">}</span> <span class="c1">//상품데이터 생성</span>
-        <span class="n">single</span> <span class="o">{</span> <span class="n">GoodsServiceImpl</span><span class="o">(</span><span class="n">get</span><span class="o">())</span> <span class="n">as</span> <span class="n">GoodsService</span> <span class="o">}</span> 
-        <span class="c1">//GoodsService는 싱글톤으로 생성 되고  get() 은 컴포넌트내에 알맞은 의존성 주입을 해준다.</span>
-        <span class="c1">//get() 은 GoodsData 라고 생각 하면 된다.</span>
-        <span class="n">factory</span> <span class="o">{</span>
-            <span class="c1">//FactoryData 가 생성 될 때마다 변경되는 값을 넣기 위해 현재시간(Long 타입)을 사용</span>
-            <span class="k">return</span><span class="nd">@factory</span> <span class="n">FactoryData</span><span class="o">(</span><span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">timeInMillis</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">()</span>
-        <span class="n">startKoin</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">listOf</span><span class="o">(</span><span class="n">goodsModule</span><span class="o">))</span> <span class="c1">//코인 시작!! listOf 에는 다른 모듈도 정의 한다면 뒤에 더 붙여서 사용</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-
-<span class="c1">//FactoryData 데이터 클래스</span>
-<span class="n">data</span> <span class="kd">class</span> <span class="nf">FactoryData</span><span class="o">(</span><span class="n">val</span> <span class="nl">timeInMillis:</span> <span class="n">Long</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">)</span>
-
-<span class="c1">//GoodsData 데이터 클래스</span>
-<span class="n">data</span> <span class="kd">class</span> <span class="nf">GoodsData</span><span class="o">(</span><span class="kt">var</span> <span class="n">name</span> <span class="o">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">"청바지"</span><span class="o">,</span> <span class="kt">var</span> <span class="n">price</span> <span class="o">:</span> <span class="n">Long</span> <span class="o">=</span> <span class="mi">30000</span><span class="o">)</span>
-
-<span class="kd">interface</span> <span class="nc">GoodsService</span> <span class="o">{</span>
-    <span class="n">fun</span> <span class="nf">getGoodsInfo</span><span class="o">():</span> <span class="n">String</span>
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nf">GoodsServiceImpl</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsData:</span> <span class="n">GoodsData</span><span class="o">)</span> <span class="o">:</span> <span class="n">GoodsService</span> <span class="o">{</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">getGoodsInfo</span><span class="o">():</span> <span class="n">String</span> <span class="o">{</span>
-        <span class="c1">//기본적으로 생성 되는 goodsData 정보는 상품명 청바지 , 가격 30000</span>
-        <span class="k">return</span> <span class="s">"상품명 : "</span> <span class="o">+</span> <span class="n">goodsData</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">"  가격 : "</span> <span class="o">+</span> <span class="n">goodsData</span><span class="o">.</span><span class="na">price</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nc">MainActivity</span> <span class="o">:</span> <span class="n">AppCompatActivity</span><span class="o">()</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsService:</span> <span class="n">GoodsService</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span>  <span class="c1">//by inject() 를 사용해서 GoodsService 주입</span>
-    <span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsData:</span> <span class="n">GoodsData</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span> <span class="c1">//by inject() 를 사용해서 GoodsData 주입</span>
-    <span class="kd">private</span> <span class="n">val</span> <span class="nl">factoryData:</span> <span class="n">FactoryData</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span> <span class="c1">//by inject() 를 사용해서 FactoryData 주입</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nl">savedInstanceState:</span> <span class="n">Bundle</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>
-        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">)</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-
-<h4 id="koin-사용-방법">Koin 사용 방법</h4>
-<ol>
-  <li>Application 부분에서 모듈 정의를 해주고 Application onCreate 시점에서 Startkoin을 호출 해주면서 사용 할 module 을 정의해준다.</li>
-  <li>module을 정의 할 때 데이터를 어떤 방식으로 생성할지 따로 정의를 해준다<br />
-ex) factory , single , bind, get</li>
-  <li>실제 사용 되는 부분에서 주입 하기 위해 by inject() 를 통해 주입한다.</li>
-</ol>
-
-<h3 id="다음-편에서는-android-에서-사용되는-viewmodel에-의존성-주입하는-방법을-알아보자">다음 편에서는 Android 에서 사용되는 ViewModel에 의존성 주입하는 방법을 알아보자.</h3>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-08-05T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/">August 05, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/" rel="bookmark" title="Proxy Pattern (디자인 패턴 13장)" itemprop="url">Proxy Pattern (디자인 패턴 13장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="프록시-패턴-정의">프록시 패턴 정의</h3>
-<p>어떤 객체에 대한 접근을 제어하기 위한 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴이다.</p>
-
-<figure>
-	<img src="/images/2020-09-02-android-proxy-pattern.png" alt="" />
-</figure>
-
-<h3 id="프록시-패턴-언제-사용할까">프록시 패턴 언제 사용할까!?</h3>
-<p>원격 프록시 , 가상 프록시 , 보호 프록시 여러가지가 있는데 가상 프록시를 다뤄보자.<br />
-네트워크를 통해 이미지를 가져온다고 가정할 때 네트워크 상태와 인터넷 연결 속도에 따라서 시간 소요 되게 된다.<br />
-이때 이미지를 불러 오는 동안 Proxy를 사용해서 임의의 이미지를 보여준 다음 실제 이미지를 보여줄 수 있다.<br />
-아래 코드를 보자.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">ProxyPattern</span> <span class="o">{</span>
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">ImageProxy</span><span class="o">().</span><span class="na">showIcon</span><span class="o">()</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">interface</span> <span class="nc">Icon</span> <span class="o">{</span>
-    <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span>
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nc">ImageIcon</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">download</span><span class="o">()</span>
-        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 그림"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">download</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 다운로드"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nc">ImageProxy</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
-    <span class="kt">var</span> <span class="nl">imageIcon:</span> <span class="n">ImageIcon</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">println</span><span class="o">(</span><span class="s">"ImageProxy 그림"</span><span class="o">)</span>
-        <span class="n">imageIcon</span> <span class="o">=</span> <span class="n">ImageIcon</span><span class="o">()</span>
-        <span class="n">imageIcon</span><span class="o">?.</span><span class="na">showIcon</span><span class="o">()</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>ImageProxy 를 통해 showIcon 메소드를 호출 하게 되면 프록시 임의의 그림을 보여주고 다운로드가 되었을때 실제 이미지 ImageIcon 그림을 보여줄 수 있다.</p>
-
-<p>아래는 테스트 결과이다.</p>
-<figure>
-	<img src="/images/2020-09-02-android-proxy-pattern-2.png" alt="" />
-</figure>
 
       
   </div><!-- /.entry-content -->

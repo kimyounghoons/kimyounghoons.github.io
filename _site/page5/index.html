@@ -288,6 +288,220 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-03-03T00:00:00+09:00"><a href="http://localhost:4000/android/android-appcenter/">March 03, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-appcenter/" rel="bookmark" title="AppCenter Distribute" itemprop="url">AppCenter Distribute</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>Firebase Distribute 를 사용하다가 배포된 apk 앱에서 최신 버전 유지가 필요해서 인앱업데이트 기능이 필요했다.<br />
+AppCenter 라는 Microsoft 에서 만든 sdk 가 있어서 이걸 사용해 보도록 했다.<br />
+Gradle Dependency 에는 다음과 같이 추가해 준다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dependencies {
+   def appCenterSdkVersion = '3.0.0'
+   implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
+}
+</code></pre></div></div>
+
+<p>그리고 인앱 업데이트 할 때 CustomDialog를 보여주기 위해 DistributeListener 인터페이스를 구현한 클래스를 하나만들어 준다.<br />
+클래스명은 임의로 InAppUpdateListener 라고 만들었다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InAppUpdateListener : DistributeListener {
+    override fun onReleaseAvailable(
+        activity: Activity?,
+        releaseDetails: ReleaseDetails
+    ): Boolean {
+        activity?.apply {
+            val dialogBuilder = AlertDialog.Builder(activity)
+            dialogBuilder.setTitle(R.string.in_app_update)
+            dialogBuilder.setMessage(R.string.msg_download_latest_version)
+            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&gt;
+                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
+            }
+            dialogBuilder.setCancelable(false)
+            dialogBuilder.create()
+                .show()
+            return true
+        }
+        return false
+    }
+}
+
+</code></pre></div></div>
+
+<p>Distribute.notifyUpdateAction(UpdateAction.UPDATE) 를 사용하게 되면 리턴을 true 로 셋팅 해준다.<br />
+return 을 false로 할 경우 액티비티 변경 될 때마다 콜백이 호출 될 수 있다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
+Distribute.setListener(InAppUpdateListener())
+AppCenter.start(application, BuildConfig.KEY_APP_CENTER_SECRET, Distribute::class.java)
+</code></pre></div></div>
+<p>테스트 그룹을 Private 으로 한 경우 첫번째줄 UpdateTrack 을 셋팅 해줘야 한다.<br />
+KEY_APP_CENTER_SECRET 는 앱의 시크릿 키 값이다. AppCenter Console -&gt; Settings 우측 상단 메뉴 버튼 클릭</p>
+<figure>
+	<img src="/images/2020-03-03-appcenter.png" alt="" />
+</figure>
+
+<p>앱 업데이트가 필요한 곳에서 다음과 같이 호출</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
+Distribute.setListener(InAppUpdateListener())
+AppCenter.start(application, BuildConfig.KEY_APPCENTER_SECRET, Distribute::class.java)
+</code></pre></div></div>
+
+<p>유의할 점은 해당 versionCode 가 Distribute 에 업로드 되어 있다는 전제하에 업데이트 할 버전이 있다면 InAppUpdateListener onReleaseAvailable 가 호출 된다.<br />
+현재 versionCode 가 1 이고 Distribute 에 있는 버전이 2 버전이라면 콜백이 호출 되지 않는다.<br />
+Distribute 에는 1,2 현재버전까지 포함되서 올라가 있어야 호출됨.<br />
+그리고 Distribute 셋팅은 AppCenter.start 가 호출 되기 전에 호출 되어야 한다. 순서가 바뀔 경우 제대로 동작하지 않을수 있음.<br />
+AppCenterSecret Key 는 노출 되면 안되기 떄문에 환경변수에 저장해서 사용했다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//앱 build.gradle
+
+buildTypes {
+        release {
+            ...
+        }
+
+        debug {
+            ...
+        }
+
+        buildTypes.each {
+            it.buildConfigField 'String', 'KEY_APP_CENTER_SECRET', "\"$System.env.KEY_APP_CENTER_SECRET\""
+        }
+}
+</code></pre></div></div>
+
+<p>이번에 Github Actions 를 사용해서 Appcenter Distribute 에 apk 배포하는걸 자동화해서 작업을 했는데 그부분은 다음 글에서 올림.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-02-27T00:00:00+09:00"><a href="http://localhost:4000/android/android-throttle_first_click/">February 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-throttle_first_click/" rel="bookmark" title="안드로이드 다중 클릭 방지(Prevent Multiple Click)" itemprop="url">안드로이드 다중 클릭 방지(Prevent Multiple Click)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>화면 이동이나 특정 API 호출을 할 때 안드로이드 자체에서 다중 클릭을 막아 주지 않기 때문에 따로 처리가 필요하다.<br />
+그래서 회사 팀원들과 같이 의견을 조금씩 반영하다 보니 좋은 결과물이 나온것 같다. ㅎㅎ<br />
+소스는 아래와 같다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var isClicked = false
+
+//데이터 바인딩에서 사용하기 위한 fun
+@BindingAdapter("app:onThrottleFirstClick", "app:onThrottleInterval", requireAll = false)
+fun onThrottleFirstClick(
+    view: View,
+    onClickListener: View.OnClickListener,
+    isWithoutInterval: Boolean = false
+) {
+    view.setOnClickListener { v -&gt;
+        if (isClicked.not()) {
+            isClicked = true
+            v?.run {
+                if (isWithoutInterval) {
+                    isClicked = false
+                    onClickListener.onClick(v)
+                } else {
+                    postDelayed({
+                        isClicked = false
+                    }, 350L)
+                    onClickListener.onClick(v)
+                }
+            }
+        }
+    }
+}
+
+//일반 뷰에서 사용할 수 있는 Kotlin Extension
+fun View.onThrottleFirstClick(interval: Long = 350L, action: (v: View) -&gt; Unit) {
+    setOnClickListener { v -&gt;
+        if (isClicked.not()) {
+            isClicked = true
+            v?.run {
+                postDelayed({
+                    isClicked = false
+                }, interval)
+                action(v)
+            }
+        }
+    }
+}
+
+</code></pre></div></div>
+
+<h3 id="xml-layout-코드before">xml Layout 코드(Before)</h3>
+<p>기존 onClick 구현 방식</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="@{(v)-&gt; 어떤 처리}"
+    android:text="일반 클릭"
+/&gt;
+</code></pre></div></div>
+
+<p>위와 같이 onClick을 사용하면 다중 클릭을 막을 수 없고 버튼을 여러번 클릭 하는 경우 어떤 처리가 여러번 처리 된다.<br />
+아래 다중클릭이 방지된 BindingAdapter 를 사용하게 되면 여러번 클릭을 막을 수 있다.<br />
+onThrottleInterval 은 싱글 클릭이 필요 없는 경우에만 넣어주면 된다.<br />
+예를 들어 옵션의 카운트 갯수를 올려주는 행위에 사용하면 된다.</p>
+
+<h3 id="xml-layout-코드after">xml Layout 코드(After)</h3>
+<p>변경된 방식</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="싱글 클릭"
+        app:onThrottleInterval="@{불린값}"
+        app:onThrottleFirstClick="@{(v) -&gt; 어떤 처리}"
+        /&gt;
+</code></pre></div></div>
+
+<h3 id="button을-가지고-있는-클래스before">button을 가지고 있는 클래스(Before)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.setOnClickListener {
+    //어떤 처리
+}
+</code></pre></div></div>
+
+<h3 id="button을-가지고-있는-클래스after">button을 가지고 있는 클래스(After)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.onThrottleFirstClick {
+    //어떤 처리
+}
+</code></pre></div></div>
+
+<p>사용법도 크게 차이가 없어서 편하게 사용할 수 있게 만들어진 것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2020-02-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-intent/">February 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -595,159 +809,6 @@ Manifest.permission.ACCESS_BACKGROUND_LOCATION
 <figure>
 	<img src="/images/2020-01-17-bluetooth-flow-chart.png" alt="" />
 </figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-01-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-centerLoadingProgress/">January 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-centerLoadingProgress/" rel="bookmark" title="Center Loading Progress" itemprop="url">Center Loading Progress</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>API 호출 할 때 다른 터치를 막기 위해 센터 프로그레스를 보여주는 경우 여러 가지 방법이 있지만 그중 progressDialog 를 사용해보자~!</p>
-
-<p>BaseActivity 에서 progressDialog 를 가지고 있고 필요할 때 showProgress() , hideProgress() 를 통해 보여주거나 감출수 있다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract class BaseActivity : AppCompatActivity(){
-    private var progressDialog: AppCompatDialog? = null
-
-    fun showProgress() {
-        if (this == null || isFinishing) {
-            return
-        }
-
-        progressDialog?.apply {
-            dismiss()
-        }
-
-        progressDialog = AppCompatDialog(this)
-        progressDialog?.apply {
-            setCancelable(false)
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setContentView(R.layout.progress_center_loading)
-            show()
-        }
-    }
-
-    fun hideProgress() {
-        progressDialog?.dismiss()
-    }
-}
-</code></pre></div></div>
-
-<p>아래는 layout 코드</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-    <span class="na">android:clickable=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-
-    <span class="nt">&lt;ProgressBar</span>
-        <span class="na">style=</span><span class="s">"?android:attr/indeterminateDrawable"</span>
-        <span class="na">android:layout_width=</span><span class="s">"34dp"</span>
-        <span class="na">android:layout_height=</span><span class="s">"34dp"</span>
-        <span class="na">android:indeterminate=</span><span class="s">"true"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
-</code></pre></div></div>
-
-<p>이 경우 장점은 
-BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.</p>
-
-<p>그리고 액티비티 layout에서 위의 layout 코드를 포함 하고 있지 않아도 된다.</p>
-
-<p>단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있을 수 있다.</p>
-
-<p>다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-12-26T00:00:00+09:00"><a href="http://localhost:4000/android/android-bindingadapter/">December 26, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bindingadapter/" rel="bookmark" title="DataBidning , BindingAdapter" itemprop="url">DataBidning , BindingAdapter</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>데이터 바인딩라이브러리는 레이아웃의 UI 구성 요소를 프로그래밍 방식이 아닌 선언적 형식을 사용하여 앱의 데이터 소스에 바인딩 할 수있는 지원 라이브러리다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;layout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="na">xmlns:bind=</span><span class="s">"http://schemas.android.com/tools"</span>
-    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;data&gt;</span>
-        <span class="nt">&lt;import</span> <span class="na">type=</span><span class="s">"android.view.View"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;variable</span>
-            <span class="na">name=</span><span class="s">"viewModel"</span>
-            <span class="na">type=</span><span class="s">"패키지경로.ExampleViewModel"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/data&gt;</span>
-    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
-            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-            <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-            <span class="na">android:background=</span><span class="s">"@{viewModel.isRedBackground ? @color/red : @color/white}"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
-<span class="nt">&lt;/layout&gt;</span>
-
-</code></pre></div></div>
-
-<p>예를 들어 API 호출을 하고 받아온 값이 빨간색 배경색을 가져야 한다면 viewModel.isRedBackground (ObservableField Boolean 값) 데이터 변경 만으로 뷰가 빨간색 또는 흰색으로 변경 된다. 하지만 상태값이 빨간색 흰색 그외 초록색이 필요하다면 BindingAdapter를 통해서 구현할 수 있다.</p>
-
-<p>android:background=”@{viewModel.isRedBackground ? @color/red : @color/white}”<br />
-–&gt; bind:status=”@{viewModel.status}”</p>
-
-<p>위의 코드에서 해당 줄만 변경한다. 그 다음 BindingAdapter를 만들어준다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@BindingAdapter("bind:status")
-fun bindBuyingStatusText(imageView: ImageView, status: String?) {
-    when (status) {
-        "빨간색" -&gt; {
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_red))
-        }
-        "흰색" -&gt; {
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_white))
-        }
-        else -&gt; {  //초록색
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_green))
-        }
-    }
-}
-
-</code></pre></div></div>
-
-<p>상태값이 2가지만 있는경우에도 BindingAdapter 사용해서 처리할수 있지만 굳이 사용할 필요는 없을것 같다.</p>
 
       
   </div><!-- /.entry-content -->

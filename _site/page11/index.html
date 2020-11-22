@@ -288,6 +288,99 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-19T00:00:00+09:00"><a href="http://localhost:4000/android/android-buildtypestring-post/">November 19, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-buildtypestring-post/" rel="bookmark" title="Build Type String" itemprop="url">Build Type String</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="빌드-타입-별-스트링-관리">빌드 타입 별 스트링 관리</h1>
+
+<p>페이스북 소셜 연동 시 다음과 같은 facebook 앱 아이디 정보가 필요하다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;meta-data
+    android:name="com.facebook.sdk.ApplicationId"
+    android:value="@string/facebook_app_id" /&gt;
+</code></pre></div></div>
+
+<p>페이스북 소셜 연동 시 live , dev , stage 세가지로 나눠서 작업을 하고 있는데 facebook_app_id 가 각각 build Type 별로 다르기 때문에 type이 바뀔 때 마다 동적으로 변경 되어야 하는 문제가 생겼다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   buildTypes {
+        release {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+        staging {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+        dev {
+            resValue "string", "facebook_app_id","페이스북 앱 아이디"
+            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+        }
+    }
+</code></pre></div></div>
+
+<p>buildType 별로 facebook_app_id , fb_login_protocol_scheme 각각 string 정보에 설정한 값이 들어가게 된다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
+
+<p>외부공유 소스</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>String title = context.getString(R.string.title);
+String plainContent = context.getString(R.string.plain_content);
+String htmlContent = context.getString(R.string.html_content);
+
+Intent shareIntent = new Intent(Intent.ACTION_SEND);
+shareIntent.setType("text/plain");
+shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+shareIntent.putExtra(Intent.EXTRA_TEXT, plainContent);
+shareIntent.putExtra(Intent.EXTRA_HTML_TEXT, htmlContent);
+context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_text)));
+</code></pre></div></div>
+
+<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
+앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
+Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
+HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
+G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-firestore-post/">November 12, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -444,120 +537,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 </code></pre></div></div>
 
 <p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-07T00:00:00+09:00"><a href="http://localhost:4000/android/shape-post/">November 07, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/shape-post/" rel="bookmark" title="Shape" itemprop="url">Shape</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>꼭지점 두루뭉실한 사각형 만들기</p>
-
-<p>drawable/파일명.xml 만들어 준다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;shape</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
-
-    <span class="nt">&lt;solid</span> <span class="na">android:color=</span><span class="s">"@color/white"</span><span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;stroke</span> <span class="na">android:width=</span><span class="s">"1dp"</span>
-        <span class="na">android:color=</span><span class="s">"@color/gray"</span><span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;padding</span> <span class="na">android:bottom=</span><span class="s">"10dp"</span>
-        <span class="na">android:left=</span><span class="s">"10dp"</span>
-        <span class="na">android:right=</span><span class="s">"10dp"</span>
-        <span class="na">android:top=</span><span class="s">"10dp"</span><span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;corners</span> <span class="na">android:radius=</span><span class="s">"7dp"</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/shape&gt;</span>
-</code></pre></div></div>
-
-<p>solid 안에 컬러는 도형의 내부 색상</p>
-
-<p>stroke 바깥 선 색상과 두께</p>
-
-<p>padding 은 도형 안쪽 여백</p>
-
-<p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/actionbar_menu-post/">November 06, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/actionbar_menu-post/" rel="bookmark" title="ActionBar Menu in Fragment" itemprop="url">ActionBar Menu in Fragment</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;menu</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;item</span>
-        <span class="na">android:id=</span><span class="s">"@+id/menu_answer_letter"</span>
-        <span class="na">android:title=</span><span class="s">"@string/answer"</span>
-        <span class="na">app:showAsAction=</span><span class="s">"always"</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/menu&gt;</span>
-</code></pre></div></div>
-
-<p>Fragment 에서 우선 Override 할 메소드는 onCreateOptionMenu , opOptionsItemSelected 두가지 !!</p>
-
-<p>Activity 에서는 onCreateOptionsMenu 메뉴가 불리지만 Fragment 에서는 setHasOptionsMenu(true) 셋팅을 해줘야 불리게 된다.</p>
-
-<p>위치는 OnCreateView 안에 넣어주면 됨.</p>
-
-<p>그럼 정상적으로 onCreateOptionsMenu 메뉴가 불리게 된다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_detail_letter, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-</code></pre></div></div>
-
-<p>다음은 메뉴 아이템이 선택 되면 불리는 메소드</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
-       R.id.menu_answer_letter -&gt;{
-           locateListener?.openAnswer(letter)
-           true
-       }
-        else -&gt;{
-            false
-        }
-}
-</code></pre></div></div>
-
-<p>확실히 자바 쓰다가 코틀린으로 쓰니까 간결하긴 하네 ㅎㅎ</p>
 
       
   </div><!-- /.entry-content -->

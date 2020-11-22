@@ -288,6 +288,173 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxjava-debounce/">August 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxjava-debounce/" rel="bookmark" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황" itemprop="url">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
+RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainActivity : AppCompatActivity() {
+
+    var count = 0
+    val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    var publishSubject: PublishSubject&lt;String&gt; = PublishSubject.create()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        button.setOnClickListener {
+            textView.text = (++count).toString()
+            publishSubject.onNext(count.toString())
+            Log.d("kyh", "count : $count")
+        }
+
+        compositeDisposable.add(publishSubject
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+            .subscribe { string -&gt;
+                Toast.makeText(this, "publishSubject 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
+            })
+
+        compositeDisposable.add(RxTextView.textChanges(textView)
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .map { charSequence -&gt; charSequence.toString() }
+            .filter {
+                !it.equals("Hello World!")
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+            .subscribe { string -&gt;
+                Toast.makeText(this, "RxBinding 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
+            }
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+}
+</code></pre></div></div>
+
+<p>debounce 를 사용하면 편하게 처리할 수 있다.
+위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
+
+<p>둘중 마음에 드는 걸로 사용하면 됨</p>
+
+<p>rx 문서에서는 debounce 를 <br />
+only emit an item from an Observable if a particular timespan has passed without it emitting another item  <br />
+라고 소개 한다.</p>
+
+<p>아이템이 들어오다가 지정한 시간동안 아이템이 들어오지 않는 경우 마지막 아이템을 subscribe 를 통해 값을 보내준다.
+rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으로 이해가 잘됨.</p>
+
+<figure>
+	<img src="/images/2019-08-22-android-rxjava-debounce.png" alt="" />
+	<figcaption>출처 http://reactivex.io/documentation/operators/debounce.html</figcaption>
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-08-20T00:00:00+09:00"><a href="http://localhost:4000/android/android-keyboard/">August 20, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-keyboard/" rel="bookmark" title="키보드 내려갈 때 특정 처리 하기" itemprop="url">키보드 내려갈 때 특정 처리 하기</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="키보드-내려갈-때-포커스-클리어-처리-하기">키보드 내려갈 때 포커스 클리어 처리 하기</h3>
+
+<p>키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ public static void showKeyboard(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+        editText.requestFocus();
+        mInputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED | InputMethodManager.HIDE_IMPLICIT_ONLY);
+ }
+
+ public static void clearFocus(Activity activity) {
+        View v = activity.getCurrentFocus();
+        if (v == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        v.clearFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+ }
+
+</code></pre></div></div>
+
+<p>키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.<br />
+editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int lastHeightDiff = 0;
+    boolean isOpenKeyboard = false;
+    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        synchronized public void onGlobalLayout() {
+            View activityRootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
+            int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+            if (lastHeightDiff == 0) {
+                lastHeightDiff = heightDiff;
+            }
+            if (heightDiff &gt; lastHeightDiff) { //keyboard show
+                isOpenKeyboard = true;
+            } else {//keyboard hide
+                if (isOpenKeyboard) {
+                    clearFocus();
+                    isOpenKeyboard = false;
+                }
+            }
+        }
+    };
+</code></pre></div></div>
+
+<p>해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.<br />
+한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-07-29T00:00:00+09:00"><a href="http://localhost:4000/android/android-edittext_typing_slow/">July 29, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -390,194 +557,6 @@ locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
 <p>3.굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.</p>
 
 <p>현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-16T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 16, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>직사각형 나머지 한 좌표 구하기 !!</p>
-
-<p>직사각형을 만드는 데 필요한 4개의 점 중 3개의 좌표가 주어질 때, 나머지 한 점의 좌표를 구하려고 합니다. 점 3개의 좌표가 들어있는 배열 v가 매개변수로 주어질 때, 직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 return 하도록 solution 함수를 완성해주세요. 단, 직사각형의 각 변은 x축, y축에 평행하며, 반드시 직사각형을 만들 수 있는 경우만 입력으로 주어집니다.</p>
-
-<p>v는 세 점의 좌표가 들어있는 2차원 배열입니다.
-v의 각 원소는 점의 좌표를 나타내며, 좌표는 [x축 좌표, y축 좌표] 순으로 주어집니다.
-좌표값은 1 이상 10억 이하의 자연수입니다.
-직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 [x축 좌표, y축 좌표] 순으로 담아 return 해주세요.</p>
-
-<p>입출력 예 설명
-입출력 예 #1
-세 점이 [1, 4], [3, 4], [3, 10] 위치에 있을 때, [1, 10]에 점이 위치하면 직사각형이 됩니다.</p>
-
-<p>입출력 예 #2
-세 점이 [1, 1], [2, 2], [1, 2] 위치에 있을 때, [2, 1]에 점이 위치하면 직사각형이 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="o">.</span><span class="no">HashMap</span><span class="p">;</span>
-<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="n">int</span><span class="p">[]</span> <span class="n">solution</span><span class="p">(</span><span class="n">int</span><span class="p">[][]</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
-         <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">xHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">yHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">xHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-            <span class="n">yHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="n">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">xHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">yHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">new</span> <span class="n">int</span><span class="p">[]{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">};</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>==========================================================</p>
-
-<p>앞뒤를 뒤집어도 똑같은 문자를 palindrome(팰린드롬)이라고 합니다. 예를 들어 12321은 팰린드롬이며, 21453은 팰린드롬이 아닙니다.</p>
-
-<p>자연수 n이 매개변수로 주어질 때, n이 팰린드롬이면 true를, 아니면 false를 반환하도록 함수 solution 을 완성하세요.</p>
-
-<p>제한사항
-n은 231 - 1 보다 작거나 같은 자연수입니다.</p>
-
-<p>입출력 예
-n	result
-12321	true
-21453	false
-입출력 예 설명
-입출력 예 #1
-12321을 뒤집으면 12321이 되어 팰린드롬입니다.</p>
-
-<p>입출력 예 #2
-21453을 뒤집으면 35412가 되어 팰린드롬이 아닙니다.</p>
-
-<p>class Solution {
-    public boolean solution(int n) {
-         int length = String.valueOf(n).length();
-        String[] values = String.valueOf(n).split(“”);</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (length % 2 == 0) {
-        int center = (length / 2);
-        for (int i = 0; i &lt; center; i++) {
-            if (!values[i].equals(values[length -i - 1])) {
-                return false;
-            }
-        }
-        return true;
-    } else {
-        int center = (length / 2) + 1;
-        for (int i = 0; i &lt; center; i++) {
-            if (!values[i].equals(values[length -i - 1])) {
-                return false;
-            }
-        }
-        return true;
-    }
-} }
-</code></pre></div></div>
-
-<p>출처 : https://programmers.co.kr/tryouts/3923/challenges/11576</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-11T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 11, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>쇠막대기 알고리즘</p>
-
-<p>여러 개의 쇠막대기를 레이저로 절단하려고 합니다. 효율적인 작업을 위해서 쇠막대기를 아래에서 위로 겹쳐 놓고, 레이저를 위에서 수직으로 발사하여 쇠막대기들을 자릅니다. 쇠막대기와 레이저의 배치는 다음 조건을 만족합니다.</p>
-
-<ul>
-  <li>쇠막대기는 자신보다 긴 쇠막대기 위에만 놓일 수 있습니다.</li>
-  <li>쇠막대기를 다른 쇠막대기 위에 놓는 경우 완전히 포함되도록 놓되, 끝점은 겹치지 않도록 놓습니다.</li>
-  <li>각 쇠막대기를 자르는 레이저는 적어도 하나 존재합니다.</li>
-  <li>레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않습니다.</li>
-</ul>
-
-<p>(a) 레이저는 여는 괄호와 닫는 괄호의 인접한 쌍 ‘()’으로 표현합니다. 또한 모든 ‘()’는 반드시 레이저를 표현합니다.
-(b) 쇠막대기의 왼쪽 끝은 여는 괄호 ‘(‘로, 오른쪽 끝은 닫힌 괄호 ‘)’로 표현됩니다.</p>
-
-<p>위 예의 괄호 표현은 그림 위에 주어져 있습니다.
-쇠막대기는 레이저에 의해 몇 개의 조각으로 잘리는데, 위 예에서 가장 위에 있는 두 개의 쇠막대기는 각각 3개와 2개의 조각으로 잘리고, 이와 같은 방식으로 주어진 쇠막대기들은 총 17개의 조각으로 잘립니다.</p>
-
-<p>쇠막대기와 레이저의 배치를 표현한 문자열 arrangement가 매개변수로 주어질 때, 잘린 쇠막대기 조각의 총 개수를 return 하도록 solution 함수를 작성해주세요.</p>
-
-<p>제한사항
-arrangement의 길이는 최대 100,000입니다.
-arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="p">.</span><span class="nf">*</span><span class="p">;</span>
-<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="n">int</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span> <span class="n">arrangement</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="no">String</span><span class="p">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrangement</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
-        <span class="no">Stack</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Stack</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="no">String</span> <span class="n">character</span> <span class="p">:</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">character</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span>
-                <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="nf">peek</span><span class="p">().</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span><span class="sr">//</span><span class="err">레이저</span>
-                    <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                    <span class="o">--</span><span class="n">count</span><span class="p">;</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="n">count</span><span class="p">;</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="sr">//</span><span class="err">막대</span> <span class="err">끝</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-                    <span class="n">count</span><span class="o">--</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>여기서 포인트는  stack 을 사용하면서 레이저와 막대끝을 구분하는 것 같다 ㅎㅎ
-알고리즘하니깐 시간 잘 가네 ㅎㅎ</p>
-
-<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42585</p>
 
       
   </div><!-- /.entry-content -->

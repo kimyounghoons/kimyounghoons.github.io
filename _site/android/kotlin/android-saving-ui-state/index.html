@@ -1,0 +1,420 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Saving UI States &#8211; 영훈 블로그</title>
+<meta name="description" content="UI 상태 저장(Saving UI States)">
+<meta name="keywords" content="Android, Kotlin">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Saving UI States">
+<meta property="og:description" content="UI 상태 저장(Saving UI States)">
+<meta property="og:url" content="http://localhost:4000/android/kotlin/android-saving-ui-state/">
+<meta property="og:site_name" content="영훈 블로그">
+<meta property="og:image" content="http://localhost:4000/images/images/logo.png">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/android/kotlin/android-saving-ui-state/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.mmenu.all.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.floating-social-share.min.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+
+
+<div class="header-menu header-menu-top">
+    <ul class="header-item-container">
+      <li class="header-item-title header-toggle "><a href="#menu"><h2><i class="fa fa-bars"></i></h2></a></li>
+      <li class="header-item-title">
+        <a href="http://localhost:4000/">
+          
+            <img class="logo" src="http://localhost:4000/images/logo.png" alt="영훈 블로그">
+          
+          <a href="http://localhost:4000/" class="title"> 영훈 블로그</a>
+        </a>
+      </li>
+      
+        
+        
+
+        
+          <li class="header-item "><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+            <ul class="header-submenu">
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Android">Android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Single">Single</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#aac">aac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#android">android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#flag">flag</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#interview">interview</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#java">java</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#notification">notification</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#sample">sample</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#자바">자바</a></li>
+              
+            </ul>
+          </li>
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+            
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+            
+        
+      
+      <li class="header-item"><a href="http://localhost:4000/search"><h3><i class="fa fa-search"></i></h3></a></li>
+    </ul>
+  </div>
+<div class="entry-header">
+  <div class="header-title">
+    <div class="header-title-wrap">
+      <h1>Saving UI States</h1>
+      
+        <h2><span class="entry-date date published updated"><time datetime="2020-11-22T00:00:00+09:00">November 22, 2020</time></span></h2>
+      
+
+      
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
+      
+    </div><!-- /.header-title-wrap -->
+  </div><!-- /.header-title -->
+</div><!-- /.entry-header -->
+
+
+<nav id="menu" style="display: none">
+  <ul>
+    
+      
+        <li><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+          <ul>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Android">Android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Single">Single</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#aac">aac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#android">android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#flag">flag</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#interview">interview</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#java">java</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#notification">notification</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#sample">sample</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#자바">자바</a></li>
+            
+          </ul>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <div class="entry-content">
+        
+      <h1 class="post-title entry-title">Saving UI States</h1>
+      <p>오늘은 UI 상태 저장에 대한 조금 더 깊은 이해와 어떤 옵션들이 있는지 그리고 각각의 옵션들의 장단점에 대해서 알아보려고 한다.</p>
+
+<h2 id="ui-상태를-유지-하기-위한-옵션">UI 상태를 유지 하기 위한 옵션</h2>
+<ol>
+  <li>ViewModel</li>
+  <li>Saved instance state</li>
+  <li>Persistent storage</li>
+</ol>
+
+<figure>
+	<img src="/images/2020-11-22-save-ui-state.png" alt="" />
+</figure>
+
+<h3 id="viewmodel">ViewModel</h3>
+<p>Android Architecture Components 에 속하는 Component 이다.<br />
+메모리에 저장 되고 화면 가로 세로 변경같은 경우 데이터가 저장 되지만 프로세스에 의해 죽고 살아 나는 경우에 데이터는 다시 복구 되지 않는다.<br />
+그리고 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
+데이터 제한은 메모리에 저장 되기 때문에 사용가능한 메모리 내에서 가능하고 속도가 빠르다.</p>
+
+<h3 id="save-instance-state">Save instance state</h3>
+<p>저번 커스텀 뷰에서 상태 저장을 위한 onSaveInstanceState 를 사용해서 저장하는 방법이다.<br />
+화면 가로 세로 변경 같은 경우, 프로세스 종료 된 이후에도 데이터가 저장 가능 하다.<br />
+하지만 ViewModel 과 마찬가지로 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
+데이터 제한은 직렬화되어 디스크에 저장 되기 때문에 primitive type 또는 심플하고 작은 object 만 가능 하다.<br />
+직렬화는 데이터를 byte 형태로 변환 하는 것을 말한다.<br />
+디스크에 접근하고 serialization , deserialization 을 거치기 때문에 ViewModel 보다 비교적 느리다.</p>
+
+<h3 id="persistent-storage">Persistent storage</h3>
+<p>Shared preferences,SQLite Database,Realm DB 기타 등등..!
+디스크에 저장 하거나 네트워크 통신을 통해 서버에 저장하는 것을 의미한다.<br />
+이 경우는 모든 경우에 대비해서 데이터를 저장 할 수 있다.<br />
+네트워크 통신을 통해 저장 하는 경우 다른 옵션들 보다 비교적 느리지만 데이터를 영구 저장하기에는 제일 좋다고 볼 수 있다.<br />
+위와 같이 여러 타입의 UI 상태 저장 방법을 알아보고 비교하는 시간을 가져 보았다.</p>
+
+<p>참고 문서
+https://developer.android.com/topic/libraries/architecture/saving-states</p>
+
+
+    </div><!-- /.entry-content -->
+    
+  </article>
+</div><!-- /#main -->
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script type="text/javascript" src="http://localhost:4000/assets/js/scripts.min.js"></script>
+<script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-154716591-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+</script>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://kimyounghoons.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+<script type="text/javascript">
+    sharing();
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154716591-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154716591-1');
+</script>
+
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/android/kotlin/android-save-data-customview/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/kotlin/android-save-data-customview/" title="Save State for CustomView">Save State for CustomView</a></h3>
+      <p>커스텀뷰 상태 저장(Save State for CustomView) <a href="http://localhost:4000/android/kotlin/android-save-data-customview/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/android-tosscustomview/" title="토스 금액 입력창 애니메이션 클론 코딩">토스 금액 입력창 애니메이션 클론 코딩</a></h4>
+        <span>Published on October 23, 2020</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" title="Json field null 에서 empty 값 변경">Json field null 에서 empty 값 변경</a></h4>
+        <span>Published on October 11, 2020</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+</body>
+</html>

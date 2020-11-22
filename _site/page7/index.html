@@ -288,6 +288,102 @@
   <header>
     
     <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-11-18T00:00:00+09:00"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/">November 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/" rel="bookmark" title="두두(dodo) 개인정보 취급방침" itemprop="url">두두(dodo) 개인정보 취급방침</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>두두(dodo)는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법,사업법 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하겠습니다.</p>
+
+<p>두두(dodo)는 사용자 개인정보를 수집 하지 않습니다.</p>
+
+<p>앱 관리자<br />
+이름: 김영훈(Davis)<br />
+직위: 두두(DoDo) Android Developer<br />
+연락처: kimyh8496@gmail.com</p>
+
+<p>고지의 의무
+두두(DoDo) 법률이나 서비스의 변경사항을 반영하기 위한 목적 등으로 개인정보 취급방침을 수정할 수 있습니다. 개인정보 취급방침이 변경되는 경우 두두(DoDo)는 변경 사항을 게시하며, 변경된 개인정보 취급방침은 게시한 날로부터 7일 후부터 효력이 발생합니다.</p>
+
+<p>공고일자: 2019년 11월 18일<br />
+시행일자: 2019년 12월 25일</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-barcode/">November 13, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-barcode/" rel="bookmark" title="DS6 Barcode (Android 7.1 Nougat)" itemprop="url">DS6 Barcode (Android 7.1 Nougat)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="기기명--ds6-android-71-nougat">기기명 : DS6 (Android 7.1 Nougat)</h3>
+
+<p>기본적으로 바코드 트레이라는 앱이 설치 되어있습니다.<br />
+이 앱 안에서 스캔 설정을 할 수 있습니다.<br />
+스캔 타임, 데이터 수신 방식, 인식 성공시 알림 등등 여러가지가 있습니다.<br />
+여기서 중요한 데이터 수신 방식(3가지)에 대해 알아 보겠습니다.</p>
+
+<ol>
+  <li>INTERNET_EVENT</li>
+  <li>KEYBOARD_EVENT</li>
+  <li>CLIPBOARD_EVENT</li>
+</ol>
+
+<h3 id="internet_event-방식">INTERNET_EVENT 방식</h3>
+<p><strong>BroadcastReceiver</strong> 로 데이터를 받아 올 수 있습니다.</p>
+
+<p>ActionName : <strong>app.dsic.barcodetray.BARCODE_BR_DECODING_DATA</strong></p>
+
+<p>BarcodeData : <strong>EXTRA_BARCODE_DECODED_DATA</strong></p>
+
+<p>해당 액션이름으로 이벤트를 받을 수 있고 <strong>EXTRA_BARCODE_DECODED_DATA</strong> 키 값으로 intent 에 담겨 오는 데이터를 가져올 수 있습니다.</p>
+
+<p>이 방식으로 데이터를 받을 경우 EditText 에 포커스가 되어 있어도 브로드캐스트리시버로 데이터가 넘어 왔기 때문에 EditText 에 입력 되지 않습니다.</p>
+
+<h3 id="keyboard_event-방식">KEYBOARD_EVENT 방식</h3>
+<p>바코드 스캔 할 때 EditText 포커스 된 경우만 데이터가 셋팅 됩니다.</p>
+
+<p><span style="color:red">주의 사항</span><br />
+이 방식은 실제로 키보드 타이핑하는 방법과 같습니다.<br />
+키보드가 한글로 셋팅 되어 있을 경우 스캔한 내용이 영어일지라도 한글 키보드로 입력한것 처럼 됩니다.<br />
+rladudgns0837 내용을 스캔한경우 김영훈0837 이런식으로 입력되기 때문에 주의해야합니다.</p>
+
+<p>키보드가 안보일 경우도 똑같이 적용됩니다.</p>
+
+<h3 id="clipboard_event-방식">CLIPBOARD_EVENT 방식</h3>
+<p>바코드 스캔 할 때 클립보드에 복사되고 EditText에 포커스 되어 있을 경우만 데이터 셋팅 됩니다. 키보드 타이핑 방식은 아니기 때문에 키보드가 영어, 한국어 무관합니다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
       <span class="entry-date date published updated"><time datetime="2019-10-29T00:00:00+09:00"><a href="http://localhost:4000/android/android-FragmentStatePagerAdapter/">October 29, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
@@ -439,173 +535,6 @@ public void cancelLottieAnimation() {
 </code></pre></div></div>
 
 <p>이제는 편하게 애니메이션 적용해보자~!ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxjava-debounce/">August 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxjava-debounce/" rel="bookmark" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황" itemprop="url">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
-RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainActivity : AppCompatActivity() {
-
-    var count = 0
-    val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    var publishSubject: PublishSubject&lt;String&gt; = PublishSubject.create()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        button.setOnClickListener {
-            textView.text = (++count).toString()
-            publishSubject.onNext(count.toString())
-            Log.d("kyh", "count : $count")
-        }
-
-        compositeDisposable.add(publishSubject
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            }
-            .subscribe { string -&gt;
-                Toast.makeText(this, "publishSubject 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
-            })
-
-        compositeDisposable.add(RxTextView.textChanges(textView)
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .map { charSequence -&gt; charSequence.toString() }
-            .filter {
-                !it.equals("Hello World!")
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            }
-            .subscribe { string -&gt;
-                Toast.makeText(this, "RxBinding 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
-            }
-        )
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
-    }
-}
-</code></pre></div></div>
-
-<p>debounce 를 사용하면 편하게 처리할 수 있다.
-위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
-
-<p>둘중 마음에 드는 걸로 사용하면 됨</p>
-
-<p>rx 문서에서는 debounce 를 <br />
-only emit an item from an Observable if a particular timespan has passed without it emitting another item  <br />
-라고 소개 한다.</p>
-
-<p>아이템이 들어오다가 지정한 시간동안 아이템이 들어오지 않는 경우 마지막 아이템을 subscribe 를 통해 값을 보내준다.
-rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으로 이해가 잘됨.</p>
-
-<figure>
-	<img src="/images/2019-08-22-android-rxjava-debounce.png" alt="" />
-	<figcaption>출처 http://reactivex.io/documentation/operators/debounce.html</figcaption>
-</figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-08-20T00:00:00+09:00"><a href="http://localhost:4000/android/android-keyboard/">August 20, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-keyboard/" rel="bookmark" title="키보드 내려갈 때 특정 처리 하기" itemprop="url">키보드 내려갈 때 특정 처리 하기</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="키보드-내려갈-때-포커스-클리어-처리-하기">키보드 내려갈 때 포커스 클리어 처리 하기</h3>
-
-<p>키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
- public static void showKeyboard(EditText editText) {
-        if (editText == null) {
-            return;
-        }
-        editText.requestFocus();
-        mInputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED | InputMethodManager.HIDE_IMPLICIT_ONLY);
- }
-
- public static void clearFocus(Activity activity) {
-        View v = activity.getCurrentFocus();
-        if (v == null) {
-            return;
-        }
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        v.clearFocus();
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
- }
-
-</code></pre></div></div>
-
-<p>키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.<br />
-editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int lastHeightDiff = 0;
-    boolean isOpenKeyboard = false;
-    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
-        @Override
-        synchronized public void onGlobalLayout() {
-            View activityRootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
-            int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
-            if (lastHeightDiff == 0) {
-                lastHeightDiff = heightDiff;
-            }
-            if (heightDiff &gt; lastHeightDiff) { //keyboard show
-                isOpenKeyboard = true;
-            } else {//keyboard hide
-                if (isOpenKeyboard) {
-                    clearFocus();
-                    isOpenKeyboard = false;
-                }
-            }
-        }
-    };
-</code></pre></div></div>
-
-<p>해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.<br />
-한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.</p>
 
       
   </div><!-- /.entry-content -->
