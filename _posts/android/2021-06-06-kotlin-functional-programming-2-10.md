@@ -13,9 +13,8 @@ categories: [Android, Kotlin]
 4. run
 5. let
 
-에 대해 순서대로 알아보자.
+### apply
 
-1. apply
 ```java
 fun <T>.apply(block: T.() -> Unit) : T
 //T의 확장 함수 로서 block 함수의 입력을 람다 리시버로 받았으므로 block  내에서 this 없이 객체에 접근할 수 있다.  
@@ -26,7 +25,8 @@ Person().apply {
 }
 ```
 
-2. also
+### also
+
 ```java
 fun <T> T.also(block: (T) -> Unit) : T
 //블럭의 반환 값이 없고 자기 자신을 반환한다.
@@ -40,7 +40,7 @@ fun getRandomInt(): Int {
 val i = getRandomInt()
 ```
 
-3. with
+### with
 ```java
 fun <T, R> with(receiver: T, block: T.() -> R) : R
 //일반적인 함수로 선언 되어 있다. 
@@ -55,7 +55,7 @@ val firstAndLast = with(numbers) {
 println(firstAndLast)
 ```
 
-4. run
+### run
 ```java
 fun <T,R> T.run(block: T.()->R) : R
 //T의 확장 함수로 선언되었고 block 함수에 this 가 람다 리시버로 전달 된다.
@@ -75,7 +75,7 @@ val letResult = service.let {
 }
 ```
 
-5. let
+### let
 ```java
 fun <T,R> T.let(block: (T)->R): R
 //T의 확장 함수 이고 block 의 반환 값을 리턴한다.
