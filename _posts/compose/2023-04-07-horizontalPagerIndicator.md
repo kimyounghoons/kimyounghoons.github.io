@@ -14,7 +14,7 @@ Accompanist 에서 제공되는 라이브러리를 사용하면 아래와 같은
 
 <figure>
     <p align="center">
-	    <img src="/images/2023-04-07-IndicatorGeneral.gif" alt="" width="200" height="350"/>
+	    <img src="/images/2023-04-07-IndicatorGeneral.gif" alt="" width="600" height="450"/>
 	</p>
 </figure>
 
@@ -24,7 +24,7 @@ IndicatorType 을 GeneralType(Accompanist에서 지원되는 Type) 과 WaterDrop
 
 <figure>
     <p align="center">
-	    <img src="/images/2023-04-07-IndicatorWaterDrop.gif" alt="" width="200" height="350"/>
+	    <img src="/images/2023-04-07-IndicatorWaterDrop.gif" alt="" width="600" height="450"/>
 	</p>
 </figure>
 
