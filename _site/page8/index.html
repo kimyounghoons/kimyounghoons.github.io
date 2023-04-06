@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxjava-debounce/">August 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-02-27T00:00:00+09:00"><a href="http://localhost:4000/android/android-throttle_first_click/">February 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,77 +298,415 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxjava-debounce/" rel="bookmark" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황" itemprop="url">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-throttle_first_click/" rel="bookmark" title="안드로이드 다중 클릭 방지(Prevent Multiple Click)" itemprop="url">안드로이드 다중 클릭 방지(Prevent Multiple Click)</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
-RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
+      <p>화면 이동이나 특정 API 호출을 할 때 안드로이드 자체에서 다중 클릭을 막아 주지 않기 때문에 따로 처리가 필요하다.<br />
+그래서 회사 팀원들과 같이 의견을 조금씩 반영하다 보니 좋은 결과물이 나온것 같다. ㅎㅎ<br />
+소스는 아래와 같다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainActivity : AppCompatActivity() {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var isClicked = false
 
-    var count = 0
-    val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    var publishSubject: PublishSubject&lt;String&gt; = PublishSubject.create()
+//데이터 바인딩에서 사용하기 위한 fun
+@BindingAdapter("app:onThrottleFirstClick", "app:onThrottleInterval", requireAll = false)
+fun onThrottleFirstClick(
+    view: View,
+    onClickListener: View.OnClickListener,
+    isWithoutInterval: Boolean = false
+) {
+    view.setOnClickListener { v -&gt;
+        if (isClicked.not()) {
+            isClicked = true
+            v?.run {
+                if (isWithoutInterval) {
+                    isClicked = false
+                    onClickListener.onClick(v)
+                } else {
+                    postDelayed({
+                        isClicked = false
+                    }, 350L)
+                    onClickListener.onClick(v)
+                }
+            }
+        }
+    }
+}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//일반 뷰에서 사용할 수 있는 Kotlin Extension
+fun View.onThrottleFirstClick(interval: Long = 350L, action: (v: View) -&gt; Unit) {
+    setOnClickListener { v -&gt;
+        if (isClicked.not()) {
+            isClicked = true
+            v?.run {
+                postDelayed({
+                    isClicked = false
+                }, interval)
+                action(v)
+            }
+        }
+    }
+}
 
-        button.setOnClickListener {
-            textView.text = (++count).toString()
-            publishSubject.onNext(count.toString())
-            Log.d("kyh", "count : $count")
+</code></pre></div></div>
+
+<h3 id="xml-layout-코드before">xml Layout 코드(Before)</h3>
+<p>기존 onClick 구현 방식</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="@{(v)-&gt; 어떤 처리}"
+    android:text="일반 클릭"
+/&gt;
+</code></pre></div></div>
+
+<p>위와 같이 onClick을 사용하면 다중 클릭을 막을 수 없고 버튼을 여러번 클릭 하는 경우 어떤 처리가 여러번 처리 된다.<br />
+아래 다중클릭이 방지된 BindingAdapter 를 사용하게 되면 여러번 클릭을 막을 수 있다.<br />
+onThrottleInterval 은 싱글 클릭이 필요 없는 경우에만 넣어주면 된다.<br />
+예를 들어 옵션의 카운트 갯수를 올려주는 행위에 사용하면 된다.</p>
+
+<h3 id="xml-layout-코드after">xml Layout 코드(After)</h3>
+<p>변경된 방식</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="싱글 클릭"
+        app:onThrottleInterval="@{불린값}"
+        app:onThrottleFirstClick="@{(v) -&gt; 어떤 처리}"
+        /&gt;
+</code></pre></div></div>
+
+<h3 id="button을-가지고-있는-클래스before">button을 가지고 있는 클래스(Before)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.setOnClickListener {
+    //어떤 처리
+}
+</code></pre></div></div>
+
+<h3 id="button을-가지고-있는-클래스after">button을 가지고 있는 클래스(After)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.onThrottleFirstClick {
+    //어떤 처리
+}
+</code></pre></div></div>
+
+<p>사용법도 크게 차이가 없어서 편하게 사용할 수 있게 만들어진 것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-02-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-intent/">February 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-intent/" rel="bookmark" title="인텐트 사용해서 다른 액티비티로 데이터 넘기기" itemprop="url">인텐트 사용해서 다른 액티비티로 데이터 넘기기</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>StartActivity 에서 DestActivity 로 String 데이터를 넘긴다고 가정하면 다음과같이 일반적으로 사용한다.</p>
+
+<h3 id="startactivity-코드">StartActivity 코드</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val stringValue = "스트링 값"
+Intent intent = new Intent(this, DestActivity.class)
+            intent.putExtra(DestActivity.KEY_VALUE, stringValue)
+            startActivity(intent)
+</code></pre></div></div>
+
+<h3 id="destactivity-코드">DestActivity 코드</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>companion object {
+    const val KEY_VALUE = "KEY_VALUE"
+}
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val stringValue = intent.getStringExtra(KEY_VALUE) ?: "",
+}
+</code></pre></div></div>
+<p>Key값은 보통 DestActivity 에서 Static value 로 가지고 있고 StartActivity 에서 DestActivity 의 키 값을 사용한다.</p>
+
+<p>또 다른 방법은 DestActivity 에서 innerClass 로 Arguments 클래스를 가지고 있는 방법이다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class DestActivity{
+  class Arguments(val stringValue: String) {
+        fun startActivity(context: Context) {
+            val intent = Intent(context, DestActivity::class.java)
+            intent.putExtra(KEY_VALUE, stringValue)
+            context.startActivity(intent)
         }
 
-        compositeDisposable.add(publishSubject
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            }
-            .subscribe { string -&gt;
-                Toast.makeText(this, "publishSubject 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
-            })
+        companion object {
+            private const val KEY_VALUE = "KEY_VALUE"
 
-        compositeDisposable.add(RxTextView.textChanges(textView)
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .map { charSequence -&gt; charSequence.toString() }
-            .filter {
-                !it.equals("Hello World!")
+            fun createFromIntent(intent: Intent): Arguments {
+                return Arguments(intent.getStringExtra(KEY_VALUE) ?: "")
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            }
-            .subscribe { string -&gt;
-                Toast.makeText(this, "RxBinding 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
-            }
-        )
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
+        }
     }
 }
 </code></pre></div></div>
 
-<p>debounce 를 사용하면 편하게 처리할 수 있다.
-위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
+<h2 id="arguments-사용법은-다음과-같다">Arguments 사용법은 다음과 같다.</h2>
 
-<p>둘중 마음에 드는 걸로 사용하면 됨</p>
+<h3 id="startactivity-에서의-코드">StartActivity 에서의 코드</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DestActivity.Arguments(stringValue)
+            .startActivity(this@BuyingBuildingsActivity)
+</code></pre></div></div>
+<h3 id="destactivity-코드-1">DestActivity 코드</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val binding = DataBindingUtil.setContentView(this, R.layout.activity_dest)
+    val arguments = Arguments.createFromIntent(intent)
+    binding.arguments = arguments
+}
+</code></pre></div></div>
 
-<p>rx 문서에서는 debounce 를 <br />
-only emit an item from an Observable if a particular timespan has passed without it emitting another item  <br />
-라고 소개 한다.</p>
+<h3 id="데이터-바인딩-activity_destxml">데이터 바인딩 (activity_dest.xml)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;layout</span> <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;data&gt;</span>
+        <span class="nt">&lt;variable</span>
+            <span class="na">name=</span><span class="s">"arguments"</span>
+            <span class="na">type=</span><span class="s">"com.example.test.DestActivity.Arguments"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/data&gt;</span>
+    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+        <span class="na">android:orientation=</span><span class="s">"vertical"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;TextView</span>
+            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:text=</span><span class="s">"@{arguments.stringValue}"</span>
+            <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintLeft_toLeftOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintRight_toRightOf=</span><span class="s">"parent"</span>
+            <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+<span class="nt">&lt;/layout&gt;</span>
+</code></pre></div></div>
 
-<p>아이템이 들어오다가 지정한 시간동안 아이템이 들어오지 않는 경우 마지막 아이템을 subscribe 를 통해 값을 보내준다.
-rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으로 이해가 잘됨.</p>
+<p>두번째 방법의 장점은 크게 3가지이다.</p>
+<ol>
+  <li>외부에서 DestActivity 에서의 키를 사용하지 않아도 된다.<br />
+Arguments 클래스 내부에서 키 값 관리 하면 됨.</li>
+  <li>데이터 바인딩을 사용한다면 Arguments 를 레이아웃에서 바로 사용할 수 있다.</li>
+  <li>intent 를 통해서 가져온 값은 Nullable 타입 이지만 Arguments 를 통해 가져온 변수는 NonNull 타입으로 변환해서 가져올 수 있다.</li>
+</ol>
 
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-01-28T00:00:00+09:00"><a href="http://localhost:4000/android/android-collections/">January 28, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-collections/" rel="bookmark" title="코틀린 람다 콜렉션(kotlin lambda collection)" itemprop="url">코틀린 람다 콜렉션(kotlin lambda collection)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="todo--선택된-아이템-알파벳들을-콤마로-구분해서-string-으로-만들기">TODO : 선택된 아이템 알파벳들을 콤마로 구분해서 String 으로 만들기</h3>
+
+<p>사용 된 함수는 filterIsInstance , filter , map , joinToString<br />
+선언형 프로그래밍 -&gt; 함수형 프로그래밍 방식으로 변경 하는 과정을 코딩</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/**
+ * Created by kimyounghoon on 2020-01-29.
+ */
+class KotlinLambdaCollectionTest {
+    open class BaseItem(var id: String)
+
+    class Item(id: String, val alphabet: String, val isSelected: Boolean) : BaseItem(id)
+
+    lateinit var items: ArrayList&lt;BaseItem&gt;
+
+    @Before
+    fun before() {  //테스트 시작 되기 전에 불린다. 리스트 셋팅!!
+        items =
+            arrayListOf(
+                Item("1", "a", false),
+                Item("2", "b", true),
+                Item("3", "c", true),
+                Item("4", "d", true),
+                Item("5", "e", false),
+                Item("6", "f", false),
+                Item("7", "g", false)
+            )
+    }
+
+
+   /*
+    *  test1 은 명령형 프로그래밍 2,3,4 함수형 프로그래밍으로 변환하는 작업입니다.
+    * */
+    @Test
+    fun test1() {
+        var alphabets = ""                  
+        val filterItems = arrayListOf&lt;Item&gt;()
+        for (item in items) {
+            if (item is Item &amp;&amp; item.isSelected) {
+                filterItems.add(item)
+            }
+        }
+
+        for (index in 0 until filterItems.size) {
+            if (index == filterItems.size - 1) {
+                alphabets += filterItems[index].alphabet
+            } else {
+                alphabets += filterItems[index].alphabet + ","
+            }
+        }
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+
+    /*
+    *  filter 를 사용해서 Item 으로만 걸렀기 때문에 as List&lt;Item&gt; 으로 캐스팅. 뭔가 아쉽다.
+    * */
+    @Test
+    fun test2() {
+        var alphabets = ""
+        (items.filter {
+            (it is Item &amp;&amp; it.isSelected)
+        } as List&lt;Item&gt;).let {
+            for (index in 0 until it.size) {
+                if (index == it.size - 1) {
+                    alphabets += it[index].alphabet
+                } else {
+                    alphabets += it[index].alphabet + ","
+                }
+            }
+        }
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+
+    /*
+    * filter 와 map , joinToString 을 사용하니 함수형 프로그래밍으로 바뀌고
+    * 가독성도 많이 좋아졌는데 map 에서 한번더 캐스팅 해서 써야하는게 불편해서 구글링 한번더!!
+    * */
+    @Test
+    fun test3() {
+        val alphabets = items.filter {
+            (it is Item &amp;&amp; it.isSelected)
+        }.map {
+            (it as Item).alphabet
+        }.joinToString(",")
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+
+    /*
+    * filterIsInstance 를 사용하면 Item 만 필터 되어서 Item 형태로 반환 되기때문에 캐스팅이 필요 없다.
+    * */
+    @Test
+    fun test4() {
+        val alphabets = items.filterIsInstance&lt;Item&gt;().filter {
+            it.isSelected
+        }.map {
+            it.alphabet
+        }.joinToString(",")
+
+        Assert.assertEquals("b,c,d", alphabets)
+    }
+}
+</code></pre></div></div>
+
+<p>test1 과 test4 를 비교 했을때 코드 양도 많이 줄고 훨씬 가독성이 많이 올라간걸 볼 수 있다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-01-16T00:00:00+09:00"><a href="http://localhost:4000/android/android-bluetooth-android10/">January 16, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bluetooth-android10/" rel="bookmark" title="안드로이드 10(29) 블루투스 연결 대응" itemprop="url">안드로이드 10(29) 블루투스 연결 대응</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h1 id="문제점">문제점</h1>
+<h2 id="bluetoothadapterstartdiscovery-return-false-">bluetoothAdapter.startDiscovery() return false !!!</h2>
+
+<p>true로 반환 되어야 하는데 false 로 반환 되어 블루투스 검색을 할 수 없음</p>
+
+<p>안드로이드 10 버전에서 위치 관련 보안이 강화 되었는데 블루투스 검색 할때 위치 관련 퍼미션이 필요하기 때문에 일어난 퍼미션 관련 이슈였습니다.</p>
+
+<p>버전 별로 블루투스 검색 및 연결 관련 퍼미션을 알아보겠습니다.</p>
+
+<p>기본적으로 블루투스 기능 ON , 위치 기능 ON 상태 여야 합니다.</p>
+
+<p>블루투스 기능 OFF 상태일 때는 사용 가능 하게 팝업 띄어 주고 위치 기능 OFF 상태일때는 체크 해서 설정 화면으로 보내면됩니다.</p>
+
+<h2 id="targetsdkversion-29-미만인-경우">targetSdkVersion 29 미만인 경우</h2>
+
+<p>AndroidManifest.xml 파일</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
+&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
+</code></pre></div></div>
+
+<p>29 미만인 경우 위치 관련 퍼미션이 적용 되어 있을 경우 아래 퍼미션이 자동으로 추가 됩니다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
+</code></pre></div></div>
+
+<p>아래 퍼미션은 런타임 퍼미션 적용<br />
+Manifest.permission.ACCESS_COARSE_LOCATION</p>
+
+<h2 id="targetsdkversion-29-인-경우">targetSdkVersion 29 인 경우</h2>
+
+<p>AndroidManifest.xml 파일 </p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
+&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
+</code></pre></div></div>
+
+<p>아래 퍼미션은 런타임 퍼미션 적용</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Manifest.permission.ACCESS_COARSE_LOCATION,
+Manifest.permission.ACCESS_FINE_LOCATION,
+Manifest.permission.ACCESS_BACKGROUND_LOCATION
+</code></pre></div></div>
+<p>퍼미션 승인 후 bluetoothAdapter. startDiscovery() 이 true로 반환되는걸 확인 할 수 있었습니다.</p>
+
+<p>아래 이미지는 블루투스 연결 버튼 클릭 시 플로우 차트</p>
 <figure>
-	<img src="/images/2019-08-22-android-rxjava-debounce.png" alt="" />
-	<figcaption>출처 http://reactivex.io/documentation/operators/debounce.html</figcaption>
+	<img src="/images/2020-01-17-bluetooth-flow-chart.png" alt="" />
 </figure>
 
       
@@ -379,7 +717,7 @@ rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으�
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-08-20T00:00:00+09:00"><a href="http://localhost:4000/android/android-keyboard/">August 20, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-01-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-centerLoadingProgress/">January 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -389,174 +727,70 @@ rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으�
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-keyboard/" rel="bookmark" title="키보드 내려갈 때 특정 처리 하기" itemprop="url">키보드 내려갈 때 특정 처리 하기</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-centerLoadingProgress/" rel="bookmark" title="Center Loading Progress" itemprop="url">Center Loading Progress</a></h1>
     
   </header>
   <div class="entry-content">
-      <h3 id="키보드-내려갈-때-포커스-클리어-처리-하기">키보드 내려갈 때 포커스 클리어 처리 하기</h3>
+      <p>API 호출 할 때 다른 터치를 막기 위해 센터 프로그레스를 보여주는 경우 여러 가지 방법이 있지만 그중 progressDialog 를 사용해보자~!</p>
 
-<p>키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function</p>
+<p>BaseActivity 에서 progressDialog 를 가지고 있고 필요할 때 showProgress() , hideProgress() 를 통해 보여주거나 감출수 있다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
- public static void showKeyboard(EditText editText) {
-        if (editText == null) {
-            return;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract class BaseActivity : AppCompatActivity(){
+    private var progressDialog: AppCompatDialog? = null
+
+    fun showProgress() {
+        if (this == null || isFinishing) {
+            return
         }
-        editText.requestFocus();
-        mInputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED | InputMethodManager.HIDE_IMPLICIT_ONLY);
- }
 
- public static void clearFocus(Activity activity) {
-        View v = activity.getCurrentFocus();
-        if (v == null) {
-            return;
+        progressDialog?.apply {
+            dismiss()
         }
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        v.clearFocus();
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
- }
 
-</code></pre></div></div>
-
-<p>키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.<br />
-editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int lastHeightDiff = 0;
-    boolean isOpenKeyboard = false;
-    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
-        @Override
-        synchronized public void onGlobalLayout() {
-            View activityRootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
-            int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
-            if (lastHeightDiff == 0) {
-                lastHeightDiff = heightDiff;
-            }
-            if (heightDiff &gt; lastHeightDiff) { //keyboard show
-                isOpenKeyboard = true;
-            } else {//keyboard hide
-                if (isOpenKeyboard) {
-                    clearFocus();
-                    isOpenKeyboard = false;
-                }
-            }
+        progressDialog = AppCompatDialog(this)
+        progressDialog?.apply {
+            setCancelable(false)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setContentView(R.layout.progress_center_loading)
+            show()
         }
-    };
-</code></pre></div></div>
+    }
 
-<p>해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.<br />
-한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-07-29T00:00:00+09:00"><a href="http://localhost:4000/android/android-edittext_typing_slow/">July 29, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-edittext_typing_slow/" rel="bookmark" title="EditText 금액 콤마 표시 Typing 할 때 느려지는 현상" itemprop="url">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="edittext-금액-콤마-표시-typing-할-때-느려지는-현상">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</h3>
-
-<p>EditText 금액 적을 때 3자리 마다 , 표시를 해야하는 상황이 생겼다.<br />
-TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.<br />
-해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.<br />
-EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에서 주는 Editable s 을 s.clear 와 s.append 를 통해 추가 해 주었고</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android:inputType="number|textNoSuggestions"
-</code></pre></div></div>
-<p>inputType 을 number 에서 위와 같이 변경 해 준뒤 해당 이슈를 수정 할 수 있었고 변경 시 빠르게 변경할 수 있었다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-07-24T00:00:00+09:00"><a href="http://localhost:4000/android/android-resconfig/">July 24, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-resconfig/" rel="bookmark" title="resConfig(Build.Gradle)" itemprop="url">resConfig(Build.Gradle)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="buildgradle-에서-resconfig">build.gradle 에서 resConfig</h3>
-
-<p>빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dev {
-   resConfigs "ko", "xxxhdpi"
+    fun hideProgress() {
+        progressDialog?.dismiss()
+    }
 }
 </code></pre></div></div>
 
-<p>주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
-locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
+<p>아래는 layout 코드</p>
 
-<p>이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">android:clickable=</span><span class="s">"true"</span><span class="nt">&gt;</span>
 
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-18T00:00:00+09:00"><a href="http://localhost:4000/android/singletask/flag/android-post/">March 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/singletask/flag/android-post/" rel="bookmark" title="singleTask Activity 사용 시 이슈" itemprop="url">singleTask Activity 사용 시 이슈</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="문제점-">문제점 :</h3>
-<p>A(Standard) Activity -&gt; B(Single Task) Activity -&gt;A(Standard)Activity Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK  FLAG로 startActivity 할 때 앱 강제 종료되는 문제</p>
-
-<h3 id="해결-">해결 :</h3>
-<p>SingleTask 는 하나의 Activity만 생성되고 다중 인스턴스를 가질 수 없다. 그리고 이미 존재하는 경우 시스템은 새 인스턴스 대신 onNewIntent() 메서드를 호출하여 인텐트를 기존 인스턴스로 라우팅한다.</p>
-
-<p>플로우가 수정 되면서 해당 이슈가 발생 되었는데 해결 방법은 생각 해본 건 대충 3가지로 정리</p>
-
-<p>1.액티비티 외에 다른 곳에서 호출 될 일이 있을까 하는 부분. Intent.FLAG_ACTIVITY_NEW_TASK 을 제거 하고 사용해도 무관한지 찾아 보는 것이다. 회원가입을 하거나 했을 때 뒤로가기 시 그대로 Task에 남게 되는 이슈가 있다. 이런 경우가 없을 시에는 FLAG_ACTIVITY_NEW_TASK를 제거하면 해결 가능하다.</p>
-
-<p>2.singleTask 액티비티에서만 Intent.FLAG_ACTIVITY_CLEAR_TASK 사용하고 NEW_TASK 는 사용하지 않는다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (context instanceof Bactivity) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        } else {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        }
+    <span class="nt">&lt;ProgressBar</span>
+        <span class="na">style=</span><span class="s">"?android:attr/indeterminateDrawable"</span>
+        <span class="na">android:layout_width=</span><span class="s">"34dp"</span>
+        <span class="na">android:layout_height=</span><span class="s">"34dp"</span>
+        <span class="na">android:indeterminate=</span><span class="s">"true"</span>
+        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
+        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
 </code></pre></div></div>
-<p>3.굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.</p>
 
-<p>현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.</p>
+<p>이 경우 장점은 
+BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.</p>
+
+<p>그리고 액티비티 layout에서 위의 layout 코드를 포함 하고 있지 않아도 된다.</p>
+
+<p>단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있을 수 있다.</p>
+
+<p>다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -629,7 +863,7 @@ locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -684,7 +918,7 @@ locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

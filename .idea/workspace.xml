@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3c2d897-5a92-4019-827b-a918243920b9" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/kimyounghoons.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/_posts/android/2020-10-23-android-tosscustomview.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/2020-10-23-android-toss-animation.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/about/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/about/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/aac/android-lifecycle/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/aac/android-lifecycle/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/actionbar_menu-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/actionbar_menu-post/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/android-FragmentStatePagerAdapter/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/android-FragmentStatePagerAdapter/index.html" afterDir="false" />
@@ -43,6 +39,9 @@
       <change beforePath="$PROJECT_DIR$/_site/android/drawerlayout-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/drawerlayout-post/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/interview/android-interview/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/interview/android-interview/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/kotlin/android-jsonNullToEmptyValue/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/kotlin/android-jsonNullToEmptyValue/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/kotlin/android-save-data-customview/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/kotlin/android-save-data-customview/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/kotlin/android-saving-ui-state/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/kotlin/android-saving-ui-state/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/android/kotlin/android-tosscustomview/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/kotlin/android-tosscustomview/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/notification/android-notification/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/notification/android-notification/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/shape-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/shape-post/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/android/singletask/flag/android-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/android/singletask/flag/android-post/index.html" afterDir="false" />
@@ -96,6 +95,7 @@
       <change beforePath="$PROJECT_DIR$/_site/sample/sample-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/sample-post/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/sample/video-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/sample/video-post/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/search.json" beforeDir="false" afterPath="$PROJECT_DIR$/_site/search.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_site/search/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/search/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/tags/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/tags/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_site/알고리즘/자바/algorithm-post/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_site/알고리즘/자바/algorithm-post/index.html" afterDir="false" />
     </list>
@@ -117,7 +117,6 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="foldersAlwaysOnTop" value="false" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -164,13 +163,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="438" y="308" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603453441425">
-      <screen x="0" y="23" width="1680" height="947" />
+    <state x="492" y="111" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1624195169442">
+      <screen x="0" y="23" width="1680" height="934" />
     </state>
-    <state x="438" y="308" key="#com.intellij.fileTypes.FileTypeChooser/1680.23.2560.1417/0.23.1680.947@0.23.1680.947" timestamp="1603453441425" />
-    <state x="493" y="254" width="693" height="488" key="find.popup" timestamp="1603455104408">
-      <screen x="0" y="23" width="1680" height="947" />
-    </state>
-    <state x="493" y="254" width="693" height="488" key="find.popup/1680.23.2560.1417/0.23.1680.947@0.23.1680.947" timestamp="1603455104408" />
+    <state x="492" y="111" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1680.934@0.23.1680.934" timestamp="1624195169442" />
   </component>
 </project>

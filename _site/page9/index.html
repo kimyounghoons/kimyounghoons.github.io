@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-16T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 16, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-12-26T00:00:00+09:00"><a href="http://localhost:4000/android/android-bindingadapter/">December 26, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,99 +298,57 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bindingadapter/" rel="bookmark" title="DataBidning , BindingAdapter" itemprop="url">DataBidning , BindingAdapter</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>직사각형 나머지 한 좌표 구하기 !!</p>
+      <p>데이터 바인딩라이브러리는 레이아웃의 UI 구성 요소를 프로그래밍 방식이 아닌 선언적 형식을 사용하여 앱의 데이터 소스에 바인딩 할 수있는 지원 라이브러리다.</p>
 
-<p>직사각형을 만드는 데 필요한 4개의 점 중 3개의 좌표가 주어질 때, 나머지 한 점의 좌표를 구하려고 합니다. 점 3개의 좌표가 들어있는 배열 v가 매개변수로 주어질 때, 직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 return 하도록 solution 함수를 완성해주세요. 단, 직사각형의 각 변은 x축, y축에 평행하며, 반드시 직사각형을 만들 수 있는 경우만 입력으로 주어집니다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;layout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">xmlns:bind=</span><span class="s">"http://schemas.android.com/tools"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;data&gt;</span>
+        <span class="nt">&lt;import</span> <span class="na">type=</span><span class="s">"android.view.View"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;variable</span>
+            <span class="na">name=</span><span class="s">"viewModel"</span>
+            <span class="na">type=</span><span class="s">"패키지경로.ExampleViewModel"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/data&gt;</span>
+    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+            <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+            <span class="na">android:background=</span><span class="s">"@{viewModel.isRedBackground ? @color/red : @color/white}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+<span class="nt">&lt;/layout&gt;</span>
 
-<p>v는 세 점의 좌표가 들어있는 2차원 배열입니다.
-v의 각 원소는 점의 좌표를 나타내며, 좌표는 [x축 좌표, y축 좌표] 순으로 주어집니다.
-좌표값은 1 이상 10억 이하의 자연수입니다.
-직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 [x축 좌표, y축 좌표] 순으로 담아 return 해주세요.</p>
-
-<p>입출력 예 설명
-입출력 예 #1
-세 점이 [1, 4], [3, 4], [3, 10] 위치에 있을 때, [1, 10]에 점이 위치하면 직사각형이 됩니다.</p>
-
-<p>입출력 예 #2
-세 점이 [1, 1], [2, 2], [1, 2] 위치에 있을 때, [2, 1]에 점이 위치하면 직사각형이 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="o">.</span><span class="no">HashMap</span><span class="p">;</span>
-<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="n">int</span><span class="p">[]</span> <span class="n">solution</span><span class="p">(</span><span class="n">int</span><span class="p">[][]</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
-         <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">xHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">yHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">xHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-            <span class="n">yHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="n">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">xHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">yHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">new</span> <span class="n">int</span><span class="p">[]{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">};</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>==========================================================</p>
-
-<p>앞뒤를 뒤집어도 똑같은 문자를 palindrome(팰린드롬)이라고 합니다. 예를 들어 12321은 팰린드롬이며, 21453은 팰린드롬이 아닙니다.</p>
-
-<p>자연수 n이 매개변수로 주어질 때, n이 팰린드롬이면 true를, 아니면 false를 반환하도록 함수 solution 을 완성하세요.</p>
-
-<p>제한사항
-n은 231 - 1 보다 작거나 같은 자연수입니다.</p>
-
-<p>입출력 예
-n	result
-12321	true
-21453	false
-입출력 예 설명
-입출력 예 #1
-12321을 뒤집으면 12321이 되어 팰린드롬입니다.</p>
-
-<p>입출력 예 #2
-21453을 뒤집으면 35412가 되어 팰린드롬이 아닙니다.</p>
-
-<p>class Solution {
-    public boolean solution(int n) {
-         int length = String.valueOf(n).length();
-        String[] values = String.valueOf(n).split(“”);</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (length % 2 == 0) {
-        int center = (length / 2);
-        for (int i = 0; i &lt; center; i++) {
-            if (!values[i].equals(values[length -i - 1])) {
-                return false;
-            }
-        }
-        return true;
-    } else {
-        int center = (length / 2) + 1;
-        for (int i = 0; i &lt; center; i++) {
-            if (!values[i].equals(values[length -i - 1])) {
-                return false;
-            }
-        }
-        return true;
-    }
-} }
 </code></pre></div></div>
 
-<p>출처 : https://programmers.co.kr/tryouts/3923/challenges/11576</p>
+<p>예를 들어 API 호출을 하고 받아온 값이 빨간색 배경색을 가져야 한다면 viewModel.isRedBackground (ObservableField Boolean 값) 데이터 변경 만으로 뷰가 빨간색 또는 흰색으로 변경 된다. 하지만 상태값이 빨간색 흰색 그외 초록색이 필요하다면 BindingAdapter를 통해서 구현할 수 있다.</p>
+
+<p>android:background=”@{viewModel.isRedBackground ? @color/red : @color/white}”<br />
+–&gt; bind:status=”@{viewModel.status}”</p>
+
+<p>위의 코드에서 해당 줄만 변경한다. 그 다음 BindingAdapter를 만들어준다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@BindingAdapter("bind:status")
+fun bindBuyingStatusText(imageView: ImageView, status: String?) {
+    when (status) {
+        "빨간색" -&gt; {
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_red))
+        }
+        "흰색" -&gt; {
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_white))
+        }
+        else -&gt; {  //초록색
+            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_green))
+        }
+    }
+}
+
+</code></pre></div></div>
+
+<p>상태값이 2가지만 있는경우에도 BindingAdapter 사용해서 처리할수 있지만 굳이 사용할 필요는 없을것 같다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -400,7 +358,7 @@ n	result
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-11T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 11, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-12-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/">December 12, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -410,222 +368,255 @@ n	result
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" rel="bookmark" title="RxKotlin combineLatest" itemprop="url">RxKotlin combineLatest</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>쇠막대기 알고리즘</p>
+      <p>집에 와서 안드로이드 단톡방 쭉쭉 보다가 어떤 분이 질문 올린 글을 봤다.<br />
+Rx 공부 해야지 해야지 생각 하다가 안하고 있었는데 마침 문제가 하나 생김 ㅎㅎ</p>
 
-<p>여러 개의 쇠막대기를 레이저로 절단하려고 합니다. 효율적인 작업을 위해서 쇠막대기를 아래에서 위로 겹쳐 놓고, 레이저를 위에서 수직으로 발사하여 쇠막대기들을 자릅니다. 쇠막대기와 레이저의 배치는 다음 조건을 만족합니다.</p>
+<p>문제는 RxKotlin 을 사용해서 입력창 세가지가 있는데 각각 입력창에서 입력 할 때마다 validation 체크를 하고 다 통과 되면 버튼을 활성화 시키고 싶다.</p>
+
+<p>키워드는 combineLatest 이다. 아래의 TestCode 를 보자.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class CombineLatestTest {
+    @Test
+    fun test() {
+        var isValid = false
+        val emailSubject = BehaviorSubject.create&lt;String&gt;()
+        val passwordSubject = BehaviorSubject.create&lt;String&gt;()
+        val nickNameSubject = BehaviorSubject.create&lt;String&gt;()
+        BehaviorSubject.combineLatest&lt;String, String, String, Boolean&gt;(
+            emailSubject,
+            passwordSubject,
+            nickNameSubject,
+            Function3&lt;String, String, String, Boolean&gt; { email, password, nickname -&gt;
+                return@Function3 email.isNotEmpty() &amp;&amp; password.isNotEmpty() &amp;&amp; nickname.isNotEmpty()
+            }
+        ).subscribe { result -&gt;
+            isValid = result
+             println("활성화 여부 $isValid")
+        }
+
+        emailSubject.onNext("이메일 입력")
+        assertEquals(isValid, false)
+
+        passwordSubject.onNext("패스워드 입력")
+        assertEquals(isValid, false)
+
+        nickNameSubject.onNext("닉네임 입력")
+        assertEquals(isValid, true)
+
+        passwordSubject.onNext("")  //패스워드 제거
+        assertEquals(isValid, false)
+
+        passwordSubject.onNext("패스워드 입력")  //패스워드 다시 입력
+        assertEquals(isValid, true)
+
+    }
+
+}
+
+
+    결과는 
+    활성화 여부 false
+    활성화 여부 false
+    활성화 여부 true
+    활성화 여부 false
+    활성화 여부 true
+
+
+</code></pre></div></div>
+
+<p>combineLatest 은 파라미터로 ObservableSource 를 받고 마지막에 리턴할 Function 을 받는다.<br />
+ObservableSource 갯수 제한은 9개 까지로 확인했다.<br />
+테스트 코드라서 isNotEmpty 로 처리 해뒀는데 저기 부분이 isValid 로 변경 되면 되겠다~</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-12-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-debug-signingkey/">December 09, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-debug-signingkey/" rel="bookmark" title="디버그 용 서명 키 만들기" itemprop="url">디버그 용 서명 키 만들기</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>기본적으로 Android Studio 에서 프로젝트를 만들게 되면 기본적으로 Build Variants가 Debug 로 셋팅 되어 있다.</p>
+
+<p>Android SDK 도구에서 생성된 디버그 인증서를 사용하여 앱에 자동으로 서명하기 때문이다.</p>
+
+<p>안드로이드 앱을 출시 하기 위해서는 Release KeyStore 를 통해 서명 된 앱이 필요하다.</p>
+
+<p>Release KeyStore 를 생성해서 서명한 앱을 출시 하고 난 뒤, Release 용 apk 가 설치 된 앱에서 Debug 모드로 빌드하게 되면 빌드 실패가 뜨고 삭제 후 설치 하시겠습니까? 라는 팝업이 뜬다.</p>
+
+<p>이 이유는 Release apk 와 Debug apk 인증 정보가 다르기 때문이다.</p>
+
+<p>이렇게 되면 삭제 후 설치는 할 수 있지만 Build Variants 가 변경될 때마다 다시 설치해야하는 번거러움도 있고 삭제하지 않고 디버깅 하고 싶은 상황에서 할 수 없게 된다.</p>
+
+<p>이 상황을 해결 하기 위해서는 Release Keystore 로부터 Debug Keystore 를 만들면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>keytool -importkeystore -v -srckeystore 릴리즈용 키스토어 파일이름 및 경로 -destkeystore 디버그용 키스토어 파일이름 및 경로 -srcstorepass 릴리즈용 키스토어 비밀번호 -deststorepass android -srcalias alias이름 -destalias androiddebugkey -srckeypass alias비밀번호 -destkeypass android
+</code></pre></div></div>
+
+<p>새로 만드는 Debug Keystore 를 Android Studio 기본 제공해주는 Debug Keystore 와 매칭 시켜주는 작업이다.<br />
+-destalias androiddebugkey , -deskkeypass android  는 Android SDK 도구에서 생성된 디버그 인증 정보와 동일하게 해서 나중에 별도 셋팅이 필요없다.</p>
+
+<p>build.gradle 셋팅은 아래와 같이 하면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android {
+ signingConfigs {
+        release {
+            storeFile file('릴리즈 키스토어 경로')
+            storePassword '패스워드'
+            keyAlias '릴리즈 alias'
+            keyPassword '패스워드'
+        }
+
+        debug {
+            storeFile file('디버그 키스토어 경로')
+            //따로 정보 필요 없음
+        }
+    }
+}
+</code></pre></div></div>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-11-27T00:00:00+09:00"><a href="http://localhost:4000/android/android-diffUtil/">November 27, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-diffUtil/" rel="bookmark" title="RecyclerView DiffUtil" itemprop="url">RecyclerView DiffUtil</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>oldList 와 newList 리스트의 차이를 계산하고 oldList를 newList로 변환하는 업데이트 작업 목록을 출력 할 수있는 유틸리티 클래스이다.<br />
+업데이트 작업 목록은 newList 가 Insert , Remove , Update 다 포함 된다.</p>
+
+<h3 id="리스트-아이템이-변경-되는-갯수-마다의-시간-데이터">리스트 아이템이 변경 되는 갯수 마다의 시간 데이터</h3>
 
 <ul>
-  <li>쇠막대기는 자신보다 긴 쇠막대기 위에만 놓일 수 있습니다.</li>
-  <li>쇠막대기를 다른 쇠막대기 위에 놓는 경우 완전히 포함되도록 놓되, 끝점은 겹치지 않도록 놓습니다.</li>
-  <li>각 쇠막대기를 자르는 레이저는 적어도 하나 존재합니다.</li>
-  <li>레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않습니다.</li>
+  <li>100 items and 10 modifications: avg: 0.39 ms, median: 0.35 ms</li>
+  <li>100 items and 100 modifications: 3.82 ms, median: 3.75 ms</li>
+  <li>100 items and 100 modifications without moves: 2.09 ms, median: 2.06 ms</li>
+  <li>1000 items and 50 modifications: avg: 4.67 ms, median: 4.59 ms</li>
+  <li>1000 items and 50 modifications without moves: avg: 3.59 ms, median: 3.50 ms</li>
+  <li>1000 items and 200 modifications: 27.07 ms, median: 26.92 ms</li>
+  <li>1000 items and 200 modifications without moves: 13.54 ms, median: 13.36 ms</li>
 </ul>
 
-<p>(a) 레이저는 여는 괄호와 닫는 괄호의 인접한 쌍 ‘()’으로 표현합니다. 또한 모든 ‘()’는 반드시 레이저를 표현합니다.
-(b) 쇠막대기의 왼쪽 끝은 여는 괄호 ‘(‘로, 오른쪽 끝은 닫힌 괄호 ‘)’로 표현됩니다.</p>
+<p>Eugene W. Myers 의 difference algorithm 을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.</p>
 
-<p>위 예의 괄호 표현은 그림 위에 주어져 있습니다.
-쇠막대기는 레이저에 의해 몇 개의 조각으로 잘리는데, 위 예에서 가장 위에 있는 두 개의 쇠막대기는 각각 3개와 2개의 조각으로 잘리고, 이와 같은 방식으로 주어진 쇠막대기들은 총 17개의 조각으로 잘립니다.</p>
+<p>사용법을 알아보자~!</p>
 
-<p>쇠막대기와 레이저의 배치를 표현한 문자열 arrangement가 매개변수로 주어질 때, 잘린 쇠막대기 조각의 총 개수를 return 하도록 solution 함수를 작성해주세요.</p>
+<p>우선 아래와 같이 DiffUtil.Callback 을 상속받는 DiffCallback 클래스를 만들고 비교할 대상을 지정 해준다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class DiffCallback(
+		private val oldData: AdapterData,
+		private val newData: AdapterData
+	) : DiffUtil.Callback() {
 
-<p>제한사항
-arrangement의 길이는 최대 100,000입니다.
-arrangement의 여는 괄호와 닫는 괄호는 항상 쌍을 이룹니다.</p>
+	override fun getOldListSize() = oldData.size
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="p">.</span><span class="nf">*</span><span class="p">;</span>
-<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="n">int</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span> <span class="n">arrangement</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">int</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="n">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="no">String</span><span class="p">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrangement</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
-        <span class="no">Stack</span><span class="o">&lt;</span><span class="no">String</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="n">new</span> <span class="no">Stack</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="no">String</span> <span class="n">character</span> <span class="p">:</span> <span class="n">array</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">character</span><span class="p">.</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span>
-                <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="nf">peek</span><span class="p">().</span><span class="nf">equals</span><span class="p">(</span><span class="s2">"("</span><span class="p">))</span> <span class="p">{</span><span class="sr">//</span><span class="err">레이저</span>
-                    <span class="n">stack</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="n">character</span><span class="p">);</span>
-                    <span class="o">--</span><span class="n">count</span><span class="p">;</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="n">count</span><span class="p">;</span>
-                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span><span class="sr">//</span><span class="err">막대</span> <span class="err">끝</span>
-                    <span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-                    <span class="n">count</span><span class="o">--</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+	override fun getNewListSize() = newData.size
 
-<p>여기서 포인트는  stack 을 사용하면서 레이저와 막대끝을 구분하는 것 같다 ㅎㅎ
-알고리즘하니깐 시간 잘 가네 ㅎㅎ</p>
+	override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int)
+     = oldData[oldItemPosition].id == newData[newItemPosition].id
 
-<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42585</p>
+	override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int)
+     = oldData[oldItemPosition] == newData[newItemPosition]
 
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-03-07T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 07, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>알고리즘 공부 시작!!!</p>
-
-<p>문제 설명
-수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.</p>
-
-<p>마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.</p>
-
-<p>제한사항
-마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
-completion의 길이는 participant의 길이보다 1 작습니다.
-참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
-참가자 중에는 동명이인이 있을 수 있습니다.</p>
-
-<p>입출력 예 설명
-예제 #1
-leo는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
-
-<p>예제 #2
-vinko는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</p>
-
-<p>예제 #3
-mislav는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="no">String</span> <span class="n">solution</span><span class="p">(</span><span class="no">String</span><span class="p">[]</span> <span class="n">participant</span><span class="p">,</span> <span class="no">String</span><span class="p">[]</span> <span class="n">completion</span><span class="p">)</span> <span class="p">{</span>
-        <span class="no">Arrays</span><span class="p">.</span><span class="nf">sort</span><span class="p">(</span><span class="n">participant</span><span class="p">);</span>
-        <span class="no">Arrays</span><span class="p">.</span><span class="nf">sort</span><span class="p">(</span><span class="n">completion</span><span class="p">);</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">completion</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">equals</span><span class="p">(</span><span class="n">completion</span><span class="p">[</span><span class="n">i</span><span class="p">])){</span>
-                <span class="k">return</span> <span class="n">participant</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>처음 문제 풀었을 때 정확성은 100 인데 효율성이 꽝이라 고민을 많이 하게 되었다.. 
-O(N) 으로 풀어야 하는 문제였다.
-해시맵 문제 였는데 맵을 사용안하고 품.. 이래도 되는건가 우선 정확성과 효율성은 잘 통과 됨 
-두 배열을 sort 하고 참여자와 완주자가 다른 순간 값을 리턴시켜주면 되는 문제.</p>
-
-<p>출처 : https://programmers.co.kr/learn/courses/30/lessons/42576?language=java</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-02-23T00:00:00+09:00"><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/">February 23, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/rxkotlin/single/android-rxkotlin/" rel="bookmark" title="RxKotlin Single" itemprop="url">RxKotlin Single</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>Rx 공부한지 별로 되진않았지만 확실히 매력있는 친구다.ㅎㅎ</p>
-
-<p>Single 에 대해 궁금증이 생겼다.</p>
-
-<p>Single은 onSuccess 나 onError 중 하나가 불리게 되면 dispose 가 된다.
-하지만 오픈 소스들을 보면 CompositeDisposible 에 차곡차곡 쌓고 dispose 시켜준다.
-이렇게 되면 중복으로 처리하는게 아닌가 ?? 
-왜 그러지 라는생각이 듬..</p>
-
-<p>이유는 구독중 onSuccess 또는 onError 가 불리기 전에 이슈가 발생할 우려가 높기 때문에 추가해주고 dispose시켜주는것 같음.ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-02-22T00:00:00+09:00"><a href="http://localhost:4000/android/aac/android-lifecycle/">February 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/aac/android-lifecycle/" rel="bookmark" title="Lifecycle" itemprop="url">Lifecycle</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>문제점 : 뎁스가 깊어질때 CustomVideoView가 가지고 있는 mediaplayer 메모리가 제대로 해제 되지 않는 문제</p>
-
-<p>해결 : life cycle 사용해서 Stop 시 mediaplayer release 처리</p>
-
-<p>VideoView 는 LifecycleObserver 인터페이스를 가지고 있다.
-우선 뷰 생성시 라이프 사이클 옵저버 등록</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     public VideoView(Context context) {
-        super(context);
-        initialize(context);
-    }
-
-    private void initialize(Context context) {
-        if (context instanceof AppCompatActivity) {
-            ((AppCompatActivity) context).getLifecycle().addObserver(this);
-        }
-    }
+}
 </code></pre></div></div>
 
-<p>@OnLifecycleEvent 종류에 따라 life cycle 콜백이 불리게 되는데 stop 되었을때 release 
-destroy 될때 등록되어 있던 observer를 제거 시켜준다.</p>
+<p>다음으로는 RecyclerView Adapter 클래스의 setData 를 보자</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    public void onLifecycleStop() {
-        stop();
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    public void onLifecycleDestroy() {
-        if (getContext() != null) {
-            if (getContext() instanceof AppCompatActivity) {
-                ((AppCompatActivity) getContext()).getLifecycle().removeObserver(this);
-            }
-        }
-    }
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fun setData(newData: AdapterData) {
+	val diffResult = DiffUtil.calculateDiff(DiffCallback(data, newData))
+	data = newData
+	diffResult.dispatchUpdatesTo(this)
+}
 </code></pre></div></div>
 
-<p>사용법 참 쉽구먼 ㅎㅎ</p>
+<p>DiffUtil.calculateDiff 는 DiffCallback 을 인자로 받고 결과 값으로 DiffUtil.DiffResult 를 반환 한다.<br />
+그 다음 RecyclerView Adapter 의 아이템을 대체 시켜 주고 dispatchUpdatesTo 를 호출한다.  여기서 this는 RecyclerView Adapter 이다.<br />
+RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispatchUpdatesTo 를 호출 하는 순간 뷰가 갱신 된다.<br />
+그렇기 때문에 다음 4가지 중 한가지를 호출 하기 위해서라고 판단 된다.</p>
+<ul>
+  <li>mAdapter.notifyItemRangeInserted(position, count);</li>
+  <li>mAdapter.notifyItemRangeRemoved(position, count);</li>
+  <li>mAdapter.notifyItemMoved(fromPosition, toPosition);</li>
+  <li>mAdapter.notifyItemRangeChanged(position, count, payload);</li>
+</ul>
+
+<p>기존 방식은 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 DiffUtil 을 사용하면 개발자가 신경 쓰지 않아도 편리하게 수정 할수 있어서 좋은 것 같다.</p>
+
+<h3 id="주의-사항">주의 사항</h3>
+<ol>
+  <li>리스트 사이즈가 큰 경우는 DiffResult를 가져올때 Background Thread 에서 실행 하고 뷰 갱신 할때만 메인스레드에서 실행 시켜야한다.</li>
+  <li>DiffUtil 사용 할 때 리스트의 Max Size 는 2^26 이다.</li>
+</ol>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-11-18T00:00:00+09:00"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/">November 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/applicationinfo/dodo-app-privacy_policy/" rel="bookmark" title="두두(dodo) 개인정보 취급방침" itemprop="url">두두(dodo) 개인정보 취급방침</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>두두(dodo)는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법,사업법 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하겠습니다.</p>
+
+<p>두두(dodo)는 사용자 개인정보를 수집 하지 않습니다.</p>
+
+<p>앱 관리자<br />
+이름: 김영훈(Davis)<br />
+직위: 두두(DoDo) Android Developer<br />
+연락처: kimyh8496@gmail.com</p>
+
+<p>고지의 의무
+두두(DoDo) 법률이나 서비스의 변경사항을 반영하기 위한 목적 등으로 개인정보 취급방침을 수정할 수 있습니다. 개인정보 취급방침이 변경되는 경우 두두(DoDo)는 변경 사항을 게시하며, 변경된 개인정보 취급방침은 게시한 날로부터 7일 후부터 효력이 발생합니다.</p>
+
+<p>공고일자: 2019년 11월 18일<br />
+시행일자: 2019년 12월 25일</p>
 
       
   </div><!-- /.entry-content -->
@@ -698,7 +689,7 @@ destroy 될때 등록되어 있던 observer를 제거 시켜준다.</p>
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -753,7 +744,7 @@ destroy 될때 등록되어 있던 observer를 제거 시켜준다.</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

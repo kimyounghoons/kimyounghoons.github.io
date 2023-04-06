@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-19T00:00:00+09:00"><a href="http://localhost:4000/android/android-buildtypestring-post/">November 19, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-08-20T00:00:00+09:00"><a href="http://localhost:4000/android/android-keyboard/">August 20, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,37 +298,63 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-buildtypestring-post/" rel="bookmark" title="Build Type String" itemprop="url">Build Type String</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-keyboard/" rel="bookmark" title="키보드 내려갈 때 특정 처리 하기" itemprop="url">키보드 내려갈 때 특정 처리 하기</a></h1>
     
   </header>
   <div class="entry-content">
-      <h1 id="빌드-타입-별-스트링-관리">빌드 타입 별 스트링 관리</h1>
+      <h3 id="키보드-내려갈-때-포커스-클리어-처리-하기">키보드 내려갈 때 포커스 클리어 처리 하기</h3>
 
-<p>페이스북 소셜 연동 시 다음과 같은 facebook 앱 아이디 정보가 필요하다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;meta-data
-    android:name="com.facebook.sdk.ApplicationId"
-    android:value="@string/facebook_app_id" /&gt;
+<p>키보드 보여주기 및 포커스 , 숨기기 및 포커스 클리어 function</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ public static void showKeyboard(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+        editText.requestFocus();
+        mInputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED | InputMethodManager.HIDE_IMPLICIT_ONLY);
+ }
+
+ public static void clearFocus(Activity activity) {
+        View v = activity.getCurrentFocus();
+        if (v == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        v.clearFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+ }
+
 </code></pre></div></div>
 
-<p>페이스북 소셜 연동 시 live , dev , stage 세가지로 나눠서 작업을 하고 있는데 facebook_app_id 가 각각 build Type 별로 다르기 때문에 type이 바뀔 때 마다 동적으로 변경 되어야 하는 문제가 생겼다.</p>
+<p>키보드 내려갈 때 감지 해서 특정한 처리가 필요 했다.<br />
+editText에서 지원 되는 키보드 감지 리스너는 보이지 않아서 따로 구현이 필요 했다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   buildTypes {
-        release {
-            resValue "string", "facebook_app_id","페이스북 앱 아이디"
-            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  int lastHeightDiff = 0;
+    boolean isOpenKeyboard = false;
+    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        synchronized public void onGlobalLayout() {
+            View activityRootView = mActivity.getWindow().getDecorView().findViewById(android.R.id.content);
+            int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+            if (lastHeightDiff == 0) {
+                lastHeightDiff = heightDiff;
+            }
+            if (heightDiff &gt; lastHeightDiff) { //keyboard show
+                isOpenKeyboard = true;
+            } else {//keyboard hide
+                if (isOpenKeyboard) {
+                    clearFocus();
+                    isOpenKeyboard = false;
+                }
+            }
         }
-        staging {
-            resValue "string", "facebook_app_id","페이스북 앱 아이디"
-            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
-        }
-        dev {
-            resValue "string", "facebook_app_id","페이스북 앱 아이디"
-            resValue "string", "fb_login_protocol_scheme","fb페이스북 앱 아이디"
-        }
-    }
+    };
 </code></pre></div></div>
 
-<p>buildType 별로 facebook_app_id , fb_login_protocol_scheme 각각 string 정보에 설정한 값이 들어가게 된다.</p>
+<p>해당 리스너는 onCreate 시 등록 onDestroy 해제 시켜줘야 한다.<br />
+한번 불리는게 아니라 여러번 불리기 때문에 isOpenKeyboard 를 사용해서 clearFocus 처리를 해주었다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -338,7 +364,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-07-29T00:00:00+09:00"><a href="http://localhost:4000/android/android-edittext_typing_slow/">July 29, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -348,30 +374,54 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-edittext_typing_slow/" rel="bookmark" title="EditText 금액 콤마 표시 Typing 할 때 느려지는 현상" itemprop="url">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</a></h1>
     
   </header>
   <div class="entry-content">
-      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
+      <h3 id="edittext-금액-콤마-표시-typing-할-때-느려지는-현상">EditText 금액 콤마 표시 Typing 할 때 느려지는 현상</h3>
 
-<p>외부공유 소스</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>String title = context.getString(R.string.title);
-String plainContent = context.getString(R.string.plain_content);
-String htmlContent = context.getString(R.string.html_content);
+<p>EditText 금액 적을 때 3자리 마다 , 표시를 해야하는 상황이 생겼다.<br />
+TextWatcher 에서 처리 하였고 정상 작동은 했지만 버벅거리는 모습이 보였다.<br />
+해당 이슈를 찾기 위해 소요시간이 걸릴만한곳에 로그를 찍으면 소요시간을 측정 했다.<br />
+EditText.setText() 부분에서 소요시간이 조금 길어서 TextWatcher 에서 주는 Editable s 을 s.clear 와 s.append 를 통해 추가 해 주었고</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android:inputType="number|textNoSuggestions"
+</code></pre></div></div>
+<p>inputType 을 number 에서 위와 같이 변경 해 준뒤 해당 이슈를 수정 할 수 있었고 변경 시 빠르게 변경할 수 있었다.</p>
 
-Intent shareIntent = new Intent(Intent.ACTION_SEND);
-shareIntent.setType("text/plain");
-shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
-shareIntent.putExtra(Intent.EXTRA_TEXT, plainContent);
-shareIntent.putExtra(Intent.EXTRA_HTML_TEXT, htmlContent);
-context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_text)));
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-07-24T00:00:00+09:00"><a href="http://localhost:4000/android/android-resconfig/">July 24, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-resconfig/" rel="bookmark" title="resConfig(Build.Gradle)" itemprop="url">resConfig(Build.Gradle)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="buildgradle-에서-resconfig">build.gradle 에서 resConfig</h3>
+
+<p>빌드 시간을 빠르게 하기 위해 Build.Gradle 에서 resConfig 셋팅 하는 경우가 있다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dev {
+   resConfigs "ko", "xxxhdpi"
+}
 </code></pre></div></div>
 
-<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
-앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
-Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
-HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
-G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
+<p>주의 해야 할 점은 ko xxxhdpi 리소스를 제외한 모든 resource를 지우고 빌드 하기 때문에 실행 하고 나서 앱 내에서 언어를 변경 하게 되면 ko 리소스 빼고는 이미 지워진 상태이기 때문에 
+locale 셋팅을 바꾸더라도 다른언어로 변경 되지 않는다.</p>
+
+<p>이 부분을 인지하고 있지 않은 상태에서 다국어 지원을 할 경우 원인을 찾기 쉽지 않다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -381,7 +431,7 @@ G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는�
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-firestore-post/">November 12, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-03-18T00:00:00+09:00"><a href="http://localhost:4000/android/singletask/flag/android-post/">March 18, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -391,72 +441,31 @@ G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는�
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-firestore-post/" rel="bookmark" title="index in firestore" itemprop="url">index in firestore</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/singletask/flag/android-post/" rel="bookmark" title="singleTask Activity 사용 시 이슈" itemprop="url">singleTask Activity 사용 시 이슈</a></h1>
     
   </header>
   <div class="entry-content">
-      <h1 id="파이어스토어-색인을-이용한-복합쿼리">파이어스토어 색인을 이용한 복합쿼리</h1>
+      <h3 id="문제점-">문제점 :</h3>
+<p>A(Standard) Activity -&gt; B(Single Task) Activity -&gt;A(Standard)Activity Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK  FLAG로 startActivity 할 때 앱 강제 종료되는 문제</p>
 
-<p>기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
-하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.</p>
+<h3 id="해결-">해결 :</h3>
+<p>SingleTask 는 하나의 Activity만 생성되고 다중 인스턴스를 가질 수 없다. 그리고 이미 존재하는 경우 시스템은 새 인스턴스 대신 onNewIntent() 메서드를 호출하여 인텐트를 기존 인스턴스로 라우팅한다.</p>
 
-<figure>
-	<img src="/images/2018-11-12-index_in_firestore.png" alt="" />
-	<figcaption>FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.</figcaption>
-</figure>
+<p>플로우가 수정 되면서 해당 이슈가 발생 되었는데 해결 방법은 생각 해본 건 대충 3가지로 정리</p>
 
-<p>처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
-letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
-추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.</p>
+<p>1.액티비티 외에 다른 곳에서 호출 될 일이 있을까 하는 부분. Intent.FLAG_ACTIVITY_NEW_TASK 을 제거 하고 사용해도 무관한지 찾아 보는 것이다. 회원가입을 하거나 했을 때 뒤로가기 시 그대로 Task에 남게 되는 이슈가 있다. 이런 경우가 없을 시에는 FLAG_ACTIVITY_NEW_TASK를 제거하면 해결 가능하다.</p>
 
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
+<p>2.singleTask 액티비티에서만 Intent.FLAG_ACTIVITY_CLEAR_TASK 사용하고 NEW_TASK 는 사용하지 않는다.</p>
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-touch-post/">November 09, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-touch-post/" rel="bookmark" title="view setAlpha in OnTouchListener" itemprop="url">view setAlpha in OnTouchListener</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>view pressed 상태 되었을 때 알파 50% 먹이기</p>
-
-<p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                v.setAlpha((float) 0.5);
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                v.setAlpha((float) 1);
-                break;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (context instanceof Bactivity) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        } else {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
-        return false;
-    }
 </code></pre></div></div>
+<p>3.굳이 singleTask로 하지 않아도 된다면 Bactivity를 singleInstance로 변경 시키는 것도 고려할 수 있겠다.</p>
 
-<p>ACTION_DOWN 상태에서는 Pressed 상태 
-ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
-ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
-에서 각각 Action을 가진다.</p>
-
-<p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
+<p>현재 처리 된 부분에서 적합한 건 두번째 방법인것 같아 두번째 방법으로 적용 시켰다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -466,7 +475,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-08T00:00:00+09:00"><a href="http://localhost:4000/kotlin/kotlin-when-post/">November 08, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-03-16T00:00:00+09:00"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/">March 16, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -476,67 +485,99 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/kotlin/kotlin-when-post/" rel="bookmark" title="how to use `when` in kotlin" itemprop="url">how to use `when` in kotlin</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9E%90%EB%B0%94/algorithm-post/" rel="bookmark" title="알고리즘 문제" itemprop="url">알고리즘 문제</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>우선 자바 소스</p>
+      <p>직사각형 나머지 한 좌표 구하기 !!</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_write_letter:
-                obtainViewModel().sendLetter()
-                return true;
-            default: 
+<p>직사각형을 만드는 데 필요한 4개의 점 중 3개의 좌표가 주어질 때, 나머지 한 점의 좌표를 구하려고 합니다. 점 3개의 좌표가 들어있는 배열 v가 매개변수로 주어질 때, 직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 return 하도록 solution 함수를 완성해주세요. 단, 직사각형의 각 변은 x축, y축에 평행하며, 반드시 직사각형을 만들 수 있는 경우만 입력으로 주어집니다.</p>
+
+<p>v는 세 점의 좌표가 들어있는 2차원 배열입니다.
+v의 각 원소는 점의 좌표를 나타내며, 좌표는 [x축 좌표, y축 좌표] 순으로 주어집니다.
+좌표값은 1 이상 10억 이하의 자연수입니다.
+직사각형을 만드는 데 필요한 나머지 한 점의 좌표를 [x축 좌표, y축 좌표] 순으로 담아 return 해주세요.</p>
+
+<p>입출력 예 설명
+입출력 예 #1
+세 점이 [1, 4], [3, 4], [3, 10] 위치에 있을 때, [1, 10]에 점이 위치하면 직사각형이 됩니다.</p>
+
+<p>입출력 예 #2
+세 점이 [1, 1], [2, 2], [1, 2] 위치에 있을 때, [2, 1]에 점이 위치하면 직사각형이 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="n">java</span><span class="p">.</span><span class="nf">util</span><span class="o">.</span><span class="no">HashMap</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+    <span class="kp">public</span> <span class="n">int</span><span class="p">[]</span> <span class="n">solution</span><span class="p">(</span><span class="n">int</span><span class="p">[][]</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+         <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">xHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="no">HashMap</span><span class="o">&lt;</span><span class="no">Integer</span><span class="p">,</span> <span class="no">Integer</span><span class="o">&gt;</span> <span class="n">yHashMap</span> <span class="o">=</span> <span class="n">new</span> <span class="no">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="nf">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">xHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+            <span class="n">yHashMap</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">getOrDefault</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">xHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">xHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="no">Integer</span> <span class="n">key</span> <span class="p">:</span> <span class="n">yHashMap</span><span class="p">.</span><span class="nf">keySet</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">yHashMap</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">new</span> <span class="n">int</span><span class="p">[]{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>==========================================================</p>
+
+<p>앞뒤를 뒤집어도 똑같은 문자를 palindrome(팰린드롬)이라고 합니다. 예를 들어 12321은 팰린드롬이며, 21453은 팰린드롬이 아닙니다.</p>
+
+<p>자연수 n이 매개변수로 주어질 때, n이 팰린드롬이면 true를, 아니면 false를 반환하도록 함수 solution 을 완성하세요.</p>
+
+<p>제한사항
+n은 231 - 1 보다 작거나 같은 자연수입니다.</p>
+
+<p>입출력 예
+n	result
+12321	true
+21453	false
+입출력 예 설명
+입출력 예 #1
+12321을 뒤집으면 12321이 되어 팰린드롬입니다.</p>
+
+<p>입출력 예 #2
+21453을 뒤집으면 35412가 되어 팰린드롬이 아닙니다.</p>
+
+<p>class Solution {
+    public boolean solution(int n) {
+         int length = String.valueOf(n).length();
+        String[] values = String.valueOf(n).split(“”);</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    if (length % 2 == 0) {
+        int center = (length / 2);
+        for (int i = 0; i &lt; center; i++) {
+            if (!values[i].equals(values[length -i - 1])) {
                 return false;
+            }
         }
+        return true;
+    } else {
+        int center = (length / 2) + 1;
+        for (int i = 0; i &lt; center; i++) {
+            if (!values[i].equals(values[length -i - 1])) {
+                return false;
+            }
+        }
+        return true;
     }
+} }
 </code></pre></div></div>
 
-<p>아래는 코틀린</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.menu_write_letter -&gt; {
-            obtainViewModel().sendLetter()
-            true
-        }
-        else -&gt; {
-            false
-        }
-    }
-</code></pre></div></div>
-
-<p>코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.</p>
-
-<p>when은 switch랑 비슷한것 같은데 뭐가 차이가 날까 ~ 궁금해서 구글링 해서 찾아보니~</p>
-
-<p>2가지가 있었다.</p>
-
-<p>1.Auto-casting</p>
-
-<p>2.when without arguments</p>
-
-<p>1번 예를 한번 보면</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>when(view){
-    is TextView -&gt; toast(view.text)
-    else -&gt; 
-}
-</code></pre></div></div>
-
-<p>is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.</p>
-
-<p>2번 예를 한번 보면</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val str = when{
-    x in 1..5 -&gt; "cheap"
-    s.contains("money") -&gt; "Welcome"
-    else -&gt; ""
-}
-</code></pre></div></div>
-
-<p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
+<p>출처 : https://programmers.co.kr/tryouts/3923/challenges/11576</p>
 
       
   </div><!-- /.entry-content -->
@@ -602,13 +643,6 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
         <li><a href="http://localhost:4000/page13/">13</a></li>
       
     
-      
-        
-        
-        
-        <li><a href="http://localhost:4000/page14/">14</a></li>
-      
-    
 
     
     
@@ -616,7 +650,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -671,7 +705,7 @@ ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

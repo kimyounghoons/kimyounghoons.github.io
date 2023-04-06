@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-01-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-centerLoadingProgress/">January 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-06-24T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/">June 24, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,70 +298,117 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-centerLoadingProgress/" rel="bookmark" title="Center Loading Progress" itemprop="url">Center Loading Progress</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/" rel="bookmark" title="Adapter Pattern (디자인 패턴 8장)" itemprop="url">Adapter Pattern (디자인 패턴 8장)</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>API 호출 할 때 다른 터치를 막기 위해 센터 프로그레스를 보여주는 경우 여러 가지 방법이 있지만 그중 progressDialog 를 사용해보자~!</p>
+      <h3 id="어댑터-패턴-정의">어댑터 패턴 정의</h3>
 
-<p>BaseActivity 에서 progressDialog 를 가지고 있고 필요할 때 showProgress() , hideProgress() 를 통해 보여주거나 감출수 있다.</p>
+<p>한 클래스의 인터페이스를 클라이언트에서 사용하고자 하는 다른 인터페이스로 변환합니다.<br />
+어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있습니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>abstract class BaseActivity : AppCompatActivity(){
-    private var progressDialog: AppCompatDialog? = null
+<h3 id="어댑터-패턴-언제-사용할까">어댑터 패턴 언제 사용할까!?</h3>
+<p>예를 들어 기존 NormalPager 를 사용하고 있는데 LibPager 를 같이 사용해야 하는 상황이 생겼다고 가정 함.<br />
+근데 LibPageListener 는 PageListener 와 다르게 같은 기능인데 다른 메소드명을 가지고 있다.<br />
+그리고 LibPageListener 에는 없는 기능(onDoubleNextPage,onDoublePreviousPage)이 PageListener에는 존재 한다.<br />
+LibPagerAdapter 를 통해서 해결해보자!!</p>
 
-    fun showProgress() {
-        if (this == null || isFinishing) {
-            return
-        }
+<p>아래의 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">class</span> <span class="nc">AdapterPattern</span> <span class="o">{</span>
 
-        progressDialog?.apply {
-            dismiss()
-        }
+    <span class="kd">interface</span> <span class="nc">PageListener</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span>
+    <span class="o">}</span>
 
-        progressDialog = AppCompatDialog(this)
-        progressDialog?.apply {
-            setCancelable(false)
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setContentView(R.layout.progress_center_loading)
-            show()
-        }
-    }
+    <span class="kd">class</span> <span class="nc">NormalPager</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
 
-    fun hideProgress() {
-        progressDialog?.dismiss()
-    }
-}
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">LibPager</span> <span class="o">:</span> <span class="n">LibPageListener</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onPrevious"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onNext"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">interface</span> <span class="nc">LibPageListener</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">LibPagerAdapter</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">libPageListener:</span> <span class="n">LibPageListener</span><span class="o">)</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+	<span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">normalPager</span> <span class="o">=</span> <span class="n">NormalPager</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
+        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="n">libPager</span> <span class="o">=</span> <span class="n">LibPager</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">libPagerAdapter</span> <span class="o">=</span> <span class="n">LibPagerAdapter</span><span class="o">(</span><span class="n">libPager</span><span class="o">)</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
+        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
 </code></pre></div></div>
+<p>위의 코드를 보면 onDoublePreviousPage,onDoubleNextPage 는 LibPageListener 없지만 같은 기능을 하게 만들어 주었다.</p>
 
-<p>아래는 layout 코드</p>
+<p>아래의 결과를 보면 동일하다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-    <span class="na">android:clickable=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-
-    <span class="nt">&lt;ProgressBar</span>
-        <span class="na">style=</span><span class="s">"?android:attr/indeterminateDrawable"</span>
-        <span class="na">android:layout_width=</span><span class="s">"34dp"</span>
-        <span class="na">android:layout_height=</span><span class="s">"34dp"</span>
-        <span class="na">android:indeterminate=</span><span class="s">"true"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"parent"</span>
-        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
-</code></pre></div></div>
-
-<p>이 경우 장점은 
-BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress 를 통해 간편하게 사용할 수 있다.</p>
-
-<p>그리고 액티비티 layout에서 위의 layout 코드를 포함 하고 있지 않아도 된다.</p>
-
-<p>단점은 필요 하지 않은 Activity 에서도 progressDialog 변수를 가지고 있을 수 있다.</p>
-
-<p>다른 방법으로는 Application class 에서 가지고 있거나 싱글톤 클래스로 가지고 있어도 괜찮을것 같다.</p>
+<figure>
+	<img src="/images/2020-06-24-android-adapter-pattern.png" alt="" />
+</figure>
 
       
   </div><!-- /.entry-content -->
@@ -371,7 +418,7 @@ BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress �
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-12-26T00:00:00+09:00"><a href="http://localhost:4000/android/android-bindingadapter/">December 26, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-06-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/">June 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -381,57 +428,60 @@ BaseActivity 를 상속 받는 Activity 의 경우 showProgress , hideProgress �
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bindingadapter/" rel="bookmark" title="DataBidning , BindingAdapter" itemprop="url">DataBidning , BindingAdapter</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" rel="bookmark" title="Iterator Pattern (디자인 패턴 7장)" itemprop="url">Iterator Pattern (디자인 패턴 7장)</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>데이터 바인딩라이브러리는 레이아웃의 UI 구성 요소를 프로그래밍 방식이 아닌 선언적 형식을 사용하여 앱의 데이터 소스에 바인딩 할 수있는 지원 라이브러리다.</p>
+      <h3 id="이터레이터-패턴-정의">이터레이터 패턴 정의</h3>
+<p>컬렉션 구현 방법을 노출시키지 않으면서도 그 집합체 안에 들어있는 모든 항목에 접글할 수 있는 방법을 제공한다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;layout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="na">xmlns:bind=</span><span class="s">"http://schemas.android.com/tools"</span>
-    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;data&gt;</span>
-        <span class="nt">&lt;import</span> <span class="na">type=</span><span class="s">"android.view.View"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;variable</span>
-            <span class="na">name=</span><span class="s">"viewModel"</span>
-            <span class="na">type=</span><span class="s">"패키지경로.ExampleViewModel"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/data&gt;</span>
-    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
-            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-            <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-            <span class="na">android:background=</span><span class="s">"@{viewModel.isRedBackground ? @color/red : @color/white}"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
-<span class="nt">&lt;/layout&gt;</span>
+<p>컬렉션 종류가 다양하고 항목을 접근하는 방식도 조금씩 다르기 때문에 대응하기가 까다롭거나 코드가 지저분해질 수 있다.<br />
+Iterator 패턴을 사용해서 해결해보자.<br />
+CustomDialogView 라는 임의의 클래스를 만들어서 iterator 매개변수로 받는 생성자를 하나 만들고 printAll 이라는 함수를 만들어서 
+모든 항목에 접근해 print 하도록 만들었다.</p>
 
+<p>아래의 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">IteratorPatternTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrayOf</span><span class="o">(</span><span class="s">"first"</span><span class="o">,</span> <span class="s">"second"</span><span class="o">,</span> <span class="s">"third"</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">arrayList</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="n">hashMap</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">(</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"one"</span><span class="o">),</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"two"</span><span class="o">),</span>
+            <span class="n">Pair</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s">"three"</span><span class="o">)</span>
+        <span class="o">)</span>
+        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">hashMap</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
+        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">CustomDialogView</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">iterator:</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;)</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">printAll</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">val</span> <span class="n">any</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">any</span> <span class="n">is</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;*,</span> <span class="o">*&gt;)</span> <span class="o">{</span>
+                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">.</span><span class="na">value</span><span class="o">)</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">)</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div></div>
+<p>hasNext 는 더 꺼낼 항목 여부에 따라 boolean 을 return 하고 next 는 해당 항목을 return 한다.
+array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 쉽게 구현할 수 있다.</p>
 
-<p>예를 들어 API 호출을 하고 받아온 값이 빨간색 배경색을 가져야 한다면 viewModel.isRedBackground (ObservableField Boolean 값) 데이터 변경 만으로 뷰가 빨간색 또는 흰색으로 변경 된다. 하지만 상태값이 빨간색 흰색 그외 초록색이 필요하다면 BindingAdapter를 통해서 구현할 수 있다.</p>
-
-<p>android:background=”@{viewModel.isRedBackground ? @color/red : @color/white}”<br />
-–&gt; bind:status=”@{viewModel.status}”</p>
-
-<p>위의 코드에서 해당 줄만 변경한다. 그 다음 BindingAdapter를 만들어준다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@BindingAdapter("bind:status")
-fun bindBuyingStatusText(imageView: ImageView, status: String?) {
-    when (status) {
-        "빨간색" -&gt; {
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_red))
-        }
-        "흰색" -&gt; {
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_white))
-        }
-        else -&gt; {  //초록색
-            imageView.setBackgroundColor(imageView.context.getColor(R.color.color_green))
-        }
-    }
-}
-
-</code></pre></div></div>
-
-<p>상태값이 2가지만 있는경우에도 BindingAdapter 사용해서 처리할수 있지만 굳이 사용할 필요는 없을것 같다.</p>
+<p>아래 사진을 보면 모두 이상 없이 프린트 된 결과를 볼 수 있다.</p>
+<figure>
+	<img src="/images/2020-06-10-android-iterator_pattern.png" alt="" />
+</figure>
 
       
   </div><!-- /.entry-content -->
@@ -441,7 +491,7 @@ fun bindBuyingStatusText(imageView: ImageView, status: String?) {
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-12-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/">December 12, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-05-27T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-command-pattern/">May 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -451,69 +501,153 @@ fun bindBuyingStatusText(imageView: ImageView, status: String?) {
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxkotlin_combineLatest/" rel="bookmark" title="RxKotlin combineLatest" itemprop="url">RxKotlin combineLatest</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-command-pattern/" rel="bookmark" title="Command Pattern (디자인 패턴 6장)" itemprop="url">Command Pattern (디자인 패턴 6장)</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>집에 와서 안드로이드 단톡방 쭉쭉 보다가 어떤 분이 질문 올린 글을 봤다.<br />
-Rx 공부 해야지 해야지 생각 하다가 안하고 있었는데 마침 문제가 하나 생김 ㅎㅎ</p>
+      <h3 id="커맨드-패턴-정의">커맨드 패턴 정의</h3>
+<p>커맨드 패턴을 이용하면 요구 사항을 객체로 캡슐화 할 수 있으며, 매개변수를 써서 여러 가지 다른 요구 사항을 집어넣을 수도 있습니다.<br />
+또한 요청 내역을 큐에 저장하거나 로그로 기록할 수도 있으며, 작업취소 기능도 지원 가능합니다.</p>
 
-<p>문제는 RxKotlin 을 사용해서 입력창 세가지가 있는데 각각 입력창에서 입력 할 때마다 validation 체크를 하고 다 통과 되면 버튼을 활성화 시키고 싶다.</p>
+<p>아래의 코드를 보자.</p>
 
-<p>키워드는 combineLatest 이다. 아래의 TestCode 를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CommandPatternTest</span> <span class="o">{</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class CombineLatestTest {
-    @Test
-    fun test() {
-        var isValid = false
-        val emailSubject = BehaviorSubject.create&lt;String&gt;()
-        val passwordSubject = BehaviorSubject.create&lt;String&gt;()
-        val nickNameSubject = BehaviorSubject.create&lt;String&gt;()
-        BehaviorSubject.combineLatest&lt;String, String, String, Boolean&gt;(
-            emailSubject,
-            passwordSubject,
-            nickNameSubject,
-            Function3&lt;String, String, String, Boolean&gt; { email, password, nickname -&gt;
-                return@Function3 email.isNotEmpty() &amp;&amp; password.isNotEmpty() &amp;&amp; nickname.isNotEmpty()
-            }
-        ).subscribe { result -&gt;
-            isValid = result
-             println("활성화 여부 $isValid")
-        }
+    <span class="kd">class</span> <span class="nc">RemoteControl</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">val</span> <span class="nl">onCommand:</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">,</span> <span class="n">Command</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">()</span>
+        <span class="kd">private</span> <span class="n">val</span> <span class="nl">offCommand:</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">,</span> <span class="n">Command</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">()</span>
+        <span class="kd">private</span> <span class="kt">var</span> <span class="nl">unDoCommand:</span> <span class="n">Command</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
 
-        emailSubject.onNext("이메일 입력")
-        assertEquals(isValid, false)
+        <span class="n">fun</span> <span class="nf">addCommand</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">onCommand:</span> <span class="n">Command</span><span class="o">,</span> <span class="nl">offCommand:</span> <span class="n">Command</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">onCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]</span> <span class="o">=</span> <span class="n">onCommand</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">offCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]</span> <span class="o">=</span> <span class="n">offCommand</span>
+        <span class="o">}</span>
 
-        passwordSubject.onNext("패스워드 입력")
-        assertEquals(isValid, false)
+        <span class="n">fun</span> <span class="nf">onButtonWasPushed</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">onCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]?.</span><span class="na">let</span> <span class="o">{</span>
+                <span class="n">it</span><span class="o">.</span><span class="na">execute</span><span class="o">()</span>
+                <span class="n">unDoCommand</span> <span class="o">=</span> <span class="n">it</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
 
-        nickNameSubject.onNext("닉네임 입력")
-        assertEquals(isValid, true)
+        <span class="n">fun</span> <span class="nf">offButtonWasPushed</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">offCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]?.</span><span class="na">let</span> <span class="o">{</span>
+                <span class="n">it</span><span class="o">.</span><span class="na">execute</span><span class="o">()</span>
+                <span class="n">unDoCommand</span> <span class="o">=</span> <span class="n">it</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
 
-        passwordSubject.onNext("")  //패스워드 제거
-        assertEquals(isValid, false)
+        <span class="n">fun</span> <span class="nf">unDoButtonWasPushed</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">unDoCommand</span><span class="o">?.</span><span class="na">let</span> <span class="o">{</span>
+                <span class="n">it</span><span class="o">.</span><span class="na">undo</span><span class="o">()</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-        passwordSubject.onNext("패스워드 입력")  //패스워드 다시 입력
-        assertEquals(isValid, true)
+    <span class="kd">interface</span> <span class="nc">Command</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span>
+    <span class="o">}</span>
 
-    }
+    <span class="kd">class</span> <span class="nc">Light</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Light On"</span><span class="o">)</span>
+        <span class="o">}</span>
 
-}
+        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Light Off"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
+    <span class="kd">class</span> <span class="nf">LightOffCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">light:</span> <span class="n">Light</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+        <span class="o">}</span>
 
-    결과는 
-    활성화 여부 false
-    활성화 여부 false
-    활성화 여부 true
-    활성화 여부 false
-    활성화 여부 true
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
+    <span class="kd">class</span> <span class="nf">LightOnCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">light:</span> <span class="n">Light</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
+        <span class="o">}</span>
 
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">KitchenLight</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"KitchenLight On"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"KitchenLight Off"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">KitchenOffCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">kitchenLight:</span> <span class="n">KitchenLight</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">KitchenOnCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">kitchenLight:</span> <span class="n">KitchenLight</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">testRemoteControl</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">remoteControl</span> <span class="o">=</span> <span class="n">RemoteControl</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">light</span> <span class="o">=</span> <span class="n">Light</span><span class="o">()</span>
+        <span class="n">remoteControl</span><span class="o">.</span><span class="na">addCommand</span><span class="o">(</span>
+            <span class="n">slot</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span>
+            <span class="n">onCommand</span> <span class="o">=</span> <span class="n">LightOnCommand</span><span class="o">(</span>
+                <span class="n">light</span>
+            <span class="o">),</span>
+            <span class="n">offCommand</span> <span class="o">=</span> <span class="n">LightOffCommand</span><span class="o">(</span>
+                <span class="n">light</span>
+            <span class="o">)</span>
+        <span class="o">)</span>
+
+        <span class="n">val</span> <span class="n">kitchenLight</span> <span class="o">=</span> <span class="n">KitchenLight</span><span class="o">()</span>
+        <span class="n">remoteControl</span><span class="o">.</span><span class="na">addCommand</span><span class="o">(</span>
+            <span class="n">slot</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span>
+            <span class="n">onCommand</span> <span class="o">=</span> <span class="n">KitchenOnCommand</span><span class="o">(</span>
+                <span class="n">kitchenLight</span>
+            <span class="o">),</span>
+            <span class="n">offCommand</span> <span class="o">=</span> <span class="n">KitchenOffCommand</span><span class="o">(</span>
+                <span class="n">kitchenLight</span>
+            <span class="o">)</span>
+        <span class="o">)</span>
+
+        <span class="n">remoteControl</span><span class="o">.</span><span class="na">onButtonWasPushed</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+        <span class="n">remoteControl</span><span class="o">.</span><span class="na">offButtonWasPushed</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+        <span class="n">remoteControl</span><span class="o">.</span><span class="na">onButtonWasPushed</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+        <span class="n">remoteControl</span><span class="o">.</span><span class="na">offButtonWasPushed</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+        <span class="n">remoteControl</span><span class="o">.</span><span class="na">unDoButtonWasPushed</span><span class="o">()</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
 </code></pre></div></div>
-
-<p>combineLatest 은 파라미터로 ObservableSource 를 받고 마지막에 리턴할 Function 을 받는다.<br />
-ObservableSource 갯수 제한은 9개 까지로 확인했다.<br />
-테스트 코드라서 isNotEmpty 로 처리 해뒀는데 저기 부분이 isValid 로 변경 되면 되겠다~</p>
+<p>리모트컨트롤에서 Command 를 추가 해서 on,off 버튼을 사용할 수 있고 unDoCommand 를 통해 마지막 실행한 명령을 되돌릴 수 있다.
+아래는 테스트 결과 이미지이다.</p>
+<figure>
+	<img src="/images/2020-05-28-android-command-pattern.png" alt="" />
+</figure>
 
       
   </div><!-- /.entry-content -->
@@ -523,146 +657,341 @@ ObservableSource 갯수 제한은 9개 까지로 확인했다.<br />
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-12-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-debug-signingkey/">December 09, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-05-17T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/">May 17, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
         
-        Reading time ~1 minute
+        Reading time ~2 minutes
       </span><!-- /.entry-reading-time -->
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-debug-signingkey/" rel="bookmark" title="디버그 용 서명 키 만들기" itemprop="url">디버그 용 서명 키 만들기</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/" rel="bookmark" title="Singleton Pattern (디자인 패턴 5장)" itemprop="url">Singleton Pattern (디자인 패턴 5장)</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>기본적으로 Android Studio 에서 프로젝트를 만들게 되면 기본적으로 Build Variants가 Debug 로 셋팅 되어 있다.</p>
+      <h3 id="싱글턴-패턴-정의">싱글턴 패턴 정의</h3>
+<p>싱글턴 패턴은 해당 클래스의 인스턴스가 하나만 만들어지고, 어디서든지 그 인스턴스에 접근할 수 있도록 하기 위한 패턴입니다.</p>
 
-<p>Android SDK 도구에서 생성된 디버그 인증서를 사용하여 앱에 자동으로 서명하기 때문이다.</p>
+<p>싱글턴 패턴 사용방법은 크게 3가지로 나뉘어진다.</p>
 
-<p>안드로이드 앱을 출시 하기 위해서는 Release KeyStore 를 통해 서명 된 앱이 필요하다.</p>
-
-<p>Release KeyStore 를 생성해서 서명한 앱을 출시 하고 난 뒤, Release 용 apk 가 설치 된 앱에서 Debug 모드로 빌드하게 되면 빌드 실패가 뜨고 삭제 후 설치 하시겠습니까? 라는 팝업이 뜬다.</p>
-
-<p>이 이유는 Release apk 와 Debug apk 인증 정보가 다르기 때문이다.</p>
-
-<p>이렇게 되면 삭제 후 설치는 할 수 있지만 Build Variants 가 변경될 때마다 다시 설치해야하는 번거러움도 있고 삭제하지 않고 디버깅 하고 싶은 상황에서 할 수 없게 된다.</p>
-
-<p>이 상황을 해결 하기 위해서는 Release Keystore 로부터 Debug Keystore 를 만들면 된다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>keytool -importkeystore -v -srckeystore 릴리즈용 키스토어 파일이름 및 경로 -destkeystore 디버그용 키스토어 파일이름 및 경로 -srcstorepass 릴리즈용 키스토어 비밀번호 -deststorepass android -srcalias alias이름 -destalias androiddebugkey -srckeypass alias비밀번호 -destkeypass android
-</code></pre></div></div>
-
-<p>새로 만드는 Debug Keystore 를 Android Studio 기본 제공해주는 Debug Keystore 와 매칭 시켜주는 작업이다.<br />
--destalias androiddebugkey , -deskkeypass android  는 Android SDK 도구에서 생성된 디버그 인증 정보와 동일하게 해서 나중에 별도 셋팅이 필요없다.</p>
-
-<p>build.gradle 셋팅은 아래와 같이 하면 된다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>android {
- signingConfigs {
-        release {
-            storeFile file('릴리즈 키스토어 경로')
-            storePassword '패스워드'
-            keyAlias '릴리즈 alias'
-            keyPassword '패스워드'
-        }
-
-        debug {
-            storeFile file('디버그 키스토어 경로')
-            //따로 정보 필요 없음
-        }
-    }
-}
-</code></pre></div></div>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2019-11-27T00:00:00+09:00"><a href="http://localhost:4000/android/android-diffUtil/">November 27, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-diffUtil/" rel="bookmark" title="RecyclerView DiffUtil" itemprop="url">RecyclerView DiffUtil</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>oldList 와 newList 리스트의 차이를 계산하고 oldList를 newList로 변환하는 업데이트 작업 목록을 출력 할 수있는 유틸리티 클래스이다.<br />
-업데이트 작업 목록은 newList 가 Insert , Remove , Update 다 포함 된다.</p>
-
-<h3 id="리스트-아이템이-변경-되는-갯수-마다의-시간-데이터">리스트 아이템이 변경 되는 갯수 마다의 시간 데이터</h3>
-
-<ul>
-  <li>100 items and 10 modifications: avg: 0.39 ms, median: 0.35 ms</li>
-  <li>100 items and 100 modifications: 3.82 ms, median: 3.75 ms</li>
-  <li>100 items and 100 modifications without moves: 2.09 ms, median: 2.06 ms</li>
-  <li>1000 items and 50 modifications: avg: 4.67 ms, median: 4.59 ms</li>
-  <li>1000 items and 50 modifications without moves: avg: 3.59 ms, median: 3.50 ms</li>
-  <li>1000 items and 200 modifications: 27.07 ms, median: 26.92 ms</li>
-  <li>1000 items and 200 modifications without moves: 13.54 ms, median: 13.36 ms</li>
-</ul>
-
-<p>Eugene W. Myers 의 difference algorithm 을 사용하여 하나의 목록을 다른 목록으로 변환하기위한 최소 업데이트 수를 계산한다.</p>
-
-<p>사용법을 알아보자~!</p>
-
-<p>우선 아래와 같이 DiffUtil.Callback 을 상속받는 DiffCallback 클래스를 만들고 비교할 대상을 지정 해준다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class DiffCallback(
-		private val oldData: AdapterData,
-		private val newData: AdapterData
-	) : DiffUtil.Callback() {
-
-	override fun getOldListSize() = oldData.size
-
-	override fun getNewListSize() = newData.size
-
-	override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int)
-     = oldData[oldItemPosition].id == newData[newItemPosition].id
-
-	override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int)
-     = oldData[oldItemPosition] == newData[newItemPosition]
-
-}
-</code></pre></div></div>
-
-<p>다음으로는 RecyclerView Adapter 클래스의 setData 를 보자</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fun setData(newData: AdapterData) {
-	val diffResult = DiffUtil.calculateDiff(DiffCallback(data, newData))
-	data = newData
-	diffResult.dispatchUpdatesTo(this)
-}
-</code></pre></div></div>
-
-<p>DiffUtil.calculateDiff 는 DiffCallback 을 인자로 받고 결과 값으로 DiffUtil.DiffResult 를 반환 한다.<br />
-그 다음 RecyclerView Adapter 의 아이템을 대체 시켜 주고 dispatchUpdatesTo 를 호출한다.  여기서 this는 RecyclerView Adapter 이다.<br />
-RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispatchUpdatesTo 를 호출 하는 순간 뷰가 갱신 된다.<br />
-그렇기 때문에 다음 4가지 중 한가지를 호출 하기 위해서라고 판단 된다.</p>
-<ul>
-  <li>mAdapter.notifyItemRangeInserted(position, count);</li>
-  <li>mAdapter.notifyItemRangeRemoved(position, count);</li>
-  <li>mAdapter.notifyItemMoved(fromPosition, toPosition);</li>
-  <li>mAdapter.notifyItemRangeChanged(position, count, payload);</li>
-</ul>
-
-<p>기존 방식은 OldList 에서 변경 된 포지션을 직접 위의 4가지중 한가지를 불러서 뷰를 갱신 시켜줬어야 하는데 DiffUtil 을 사용하면 개발자가 신경 쓰지 않아도 편리하게 수정 할수 있어서 좋은 것 같다.</p>
-
-<h3 id="주의-사항">주의 사항</h3>
 <ol>
-  <li>리스트 사이즈가 큰 경우는 DiffResult를 가져올때 Background Thread 에서 실행 하고 뷰 갱신 할때만 메인스레드에서 실행 시켜야한다.</li>
-  <li>DiffUtil 사용 할 때 리스트의 Max Size 는 2^26 이다.</li>
+  <li>getInstance() 메소드에 synchronized 키워드를 사용</li>
+  <li>인스턴스를 필요할 때 생성하지 말고, 처음부터 만듦</li>
+  <li>DCL(Double-Checking Locking) 을 써서 getInstance()에서 동기화 되는 부분을 줄임</li>
 </ol>
+
+<p>첫번째 방법부터 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span><span class="c1">//생성자를 외부에서 사용하지 못하도록 private 으로 셋팅</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//synchronized 를 사용해 서로 다른 스레드에서 실행 시 하나의 스레드가 끝난 뒤 다른 스레드가 접근 가능</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위의 방법처럼 메소드를 동기화 하게 되면 속도가 100배 정도 저하된다고 한다.
+속도가 크게 중요하지 않은 부분에서 사용하면 괜춘~!</p>
+
+<p>두번째 방법을 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span><span class="c1">//정적 초기화 부분에서 생성</span>
+    
+    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위의 방법처럼 사용하면 JVM에서 Singleton 의 유일한 인스턴스를 생성해준다.
+JVM에서 유일한 인스턴스를 생성하기 전에는 어떤 스레드도 uniqueInstance 에 접근 할 수 없다.</p>
+
+<p>세번째 방법을 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>volatile 키워드를 사용하면 멀티 스레딩을 쓰더라도 uniqueinstance 변수가 Singleton 인스턴스로 초기화 되는 과정이 올바르게 진행되도록 할 수 있다.<br />
+하지만 자바5 보다 전에 나온 버전의 JVM 을 사용해야 한다면 DCL을 사용할 수 없다.</p>
+
+<p>일반적인 변수의 값은 CPU cache 를 통해 가져 오는데 volatile 키워드를 사용하면 CPU cache가 아닌 MainMemory 에서 가져온다.<br />
+그렇기 떄문에 읽고 쓰는 작업을 할 때 제대로 된 값을 읽고 쓸 수 있다.<br />
+하지만 멀티 스레드에서 값을 가져올 때 synchronized 를 사용하지 않고 가져오면 완벽하게 보장 되지 않기 때문에 위의 코드를 보면 volatile uniqueInstance 를 초기화 할때 synchronized 를 사용한 것을 볼 수 있다.<br />
+이렇게 사용함으로써 안전하게 초기화 하고 instance를 가져와서 사용할 수 있다.<br />
+코틀린에서는 아주 간단하게 싱글턴을 만들어 사용한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">object</span> <span class="n">Singleton</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위의 코드가 끝이다.<br />
+해당 코틀린 코드는 자바로 Decompile 했을때 1,2,3 방법 중 어떤 방법으로 만들어 질까 궁금해서 한번 해봤다.<br />
+Android Studio 에서 Menu &gt; Tools &gt; Kotlin &gt; Show Kotlin Bytecode &gt; Decompile !!</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Singleton</span> <span class="n">INSTANCE</span><span class="o">;</span>
+
+   <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span>
+   <span class="o">}</span>
+
+   <span class="kd">static</span> <span class="o">{</span>
+      <span class="n">Singleton</span> <span class="n">var0</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+      <span class="n">INSTANCE</span> <span class="o">=</span> <span class="n">var0</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>두번째 방법으로 만들어지는걸 볼 수 있었다.<br />
+이상 싱글턴 패턴에 대해 알아보았다.</p>
+
+<p>참고 URL<br />
+http://tutorials.jenkov.com/java-concurrency/volatile.html</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-04-26T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/">April 26, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~3 minutes
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/" rel="bookmark" title="Factory Pattern (디자인 패턴 4장)" itemprop="url">Factory Pattern (디자인 패턴 4장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="팩토리-메소드-패턴과-추상-팩토리-패턴">팩토리 메소드 패턴과 추상 팩토리 패턴</h3>
+
+<h4 id="팩토리-메소드-정의">팩토리 메소드 정의</h4>
+<p>객체를 생성하기 위한 인터페이스를 정의하는데, 어떤 클래스의 인스턴스를 만들지는 서브클래스에서 결정하게 한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">FactoryMethodPatternTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">testCreateModel</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">yellowMemo</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Yellow"</span><span class="o">)</span>
+        <span class="n">yellowMemo</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">blueMemo</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Blue"</span><span class="o">)</span>
+        <span class="n">blueMemo</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
+        <span class="n">val</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Else"</span><span class="o">)</span>
+        <span class="n">empty</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ModelFactory</span> <span class="o">{</span>
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">create</span><span class="o">(</span><span class="nl">className:</span> <span class="n">String</span><span class="o">):</span> <span class="n">Model</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">ClassFactory</span> <span class="o">:</span> <span class="n">ModelFactory</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">create</span><span class="o">(</span><span class="nl">className:</span> <span class="n">String</span><span class="o">):</span> <span class="n">Model</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nf">when</span> <span class="o">(</span><span class="n">className</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">())</span> <span class="o">{</span>
+                <span class="s">"yellow"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">YellowMemo</span><span class="o">()</span>
+                <span class="o">}</span>
+                <span class="s">"blue"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">BlueMemo</span><span class="o">()</span>
+                <span class="o">}</span>
+                <span class="k">else</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">Empty</span><span class="o">()</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Model</span> <span class="o">{</span>
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">YellowMemo</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"YellowMemo 클릭"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">BlueMemo</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"BlueMemo 클릭"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">Empty</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Empty 클릭"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+</code></pre></div></div>
+
+<p>위의 코드 테스트 결과이미지</p>
+<figure>
+	<img src="/images/2020-04-26-android-factory-pattern-01.png" alt="" />
+</figure>
+
+<p>추상클래스 ModelFactory 의 create fun 추상 메소드를 통해 모델을 만들고 각각을 클릭 했을 때 print 내용은 달라진다.<br />
+모델을 직접 만들지 않고 Factory 를 통해 만들어서 사용하였다.<br />
+하지만 이렇게 되면 create 될때 className 에 의해 모두 모델을 ClassFactory에서 만들어 주어야 한다.<br />
+모델이 셀수 없게 많아지고 해당 모델들을 관리 해야 한다면??<br />
+모든 모델들을 ClassFactory에 추가 해야하기 때문에 비효율적이다.<br />
+위의 문제점을 보완한 아래의 내용을 보자.</p>
+
+<h4 id="추상팩토리-정의">추상팩토리 정의</h4>
+<p>추상 팩토리 패턴에서는 인터페이스를 이용하여 서로 연관된 또는 의존하는 객체인 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
+Android Architecture Component 에 있는 ViewModel 을 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">viewModel</span> <span class="o">=</span> <span class="n">ViewModelProviders</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="nl">MemoViewModel:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>ViewModelProviders.of(this) 는 ViewModelProvider 를 반환 하고 get(MemoViewModel::class.java)을 통해 MemoViewModel 을 반환한다.<br />
+ViewModelProvider를 자세히 살펴 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ViewModelProvider</span> <span class="o">{</span>
+
+<span class="nd">@NonNull</span>
+<span class="nd">@MainThread</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">get</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">canonicalName</span> <span class="o">=</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">getCanonicalName</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">canonicalName</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"Local and anonymous classes can not be ViewModels"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="nf">get</span><span class="o">(</span><span class="n">DEFAULT_KEY</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">canonicalName</span><span class="o">,</span> <span class="n">modelClass</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="nd">@NonNull</span>
+<span class="nd">@MainThread</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">get</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">ViewModel</span> <span class="n">viewModel</span> <span class="o">=</span> <span class="n">mViewModelStore</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">modelClass</span><span class="o">.</span><span class="na">isInstance</span><span class="o">(</span><span class="n">viewModel</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">viewModel</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">viewModel</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">mFactory</span> <span class="k">instanceof</span> <span class="n">KeyedFactory</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">viewModel</span> <span class="o">=</span> <span class="o">((</span><span class="n">KeyedFactory</span><span class="o">)</span> <span class="o">(</span><span class="n">mFactory</span><span class="o">)).</span><span class="na">create</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">modelClass</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">viewModel</span> <span class="o">=</span> <span class="o">(</span><span class="n">mFactory</span><span class="o">).</span><span class="na">create</span><span class="o">(</span><span class="n">modelClass</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">mViewModelStore</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">viewModel</span><span class="o">);</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">viewModel</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="kd">abstract</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">KeyedFactory</span> <span class="kd">implements</span> <span class="n">Factory</span> <span class="o">{</span>
+    <span class="nd">@NonNull</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span>
+            <span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">);</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">UnsupportedOperationException</span><span class="o">(</span><span class="s">"create(String, Class&lt;?&gt;) must be called on "</span>
+                <span class="o">+</span> <span class="s">"implementaions of KeyedFactory"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">AndroidViewModelFactory</span> <span class="kd">extends</span> <span class="n">ViewModelProvider</span><span class="o">.</span><span class="na">NewInstanceFactory</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">AndroidViewModelFactory</span> <span class="n">sInstance</span><span class="o">;</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">AndroidViewModelFactory</span> <span class="nf">getInstance</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Application</span> <span class="n">application</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">sInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AndroidViewModelFactory</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">sInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Application</span> <span class="n">mApplication</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">AndroidViewModelFactory</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Application</span> <span class="n">application</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mApplication</span> <span class="o">=</span> <span class="n">application</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">AndroidViewModel</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">modelClass</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">getConstructor</span><span class="o">(</span><span class="n">Application</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">newInstance</span><span class="o">(</span><span class="n">mApplication</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">modelClass</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>	
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">NewInstanceFactory</span> <span class="kd">implements</span> <span class="n">Factory</span> <span class="o">{</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"ClassNewInstance"</span><span class="o">)</span>
+    <span class="nd">@NonNull</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Factory</span> <span class="o">{</span>
+    <span class="nd">@NonNull</span>
+    <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>소스가 좀 길지만 필요한 부분만 편집했다.<br />
+mFactory 는 AndroidViewModelFactory 이다.<br />
+Factory 라는 인터페이스로 인해 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
+mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 아니면 Factory에 의해 생성되게 된다.</p>
+
+<p>간단한 로직의 객체 생성이라면 팩토리 메소드를 사용해도 괜찮을것 같고 Android Architecture Component 처럼 구상 클래스를 지정하고 싶지 않을때는
+추상 팩토리 패턴을 사용하면 좋을것 같다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -735,7 +1064,7 @@ RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispat
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -790,7 +1119,7 @@ RecyclerView Adapter 를 파라미터로 받는 이유는 내부적으로 dispat
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

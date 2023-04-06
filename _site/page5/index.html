@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-03T00:00:00+09:00"><a href="http://localhost:4000/android/android-appcenter/">March 03, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-08-05T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/">August 05, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,516 +298,517 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-appcenter/" rel="bookmark" title="AppCenter Distribute" itemprop="url">AppCenter Distribute</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-proxy-pattern/" rel="bookmark" title="Proxy Pattern (디자인 패턴 13장)" itemprop="url">Proxy Pattern (디자인 패턴 13장)</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>Firebase Distribute 를 사용하다가 배포된 apk 앱에서 최신 버전 유지가 필요해서 인앱업데이트 기능이 필요했다.<br />
-AppCenter 라는 Microsoft 에서 만든 sdk 가 있어서 이걸 사용해 보도록 했다.<br />
-Gradle Dependency 에는 다음과 같이 추가해 준다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dependencies {
-   def appCenterSdkVersion = '3.0.0'
-   implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
-}
-</code></pre></div></div>
+      <h3 id="프록시-패턴-정의">프록시 패턴 정의</h3>
+<p>어떤 객체에 대한 접근을 제어하기 위한 용도로 대리인이나 대변인에 해당하는 객체를 제공하는 패턴이다.</p>
 
-<p>그리고 인앱 업데이트 할 때 CustomDialog를 보여주기 위해 DistributeListener 인터페이스를 구현한 클래스를 하나만들어 준다.<br />
-클래스명은 임의로 InAppUpdateListener 라고 만들었다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InAppUpdateListener : DistributeListener {
-    override fun onReleaseAvailable(
-        activity: Activity?,
-        releaseDetails: ReleaseDetails
-    ): Boolean {
-        activity?.apply {
-            val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setTitle(R.string.in_app_update)
-            dialogBuilder.setMessage(R.string.msg_download_latest_version)
-            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&gt;
-                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
-            }
-            dialogBuilder.setCancelable(false)
-            dialogBuilder.create()
-                .show()
-            return true
-        }
-        return false
-    }
-}
-
-</code></pre></div></div>
-
-<p>Distribute.notifyUpdateAction(UpdateAction.UPDATE) 를 사용하게 되면 리턴을 true 로 셋팅 해준다.<br />
-return 을 false로 할 경우 액티비티 변경 될 때마다 콜백이 호출 될 수 있다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
-Distribute.setListener(InAppUpdateListener())
-AppCenter.start(application, BuildConfig.KEY_APP_CENTER_SECRET, Distribute::class.java)
-</code></pre></div></div>
-<p>테스트 그룹을 Private 으로 한 경우 첫번째줄 UpdateTrack 을 셋팅 해줘야 한다.<br />
-KEY_APP_CENTER_SECRET 는 앱의 시크릿 키 값이다. AppCenter Console -&gt; Settings 우측 상단 메뉴 버튼 클릭</p>
 <figure>
-	<img src="/images/2020-03-03-appcenter.png" alt="" />
+	<img src="/images/2020-09-02-android-proxy-pattern.png" alt="" />
 </figure>
 
-<p>앱 업데이트가 필요한 곳에서 다음과 같이 호출</p>
+<h3 id="프록시-패턴-언제-사용할까">프록시 패턴 언제 사용할까!?</h3>
+<p>원격 프록시 , 가상 프록시 , 보호 프록시 여러가지가 있는데 가상 프록시를 다뤄보자.<br />
+네트워크를 통해 이미지를 가져온다고 가정할 때 네트워크 상태와 인터넷 연결 속도에 따라서 시간 소요 되게 된다.<br />
+이때 이미지를 불러 오는 동안 Proxy를 사용해서 임의의 이미지를 보여준 다음 실제 이미지를 보여줄 수 있다.<br />
+아래 코드를 보자.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Distribute.setUpdateTrack(UpdateTrack.PRIVATE)
-Distribute.setListener(InAppUpdateListener())
-AppCenter.start(application, BuildConfig.KEY_APPCENTER_SECRET, Distribute::class.java)
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">ProxyPattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">ImageProxy</span><span class="o">().</span><span class="na">showIcon</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">interface</span> <span class="nc">Icon</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">ImageIcon</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">download</span><span class="o">()</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 그림"</span><span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">download</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageIcon 다운로드"</span><span class="o">)</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">ImageProxy</span> <span class="o">:</span> <span class="n">Icon</span> <span class="o">{</span>
+    <span class="kt">var</span> <span class="nl">imageIcon:</span> <span class="n">ImageIcon</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">showIcon</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"ImageProxy 그림"</span><span class="o">)</span>
+        <span class="n">imageIcon</span> <span class="o">=</span> <span class="n">ImageIcon</span><span class="o">()</span>
+        <span class="n">imageIcon</span><span class="o">?.</span><span class="na">showIcon</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
-<p>유의할 점은 해당 versionCode 가 Distribute 에 업로드 되어 있다는 전제하에 업데이트 할 버전이 있다면 InAppUpdateListener onReleaseAvailable 가 호출 된다.<br />
-현재 versionCode 가 1 이고 Distribute 에 있는 버전이 2 버전이라면 콜백이 호출 되지 않는다.<br />
-Distribute 에는 1,2 현재버전까지 포함되서 올라가 있어야 호출됨.<br />
-그리고 Distribute 셋팅은 AppCenter.start 가 호출 되기 전에 호출 되어야 한다. 순서가 바뀔 경우 제대로 동작하지 않을수 있음.<br />
-AppCenterSecret Key 는 노출 되면 안되기 떄문에 환경변수에 저장해서 사용했다.</p>
+<p>ImageProxy 를 통해 showIcon 메소드를 호출 하게 되면 프록시 임의의 그림을 보여주고 다운로드가 되었을때 실제 이미지 ImageIcon 그림을 보여줄 수 있다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//앱 build.gradle
-
-buildTypes {
-        release {
-            ...
-        }
-
-        debug {
-            ...
-        }
-
-        buildTypes.each {
-            it.buildConfigField 'String', 'KEY_APP_CENTER_SECRET', "\"$System.env.KEY_APP_CENTER_SECRET\""
-        }
-}
-</code></pre></div></div>
-
-<p>이번에 Github Actions 를 사용해서 Appcenter Distribute 에 apk 배포하는걸 자동화해서 작업을 했는데 그부분은 다음 글에서 올림.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-02-27T00:00:00+09:00"><a href="http://localhost:4000/android/android-throttle_first_click/">February 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-throttle_first_click/" rel="bookmark" title="안드로이드 다중 클릭 방지(Prevent Multiple Click)" itemprop="url">안드로이드 다중 클릭 방지(Prevent Multiple Click)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>화면 이동이나 특정 API 호출을 할 때 안드로이드 자체에서 다중 클릭을 막아 주지 않기 때문에 따로 처리가 필요하다.<br />
-그래서 회사 팀원들과 같이 의견을 조금씩 반영하다 보니 좋은 결과물이 나온것 같다. ㅎㅎ<br />
-소스는 아래와 같다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var isClicked = false
-
-//데이터 바인딩에서 사용하기 위한 fun
-@BindingAdapter("app:onThrottleFirstClick", "app:onThrottleInterval", requireAll = false)
-fun onThrottleFirstClick(
-    view: View,
-    onClickListener: View.OnClickListener,
-    isWithoutInterval: Boolean = false
-) {
-    view.setOnClickListener { v -&gt;
-        if (isClicked.not()) {
-            isClicked = true
-            v?.run {
-                if (isWithoutInterval) {
-                    isClicked = false
-                    onClickListener.onClick(v)
-                } else {
-                    postDelayed({
-                        isClicked = false
-                    }, 350L)
-                    onClickListener.onClick(v)
-                }
-            }
-        }
-    }
-}
-
-//일반 뷰에서 사용할 수 있는 Kotlin Extension
-fun View.onThrottleFirstClick(interval: Long = 350L, action: (v: View) -&gt; Unit) {
-    setOnClickListener { v -&gt;
-        if (isClicked.not()) {
-            isClicked = true
-            v?.run {
-                postDelayed({
-                    isClicked = false
-                }, interval)
-                action(v)
-            }
-        }
-    }
-}
-
-</code></pre></div></div>
-
-<h3 id="xml-layout-코드before">xml Layout 코드(Before)</h3>
-<p>기존 onClick 구현 방식</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:onClick="@{(v)-&gt; 어떤 처리}"
-    android:text="일반 클릭"
-/&gt;
-</code></pre></div></div>
-
-<p>위와 같이 onClick을 사용하면 다중 클릭을 막을 수 없고 버튼을 여러번 클릭 하는 경우 어떤 처리가 여러번 처리 된다.<br />
-아래 다중클릭이 방지된 BindingAdapter 를 사용하게 되면 여러번 클릭을 막을 수 있다.<br />
-onThrottleInterval 은 싱글 클릭이 필요 없는 경우에만 넣어주면 된다.<br />
-예를 들어 옵션의 카운트 갯수를 올려주는 행위에 사용하면 된다.</p>
-
-<h3 id="xml-layout-코드after">xml Layout 코드(After)</h3>
-<p>변경된 방식</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="싱글 클릭"
-        app:onThrottleInterval="@{불린값}"
-        app:onThrottleFirstClick="@{(v) -&gt; 어떤 처리}"
-        /&gt;
-</code></pre></div></div>
-
-<h3 id="button을-가지고-있는-클래스before">button을 가지고 있는 클래스(Before)</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.setOnClickListener {
-    //어떤 처리
-}
-</code></pre></div></div>
-
-<h3 id="button을-가지고-있는-클래스after">button을 가지고 있는 클래스(After)</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>button.onThrottleFirstClick {
-    //어떤 처리
-}
-</code></pre></div></div>
-
-<p>사용법도 크게 차이가 없어서 편하게 사용할 수 있게 만들어진 것 같다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-02-10T00:00:00+09:00"><a href="http://localhost:4000/android/android-intent/">February 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-intent/" rel="bookmark" title="인텐트 사용해서 다른 액티비티로 데이터 넘기기" itemprop="url">인텐트 사용해서 다른 액티비티로 데이터 넘기기</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>StartActivity 에서 DestActivity 로 String 데이터를 넘긴다고 가정하면 다음과같이 일반적으로 사용한다.</p>
-
-<h3 id="startactivity-코드">StartActivity 코드</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val stringValue = "스트링 값"
-Intent intent = new Intent(this, DestActivity.class)
-            intent.putExtra(DestActivity.KEY_VALUE, stringValue)
-            startActivity(intent)
-</code></pre></div></div>
-
-<h3 id="destactivity-코드">DestActivity 코드</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>companion object {
-    const val KEY_VALUE = "KEY_VALUE"
-}
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    val stringValue = intent.getStringExtra(KEY_VALUE) ?: "",
-}
-</code></pre></div></div>
-<p>Key값은 보통 DestActivity 에서 Static value 로 가지고 있고 StartActivity 에서 DestActivity 의 키 값을 사용한다.</p>
-
-<p>또 다른 방법은 DestActivity 에서 innerClass 로 Arguments 클래스를 가지고 있는 방법이다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class DestActivity{
-  class Arguments(val stringValue: String) {
-        fun startActivity(context: Context) {
-            val intent = Intent(context, DestActivity::class.java)
-            intent.putExtra(KEY_VALUE, stringValue)
-            context.startActivity(intent)
-        }
-
-        companion object {
-            private const val KEY_VALUE = "KEY_VALUE"
-
-            fun createFromIntent(intent: Intent): Arguments {
-                return Arguments(intent.getStringExtra(KEY_VALUE) ?: "")
-            }
-        }
-    }
-}
-</code></pre></div></div>
-
-<h2 id="arguments-사용법은-다음과-같다">Arguments 사용법은 다음과 같다.</h2>
-
-<h3 id="startactivity-에서의-코드">StartActivity 에서의 코드</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DestActivity.Arguments(stringValue)
-            .startActivity(this@BuyingBuildingsActivity)
-</code></pre></div></div>
-<h3 id="destactivity-코드-1">DestActivity 코드</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    val binding = DataBindingUtil.setContentView(this, R.layout.activity_dest)
-    val arguments = Arguments.createFromIntent(intent)
-    binding.arguments = arguments
-}
-</code></pre></div></div>
-
-<h3 id="데이터-바인딩-activity_destxml">데이터 바인딩 (activity_dest.xml)</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;layout</span> <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;data&gt;</span>
-        <span class="nt">&lt;variable</span>
-            <span class="na">name=</span><span class="s">"arguments"</span>
-            <span class="na">type=</span><span class="s">"com.example.test.DestActivity.Arguments"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/data&gt;</span>
-    <span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-        <span class="na">android:orientation=</span><span class="s">"vertical"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;TextView</span>
-            <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
-            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
-            <span class="na">android:text=</span><span class="s">"@{arguments.stringValue}"</span>
-            <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span>
-            <span class="na">app:layout_constraintLeft_toLeftOf=</span><span class="s">"parent"</span>
-            <span class="na">app:layout_constraintRight_toRightOf=</span><span class="s">"parent"</span>
-            <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
-<span class="nt">&lt;/layout&gt;</span>
-</code></pre></div></div>
-
-<p>두번째 방법의 장점은 크게 3가지이다.</p>
-<ol>
-  <li>외부에서 DestActivity 에서의 키를 사용하지 않아도 된다.<br />
-Arguments 클래스 내부에서 키 값 관리 하면 됨.</li>
-  <li>데이터 바인딩을 사용한다면 Arguments 를 레이아웃에서 바로 사용할 수 있다.</li>
-  <li>intent 를 통해서 가져온 값은 Nullable 타입 이지만 Arguments 를 통해 가져온 변수는 NonNull 타입으로 변환해서 가져올 수 있다.</li>
-</ol>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-01-28T00:00:00+09:00"><a href="http://localhost:4000/android/android-collections/">January 28, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-collections/" rel="bookmark" title="코틀린 람다 콜렉션(kotlin lambda collection)" itemprop="url">코틀린 람다 콜렉션(kotlin lambda collection)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="todo--선택된-아이템-알파벳들을-콤마로-구분해서-string-으로-만들기">TODO : 선택된 아이템 알파벳들을 콤마로 구분해서 String 으로 만들기</h3>
-
-<p>사용 된 함수는 filterIsInstance , filter , map , joinToString<br />
-선언형 프로그래밍 -&gt; 함수형 프로그래밍 방식으로 변경 하는 과정을 코딩</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/**
- * Created by kimyounghoon on 2020-01-29.
- */
-class KotlinLambdaCollectionTest {
-    open class BaseItem(var id: String)
-
-    class Item(id: String, val alphabet: String, val isSelected: Boolean) : BaseItem(id)
-
-    lateinit var items: ArrayList&lt;BaseItem&gt;
-
-    @Before
-    fun before() {  //테스트 시작 되기 전에 불린다. 리스트 셋팅!!
-        items =
-            arrayListOf(
-                Item("1", "a", false),
-                Item("2", "b", true),
-                Item("3", "c", true),
-                Item("4", "d", true),
-                Item("5", "e", false),
-                Item("6", "f", false),
-                Item("7", "g", false)
-            )
-    }
-
-
-   /*
-    *  test1 은 명령형 프로그래밍 2,3,4 함수형 프로그래밍으로 변환하는 작업입니다.
-    * */
-    @Test
-    fun test1() {
-        var alphabets = ""                  
-        val filterItems = arrayListOf&lt;Item&gt;()
-        for (item in items) {
-            if (item is Item &amp;&amp; item.isSelected) {
-                filterItems.add(item)
-            }
-        }
-
-        for (index in 0 until filterItems.size) {
-            if (index == filterItems.size - 1) {
-                alphabets += filterItems[index].alphabet
-            } else {
-                alphabets += filterItems[index].alphabet + ","
-            }
-        }
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-
-    /*
-    *  filter 를 사용해서 Item 으로만 걸렀기 때문에 as List&lt;Item&gt; 으로 캐스팅. 뭔가 아쉽다.
-    * */
-    @Test
-    fun test2() {
-        var alphabets = ""
-        (items.filter {
-            (it is Item &amp;&amp; it.isSelected)
-        } as List&lt;Item&gt;).let {
-            for (index in 0 until it.size) {
-                if (index == it.size - 1) {
-                    alphabets += it[index].alphabet
-                } else {
-                    alphabets += it[index].alphabet + ","
-                }
-            }
-        }
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-
-    /*
-    * filter 와 map , joinToString 을 사용하니 함수형 프로그래밍으로 바뀌고
-    * 가독성도 많이 좋아졌는데 map 에서 한번더 캐스팅 해서 써야하는게 불편해서 구글링 한번더!!
-    * */
-    @Test
-    fun test3() {
-        val alphabets = items.filter {
-            (it is Item &amp;&amp; it.isSelected)
-        }.map {
-            (it as Item).alphabet
-        }.joinToString(",")
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-
-    /*
-    * filterIsInstance 를 사용하면 Item 만 필터 되어서 Item 형태로 반환 되기때문에 캐스팅이 필요 없다.
-    * */
-    @Test
-    fun test4() {
-        val alphabets = items.filterIsInstance&lt;Item&gt;().filter {
-            it.isSelected
-        }.map {
-            it.alphabet
-        }.joinToString(",")
-
-        Assert.assertEquals("b,c,d", alphabets)
-    }
-}
-</code></pre></div></div>
-
-<p>test1 과 test4 를 비교 했을때 코드 양도 많이 줄고 훨씬 가독성이 많이 올라간걸 볼 수 있다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-01-16T00:00:00+09:00"><a href="http://localhost:4000/android/android-bluetooth-android10/">January 16, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bluetooth-android10/" rel="bookmark" title="안드로이드 10(29) 블루투스 연결 대응" itemprop="url">안드로이드 10(29) 블루투스 연결 대응</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="문제점">문제점</h1>
-<h2 id="bluetoothadapterstartdiscovery-return-false-">bluetoothAdapter.startDiscovery() return false !!!</h2>
-
-<p>true로 반환 되어야 하는데 false 로 반환 되어 블루투스 검색을 할 수 없음</p>
-
-<p>안드로이드 10 버전에서 위치 관련 보안이 강화 되었는데 블루투스 검색 할때 위치 관련 퍼미션이 필요하기 때문에 일어난 퍼미션 관련 이슈였습니다.</p>
-
-<p>버전 별로 블루투스 검색 및 연결 관련 퍼미션을 알아보겠습니다.</p>
-
-<p>기본적으로 블루투스 기능 ON , 위치 기능 ON 상태 여야 합니다.</p>
-
-<p>블루투스 기능 OFF 상태일 때는 사용 가능 하게 팝업 띄어 주고 위치 기능 OFF 상태일때는 체크 해서 설정 화면으로 보내면됩니다.</p>
-
-<h2 id="targetsdkversion-29-미만인-경우">targetSdkVersion 29 미만인 경우</h2>
-
-<p>AndroidManifest.xml 파일</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
-&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
-</code></pre></div></div>
-
-<p>29 미만인 경우 위치 관련 퍼미션이 적용 되어 있을 경우 아래 퍼미션이 자동으로 추가 됩니다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
-</code></pre></div></div>
-
-<p>아래 퍼미션은 런타임 퍼미션 적용<br />
-Manifest.permission.ACCESS_COARSE_LOCATION</p>
-
-<h2 id="targetsdkversion-29-인-경우">targetSdkVersion 29 인 경우</h2>
-
-<p>AndroidManifest.xml 파일 </p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;
-&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
-&lt;uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/&gt;
-</code></pre></div></div>
-
-<p>아래 퍼미션은 런타임 퍼미션 적용</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Manifest.permission.ACCESS_COARSE_LOCATION,
-Manifest.permission.ACCESS_FINE_LOCATION,
-Manifest.permission.ACCESS_BACKGROUND_LOCATION
-</code></pre></div></div>
-<p>퍼미션 승인 후 bluetoothAdapter. startDiscovery() 이 true로 반환되는걸 확인 할 수 있었습니다.</p>
-
-<p>아래 이미지는 블루투스 연결 버튼 클릭 시 플로우 차트</p>
+<p>아래는 테스트 결과이다.</p>
 <figure>
-	<img src="/images/2020-01-17-bluetooth-flow-chart.png" alt="" />
+	<img src="/images/2020-09-02-android-proxy-pattern-2.png" alt="" />
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-08-03T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-state-pattern/">August 03, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-state-pattern/" rel="bookmark" title="State Pattern (디자인 패턴 12장)" itemprop="url">State Pattern (디자인 패턴 12장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="스테이트-패턴-정의">스테이트 패턴 정의</h3>
+<p>객체의 내부 상태가 바뀜에 따라서 객체의 행동을 바꿀 수 있다.<br />
+객체의 클래스가 바뀌는 것과 같은 결과를 얻을 수 있다.</p>
+
+<figure>
+	<img src="/images/2020-08-03-android-state-pattern.png" alt="" />
+</figure>
+
+<h3 id="스테이트-패턴-언제-사용할까">스테이트 패턴 언제 사용할까!?</h3>
+<p>현재 기분 상태를 예를 들어 보자 
+Good , Bad , Normal 상태가 있다.<br />
+그리고 rain (비가 옴), clear (맑음) , vacation (휴가)  메소드가 있다.<br />
+비가 옴 , 맑음 , 휴가 일때 상태가 변경 된다.<br />
+아래의 코드를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">StatePattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">stateContext</span> <span class="o">=</span> <span class="n">StateContext</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">BadState</span><span class="o">(</span><span class="n">stateContext</span><span class="o">)</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">clear</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">rain</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">vacation</span><span class="o">()</span>
+        <span class="n">stateContext</span><span class="o">.</span><span class="na">rain</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">interface</span> <span class="nc">State</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span>
+        <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">GoodState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가와서 기분 좋음에서 보통으로"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">normalState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 좋지만 최상의 상태"</span><span class="o">)</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 하지만 최상의 상태"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">NormalState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가와서 기분 보통에서 나쁨으로"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">badState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 보통에서 좋음 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 기분 보통에서 좋음 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">BadState</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">stateContext:</span> <span class="n">StateContext</span><span class="o">)</span> <span class="o">:</span> <span class="n">State</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"비가 오지만 이보다 더 안좋을 수 없다."</span><span class="o">)</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"날씨 맑아서 기분 안좋음에서 보통으로 변경"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">normalState</span>
+        <span class="o">}</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"휴가다~~! ^^ 기분 안좋음에서 좋음으로 두단계 업!!"</span><span class="o">)</span>
+            <span class="n">stateContext</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">stateContext</span><span class="o">.</span><span class="na">goodState</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">class</span> <span class="nc">StateContext</span> <span class="o">{</span>
+        <span class="kt">var</span> <span class="nl">state:</span> <span class="n">State</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+        <span class="kt">var</span> <span class="n">goodState</span> <span class="o">=</span> <span class="n">GoodState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">normalState</span> <span class="o">=</span> <span class="n">NormalState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="kt">var</span> <span class="n">badState</span> <span class="o">=</span> <span class="n">BadState</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+        <span class="n">fun</span> <span class="nf">rain</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">rain</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">fun</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">clear</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">fun</span> <span class="nf">vacation</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">state</span><span class="o">?.</span><span class="na">vacation</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>얼핏 보면 스트레티지 패턴과 동일하다고 볼 수 있겠지만 차이점이 있다.<br />
+스트레티지 패턴의 경우는 어떤 알고리즘의 행동 자체를 건네주는 반면 스테이트 패턴의 경우는 비슷하긴 하지만 미리 정해진 상태 전환 규칙을 바탕으로 알아서 자기 상태를 변경하는 점이 다르다.<br />
+구조가 비슷하긴 하지만 용도나 목적이 완전 다르다.</p>
+
+<p>아래는 테스트 결과이다.</p>
+<figure>
+	<img src="/images/2020-08-03-android-state-pattern-02.png" alt="" />
+</figure>
+
+<p>참조 링크
+https://en.wikipedia.org/wiki/State_pattern</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-07-29T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-composite-pattern/">July 29, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-composite-pattern/" rel="bookmark" title="Composite Pattern (디자인 패턴 11장)" itemprop="url">Composite Pattern (디자인 패턴 11장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="컴포지트-패턴-정의">컴포지트 패턴 정의</h3>
+<p>객체들을 트리 구조로 구성하여 부분과 전체를 나타내는 계층구조로 만들 수 있습니다.<br />
+이 패턴을 이용하면 클라이언트에서 개별 객체와 다른 객체들로 구성된 복합 객체를 똑같은 방법으로 다룰 수 있다.</p>
+
+<figure>
+	<img src="/images/2020-07-29-android-composite-pattern-02.png" alt="" />
+</figure>
+
+<h3 id="컴포지트-패턴-언제-사용할까">컴포지트 패턴 언제 사용할까!?</h3>
+<p>식당에 메뉴가 있는데 아침 메뉴 점심 메뉴 저녁메뉴가 있을 수 있고 또 다른 디저트 메뉴 혹은 디저트 메뉴 안에서도 또 다른 메뉴로 나뉘어 질 수 있다.<br />
+이런 식으로 계층 구조로 생각 해야 하는 경우 사용하면 유용하다.</p>
+
+<p>아래의 코드를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">class</span> <span class="nc">CompositePattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">allMenus</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"전체메뉴"</span><span class="o">)</span>
+
+        <span class="n">val</span> <span class="n">breakfastMenu</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"아침메뉴"</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"토스트"</span><span class="o">,</span> <span class="mi">3000</span><span class="o">))</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"삼겹살"</span><span class="o">,</span> <span class="mi">10000</span><span class="o">))</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"김밥"</span><span class="o">,</span> <span class="mi">2500</span><span class="o">))</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="n">val</span> <span class="n">lunchMenu</span> <span class="o">=</span> <span class="n">Menu</span><span class="o">(</span><span class="s">"점심메뉴"</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"ㅄㅎㄱ"</span><span class="o">,</span> <span class="mi">10000</span><span class="o">))</span>
+                <span class="n">add</span><span class="o">(</span><span class="n">MenuItem</span><span class="o">(</span><span class="s">"ㅍㅇㅈ"</span><span class="o">,</span> <span class="mi">3500</span><span class="o">))</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="n">allMenus</span><span class="o">.</span><span class="na">menuComponents</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">add</span><span class="o">(</span><span class="n">breakfastMenu</span><span class="o">)</span>
+            <span class="n">add</span><span class="o">(</span><span class="n">lunchMenu</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">allMenus</span><span class="o">.</span><span class="na">print</span><span class="o">()</span>
+
+    <span class="o">}</span>
+
+    <span class="c1">//Component</span>
+    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">MenuComponent</span> <span class="o">{</span>
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Leaf</span>
+    <span class="kd">class</span> <span class="nf">MenuItem</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">,</span> <span class="kd">private</span> <span class="n">val</span> <span class="nl">price:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">:</span> <span class="n">MenuComponent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"name : $name , price : $price"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">//Composite</span>
+    <span class="kd">class</span> <span class="nf">Menu</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">)</span> <span class="o">:</span> <span class="n">MenuComponent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">menuComponents</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">&lt;</span><span class="n">MenuComponent</span><span class="o">&gt;()</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"name : $name"</span><span class="o">)</span>
+            <span class="n">val</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">menuComponents</span><span class="o">.</span><span class="na">iterator</span><span class="o">()</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">val</span> <span class="n">menuComponent</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
+                <span class="n">menuComponent</span><span class="o">.</span><span class="na">print</span><span class="o">()</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>Leaf 에서는 더 이상 메뉴를 추가,제거 할 수 없다.<br />
+Composite 에서만 가능</p>
+
+<p>아래는 테스트 결과이다.</p>
+<figure>
+	<img src="/images/2020-07-29-android-composite-pattern.png" alt="" />
+</figure>
+
+<p>[사진 자료 출처]
+(https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8_%ED%8C%A8%ED%84%B4#:~:text=%EC%BB%B4%ED%8F%AC%EC%A7%80%ED%8A%B8%20%ED%8C%A8%ED%84%B4(Composite%20pattern)%EC%9D%B4%EB%9E%80,%EB%8F%99%EC%9D%BC%ED%95%98%EA%B2%8C%20%EB%8B%A4%EB%A3%A8%EB%8F%84%EB%A1%9D%20%ED%95%9C%EB%8B%A4.)</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-07-15T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/">July 15, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-template-method-pattern/" rel="bookmark" title="Template Pattern (디자인 패턴 10장)" itemprop="url">Template Pattern (디자인 패턴 10장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="템플릿-메소드-패턴-정의">템플릿 메소드 패턴 정의</h3>
+<p>메소드에서 알고리즘의 골격을 정의한다.<br />
+알고리즘의 여러 단계 중 일부는 서브클래스에서 구현할 수 있습니다.<br />
+템플릿 메소드를 이용하면 알고리즘의 구조는 그대로 유지하면서 서브클래스에서 특정 단계를 재정의할 수 있습니다.</p>
+
+<h4 id="헐리우드-원칙디자인-원칙">헐리우드 원칙(디자인 원칙)</h4>
+<p>먼저 연락하지 마세요. 저희가 연락 드리겠습니다.
+-&gt; 의존성 부패를 방지 할 수 있다.</p>
+
+<h4 id="의존성-부패란">의존성 부패란?</h4>
+<p>고수준 구성요소가 저수준 구성요소에 의존하고 그 저수준 구성요소는 다시 고수준 구성요소에 의존하게 된다면 서로에게 의존성이 있다는걸 알 수 있다.<br />
+이런 현상을 의존성 부패라고 한다.</p>
+
+<h3 id="템플릿-패턴-언제-사용할까">템플릿 패턴 언제 사용할까!?</h3>
+<p>CustomActionBar<br />
+왼쪽 뒤로가기 메뉴 버튼<br />
+타이틀<br />
+흰색 배경</p>
+
+<p>SecondCustomActionBar<br />
+왼쪽 뒤로가기 메뉴 버튼<br />
+타이틀<br />
+분홍색 배경<br />
+오른쪽 즐겨찾기 버튼(CustomActionBar 에는 없음)</p>
+
+<p>두개의 CustomActionBar 가 있다고 가정하고 공통된 부분을 찾아보자.<br />
+왼쪽 뒤로가기 메뉴 버튼은 완전 동일 하고 타이틀과 배경을 셋팅 하는 부분은 타이틀과 배경색은 다르지만 셋팅하는 부분은 공통된 부분이다.<br />
+그리고 오른쪽 즐겨찾기 버튼은 CustomActionBar 에는 존재하지 않는다. 이부분은 hook를 통해서 처리 한다.</p>
+
+<p>아래의 코드를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">TemplateMethodPattern</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">customActionBar</span> <span class="o">=</span> <span class="n">CustomActionBar</span><span class="o">()</span>
+        <span class="n">customActionBar</span><span class="o">.</span><span class="na">prepare</span><span class="o">()</span>
+
+        <span class="n">println</span><span class="o">(</span><span class="s">"----------------------------------------------"</span><span class="o">)</span>
+
+        <span class="n">val</span> <span class="n">secondActionBar</span> <span class="o">=</span> <span class="n">SecondCustomActionBar</span><span class="o">()</span>
+        <span class="n">secondActionBar</span><span class="o">.</span><span class="na">prepare</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ActionBar</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">prepare</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">initTitle</span><span class="o">()</span>
+            <span class="n">initBackButtonView</span><span class="o">()</span>
+            <span class="n">setBackground</span><span class="o">()</span>
+            <span class="n">hook</span><span class="o">()</span>
+        <span class="o">}</span>
+
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">initTitle</span><span class="o">()</span>
+
+        <span class="kd">private</span> <span class="n">fun</span> <span class="nf">initBackButtonView</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"뒤로가기 버튼 셋팅"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">setBackground</span><span class="o">()</span>
+
+        <span class="n">open</span> <span class="n">fun</span> <span class="nf">hook</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">CustomActionBar</span> <span class="o">:</span> <span class="n">ActionBar</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//왼쪽 뒤로가기 메뉴 버튼</span>
+        <span class="c1">//타이틀 셋팅</span>
+        <span class="c1">//흰색 배경</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">initTitle</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Title: CustomActionBar"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">setBackground</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"흰색 배경"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">SecondCustomActionBar</span> <span class="o">:</span> <span class="n">ActionBar</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">//왼쪽 뒤로가기 메뉴 버튼</span>
+        <span class="c1">//타이틀 셋팅</span>
+        <span class="c1">//분홍색 배경</span>
+        <span class="c1">//오른쪽 즐겨찾기 버튼(CustomActionBar 에는 없음)</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">initTitle</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Title : SecondCustomActionBar"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">setBackground</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"분홍색 배경"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">hook</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"오른쪽 즐겨찾기 버튼 셋팅"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>아래는 테스트 결과이다.</p>
+
+<figure>
+	<img src="/images/2020-07-15-android-template-pattern.png" alt="" />
+</figure>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-07-13T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-facade-pattern/">July 13, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-facade-pattern/" rel="bookmark" title="Facade Pattern (디자인 패턴 9장)" itemprop="url">Facade Pattern (디자인 패턴 9장)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="퍼사드-패턴-정의">퍼사드 패턴 정의</h3>
+<p>어떤 서브시스템의 일련의 인터페이스에 대한 통합된 인터페이스를 제공합니다.<br />
+퍼사드에서 고수준 인터페이스를 정의하기 때문에 서브시스템을 더 쉽게 사용할 수 있습니다.</p>
+
+<p>디자인 원칙 
+최소 지식 원칙 - 정말 친한 친구하고만 얘기하라.</p>
+
+<h3 id="퍼사드-패턴-언제-사용할까">퍼사드 패턴 언제 사용할까!?</h3>
+
+<p>아래의 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">class</span> <span class="nc">FacadePattern</span> <span class="o">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">computerFacade</span> <span class="o">=</span> <span class="n">ComputerFacade</span><span class="o">(</span><span class="n">Monitor</span><span class="o">(),</span> <span class="n">Speaker</span><span class="o">())</span>
+        <span class="n">computerFacade</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"----------------------------------"</span><span class="o">)</span>
+        <span class="n">computerFacade</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">ComputerFacade</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">monitor:</span> <span class="n">Monitor</span><span class="o">,</span> <span class="kd">private</span> <span class="n">val</span> <span class="nl">speaker:</span> <span class="n">Speaker</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">monitor</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
+            <span class="n">speaker</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
+            <span class="n">speaker</span><span class="o">.</span><span class="na">volume</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="o">}</span>
+
+        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">speaker</span><span class="o">.</span><span class="na">volume</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">speaker</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+            <span class="n">monitor</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">Monitor</span> <span class="o">{</span>
+        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Monitor on"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Monitor off"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">Speaker</span> <span class="o">{</span>
+        <span class="kt">var</span> <span class="n">volume</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">set</span><span class="o">(</span><span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">println</span><span class="o">(</span><span class="s">"volume set : $value"</span><span class="o">)</span>
+                <span class="n">field</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="o">}</span>
+
+        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Speaker on"</span><span class="o">)</span>
+        <span class="o">}</span>
+
+        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">println</span><span class="o">(</span><span class="s">"Speaker off"</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>위의 코드를 보면 클라이언트 입장에서 ComputerFacade 만 알고 있으면 컴퓨터를 키고 끄는데 문제가 없다.<br />
+위의 클래스들은 간단하게 구현 했기때문에 쉽게 보일 수 있지만 컴퓨터가 부팅 되는 과정 까지 모두 포함된 내용을 클라이언트에서 알아야 한다면!?<br />
+클라이언트 입장에서 컴퓨터를 키는 도중에 지쳐서 그만둘지도 모른다.<br />
+이런 과정들을 최소한으로만 알게 하기 위해 퍼사드 패턴을 사용한다.<br />
+아래는 테스트 결과 이다.</p>
+
+<figure>
+	<img src="/images/2020-07-13-android-facade-pattern.png" alt="" />
 </figure>
 
       
@@ -881,7 +882,7 @@ Manifest.permission.ACCESS_BACKGROUND_LOCATION
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -936,7 +937,7 @@ Manifest.permission.ACCESS_BACKGROUND_LOCATION
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

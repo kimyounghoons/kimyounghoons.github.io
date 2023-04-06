@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00"><a href="http://localhost:4000/git/sourcetree/require-accountinfo-post/">December 18, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-barcode/">November 13, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,317 +298,46 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/git/sourcetree/require-accountinfo-post/" rel="bookmark" title="SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우" itemprop="url">SourceTree에서 Pull,Push,Fetch 할 때 계속 계정 요청 하는 경우</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-barcode/" rel="bookmark" title="DS6 Barcode (Android 7.1 Nougat)" itemprop="url">DS6 Barcode (Android 7.1 Nougat)</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>Window 사용할때는 이런일 없었는데 맥북 쓰면서 SourceTree 에서 계정 입력 요청이 계속 떠서 구글링 해서 해결 방법을 찾았다.</p>
+      <h3 id="기기명--ds6-android-71-nougat">기기명 : DS6 (Android 7.1 Nougat)</h3>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">config</span> <span class="n">credential</span><span class="p">.</span><span class="nf">helper</span> <span class="n">store</span>    </code></pre></figure>
-
-<p>입력해주면 해결완료!
-그다음부터는 계정 요청을 하지않는다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-12-18T00:00:00+09:00"><a href="http://localhost:4000/android/constraintlayout-post/">December 18, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/constraintlayout-post/" rel="bookmark" title="ConstraintLayout 사용" itemprop="url">ConstraintLayout 사용</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>ConstraintLayout 의 강점을 살려보자.</p>
-
-<figure class="half">
-	<img src="/images/2018-12-18-constraintlayout-01.png" alt="" />
-    <img src="/images/2018-12-18-constraintlayout-02.png" alt="" />
-	<figcaption>초록색 링이 꺼졌다 켜졌다 해야할 때 layout 어떻게 배치 할까!?</figcaption>
-</figure>
-
-<p>보통 디자이너 분들은 해당 다운로드 이미지, 공유 이미지,초록색 링 이미지 이렇게 주신다.
-RelativeLayout을 사용하게 되면 만들기가 쉽지 않다. 
-기존에 RelativeLayout을 사용했을 때는 다운로드 이미지, 공유 이미지, 초록색 링이 포함된 다운로드 이미지 , 초록색 링이 포함된 공유 이미지 이렇게 받아서 작업을했다.
-하지만 ConstraintLayout 을 사용했을 때 이런 문제점을 해결할 수 있었다. 물론 RelativeLayout 으로도 아마 가능할수도 있을지 모르지만 쉽게 떠오르지 않았다.</p>
-
-<p>여기서 키워드는 GuideLine 과 ConstraintGroup 이다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
-<span class="nt">&lt;android.support.constraint.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
-    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
-    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-    <span class="na">android:animateLayoutChanges=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-
-    <span class="nt">&lt;View</span>
-        <span class="na">android:id=</span><span class="s">"@+id/bottom_background"</span>
-        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-        <span class="na">android:layout_height=</span><span class="s">"80dp"</span>
-        <span class="na">android:background=</span><span class="s">"@color/take_bottom_black"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"parent"</span> <span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;android.support.constraint.Guideline</span>
-        <span class="na">android:id=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
-        <span class="na">android:layout_height=</span><span class="s">"1dp"</span>
-        <span class="na">android:orientation=</span><span class="s">"horizontal"</span>
-        <span class="na">app:layout_constraintGuide_end=</span><span class="s">"40dp"</span> <span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;android.support.constraint.Guideline</span>
-        <span class="na">android:id=</span><span class="s">"@+id/guideline_share"</span>
-        <span class="na">android:layout_width=</span><span class="s">"1dp"</span>
-        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-        <span class="na">android:orientation=</span><span class="s">"vertical"</span>
-        <span class="na">app:layout_constraintGuide_percent=</span><span class="s">"0.33333"</span> <span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;android.support.constraint.Guideline</span>
-        <span class="na">android:id=</span><span class="s">"@+id/guideline_down"</span>
-        <span class="na">android:layout_width=</span><span class="s">"1dp"</span>
-        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
-        <span class="na">android:orientation=</span><span class="s">"vertical"</span>
-        <span class="na">app:layout_constraintGuide_percent=</span><span class="s">"0.666666"</span><span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;ImageView</span>
-        <span class="na">android:id=</span><span class="s">"@+id/share_button"</span>
-        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:src=</span><span class="s">"@drawable/take_btn_finish_share"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span>
-        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_share"</span>
-        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@+id/guideline_share"</span>
-        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;ImageView</span>
-        <span class="na">android:id=</span><span class="s">"@+id/down_button"</span>
-        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:src=</span><span class="s">"@drawable/take_btn_finish_save"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span>
-        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_down"</span>
-        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_down"</span>
-        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
-
-
-    <span class="nt">&lt;ImageView</span>
-        <span class="na">android:id=</span><span class="s">"@+id/image_share_guide"</span>
-        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:src=</span><span class="s">"@drawable/quick_round_03"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_share"</span>
-        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_share"</span>
-        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;ImageView</span>
-        <span class="na">android:id=</span><span class="s">"@+id/image_download_guide"</span>
-        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:src=</span><span class="s">"@drawable/quick_round_03"</span>
-        <span class="na">app:layout_constraintBottom_toBottomOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span>
-        <span class="na">app:layout_constraintEnd_toEndOf=</span><span class="s">"@+id/guideline_down"</span>
-        <span class="na">app:layout_constraintStart_toStartOf=</span><span class="s">"@id/guideline_down"</span>
-        <span class="na">app:layout_constraintTop_toTopOf=</span><span class="s">"@+id/guideline_bottom_center_horizontal"</span> <span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;android.support.constraint.Group</span>
-        <span class="na">android:id=</span><span class="s">"@+id/group_quick_guide"</span>
-        <span class="na">android:layout_width=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
-        <span class="na">android:visibility=</span><span class="s">"gone"</span>
-        <span class="na">app:constraint_referenced_ids=</span><span class="s">"image_share_guide,image_download_guide"</span> <span class="nt">/&gt;</span>
-
-<span class="nt">&lt;/android.support.constraint.ConstraintLayout&gt;</span>
-</code></pre></div></div>
-
-<p>해당 이미지의 Layout 이다.
-가로 세로의 각각 GuideLine 을 설정 한 후 각 뷰는 부모의 뷰에서 몇 dp 만큼 떨어진게 아니라 기준점이 GuideLine 이 되는 것이다.
-쉽게 만들수 있다. 그리고 ConstraintGroup을 만들어서 referenceIds 에 뷰들이 GONE처리 되어야 하는 아이디들을 넣어 주면 된다.
-group_quick_guide 를 찾아서 Visible Gone 처리를 해주면 참조한 뷰들이 모두 적용된다.
-매우 편리하다!!ㅎㅎ</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-12-04T00:00:00+09:00"><a href="http://localhost:4000/android/android-locale/">December 04, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-locale/" rel="bookmark" title="Locale" itemprop="url">Locale</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>문제점 : 다국어 지원 앱
-다국어 지원을 위한 라이브러리를 사용해서 앱을 실행할 때 다국어 지원 관련 셋팅을 하게 된다.
-간체,번체의 경우 language 와 country 두가지 모두 사용해서 구분을 하게 된다.
-하지만 지역별로 이벤트를 설정 할 경우 locale 지역 정보를 가져올때 시스템에 설정된 지역 정보가 아닌 앱에서 설정된 지역을 가져오기때문에 문제</p>
-
-<p>해결 : Application Class 에서 다국어 관련 Locale 을 셋팅 하기 전 country 정보를 미리 SharedPreference 에 저장해 놓고 필요한 경우 가져 온다. 시스템 언어를 변경 할 경우 onConfigurationChanged 가 불리게 되어서 여기서 다시 지역 정보를 갱신 시켜 주어야 한다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Application Class
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        PreferenceManager.getDefaultSharedPreferences(this)
-        .edit()
-        .putString(getString(R.string.pref_key_system_country), Locale.getDefault().getCountry())
-        .apply();
-        LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
-    }
-
-      @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.getLocales().get(0) != null) { //첫번째가 변경된 Locale 정보를 가진다.
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.pref_key_system_country), newConfig.getLocales().get(0).getCountry()).apply();
-        }
-        LocaleChanger.onConfigurationChanged();
-    }
-
-</code></pre></div></div>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-27T00:00:00+09:00"><a href="http://localhost:4000/android/notification/android-notification/">November 27, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/notification/android-notification/" rel="bookmark" title="Notification" itemprop="url">Notification</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h1 id="안드로이드-푸시-팝업">안드로이드 푸시 팝업</h1>
-
-<p>순서</p>
+<p>기본적으로 바코드 트레이라는 앱이 설치 되어있습니다.<br />
+이 앱 안에서 스캔 설정을 할 수 있습니다.<br />
+스캔 타임, 데이터 수신 방식, 인식 성공시 알림 등등 여러가지가 있습니다.<br />
+여기서 중요한 데이터 수신 방식(3가지)에 대해 알아 보겠습니다.</p>
 
 <ol>
-  <li>NotificationManager 얻어옴</li>
-  <li>오레오 버전 이상이면 Channel 생성 아니면 패스</li>
-  <li>PendingIntent생성</li>
-  <li>NotificationCompat 생성</li>
-  <li>빌드한 Notification을 notificationManager에 붙여주면 끝!</li>
-  <li>Notification 클릭 시 핸들</li>
+  <li>INTERNET_EVENT</li>
+  <li>KEYBOARD_EVENT</li>
+  <li>CLIPBOARD_EVENT</li>
 </ol>
 
-<p>1.NotificationManager 얻어옴</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-</code></pre></div></div>
+<h3 id="internet_event-방식">INTERNET_EVENT 방식</h3>
+<p><strong>BroadcastReceiver</strong> 로 데이터를 받아 올 수 있습니다.</p>
 
-<p>2.오레오 버전 이상이면 Channel 생성 아니면 패스</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(getString(R.string.app_name) + getString(R.string.priority_high), getString(R.string.app_name) + getString(R.string.priority_high), NotificationManager.IMPORTANCE_HIGH)
-                channel.description = getString(R.string.app_name) + getString(R.string.priority_high)
-                channel.enableLights(true)
-                channel.lightColor = Color.BLUE
-                channel.enableVibration(true)
-                channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
-                channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
-                notificationManager.createNotificationChannel(channel)
-            }
-</code></pre></div></div>
+<p>ActionName : <strong>app.dsic.barcodetray.BARCODE_BR_DECODING_DATA</strong></p>
 
-<p>Channel 생성 시 IMPORTANCE 설정에 따라 알림이 다르다.
-NotificationManager.IMPORTANCE_HIGH :소리 및 팝업 (헤드업 알림)
-NotificationManager.IMPORTANCE_DEFAULT : 소리
-NotificationManager.IMPORTANCE_LOW : 소리 없음  <br />
-NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
+<p>BarcodeData : <strong>EXTRA_BARCODE_DECODED_DATA</strong></p>
 
-<p>3.PendingIntent생성</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val intent = Intent(applicationContext, MainActivity::class.java)
-            remoteMessage.data?.apply {
-                intent.putExtra(JSON_LETTER, get(JSON_LETTER))
-                intent.putExtra(JSON_ANSWER, get(JSON_ANSWER))
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            }
-   val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-</code></pre></div></div>
+<p>해당 액션이름으로 이벤트를 받을 수 있고 <strong>EXTRA_BARCODE_DECODED_DATA</strong> 키 값으로 intent 에 담겨 오는 데이터를 가져올 수 있습니다.</p>
 
-<p>알림 팝업을 누르게 되면 PendingIntent 에 실어 두었던 Intent 정보를 가져와서 사용할 수 있다.</p>
+<p>이 방식으로 데이터를 받을 경우 EditText 에 포커스가 되어 있어도 브로드캐스트리시버로 데이터가 넘어 왔기 때문에 EditText 에 입력 되지 않습니다.</p>
 
-<p>4.NotificationCompat 생성</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   val builder = NotificationCompat.Builder(applicationContext, getString(R.string.app_name) + getString(R.string.priority_high))
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(title)
-                    .setContentText(body)
-                    .setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent)
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-</code></pre></div></div>
+<h3 id="keyboard_event-방식">KEYBOARD_EVENT 방식</h3>
+<p>바코드 스캔 할 때 EditText 포커스 된 경우만 데이터가 셋팅 됩니다.</p>
 
-<p>5.빌드한 Notification을 notificationManager에 붙여주면 끝!</p>
+<p><span style="color:red">주의 사항</span><br />
+이 방식은 실제로 키보드 타이핑하는 방법과 같습니다.<br />
+키보드가 한글로 셋팅 되어 있을 경우 스캔한 내용이 영어일지라도 한글 키보드로 입력한것 처럼 됩니다.<br />
+rladudgns0837 내용을 스캔한경우 김영훈0837 이런식으로 입력되기 때문에 주의해야합니다.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notificationManager.notify(1, builder.build())
-</code></pre></div></div>
+<p>키보드가 안보일 경우도 똑같이 적용됩니다.</p>
 
-<p>6.Notification 클릭 시 핸들</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.apply {
-            if (intent.extras.getString(JSON_ANSWER) != null) {
-                val jsonLetter = intent.extras.getString(JSON_LETTER)
-                val jsonAnswer = intent.extras.getString(JSON_ANSWER, EMPTY)
-                if (supportFragmentManager.backStackEntryCount &gt; 0) {
-                    if (jsonLetter == null) {
-                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
-                        openReAnswers(answer)
-                    } else {
-                        openReAnswers(jsonLetter, jsonAnswer)
-                    }
-                    return
-                } else {
-                    openHome()
-                    if (jsonLetter == null) {
-                        val answer = Gson().fromJson(jsonAnswer, Answer::class.java)
-                        openReAnswers(answer)
-                    } else {
-                        openReAnswers(jsonLetter, jsonAnswer)
-                    }
-                    return
-                }
-            }
-        }
-    }
-</code></pre></div></div>
-
-<p>Notification 클릭 시 onNewIntent 메소드 호출 되는데 여기서 intent에 넣어 두었던 데이터를 사용하면 된다.</p>
+<h3 id="clipboard_event-방식">CLIPBOARD_EVENT 방식</h3>
+<p>바코드 스캔 할 때 클립보드에 복사되고 EditText에 포커스 되어 있을 경우만 데이터 셋팅 됩니다. 키보드 타이핑 방식은 아니기 때문에 키보드가 영어, 한국어 무관합니다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -618,7 +347,7 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2018-11-20T00:00:00+09:00"><a href="http://localhost:4000/firebase/firebase-push/">November 20, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2019-10-29T00:00:00+09:00"><a href="http://localhost:4000/android/android-FragmentStatePagerAdapter/">October 29, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -628,58 +357,238 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/firebase/firebase-push/" rel="bookmark" title="Firebase Push Test in Postman" itemprop="url">Firebase Push Test in Postman</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-FragmentStatePagerAdapter/" rel="bookmark" title="FragmentStatePagerAdapter" itemprop="url">FragmentStatePagerAdapter</a></h1>
     
   </header>
   <div class="entry-content">
-      <h1 id="포스트맨에서-파이어베이스-푸시-테스트">포스트맨에서 파이어베이스 푸시 테스트!!</h1>
+      <p>FragmentStatePagerAdapter 안에서 사용 되는 Fragment 의 경우 현재 보여지는 Fragment 를 인식 하기 위해</p>
 
-<p>POST 형식 url : https://fcm.googleapis.com/fcm/send</p>
+<h2 id="기존-방법deprecated">기존 방법(Deprecated)</h2>
+<p>setUserVisibleHint(isVisibleToUser : Boolean) method를 오버라이드 해서 사용하였다.</p>
 
-<h3 id="headers">Headers</h3>
+<h2 id="새로운-방법">새로운 방법</h2>
+<p>FragmentStatePagerAdapter 생성자부분에서 두번째 파라미터가 생겼는데 BEHAVIOR_SET_USER_VISIBLE_HINT,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 두가지 값으로 나뉘어진다. BEHAVIOR_SET_USER_VISIBLE_HINT 는 deprecated 되었고 BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 를 권장 사용하게 한다.</p>
 
-<table rules="groups">
-  <thead>
-    <tr>
-      <th style="text-align: left">KEY</th>
-      <th style="text-align: center">VALUE</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">Authorization</td>
-      <td style="text-align: center">key= server key</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Content-Type</td>
-      <td style="text-align: center">application/json</td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-  </tbody>
-</table>
+<figure>
+	<img src="/images/20191029_Android_FragmentStatePagerAdapter.png" alt="" />
+</figure>
+<p><a href="https://developer.android.com/reference/androidx/fragment/app/FragmentStatePagerAdapter.html#BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT">https://developer.android.com/reference/androidx/fragment/app/FragmentStatePagerAdapter.html#BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT</a></p>
 
-<h3 id="body-raw-applicationjson">Body raw (application/json)</h3>
+<p>아래와 같이 사용하면 된다~!</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "to":"받을 사람 firebase token key",
-    "notification":{
-      "title":"제목",
-      "body":"바디"
-      ...
-    },
-    "data" : {
-      "letterId" : "CUXbq8XrXOBOw8bWfMkz"
-      ...
+<p>Adapter 예시</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainAdapter(fm: FragmentManager) :
+    FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    }
+</code></pre></div></div>
+
+<p>Fragment 예시</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>override fun onPause() {
+        super.onPause()
+        //Fragment 가려질 때 처리
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Fragment 보여질 때 처리
+    }
+</code></pre></div></div>
+
+<p>그리고 마지막으로
+만약 onResume 이나 onPause가 두번 불리게 된다면 다른 Listener 를 통해 해당 프래그먼트가 불리고 있지 않은지 체크 해봐야한다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-10-15T00:00:00+09:00"><a href="http://localhost:4000/android/android-notifyDataSetChanged/">October 15, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-notifyDataSetChanged/" rel="bookmark" title="notifyDataSetChanged()" itemprop="url">notifyDataSetChanged()</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h2 id="문제">문제</h2>
+<p>notifyDataSetChanged() 호출 시 RecyclerView 리스트가 갱신이 되지 않는 문제</p>
+
+<h2 id="문제-해결">문제 해결</h2>
+<p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()">https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#notifyDataSetChanged()</a></p>
+
+<p>LayoutManagers will be forced to fully rebind and relayout all visible views.</p>
+
+<p>문서에 의하면 뷰가 Gone 상태 일때는 갱신이 일어나지 않는다.</p>
+
+<p>그래서 Invisible 상태로 두고 갱신시켜 줘서 해결 함.</p>
+
+<h2 id="회고">회고</h2>
+<p>처음에는 data 가 제대로 들어가 있지 않은것 같아서 확인 했는데 정상적으로 들어가 있었고<br />
+두번째는 adapter 의 data list 의 참조 문제를 의심해서 한 곳에서 list 를 만들고 해당 리스트를 다른곳에서도 같이 바라보게 했지만 그대로 문제가 발생<br />
+세번째는 뷰가 바인딩 되지 않는 것을 보고 이상하게 생각해서 뷰를 가리지 않고 그대로 하니 잘 나옴..<br />
+뷰의 visible 상태에 뭔가 문제가 있다고 생각해서 다큐먼트를 찾아 보니.. 위의 글이 있었다.<br />
+좀 더 정확히 알고 사용하는 버릇을 들여야 할 것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-10-07T00:00:00+09:00"><a href="http://localhost:4000/android/android-lottie/">October 07, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-lottie/" rel="bookmark" title="애니메이션 UI 대응 로티 라이브러리" itemprop="url">애니메이션 UI 대응 로티 라이브러리</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>UI 작업을 하다보면 애니메이션 효과는 피할래야 피할수 없다.<br />
+하지만 처음 디자인팀으로부터 전달 받는 경우 여러 효과가 있을 때 각 효과에 대해 정확한 데이터를 받는 경우는 드물다.<br />
+그렇기 때문에 우선 작업하고 디자인QA 를 거치는 경우가 많다.<br />
+하지만 이 lottie 라이브러리를 사용하게 되면 개발자와 디자인 작업자 모두 행복해 질 수 있다.<br />
+안드로이드 뿐만아니라 IOS , React Native , Web , Window 다 지원하기 때문에 Json파일만 있으면 모두 동일한 애니메이션을 만들 수 있다.</p>
+
+<p>디자인팀에 해당 애니메이션을 json 파일로 보내달라고 요청하면 받을 수 있는데 해당 파일만 있으면 Ok!</p>
+
+<p>사용법은 쉽기 때문에 업로드 하지 않는다.<br />
+하지만 사용하면서 RecyclerView 에서 사용하는 경우 2가지 이슈를 발견 했다.</p>
+
+<p>첫번째 : 나는 한번만 실행 하고 싶은데 스크롤 시 계속 애니메이션 실행 되는 이슈가 있었다.<br />
+라이브러리 내부 코드를 보니 애니메이션이 다 끝나기 전에 해당 뷰가 Detach 되는 경우 Attach 될 때 강제로 animation을 실행 시키고 있었다.<br />
+그래서 다음과 같이 Detach 될때 애니메이션을 강제로 취소시켰다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Override
+public void onViewDetachedFromWindow(@NonNull ViewHolderGeneric holder) {
+    super.onViewDetachedFromWindow(holder);
+    if (holder instanceof LottieViewHolder) {
+        ((LottieViewHolder) holder).cancelLottieAnimation(); //아래에 LottieViewHolder method 
+    }
+}
+
+//method in LottieViewHolder
+public void cancelLottieAnimation() {
+    if (lottieAnimation.isAnimating()) {
+        lottieAnimation.cancelAnimation();
+        lottieAnimation.setProgress(1f);
     }
 }
 </code></pre></div></div>
 
-<p>보내면 push 가 성공적으로 200 떨어진다.</p>
+<p>두번째 : 핸들러 사용 하지 않으면 playAnimation 정상 작동 하지 않는 이슈.<br />
+아래와 같이 처리해주었다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new Handler().post(() -&gt; lottieAnimation.playAnimation());
+</code></pre></div></div>
+
+<p>이제는 편하게 애니메이션 적용해보자~!ㅎㅎ</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2019-08-22T00:00:00+09:00"><a href="http://localhost:4000/android/android-rxjava-debounce/">August 22, 2019</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-rxjava-debounce/" rel="bookmark" title="카운트 연속 클릭 시 마지막 카운트 api 호출 상황" itemprop="url">카운트 연속 클릭 시 마지막 카운트 api 호출 상황</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데…<br />
+RxKotlin을 사용하면 간단하게 처리 할 수 있다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class MainActivity : AppCompatActivity() {
+
+    var count = 0
+    val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    var publishSubject: PublishSubject&lt;String&gt; = PublishSubject.create()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        button.setOnClickListener {
+            textView.text = (++count).toString()
+            publishSubject.onNext(count.toString())
+            Log.d("kyh", "count : $count")
+        }
+
+        compositeDisposable.add(publishSubject
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+            .subscribe { string -&gt;
+                Toast.makeText(this, "publishSubject 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
+            })
+
+        compositeDisposable.add(RxTextView.textChanges(textView)
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .map { charSequence -&gt; charSequence.toString() }
+            .filter {
+                !it.equals("Hello World!")
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+            .subscribe { string -&gt;
+                Toast.makeText(this, "RxBinding 사용~! api에 보낼 카운트 : $string", Toast.LENGTH_LONG).show()
+            }
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+}
+</code></pre></div></div>
+
+<p>debounce 를 사용하면 편하게 처리할 수 있다.
+위의 소스는 PublishSubject 와 RxBidning Library의 RxTextView 를 사용한 예제 소스</p>
+
+<p>둘중 마음에 드는 걸로 사용하면 됨</p>
+
+<p>rx 문서에서는 debounce 를 <br />
+only emit an item from an Observable if a particular timespan has passed without it emitting another item  <br />
+라고 소개 한다.</p>
+
+<p>아이템이 들어오다가 지정한 시간동안 아이템이 들어오지 않는 경우 마지막 아이템을 subscribe 를 통해 값을 보내준다.
+rx 는 마블을 보고 이해 하는게 제일 좋은 것 같다. 직관적으로 이해가 잘됨.</p>
+
+<figure>
+	<img src="/images/2019-08-22-android-rxjava-debounce.png" alt="" />
+	<figcaption>출처 http://reactivex.io/documentation/operators/debounce.html</figcaption>
+</figure>
 
       
   </div><!-- /.entry-content -->
@@ -752,7 +661,7 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -807,7 +716,7 @@ NotificationManager.IMPORTANCE_MIN : 소리 및 시각적 알림 없음</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

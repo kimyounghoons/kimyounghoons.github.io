@@ -287,14 +287,8 @@
 <article class="hentry">
   <header>
     
-      <div class="entry-image-index">
-        <a href="http://localhost:4000/sample/sample-post/" title="Android!!!"><img src="http://localhost:4000/images/feature.jpg" alt="Android!!!"></a>
-        <div class="image-credit">Image source: <a target="_blank" href="http://www.dargadgetz.com/ios-8-abstract-wallpaper-pack-for-iphone-5s-5c-and-ipod-touch-retina/">dargadgetz</a></div><!-- /.image-credit -->
-
-      </div><!-- /.entry-image -->
-    
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-12-02T00:00:00+09:00"><a href="http://localhost:4000/sample/sample-post/">December 02, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2018-11-13T00:00:00+09:00"><a href="http://localhost:4000/android/android-share-post/">November 13, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -304,147 +298,30 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/sample/sample-post/" rel="bookmark" title="Android!!!" itemprop="url">Android!!!</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-share-post/" rel="bookmark" title="share Intent" itemprop="url">share Intent</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>Below is just about everything you’ll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.</p>
+      <h1 id="안드로이드-외부-공유">안드로이드 외부 공유</h1>
 
-<h1 id="heading-1">Heading 1</h1>
+<p>외부공유 소스</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>String title = context.getString(R.string.title);
+String plainContent = context.getString(R.string.plain_content);
+String htmlContent = context.getString(R.string.html_content);
 
-<h2 id="heading-2">Heading 2</h2>
-
-<h3 id="heading-3">Heading 3</h3>
-
-<h4 id="heading-4">Heading 4</h4>
-
-<h5 id="heading-5">Heading 5</h5>
-
-<h6 id="heading-6">Heading 6</h6>
-
-<h3 id="body-text">Body text</h3>
-
-<p>Lorem ipsum dolor sit amet, test link adipiscing elit. <strong>This is strong</strong>. Nullam– dignissim convallis est. Quisque aliquam.</p>
-
-<p class="image-right"><img src="http://localhost:4000/images/3953273590_704e3899d5_m.jpg" alt="Smithsonian Image" /></p>
-
-<p><em>This is emphasized</em>. Donec faucibus. Nunc iaculis suscipit dui. 53 = 125. Water is H<sub>2</sub>O. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. The New York Times <cite>(That’s a citation)</cite>. <u>Underline</u>. Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.</p>
-
-<p>HTML and <abbr title="cascading stylesheets">CSS<abbr> are our tools. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus.</abbr></abbr></p>
-
-<p>If you want to show just a part of your post in the come page, add the <code class="highlighter-rouge">&lt;!-- more --&gt;</code> tag to your post content. Everything after this tag will be hidden from the page listing page.</p>
-
-<h3 id="blockquotes">Blockquotes</h3>
-
-<blockquote>
-  <p>Lorem ipsum dolor sit amet, test link adipiscing elit. Nullam dignissim convallis est. Quisque aliquam.</p>
-</blockquote>
-
-<h2 id="list-types">List Types</h2>
-
-<h3 id="ordered-lists">Ordered Lists</h3>
-
-<ol>
-  <li>Item one
-    <ol>
-      <li>sub item one</li>
-      <li>sub item two</li>
-      <li>sub item three</li>
-    </ol>
-  </li>
-  <li>Item two</li>
-</ol>
-
-<h3 id="unordered-lists">Unordered Lists</h3>
-
-<ul>
-  <li>Item one</li>
-  <li>Item two</li>
-  <li>Item three</li>
-</ul>
-
-<h2 id="tables">Tables</h2>
-
-<table rules="groups">
-  <thead>
-    <tr>
-      <th style="text-align: left">Header1</th>
-      <th style="text-align: center">Header2</th>
-      <th style="text-align: right">Header3</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">cell1</td>
-      <td style="text-align: center">cell2</td>
-      <td style="text-align: right">cell3</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">cell4</td>
-      <td style="text-align: center">cell5</td>
-      <td style="text-align: right">cell6</td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td style="text-align: left">cell1</td>
-      <td style="text-align: center">cell2</td>
-      <td style="text-align: right">cell3</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">cell4</td>
-      <td style="text-align: center">cell5</td>
-      <td style="text-align: right">cell6</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td style="text-align: left">Foot1</td>
-      <td style="text-align: center">Foot2</td>
-      <td style="text-align: right">Foot3</td>
-    </tr>
-  </tfoot>
-</table>
-
-<h2 id="code-snippets">Code Snippets</h2>
-
-<p>Syntax highlighting via Pygments</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#container</span> <span class="p">{</span>
-  <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
-  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
-  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>Non Pygments code example</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="awesome"&gt;
-    &lt;p&gt;This is great isn't it?&lt;/p&gt;
-&lt;/div&gt;
+Intent shareIntent = new Intent(Intent.ACTION_SEND);
+shareIntent.setType("text/plain");
+shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
+shareIntent.putExtra(Intent.EXTRA_TEXT, plainContent);
+shareIntent.putExtra(Intent.EXTRA_HTML_TEXT, htmlContent);
+context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_text)));
 </code></pre></div></div>
 
-<h2 id="buttons">Buttons</h2>
-
-<p>Make any link standout more when applying the <code class="highlighter-rouge">.btn</code> class.</p>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"btn btn-success"</span><span class="nt">&gt;</span>Success Button<span class="nt">&lt;/a&gt;</span></code></pre></figure>
-
-<div><a href="#" class="btn">Primary Button</a></div>
-<div><a href="#" class="btn btn-success">Success Button</a></div>
-<div><a href="#" class="btn btn-warning">Warning Button</a></div>
-<div><a href="#" class="btn btn-danger">Danger Button</a></div>
-<div><a href="#" class="btn btn-info">Info Button</a></div>
-
-<h2 id="post-featured-image">Post Featured Image</h2>
-
-<p>To show an image banner at top of your post, use add the following code:</p>
-
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">image</span><span class="pi">:</span>
-    <span class="na">feature</span><span class="pi">:</span> <span class="s">&lt;name of the image&gt;</span>
-    <span class="na">credit</span><span class="pi">:</span> <span class="s">&lt;source of the image - optional&gt;</span>
-    <span class="na">creditlink</span><span class="pi">:</span> <span class="s">&lt;source of the image (url) - optional&gt;</span></code></pre></figure>
-
-<p>The image must be in the <code class="highlighter-rouge">/images</code> folder.</p>
+<p>Intent.EXTRA_TEXT , Intent.EXTRA_HTML_TEXT  두가지 타입 모두 보내준다.
+앱을 통해 공유 하게 되면 선택 되는 앱이 다양하기 때문에 그냥 TEXT 정보를 가져가는 앱이 있고 HTML_TEXT 정보를 가져가는 앱이 있다.
+Content 내용에 링크를 걸지 않는 다면 Intent.EXTRA_TEXT 만 작성하더라도 괜찮다.
+HTML_TEXT 가 없을 경우 EXTRA_TEXT 정보를 가져간다.
+G-mail 경우는 Intent.EXTRA_TEXT 만 넣어 줬을 때도 링크가 걸리는걸 볼수 있었다. 몇몇 앱은 지원이 되지만 안되는 예외 사항이 있기 때문에 모두 지원 하려면 HTML_TEXT를 같이 넣어 주는게 좋다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -454,7 +331,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-12-01T00:00:00+09:00"><a href="http://localhost:4000/sample/code-highlighting-post/">December 01, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2018-11-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-firestore-post/">November 12, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -464,68 +341,72 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/sample/code-highlighting-post/" rel="bookmark" title="Syntax Highlighting Post" itemprop="url">Syntax Highlighting Post</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-firestore-post/" rel="bookmark" title="index in firestore" itemprop="url">index in firestore</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+      <h1 id="파이어스토어-색인을-이용한-복합쿼리">파이어스토어 색인을 이용한 복합쿼리</h1>
 
-<h3 id="rouge-code-blocks">Rouge Code Blocks</h3>
+<p>기존 Realtime Database 는 다중 쿼리를 지원하지 않아서 다중 쿼리 처럼 사용하기 위해서 필드를 하나 더 만들어야 하는 번거러움이 있었다.
+하지만 firestore는 색인을 사용해서 다중 쿼리를 사용할 수 있다.</p>
 
-<p>To modify styling and highlight colors edit <code class="highlighter-rouge">/_sass/_rouge.scss</code>.</p>
+<figure>
+	<img src="/images/2018-11-12-index_in_firestore.png" alt="" />
+	<figcaption>FireStore 데이터 베이스의 컬렉션 ID로 구분 된다.</figcaption>
+</figure>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#container</span> <span class="p">{</span>
-    <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
-    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
-    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
-<span class="p">}</span></code></pre></figure>
+<p>처음 색인을 보면 answer 컬렉션 ID 를 가지는 곳에 다중 쿼리를 사용할 수 있는 것은 letterId, time 을 이용한 쿼리를 사용할 수있다.
+letterId, answerId 라고 다중 쿼리를 사용하게 되면 등록된 색인이 없기 때문에 쿼리를 사용했을 때 fail로 응답이 온다.
+추가적으로 더 많은 필드를 원하면 3개이상도 가능 하다.</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"pagination"</span> <span class="na">role=</span><span class="s">"navigation"</span><span class="nt">&gt;</span>
-    {% if page.previous %}
-        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.url }}{{ page.previous.url }}"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"{{ page.previous.title }}"</span><span class="nt">&gt;</span>Previous article<span class="nt">&lt;/a&gt;</span>
-    {% endif %}
-    {% if page.next %}
-        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.url }}{{ page.next.url }}"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"{{ page.next.title }}"</span><span class="nt">&gt;</span>Next article<span class="nt">&lt;/a&gt;</span>
-    {% endif %}
-<span class="nt">&lt;/nav&gt;</span><span class="c">&lt;!-- /.pagination --&gt;</span></code></pre></figure>
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Jekyll</span>
-  <span class="k">class</span> <span class="nc">TagIndex</span> <span class="o">&lt;</span> <span class="no">Page</span>
-    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
-      <span class="vi">@site</span> <span class="o">=</span> <span class="n">site</span>
-      <span class="vi">@base</span> <span class="o">=</span> <span class="n">base</span>
-      <span class="vi">@dir</span> <span class="o">=</span> <span class="n">dir</span>
-      <span class="vi">@name</span> <span class="o">=</span> <span class="s1">'index.html'</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">process</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">read_yaml</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'_layouts'</span><span class="p">),</span> <span class="s1">'tag_index.html'</span><span class="p">)</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'tag'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag</span>
-      <span class="n">tag_title_prefix</span> <span class="o">=</span> <span class="n">site</span><span class="p">.</span><span class="nf">config</span><span class="p">[</span><span class="s1">'tag_title_prefix'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'Tagged: '</span>
-      <span class="n">tag_title_suffix</span> <span class="o">=</span> <span class="n">site</span><span class="p">.</span><span class="nf">config</span><span class="p">[</span><span class="s1">'tag_title_suffix'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'&amp;#8211;'</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="n">tag_title_prefix</span><span class="si">}#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">"</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"An archive of posts tagged </span><span class="si">#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">."</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span></code></pre></figure>
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2018-11-09T00:00:00+09:00"><a href="http://localhost:4000/android/android-touch-post/">November 09, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-touch-post/" rel="bookmark" title="view setAlpha in OnTouchListener" itemprop="url">view setAlpha in OnTouchListener</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>view pressed 상태 되었을 때 알파 50% 먹이기</p>
 
-<h3 id="standard-code-block">Standard Code Block</h3>
+<p>커스텀 뷰에서는 onTouch 메소드 오버라이드 해서 사용</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;nav class="pagination" role="navigation"&gt;
-    {% if page.previous %}
-        &lt;a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}"&gt;Previous article&lt;/a&gt;
-    {% endif %}
-    {% if page.next %}
-        &lt;a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}"&gt;Next article&lt;/a&gt;
-    {% endif %}
-&lt;/nav&gt;&lt;!-- /.pagination --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                v.setAlpha((float) 0.5);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                v.setAlpha((float) 1);
+                break;
+        }
+        return false;
+    }
 </code></pre></div></div>
 
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p><a href="http://en.wikipedia.org/wiki/Syntax_highlighting">http://en.wikipedia.org/wiki/Syntax_highlighting</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
+<p>ACTION_DOWN 상태에서는 Pressed 상태 
+ACTION_UP 상태에서는 그 뷰에서 뗀 상태 
+ACTION_CANCEL 프레스 상태에서 그 뷰를 벗어난 곳에서 뗀 상태
+에서 각각 Action을 가진다.</p>
+
+<p>프레스 되면 0.5 알파 값 주고 떼면 다시 원상태 복구</p>
 
       
   </div><!-- /.entry-content -->
@@ -535,7 +416,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-11-30T00:00:00+09:00"><a href="http://localhost:4000/dark-post/">November 30, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2018-11-08T00:00:00+09:00"><a href="http://localhost:4000/kotlin/kotlin-when-post/">November 08, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -545,15 +426,67 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/dark-post/" rel="bookmark" title="Dark Post" itemprop="url">Dark Post</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/kotlin/kotlin-when-post/" rel="bookmark" title="how to use `when` in kotlin" itemprop="url">how to use `when` in kotlin</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>This is a sample post to show the dark post theme. To use this dark theme, just add:</p>
+      <p>우선 자바 소스</p>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml">    <span class="na">layout</span><span class="pi">:</span> <span class="s">dark-post</span></code></pre></figure>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_write_letter:
+                obtainViewModel().sendLetter()
+                return true;
+            default: 
+                return false;
+        }
+    }
+</code></pre></div></div>
 
-<p>on your post. This theme adds a dark background with a white panel to show your content.</p>
+<p>아래는 코틀린</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.menu_write_letter -&gt; {
+            obtainViewModel().sendLetter()
+            true
+        }
+        else -&gt; {
+            false
+        }
+    }
+</code></pre></div></div>
+
+<p>코틀린의 메소드는 = 으로 바로 값을 리턴 시킬수 있다.</p>
+
+<p>when은 switch랑 비슷한것 같은데 뭐가 차이가 날까 ~ 궁금해서 구글링 해서 찾아보니~</p>
+
+<p>2가지가 있었다.</p>
+
+<p>1.Auto-casting</p>
+
+<p>2.when without arguments</p>
+
+<p>1번 예를 한번 보면</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>when(view){
+    is TextView -&gt; toast(view.text)
+    else -&gt; 
+}
+</code></pre></div></div>
+
+<p>is TextView 한다음에는 view가 TextView로 자동 캐스팅되어서 사용할 수 있다는 점이 편리하다.</p>
+
+<p>2번 예를 한번 보면</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>val str = when{
+    x in 1..5 -&gt; "cheap"
+    s.contains("money") -&gt; "Welcome"
+    else -&gt; ""
+}
+</code></pre></div></div>
+
+<p>when(argument) 를 사용하지 않고 when {} 으로 바로 사용.</p>
 
       
   </div><!-- /.entry-content -->
@@ -563,7 +496,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-11-29T00:00:00+09:00"><a href="http://localhost:4000/sample/background-image/">November 29, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2018-11-07T00:00:00+09:00"><a href="http://localhost:4000/android/shape-post/">November 07, 2018</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -573,44 +506,38 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/sample/background-image/" rel="bookmark" title="Post with a Background Image" itemprop="url">Post with a Background Image</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/shape-post/" rel="bookmark" title="Shape" itemprop="url">Shape</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>Here be a sample post with a custom background image. To utilize this “feature” just add the following YAML to a post’s front matter.</p>
+      <p>꼭지점 두루뭉실한 사각형 만들기</p>
 
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">image</span><span class="pi">:</span>
-  <span class="na">background</span><span class="pi">:</span> <span class="s">filename.png</span></code></pre></figure>
+<p>drawable/파일명.xml 만들어 준다.</p>
 
-<p>This little bit of YAML makes the assumption that your background image asset is in the <code class="highlighter-rouge">/images</code> folder. If you place it somewhere else or are hotlinking from the web, just include the full http(s):// URL. Either way you should have a background image that is tiled.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;shape</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
 
-<p>If you want to set a background image for the entire site just add <code class="highlighter-rouge">background: filename.png</code> to your <code class="highlighter-rouge">_config.yml</code> and BOOM — background images on every page!</p>
+    <span class="nt">&lt;solid</span> <span class="na">android:color=</span><span class="s">"@color/white"</span><span class="nt">/&gt;</span>
 
-<div xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/" about="http://subtlepatterns.com" class="notice">Background images from <span property="dct:title">Subtle Patterns</span> (<a rel="cc:attributionURL" property="cc:attributionName" href="http://subtlepatterns.com">Subtle Patterns</a>) / <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></div>
+    <span class="nt">&lt;stroke</span> <span class="na">android:width=</span><span class="s">"1dp"</span>
+        <span class="na">android:color=</span><span class="s">"@color/gray"</span><span class="nt">/&gt;</span>
 
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
+    <span class="nt">&lt;padding</span> <span class="na">android:bottom=</span><span class="s">"10dp"</span>
+        <span class="na">android:left=</span><span class="s">"10dp"</span>
+        <span class="na">android:right=</span><span class="s">"10dp"</span>
+        <span class="na">android:top=</span><span class="s">"10dp"</span><span class="nt">/&gt;</span>
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2016-11-28T00:00:00+09:00"><a href="http://localhost:4000/sample/sample-link-post/">November 28, 2016</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/sample/sample-link-post/" class="permalink" rel="bookmark" title="Sample Link Post"><i class="fa fa-bookmark"></i></a> <a href="http://aronbordin.com">Sample Link Post</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>This theme supports <strong>link posts</strong>, made famous by John Gruber. To use, just add <code class="highlighter-rouge">link: http://url-you-want-linked</code> to the post’s YAML front matter and you’re done.</p>
+    <span class="nt">&lt;corners</span> <span class="na">android:radius=</span><span class="s">"7dp"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/shape&gt;</span>
+</code></pre></div></div>
+
+<p>solid 안에 컬러는 도형의 내부 색상</p>
+
+<p>stroke 바깥 선 색상과 두께</p>
+
+<p>padding 은 도형 안쪽 여백</p>
+
+<p>corners radius 속성을 먹이면 사각형은 꼭지점 부분이 두루뭉실하게 변함 값이 높을수록 더 심해짐</p>
 
       
   </div><!-- /.entry-content -->
@@ -662,12 +589,35 @@
         <li><strong class="current-page">14</strong></li>
       
     
+      
+        
+        
+        
+        <li><a href="http://localhost:4000/page15/">15</a></li>
+      
+    
+      
+        
+        
+        
+        <li><a href="http://localhost:4000/page16/">16</a></li>
+      
+    
+      
+        
+        
+        
+        <li><a href="http://localhost:4000/page17/">17</a></li>
+      
+    
 
     
     
+      <li>…</li>
+    
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -722,7 +672,7 @@
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

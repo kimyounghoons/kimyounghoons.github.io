@@ -1,0 +1,558 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>함수형 프로그래밍 2-1장 &#8211; 영훈 블로그</title>
+<meta name="description" content="함수형 프로그래밍 2-1장">
+<meta name="keywords" content="Android, Kotlin">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="함수형 프로그래밍 2-1장">
+<meta property="og:description" content="함수형 프로그래밍 2-1장">
+<meta property="og:url" content="http://localhost:4000/android/kotlin/kotlin-functional-programming-2/">
+<meta property="og:site_name" content="영훈 블로그">
+<meta property="og:image" content="http://localhost:4000/images/images/logo.png">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.mmenu.all.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.floating-social-share.min.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+
+
+<div class="header-menu header-menu-top">
+    <ul class="header-item-container">
+      <li class="header-item-title header-toggle "><a href="#menu"><h2><i class="fa fa-bars"></i></h2></a></li>
+      <li class="header-item-title">
+        <a href="http://localhost:4000/">
+          
+            <img class="logo" src="http://localhost:4000/images/logo.png" alt="영훈 블로그">
+          
+          <a href="http://localhost:4000/" class="title"> 영훈 블로그</a>
+        </a>
+      </li>
+      
+        
+        
+
+        
+          <li class="header-item "><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+            <ul class="header-submenu">
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Android">Android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Single">Single</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#aac">aac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#android">android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#flag">flag</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#interview">interview</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#java">java</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#notification">notification</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#sample">sample</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#자바">자바</a></li>
+              
+            </ul>
+          </li>
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+            
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+            
+        
+      
+      <li class="header-item"><a href="http://localhost:4000/search"><h3><i class="fa fa-search"></i></h3></a></li>
+    </ul>
+  </div>
+<div class="entry-header">
+  <div class="header-title">
+    <div class="header-title-wrap">
+      <h1>함수형 프로그래밍 2-1장</h1>
+      
+        <h2><span class="entry-date date published updated"><time datetime="2021-02-07T00:00:00+09:00">February 07, 2021</time></span></h2>
+      
+
+      
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~2 minutes
+        </p><!-- /.entry-reading-time -->
+      
+    </div><!-- /.header-title-wrap -->
+  </div><!-- /.header-title -->
+</div><!-- /.entry-header -->
+
+
+<nav id="menu" style="display: none">
+  <ul>
+    
+      
+        <li><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+          <ul>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Android">Android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Single">Single</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#aac">aac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#android">android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#flag">flag</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#interview">interview</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#java">java</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#notification">notification</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#sample">sample</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#자바">자바</a></li>
+            
+          </ul>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <div class="entry-content">
+        
+      <h1 class="post-title entry-title">함수형 프로그래밍 2-1장</h1>
+      <h3 id="코틀린으로-함수형-프로그래밍-시작하기">코틀린으로 함수형 프로그래밍 시작하기</h3>
+
+<h4 id="21-프로퍼티-선언과-안전한-널-처리">2.1 프로퍼티 선언과 안전한 널 처리</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="nl">a:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">"a"</span> <span class="c1">// 읽기 전용 프로퍼티(값을 변경 할 수 없음)</span>
+<span class="kt">var</span> <span class="nl">a:</span> <span class="n">String</span> <span class="o">=</span><span class="s">"a"</span> <span class="c1">//가변 프로퍼티 (값을 다른 값으로 변경 할 수 있다.)</span>
+</code></pre></div></div>
+
+<h4 id="타입-추론을-사용한-선언">타입 추론을 사용한 선언</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">a</span> <span class="o">=</span><span class="s">"a"</span>
+<span class="kt">var</span> <span class="n">b</span> <span class="o">=</span><span class="s">"b"</span>
+</code></pre></div></div>
+
+<p>a 가 String 타입을 코틀린 컴파일러가 추론하기 때문에 String 을 생략할 수 있다.</p>
+
+<h4 id="안전한-널처리">안전한 널처리</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="nl">a:</span> <span class="n">String</span> <span class="o">=</span> <span class="kc">null</span> <span class="c1">//컴파일 오류 발생!!</span>
+<span class="n">val</span> <span class="nl">a:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+</code></pre></div></div>
+
+<h4 id="22-함수와-람다">2.2 함수와 람다</h4>
+
+<p>함수를 선언 하는 방법 3가지</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">sum</span><span class="o">(</span><span class="nl">a:</span><span class="n">Int</span><span class="o">,</span> <span class="nl">b:</span> <span class="n">Int</span><span class="o">):</span> <span class="n">Int</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="o">}</span>
+
+<span class="n">fun</span> <span class="nf">sum</span><span class="o">(</span><span class="nl">a:</span><span class="n">Int</span><span class="o">,</span> <span class="nl">b:</span> <span class="n">Int</span><span class="o">):</span> <span class="n">Int</span>  <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> 
+
+<span class="n">fun</span> <span class="nf">sum</span><span class="o">(</span><span class="nl">a:</span><span class="n">Int</span><span class="o">,</span> <span class="nl">b:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> 
+</code></pre></div></div>
+
+<h4 id="파라미터-디폴트-값-셋팅">파라미터 디폴트 값 셋팅</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">sum</span><span class="o">(</span><span class="nl">a:</span><span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="nl">b:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="c1">//sum() 호출 하면 return 0+0 과 같다.</span>
+</code></pre></div></div>
+
+<h4 id="익명-함수와-람다-표현식">익명 함수와 람다 표현식</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">calculate</span><span class="o">(</span><span class="nl">x:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">y:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">calculate:</span> <span class="o">(</span><span class="n">Int</span><span class="o">,</span><span class="n">Int</span><span class="o">)-&gt;</span> <span class="n">Int</span><span class="o">):</span> <span class="n">Int</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf">calculate</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="err">사용</span> <span class="n">calculate</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span> <span class="o">{</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">})</span>
+<span class="k">return</span> <span class="mi">1</span><span class="o">+</span><span class="mi">2</span> 
+<span class="err">결과값</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<h4 id="확장-함수">확장 함수</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="n">Int</span><span class="o">.</span><span class="na">sum</span><span class="o">(</span><span class="nl">value:</span> <span class="n">Int</span><span class="o">):</span> <span class="n">Int</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span> <span class="o">+</span> <span class="n">value</span>
+<span class="o">}</span>
+<span class="err">이미</span> <span class="err">작성된</span> <span class="n">Int</span> <span class="err">클래스에</span> <span class="n">sum</span> <span class="err">함수를</span> <span class="err">생성</span> <span class="err">할</span> <span class="err">수</span> <span class="err">있다</span><span class="o">.</span> 
+</code></pre></div></div>
+
+<h3 id="23-제어-구문">2.3 제어 구문</h3>
+<h4 id="if문">if문</h4>
+<p>자바와 달리 if문이 구문으로 쓰이기도 하고 표현식으로 사용되기도 한다.</p>
+
+<h4 id="if-구문-사용">if 구문 사용</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">isTrue</span> <span class="o">:</span> <span class="n">Boolean</span>
+<span class="nf">if</span><span class="o">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="o">){</span>
+    <span class="n">isTrue</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+    <span class="n">isTrue</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="if-표현식">if 표현식</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">isTrue</span> <span class="o">=</span> <span class="k">if</span><span class="o">(</span><span class="n">x</span><span class="o">&gt;</span><span class="n">y</span><span class="o">){</span> <span class="kc">true</span> <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="kc">false</span> <span class="o">}</span>
+<span class="kc">true</span> <span class="o">,</span> <span class="kc">false</span> <span class="err">라는</span> <span class="err">값을</span> <span class="n">isTrue</span> <span class="err">변수에</span> <span class="err">반환</span>
+</code></pre></div></div>
+
+<h4 id="when문">when문</h4>
+<p>자바의 switch와 비슷한 기능</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">when</span><span class="o">(</span><span class="n">value</span><span class="o">){</span>
+    <span class="mi">1</span> <span class="o">-&gt;{</span><span class="n">println</span><span class="o">(</span><span class="s">"value==1"</span><span class="o">)}</span> <span class="c1">//value 가 1인 경우</span>
+    <span class="mi">2</span><span class="o">,</span><span class="mi">3</span> <span class="o">-&gt;{</span><span class="n">println</span><span class="o">(</span><span class="s">"value 2 or value 3"</span><span class="o">)}</span> <span class="c1">//value 가 2 또는 3인 경우</span>
+    <span class="k">else</span> <span class="o">-&gt;{</span><span class="n">println</span><span class="o">(</span><span class="s">"else"</span><span class="o">)}</span> <span class="c1">//그 외의 경우</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="when-표현식">when 표현식</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">value</span> <span class="o">=</span> <span class="n">when</span> <span class="o">{</span>
+    <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">1</span>
+    <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">-&gt;</span> <span class="mi">2</span>
+    <span class="k">else</span> <span class="o">-&gt;</span> <span class="mi">3</span> 
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="for문">for문</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">list</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">)</span>
+
+<span class="k">for</span><span class="o">(</span><span class="n">item</span> <span class="n">in</span> <span class="n">list</span><span class="o">){</span>
+    <span class="n">print</span><span class="o">(</span><span class="n">item</span><span class="o">)</span> <span class="c1">//12345 출력</span>
+<span class="o">}</span>
+<span class="k">for</span><span class="o">((</span><span class="n">index</span><span class="o">,</span> <span class="n">item</span><span class="o">)</span> <span class="n">in</span> <span class="n">list</span><span class="o">.</span><span class="na">withIndex</span><span class="o">()){</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">"index: $index item: $item"</span><span class="o">)</span>
+    <span class="c1">// println("index: 0 item: 1")</span>
+    <span class="c1">// println("index: 1 item: 2")</span>
+    <span class="c1">// println("index: 2 item: 3")</span>
+    <span class="c1">// println("index: 3 item: 4")</span>
+    <span class="c1">// println("index: 4 item: 5")</span>
+<span class="o">}</span> 
+
+<span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="o">){</span>
+    <span class="n">print</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="mi">12345</span> <span class="err">출력</span>
+<span class="o">}</span>
+<span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="n">until</span> <span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="o">){</span>
+    <span class="n">print</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="mi">1234</span> <span class="err">출력</span>
+<span class="o">}</span>
+<span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">6</span> <span class="n">downTo</span> <span class="mi">0</span> <span class="n">step</span> <span class="mi">2</span><span class="o">){</span>
+    <span class="n">print</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="c1">// 6420 출력</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="24-인터페이스">2.4 인터페이스</h3>
+<h4 id="인터페이스-특징">인터페이스 특징</h4>
+<ol>
+  <li>다중 상속이 가능하다</li>
+  <li>추상 함수를 가질 수 있다</li>
+  <li>함수의 본문을 구현할 수 있다</li>
+  <li>여러 인터페이스에서 같은 이름의 함수를 가질 수 있다</li>
+  <li>추상 프로퍼티를 가질 수 있다</li>
+</ol>
+
+<h4 id="1번-2번-예제-다중-상속이-가능하다-추상-함수를-가질-수-있다">1번, 2번 예제 (다중 상속이 가능하다, 추상 함수를 가질 수 있다)</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
+    <span class="n">printA</span><span class="o">()</span> <span class="c1">//추상 함수</span>
+<span class="o">}</span>
+<span class="kd">interface</span> <span class="nc">B</span> <span class="o">{</span>
+    <span class="n">printB</span><span class="o">()</span> <span class="c1">// 추상 함수</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Model</span> <span class="o">:</span> <span class="n">A</span><span class="o">,</span><span class="n">B</span> <span class="o">{</span> <span class="c1">//A 와 B 다중 상속</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">printA</span><span class="o">(){</span>
+        <span class="c1">//하고 싶은 구현</span>
+    <span class="o">}</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">printB</span><span class="o">(){</span>
+        <span class="c1">//하고 싶은 구현</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<h4 id="3번-예제-함수의-본문을-구현할-수-있다">3번 예제 (함수의 본문을 구현할 수 있다)</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
+    <span class="n">printA</span><span class="o">(){</span>
+        <span class="n">print</span><span class="o">(</span><span class="s">"A"</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<h4 id="4번-예제-여러-인터페이스에서-같은-이름의-함수를-가질-수-있다">4번 예제 (여러 인터페이스에서 같은 이름의 함수를 가질 수 있다)</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
+    <span class="n">printTest</span><span class="o">(){</span>
+        <span class="n">print</span><span class="o">(</span><span class="s">"A"</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">interface</span> <span class="nc">B</span> <span class="o">{</span>
+    <span class="n">printTest</span><span class="o">(){</span>
+        <span class="n">print</span><span class="o">(</span><span class="s">"B"</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Model</span> <span class="o">:</span> <span class="n">A</span><span class="o">,</span><span class="n">B</span><span class="o">{</span>
+    <span class="c1">//Model 클래스의 printTest 사용 시 A 의 printTest 구현부 , B 의 printTest 구현부 둘다 호출</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">printTest</span><span class="o">(){</span>
+        <span class="kd">super</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;.</span><span class="na">printTest</span><span class="o">()</span>
+        <span class="kd">super</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;.</span><span class="na">printTest</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>   
+<span class="o">}</span>
+</code></pre></div></div>
+<h4 id="5번-예제-추상-프로퍼티를-가질-수-있다">5번 예제 (추상 프로퍼티를 가질 수 있다)</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
+    <span class="n">val</span> <span class="n">a</span> <span class="o">:</span> <span class="n">Int</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Model</span> <span class="o">{</span>
+    <span class="n">override</span> <span class="n">val</span> <span class="nl">a:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">//val ,var 둘다 가능하다.</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+    </div><!-- /.entry-content -->
+    
+  </article>
+</div><!-- /#main -->
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script type="text/javascript" src="http://localhost:4000/assets/js/scripts.min.js"></script>
+<script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-154716591-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+</script>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://kimyounghoons.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+<script type="text/javascript">
+    sharing();
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154716591-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154716591-1');
+</script>
+
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/android/kotlin/android-kotlin-functional-programming-1/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-3-1/" title="재귀">재귀</a></h3>
+      <p>재귀 <a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-3-1/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-11/" title="Kotlin 변성(Variance)">Kotlin 변성(Variance)</a></h4>
+        <span>Published on June 06, 2021</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-10/" title="Kotlin Scope functions">Kotlin Scope functions</a></h4>
+        <span>Published on June 06, 2021</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+</body>
+</html>

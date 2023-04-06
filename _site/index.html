@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-11-22T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-saving-ui-state/">November 22, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2021-06-20T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-3-1/">June 20, 2021</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,47 +298,77 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-saving-ui-state/" rel="bookmark" title="Saving UI States" itemprop="url">Saving UI States</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-3-1/" rel="bookmark" title="재귀" itemprop="url">재귀</a></h1>
     
   </header>
   <div class="entry-content">
-      <p>오늘은 UI 상태 저장에 대한 조금 더 깊은 이해와 어떤 옵션들이 있는지 그리고 각각의 옵션들의 장단점에 대해서 알아보려고 한다.</p>
+      <p>함수형 프로그래밍에서는 명령문을 반복할 때 루프 대신에 재귀를 사용 한다.</p>
 
-<h2 id="ui-상태를-유지-하기-위한-옵션">UI 상태를 유지 하기 위한 옵션</h2>
+<h3 id="31-함수형-프로그래밍에서-재귀가-가지는-의미">3.1 함수형 프로그래밍에서 재귀가 가지는 의미</h3>
+
+<p>재귀는 어떤 함수의 구현 내부에서 자기 자신을 호출하는 함수를 정의하는 방법을 말한다.</p>
+
+<p>피보나치 수열을 명령형 프로그래밍으로 구현한 예제를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">fibo</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span><span class="n">IntArray</span><span class="o">(</span><span class="mi">100</span><span class="o">))</span> <span class="c1">// 55 출력</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">fun</span> <span class="nf">fibo</span><span class="o">(</span><span class="n">n</span> <span class="o">:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">fibo:</span> <span class="n">IntArray</span><span class="o">):</span> <span class="n">Int</span> <span class="o">{</span>
+    <span class="n">fibo</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">fibo</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">2</span><span class="o">..</span><span class="na">n</span><span class="o">){</span>
+        <span class="n">fibo</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">fibo</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">fibo</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">fibo</span><span class="o">[</span><span class="n">n</span><span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>피보나치 수열의 결과를 한번에 얻으려고 하지 않고 단계별 결과 값을 구해서 합하였다.</p>
+
+<p>이전 값들을 기억하기 위해 한 메모리 IntArray(100) 을 확보해 놓았다.</p>
+
+<p>루프가 반복 되면서 이전 값이 필요하면 메모리에 저장된 값을 사용한다.</p>
+
+<p>본예제에서는 피보나치수열을 100개 까지만 계산할 수 있다.</p>
+
+<p>피보나치 수열을 재귀로 구현한 예제를 보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">"결과 : "</span><span class="o">+</span><span class="n">fiboResursion</span><span class="o">(</span><span class="mi">10</span><span class="o">))</span><span class="c1">//55 출력</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="n">fun</span> <span class="nf">fiboResursion</span><span class="o">(</span><span class="n">n</span> <span class="o">:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">when</span><span class="o">(</span><span class="n">n</span><span class="o">){</span>
+        <span class="mi">0</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+        <span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">1</span>
+        <span class="k">else</span> <span class="o">-&gt;</span> <span class="n">fiboResursion</span><span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">+</span> <span class="n">fiboResursion</span><span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>내부에서 자기 자신을 호출하여 재귀로 피보나치 수열 문제를 해결 하였다.</p>
+
+<p>재귀로 구현한 예제는 고정 메모리 할당이나 값의 변경이 없다.</p>
+
+<p>메모리를 직접 할당해서 사용하지 않고 스택을 활용 한다.</p>
+
+<p>재귀 호출을 사용하면 컴파일러는 내부적으로 현재 호출하는 함수에 대한 정보들을 스택에 기록해 두고 다음 함수를 호출한다.</p>
+
+<p>메모리에 할당 하지 않고 컴파일러에 의해 관리 된다고 보면 된다.</p>
+
+<h3 id="함수형-프로그래밍에서-재귀">함수형 프로그래밍에서 재귀</h3>
+<p>함수형 프로그래밍에서는 어떻게 값을 계산할 수 있을지 선언하는 대신 무엇을 선언할지를 고민 해야 한다.</p>
+
+<p>for , while 문과 같은 반복 명령어는 구조적으로 어떻게 동작해야 하는지를 명령하는 구문이다.</p>
+
+<p>따라서 함수형 프로그래밍은 루프를 사용해서 해결하던 문제들을 재귀로 풀어야 한다.</p>
+
+<p>재귀는 반복문에 비하여 복잡한 알고리즘을 간결하게 표현할 수 있지만, 다음과 같은 문제점을 가진다.</p>
+
 <ol>
-  <li>ViewModel</li>
-  <li>Saved instance state</li>
-  <li>Persistent storage</li>
+  <li>동적 계획법 방식에 비해서 성능이 느리다.</li>
+  <li>스택 오버플로 오류가 발생할 수 있다.</li>
 </ol>
-
-<figure>
-	<img src="/images/2020-11-22-save-ui-state.png" alt="" />
-</figure>
-
-<h3 id="viewmodel">ViewModel</h3>
-<p>Android Architecture Components 에 속하는 Component 이다.<br />
-메모리에 저장 되고 화면 가로 세로 변경같은 경우 데이터가 저장 되지만 프로세스에 의해 죽고 살아 나는 경우에 데이터는 다시 복구 되지 않는다.<br />
-그리고 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
-데이터 제한은 메모리에 저장 되기 때문에 사용가능한 메모리 내에서 가능하고 속도가 빠르다.</p>
-
-<h3 id="save-instance-state">Save instance state</h3>
-<p>저번 커스텀 뷰에서 상태 저장을 위한 onSaveInstanceState 를 사용해서 저장하는 방법이다.<br />
-화면 가로 세로 변경 같은 경우, 프로세스 종료 된 이후에도 데이터가 저장 가능 하다.<br />
-하지만 ViewModel 과 마찬가지로 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
-데이터 제한은 직렬화되어 디스크에 저장 되기 때문에 primitive type 또는 심플하고 작은 object 만 가능 하다.<br />
-직렬화는 데이터를 byte 형태로 변환 하는 것을 말한다.<br />
-디스크에 접근하고 serialization , deserialization 을 거치기 때문에 ViewModel 보다 비교적 느리다.</p>
-
-<h3 id="persistent-storage">Persistent storage</h3>
-<p>Shared preferences,SQLite Database,Realm DB 기타 등등..!
-디스크에 저장 하거나 네트워크 통신을 통해 서버에 저장하는 것을 의미한다.<br />
-이 경우는 모든 경우에 대비해서 데이터를 저장 할 수 있다.<br />
-네트워크 통신을 통해 저장 하는 경우 다른 옵션들 보다 비교적 느리지만 데이터를 영구 저장하기에는 제일 좋다고 볼 수 있다.<br />
-위와 같이 여러 타입의 UI 상태 저장 방법을 알아보고 비교하는 시간을 가져 보았다.</p>
-
-<p>참고 문서
-https://developer.android.com/topic/libraries/architecture/saving-states</p>
-
 
       
   </div><!-- /.entry-content -->
@@ -348,7 +378,7 @@ https://developer.android.com/topic/libraries/architecture/saving-states</p>
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-save-data-customview/">November 06, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2021-06-06T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-11/">June 06, 2021</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -358,71 +388,361 @@ https://developer.android.com/topic/libraries/architecture/saving-states</p>
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-save-data-customview/" rel="bookmark" title="Save State for CustomView" itemprop="url">Save State for CustomView</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-11/" rel="bookmark" title="Kotlin 변성(Variance)" itemprop="url">Kotlin 변성(Variance)</a></h1>
     
   </header>
   <div class="entry-content">
-      <h2 id="커스텀뷰-상태-저장">커스텀뷰 상태 저장</h2>
-<p>커스텀뷰가 그려지고 메모리 부족 등으로 인해 다시 그려지는 순간 데이터를 저장한후 다시 가져와야 화면에 그대로 보여줄수 있다.</p>
+      <h4 id="변성variance은-자바나-코틀린뿐-아니라-다른-언어에서도-존재하는-개념이다">변성(Variance)은 자바나 코틀린뿐 아니라 다른 언어에서도 존재하는 개념이다.</h4>
 
-<p>개발자 모드에서 활동 유지 안함을 활성화 한 후 테스트해야 한다.</p>
+<p>변성을 제대로 이해하려면 “타입 S가 T의 하위 타입일 때, Box[S]가 Box[T]의 하위 타입인가? 라는 질문에서 시작 해야 한다.</p>
 
-<p>아래는 커스텀뷰 상태 저장을 하지 않은 상태이다.</p>
+<p>Box[S]와 Box[T] 는 상속 관계가 없다. (무공변)</p>
+
+<p>Box[S]는 Box[T]의 하위 타입 이다. (공변)</p>
+
+<p>Box[T]는 Box[S]의 하위 타입 이다. (반공변)</p>
+
+<p>타입 S와 T의 관계가 동일한 방향의 상하위 관계이면 공변 아니면 반공변 관계가 없으면 무공변으로 이해하면 된다.</p>
+
+<h4 id="공통으로-사용할-클래스들">공통으로 사용할 클래스들</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="n">open</span> <span class="kd">class</span> <span class="nc">Language</span>
+<span class="n">open</span> <span class="kd">class</span> <span class="nc">JVM</span><span class="o">:</span> <span class="n">Language</span><span class="o">()</span>
+<span class="kd">class</span> <span class="nc">Kotlin</span><span class="o">:</span> <span class="n">JVM</span><span class="o">()</span>
+
+<span class="c1">//Kotlin &lt; JVM &lt; Language 상속 관계로 볼 수 있다.</span>
+
+<span class="n">val</span> <span class="n">languageBox</span> <span class="o">=</span> <span class="n">object</span> <span class="o">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">Language</span><span class="o">&gt;</span> <span class="o">{}</span>
+<span class="n">val</span> <span class="n">jvmBox</span> <span class="o">=</span> <span class="n">object</span> <span class="o">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">JVM</span><span class="o">&gt;{}</span>
+<span class="n">val</span> <span class="n">kotlinBox</span> <span class="o">=</span> <span class="n">object</span> <span class="o">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">Kotlin</span><span class="o">&gt;{}</span>
+</code></pre></div></div>
+
+<h3 id="무공변의-의미와-예시">무공변의 의미와 예시</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">lanuageBox</span><span class="o">)</span> <span class="c1">//컴파일 오류</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">jvmBox</span><span class="o">)</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">kotlinBox</span><span class="o">)</span> <span class="c1">//컴파일 오류</span>
+<span class="o">}</span>
+<span class="n">fun</span> <span class="nf">invariant</span><span class="o">(</span><span class="nl">value:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">JVM</span><span class="o">&gt;){}</span>
+</code></pre></div></div>
+<p>타입이 Box<JVM> 으로 선언 되었기 때문에 jvmBox 외에 매개변수를 받을 수 없다.  
+invariant의 매개변수는 무공변이다.</JVM></p>
+
+<h3 id="공변의-의미와-예시">공변의 의미와 예시</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">lanuageBox</span><span class="o">)</span> <span class="c1">//컴파일 오류</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">jvmBox</span><span class="o">)</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">kotlinBox</span><span class="o">)</span>
+<span class="o">}</span>
+<span class="n">fun</span> <span class="nf">invariant</span><span class="o">(</span><span class="nl">value:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">out</span> <span class="n">JVM</span><span class="o">&gt;){}</span>
+</code></pre></div></div>
+<p>타입이 Box<out JVM=""> 으로 선언 되었기 때문에 jvmBox,kotlinBox 매개변수를 받을 수 있다.
+invariant의 매개변수는 공변이다.</out></p>
+
+<h3 id="반공변의-의미와-예시">반공변의 의미와 예시</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">contravariant</span><span class="o">(</span><span class="n">lanuageBox</span><span class="o">)</span>
+    <span class="n">contravariant</span><span class="o">(</span><span class="n">jvmBox</span><span class="o">)</span>
+    <span class="n">contravariant</span><span class="o">(</span><span class="n">kotlinBox</span><span class="o">)</span><span class="c1">//컴파일 오류</span>
+<span class="o">}</span>
+<span class="n">fun</span> <span class="nf">contravariant</span><span class="o">(</span><span class="nl">value:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">in</span> <span class="n">JVM</span><span class="o">&gt;){}</span>
+</code></pre></div></div>
+<p>타입이 Box<out JVM=""> 으로 선언 되었기 때문에 lanuageBox,jvmBox 매개변수를 받을 수 있다.
+contravariant 매개변수는 반공변이다.</out></p>
+
+<h3 id="in-out-키워드를-사용할-때-주의할-점이-있다">in out 키워드를 사용할 때 주의할 점이 있다.</h3>
+
+<p>out 부터 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">Box2</span><span class="o">&lt;</span><span class="n">out</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">read</span><span class="o">():</span> <span class="n">T</span>
+    <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">value:</span> <span class="n">T</span><span class="o">)</span> <span class="c1">// 컴파일 오류</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>T를 읽어서 반환할 때는 어떤 상위 타입에 하위 타입을 할당하는 것이 가능하기 때문에 문제가 없지만 write()함수는 value 값을 받아서 처리 할때 어떤 하위 타입이 들어올지
+알 수 없기 때문에 런타임 오류가 발생할 가능성이 있다.</p>
+
+<p>in 예제를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">Box2</span><span class="o">&lt;</span><span class="n">in</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">read</span><span class="o">():</span> <span class="n">T</span> <span class="c1">//컴파일 오류</span>
+    <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">value:</span> <span class="n">T</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>반공변으로 선언 했을 때는 read함수에서 컴파일 오류가 발생 한다.
+그 이유는 호출자가 선언한 T 타입의 변수에 T보다 상위 타입의 값을 할당하면 런타임 오류가 발생하기 때문이다.</p>
+
+<p>in, out 키워드의 의미는 문자 그대로 이해하면 쉽다.<br />
+in 으로 선언된 타입은 입력값에만 활용(읽기 전용)할 수 있고 
+out으로 선언된 타입은 반환값(출력)의 타입으로만 사용할 수 있다.</p>
+
+<p>그렇게 되면 프로그래머의 의도치 않은 실수를 컴파일 타임에 막을 수 있다.</p>
+
+<p>Kotlin 변성(Variance)에 대해 알아 보았다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2021-06-06T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-10/">June 06, 2021</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-10/" rel="bookmark" title="Kotlin Scope functions" itemprop="url">Kotlin Scope functions</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <ol>
+  <li>apply</li>
+  <li>also</li>
+  <li>with</li>
+  <li>run</li>
+  <li>let</li>
+</ol>
+
+<h3 id="apply">apply</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;.</span><span class="na">apply</span><span class="o">(</span><span class="nl">block:</span> <span class="n">T</span><span class="o">.()</span> <span class="o">-&gt;</span> <span class="n">Unit</span><span class="o">)</span> <span class="o">:</span> <span class="n">T</span>
+<span class="c1">//T의 확장 함수 로서 block 함수의 입력을 람다 리시버로 받았으므로 block  내에서 this 없이 객체에 접근할 수 있다.  </span>
+<span class="c1">//apply 는 객체 내부 프로퍼티를 변경할 때 사용한다.</span>
+
+<span class="n">Person</span><span class="o">().</span><span class="na">apply</span> <span class="o">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">"홍길동"</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="also">also</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span><span class="o">.</span><span class="na">also</span><span class="o">(</span><span class="nl">block:</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Unit</span><span class="o">)</span> <span class="o">:</span> <span class="n">T</span>
+<span class="c1">//블럭의 반환 값이 없고 자기 자신을 반환한다.</span>
+<span class="c1">//어떤 fun 호출 후 추가적으로 궁금한 부분이나 변경할 부분에 대해 사용한다.</span>
+<span class="n">fun</span> <span class="nf">getRandomInt</span><span class="o">():</span> <span class="n">Int</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">Random</span><span class="o">.</span><span class="na">nextInt</span><span class="o">(</span><span class="mi">100</span><span class="o">).</span><span class="na">also</span> <span class="o">{</span>
+        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"getRandomInt() generated value $it"</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">val</span> <span class="n">i</span> <span class="o">=</span> <span class="n">getRandomInt</span><span class="o">()</span>
+</code></pre></div></div>
+
+<h3 id="with">with</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="nf">with</span><span class="o">(</span><span class="nl">receiver:</span> <span class="n">T</span><span class="o">,</span> <span class="nl">block:</span> <span class="n">T</span><span class="o">.()</span> <span class="o">-&gt;</span> <span class="n">R</span><span class="o">)</span> <span class="o">:</span> <span class="n">R</span>
+<span class="c1">//일반적인 함수로 선언 되어 있다. </span>
+<span class="c1">//receiver 받은 객체에 this 를 사용하지 않고 접근 가능 하고 block 함수에서 반환한 값을 그대로 반환한다.</span>
+<span class="c1">//프로퍼티에 직접적으로 접근 하면서 return 값을 변경해서 사용해야 할때 사용한다.</span>
+
+<span class="n">val</span> <span class="n">numbers</span> <span class="o">=</span> <span class="n">mutableListOf</span><span class="o">(</span><span class="s">"one"</span><span class="o">,</span> <span class="s">"two"</span><span class="o">,</span> <span class="s">"three"</span><span class="o">)</span>
+<span class="n">val</span> <span class="n">firstAndLast</span> <span class="o">=</span> <span class="n">with</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+    <span class="s">"The first element is ${first()},"</span> <span class="o">+</span>
+    <span class="s">" the last element is ${last()}"</span>
+<span class="o">}</span>
+<span class="n">println</span><span class="o">(</span><span class="n">firstAndLast</span><span class="o">)</span>
+</code></pre></div></div>
+
+<h3 id="run">run</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">T</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nl">block:</span> <span class="n">T</span><span class="o">.()-&gt;</span><span class="n">R</span><span class="o">)</span> <span class="o">:</span> <span class="n">R</span>
+<span class="c1">//T의 확장 함수로 선언되었고 block 함수에 this 가 람다 리시버로 전달 된다.</span>
+<span class="c1">//run은 람다에 객체 초기화와 반환 값 계산이 모두 포함되어있을 때 유용합니다.</span>
+
+<span class="n">val</span> <span class="n">service</span> <span class="o">=</span> <span class="n">Service</span><span class="o">(</span><span class="s">"url"</span><span class="o">,</span> <span class="mi">8888</span><span class="o">)</span>
+
+<span class="n">val</span> <span class="n">result</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">run</span> <span class="o">{</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="mi">8080</span>
+    <span class="n">query</span><span class="o">(</span><span class="n">port</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="c1">//let 으로 사용했을때와의 차이를 보면 확실히 편하게 사용한걸 볼 수 있다.</span>
+<span class="n">val</span> <span class="n">letResult</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">let</span> <span class="o">{</span>
+    <span class="n">it</span><span class="o">.</span><span class="na">port</span> <span class="o">=</span> <span class="mi">8080</span>
+    <span class="n">it</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">port</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="let">let</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">T</span><span class="o">.</span><span class="na">let</span><span class="o">(</span><span class="nl">block:</span> <span class="o">(</span><span class="n">T</span><span class="o">)-&gt;</span><span class="n">R</span><span class="o">):</span> <span class="n">R</span>
+<span class="c1">//T의 확장 함수 이고 block 의 반환 값을 리턴한다.</span>
+<span class="c1">// processNonNullString str 이 널이 아니어야 하는 상황 그리고 return 값이 필요할때 사용 한다.</span>
+<span class="n">val</span> <span class="nl">str:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="s">"Hello"</span>   
+<span class="n">val</span> <span class="n">length</span> <span class="o">=</span> <span class="n">str</span><span class="o">?.</span><span class="na">let</span> <span class="o">{</span> 
+    <span class="n">processNonNullString</span><span class="o">(</span><span class="n">it</span><span class="o">)</span>      <span class="c1">// OK: 'it' is not null inside '?.let { }'</span>
+    <span class="n">it</span><span class="o">.</span><span class="na">length</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>5가지 Scopefunctions 에 대해 알아 보았다.<br />
+앞으로 각각의 상황에 맞게 잘 사용하면 좋을 것 같다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2021-05-09T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-constraintlayout-expand/">May 09, 2021</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-constraintlayout-expand/" rel="bookmark" title="ViewGroup 안에 ConstraintLayout View 추가한 경우 펼치고 접을때 이슈" itemprop="url">ViewGroup 안에 ConstraintLayout View 추가한 경우 펼치고 접을때 이슈</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>해당 이슈를 영상으로 우선 보자.</p>
 
 <figure>
     <p align="center">
-	    <img src="/images/2020-11-06-android-save-data-customview-01.gif" alt="" width="200" height="350" />
+	    <img src="/images/collapseIssue.gif" alt="" width="200" height="350" />
 	</p>
 </figure>
 
-<p>이제부터 데이터 저장을 해보자~!</p>
+<p>ViewGroup 자체는 늘어났다가 줄었다가 잘 되는걸 볼 수 있지만 ConstraintLayout 뷰 안의 텍스트 뷰들이 제대로 자리를 잡지 못하면서 뷰가 깨져 보인다.</p>
 
-<p>이때 필요한 메소드는 onSaveInstanceState , onRestoreInstanceState 두개이다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">override</span> <span class="n">fun</span> <span class="nf">onSaveInstanceState</span><span class="o">():</span> <span class="n">Parcelable</span><span class="o">?</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nf">Bundle</span><span class="o">().</span><span class="na">apply</span> <span class="o">{</span>
-            <span class="n">putParcelable</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">,</span> <span class="kd">super</span><span class="o">.</span><span class="na">onSaveInstanceState</span><span class="o">())</span>
-            <span class="n">putStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">,</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">textViewArrayList</span><span class="o">.</span><span class="na">map</span> <span class="o">{</span>
-                <span class="n">it</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span>
-            <span class="o">}))</span>
+<p>해당 이슈는 ConstraintLayout 은 동적으로 뷰가 변경 될 때는 ConstraintLayout 연결 관계를 clone 해서 다시 해당 뷰에 적용 시켜주어야 제대로 변경이 된다.</p>
+
+<p>그래서 ViewGroup 안에 모든 ConstraintLayout 을 찾아서 clone 해서 apply 까지 해주는 notifyConstraintView fun 을 만들어서 해결 하였다.</p>
+
+<p>아래는 전체적인 코드인데 notifyConstraintView 을 사용하면 정상작동 안하면 위와 같이 뷰가 깨지는걸 볼 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MainActivity</span> <span class="o">:</span> <span class="n">AppCompatActivity</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">var</span> <span class="nl">_binding:</span> <span class="n">ActivityMainBinding</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+    <span class="kd">protected</span> <span class="n">val</span> <span class="nl">binding:</span> <span class="n">ActivityMainBinding</span>
+        <span class="nf">get</span><span class="o">()</span> <span class="o">=</span> <span class="n">_binding</span> <span class="n">as</span> <span class="n">ActivityMainBinding</span>
+
+    <span class="kd">private</span> <span class="kt">var</span> <span class="nl">valueAnimator:</span> <span class="n">ValueAnimator</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nl">savedInstanceState:</span> <span class="n">Bundle</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>
+        <span class="n">_binding</span> <span class="o">=</span> <span class="n">ActivityMainBinding</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">layoutInflater</span><span class="o">)</span>
+        <span class="n">binding</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">setContentView</span><span class="o">(</span><span class="n">root</span><span class="o">)</span>
+            <span class="n">tvTitle</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="s">"접기"</span>
+            <span class="n">tvTitle</span><span class="o">.</span><span class="na">setOnClickListener</span> <span class="o">{</span>
+                <span class="n">expandOrCollapse</span><span class="o">()</span>
+            <span class="o">}</span>
         <span class="o">}</span>
-<span class="o">}</span>
+        <span class="n">initLinearLayoutContent</span><span class="o">()</span>
+    <span class="o">}</span>
 
-<span class="n">override</span> <span class="n">fun</span> <span class="nf">onRestoreInstanceState</span><span class="o">(</span><span class="nl">state:</span> <span class="n">Parcelable</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="n">is</span> <span class="n">Bundle</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">)</span> <span class="n">as</span> <span class="n">Parcelable</span><span class="o">)</span>
-            <span class="n">state</span><span class="o">.</span><span class="na">getStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">)?.</span><span class="na">let</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">())</span> <span class="o">{</span>
-                    <span class="n">removeAllViews</span><span class="o">()</span>
-                    <span class="n">it</span><span class="o">.</span><span class="na">filter</span> <span class="o">{</span> <span class="n">originContent</span> <span class="o">-&gt;</span>
-                        <span class="n">originContent</span> <span class="o">!=</span> <span class="s">","</span> <span class="o">&amp;&amp;</span> <span class="n">originContent</span> <span class="o">!=</span> <span class="n">endText</span>
-                    <span class="o">}.</span><span class="na">forEach</span> <span class="o">{</span> <span class="n">filteredContent</span> <span class="o">-&gt;</span>
-                        <span class="n">addText</span><span class="o">(</span><span class="n">filteredContent</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">initLinearLayoutContent</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">listOf</span><span class="o">(</span>
+                <span class="n">Item</span><span class="o">(</span><span class="s">"첫번째"</span><span class="o">,</span> <span class="s">"first"</span><span class="o">),</span>
+                <span class="n">Item</span><span class="o">(</span><span class="s">"두번째"</span><span class="o">,</span> <span class="s">"second"</span><span class="o">),</span>
+                <span class="n">Item</span><span class="o">(</span><span class="s">"세번째"</span><span class="o">,</span> <span class="s">"third"</span><span class="o">)</span>
+        <span class="o">).</span><span class="na">forEach</span> <span class="o">{</span>
+            <span class="n">val</span> <span class="n">itemContentBinding</span> <span class="o">=</span> <span class="n">ItemContentBinding</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">LayoutInflater</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="k">this</span><span class="o">),</span> <span class="n">binding</span><span class="o">.</span><span class="na">llContent</span><span class="o">,</span> <span class="kc">false</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
+                <span class="n">tvTitle</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="na">title</span>
+                <span class="n">tvContent</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="na">content</span>
+            <span class="o">}</span>
+            <span class="n">binding</span><span class="o">.</span><span class="na">llContent</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">itemContentBinding</span><span class="o">.</span><span class="na">root</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">expandOrCollapse</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">binding</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">tvTitle</span><span class="o">.</span><span class="na">text</span> <span class="o">==</span> <span class="s">"접기"</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">tvTitle</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="s">"펼치기"</span>
+                <span class="n">collapse</span><span class="o">(</span><span class="n">llContent</span><span class="o">)</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">tvTitle</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="s">"접기"</span>
+                <span class="n">expand</span><span class="o">(</span><span class="n">llContent</span><span class="o">)</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">expand</span><span class="o">(</span><span class="nl">view:</span> <span class="n">View</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">view</span><span class="o">.</span><span class="na">visibility</span> <span class="o">=</span> <span class="n">View</span><span class="o">.</span><span class="na">VISIBLE</span>
+        <span class="n">val</span> <span class="n">widthSpec</span> <span class="o">=</span> <span class="n">View</span><span class="o">.</span><span class="na">MeasureSpec</span><span class="o">.</span><span class="na">makeMeasureSpec</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">View</span><span class="o">.</span><span class="na">MeasureSpec</span><span class="o">.</span><span class="na">UNSPECIFIED</span><span class="o">)</span>
+        <span class="n">val</span> <span class="n">heightSpec</span> <span class="o">=</span> <span class="n">View</span><span class="o">.</span><span class="na">MeasureSpec</span><span class="o">.</span><span class="na">makeMeasureSpec</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">View</span><span class="o">.</span><span class="na">MeasureSpec</span><span class="o">.</span><span class="na">UNSPECIFIED</span><span class="o">)</span>
+        <span class="n">view</span><span class="o">.</span><span class="na">measure</span><span class="o">(</span><span class="n">widthSpec</span><span class="o">,</span> <span class="n">heightSpec</span><span class="o">)</span>
+        <span class="n">valueAnimator</span> <span class="o">=</span> <span class="n">getSlideAnimator</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">view</span><span class="o">.</span><span class="na">measuredHeight</span><span class="o">,</span> <span class="n">view</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">start</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">collapse</span><span class="o">(</span><span class="nl">view:</span> <span class="n">View</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">finalHeight</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="na">height</span>
+        <span class="n">valueAnimator</span> <span class="o">=</span> <span class="n">getSlideAnimator</span><span class="o">(</span><span class="n">finalHeight</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">view</span><span class="o">).</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">addListener</span><span class="o">(</span><span class="n">object</span> <span class="o">:</span> <span class="n">Animator</span><span class="o">.</span><span class="na">AnimatorListener</span> <span class="o">{</span>
+                <span class="n">override</span> <span class="n">fun</span> <span class="nf">onAnimationEnd</span><span class="o">(</span><span class="nl">animator:</span> <span class="n">Animator</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">view</span><span class="o">.</span><span class="na">visibility</span> <span class="o">=</span> <span class="n">View</span><span class="o">.</span><span class="na">GONE</span>
+                <span class="o">}</span>
+
+                <span class="n">override</span> <span class="n">fun</span> <span class="nf">onAnimationStart</span><span class="o">(</span><span class="nl">animator:</span> <span class="n">Animator</span><span class="o">)</span> <span class="o">{}</span>
+                <span class="n">override</span> <span class="n">fun</span> <span class="nf">onAnimationCancel</span><span class="o">(</span><span class="nl">animator:</span> <span class="n">Animator</span><span class="o">)</span> <span class="o">{}</span>
+                <span class="n">override</span> <span class="n">fun</span> <span class="nf">onAnimationRepeat</span><span class="o">(</span><span class="nl">animator:</span> <span class="n">Animator</span><span class="o">)</span> <span class="o">{}</span>
+            <span class="o">})</span>
+            <span class="n">start</span><span class="o">()</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">getSlideAnimator</span><span class="o">(</span><span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">end:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">view:</span> <span class="n">View</span><span class="o">):</span> <span class="n">ValueAnimator</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">animator</span> <span class="o">=</span> <span class="n">ValueAnimator</span><span class="o">.</span><span class="na">ofInt</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">end</span><span class="o">)</span>
+        <span class="n">animator</span><span class="o">.</span><span class="na">duration</span> <span class="o">=</span> <span class="mi">300</span>
+        <span class="n">animator</span><span class="o">.</span><span class="na">addUpdateListener</span> <span class="o">{</span> <span class="n">valueAnimator</span> <span class="o">-&gt;</span> <span class="c1">//Update Height</span>
+            <span class="n">val</span> <span class="n">value</span> <span class="o">=</span> <span class="n">valueAnimator</span><span class="o">.</span><span class="na">animatedValue</span> <span class="n">as</span> <span class="n">Int</span>
+            <span class="n">val</span> <span class="n">layoutParams</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="na">layoutParams</span>
+            <span class="n">layoutParams</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="nf">notifyConstraintView</span><span class="o">(</span><span class="n">view</span><span class="o">)</span>
+            <span class="n">view</span><span class="o">.</span><span class="na">layoutParams</span> <span class="o">=</span> <span class="n">layoutParams</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">animator</span>
+    <span class="o">}</span>
+
+    <span class="cm">/*
+     * ConstraintSet clone 사용하기 때문에 부모 ConstraintLayout 의 자식 뷰들은 모두 id를 지정해 주어야 함.
+     * */</span>
+    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">notifyConstraintView</span><span class="o">(</span><span class="nl">view:</span> <span class="n">View</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">view</span> <span class="n">is</span> <span class="n">ViewGroup</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">view</span><span class="o">.</span><span class="na">childCount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">view</span><span class="o">.</span><span class="na">children</span><span class="o">.</span><span class="na">forEach</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">it</span> <span class="n">is</span> <span class="n">ViewGroup</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">it</span> <span class="n">is</span> <span class="n">ConstraintLayout</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">with</span><span class="o">(</span><span class="n">ConstraintSet</span><span class="o">())</span> <span class="o">{</span>
+                                <span class="n">clone</span><span class="o">(</span><span class="n">it</span><span class="o">)</span>
+                                <span class="n">applyTo</span><span class="o">(</span><span class="n">it</span><span class="o">)</span>
+                            <span class="o">}</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">notifyConstraintView</span><span class="o">(</span><span class="n">it</span><span class="o">)</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
             <span class="o">}</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">)</span>
         <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="n">data</span> <span class="kd">class</span> <span class="nf">Item</span><span class="o">(</span><span class="n">val</span> <span class="nl">title:</span> <span class="n">String</span><span class="o">,</span> <span class="n">val</span> <span class="nl">content:</span> <span class="n">String</span><span class="o">)</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDestroy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">valueAnimator</span><span class="o">?.</span><span class="na">cancel</span><span class="o">()</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onDestroy</span><span class="o">()</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>활동 유지 안함을 하게 되면 Activity 가 종료된 후 다시 생성되게 되는데 이때 뷰의 onSaveInstanceState 가 호출 된다.</p>
-
-<p>위와같이 StringArrayList 를 onSaveInstanceState 에서 저장하고 다시 생성 될 때 onRestoreInstanceState 가 호출되고 onSaveInstanceState 에서 return 해준 Bundle 이 state 로 넘어온다.</p>
-
-<p>이때 주의 해야하는 점은 super.onRestoreInstanceState()를 호출 해줄 때 super.onSaveInstanceState() 를 저장한 값 그대로 넣어줘야 한다.</p>
-
-<p>아래는 커스텀뷰 상태 저장을 한 상태이다.</p>
-
 <figure>
     <p align="center">
-	    <img src="/images/2020-11-06-android-save-data-customview-02.gif" alt="" width="200" height="350" />
+	    <img src="/images/collapseIssueResolve.gif" alt="" width="200" height="350" />
 	</p>
 </figure>
 
-<p>데이터 상태를 저장 한 후 다시 불러 왔기때문에 금액 입력이 보이지 않고 원래 적었던 금액이 보이게 된다.</p>
-
-<p>완성도 높은 CustomView 를 만들게 되면 이부분은 필수적인 부분이라고 볼 수 있다.</p>
+<p>뷰가 깔끔하게 잘 나오는것을 확인 할 수 있다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -432,7 +752,7 @@ https://developer.android.com/topic/libraries/architecture/saving-states</p>
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-10-23T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-tosscustomview/">October 23, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2021-04-25T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-9/">April 25, 2021</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -442,268 +762,59 @@ https://developer.android.com/topic/libraries/architecture/saving-states</p>
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-tosscustomview/" rel="bookmark" title="토스 금액 입력창 애니메이션 클론 코딩" itemprop="url">토스 금액 입력창 애니메이션 클론 코딩</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-9/" rel="bookmark" title="함수형 프로그래밍 2-9" itemprop="url">함수형 프로그래밍 2-9</a></h1>
     
   </header>
   <div class="entry-content">
-      <figure>
-    <p align="center">
-	    <img src="/images/2020-10-23-android-toss-animation.gif" alt="" width="200" height="350" />
-	</p>
-</figure>
+      <h3 id="제네릭">제네릭</h3>
+<p>제네릭은 객체 내부에서 사용할 데이터 타입을 외부에서 정하는 기법이다.</p>
 
-<p>토스 금액 입력창 애니메이션을 봤는데 생각보다 더 복잡한 애니메이션이 들어가 있었다.</p>
+<p>제네릭을 사용하면 클래스를 선언할 때 타입을 확정 짓지 않고, 클래스가 객체화되는 시점에 타입이 결정된다.</p>
 
-<p>애니메이션 종류는 다음과 같았다.</p>
+<p>다음은 예제를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GenericTest</span> <span class="o">{</span>
 
-<h3 id="입력-할-때-애니메이션">입력 할 때 애니메이션</h3>
-<ol>
-  <li>위에서 아래로 내려 감</li>
-  <li>위에서 아래로 내려 갈때 투명도 변경</li>
-  <li>금액이기 떄문에 콤마가 찍히는데 콤마는 생길 때 fade in</li>
-</ol>
-
-<h3 id="제거-할-때-애니메이션">제거 할 때 애니메이션</h3>
-<ol>
-  <li>원래 위치에서 내려감</li>
-  <li>원래 위치에서 내려갈때 투명도 변경</li>
-  <li>콤마 제거 될 때 fade out</li>
-</ol>
-
-<h3 id="예정-금액-보다-많을-때-진동과-함께-좌우-흔들리는-애니메이션">예정 금액 보다 많을 때 진동과 함께 좌우 흔들리는 애니메이션</h3>
-
-<h3 id="총-7가지-애니메이션이-존재-했다">총 7가지 애니메이션이 존재 했다.</h3>
-
-<p>처음 생각한 방법은 EditText 에서 onDraw 를 커스텀 해서 사용하는 방법이었다.</p>
-
-<p>onDraw 에서 코드로 모두 그리려고 하니 너무 복잡해지는 것 같아 좀 더 간단한 방법이 없을까 고민을 하기 시작함…</p>
-
-<p>어차피 입력은 오른쪽에서부터 쌓이니까 LinearLayout 으로 ViewGroup 을 만들고 텍스트 하나당 TextView 하나를 LinearLayout 으로 쌓아가는 방식으로 만들고 애니메이션을 각각의 뷰에 먹여주면 어떨까!?라는 생각을 하게 되었다.</p>
-
-<p>이 방법을 사용해보니 좀 더 코드가 깔끔해지고 가독성도 많이 좋아 졌다.</p>
-
-<p>예전부터 오픈소스 라이브러리를 만들어보고 싶었는데 도전!!</p>
-
-<p>아래 링크를 타고 들어가보자~!</p>
-
-<p><a href="https://github.com/kimyounghoons/PriceAnimationTextView">https://github.com/kimyounghoons/PriceAnimationTextView</a></p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-10-11T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/">October 11, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~2 minutes
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" rel="bookmark" title="Json field null 에서 empty 값 변경" itemprop="url">Json field null 에서 empty 값 변경</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>서버와 데이터를 주고 받을 때 Json 형식으로 주고 받는데 서버에서 내려주는 데이터 field 가 가끔씩 의도하지 않은 null 값이 내려올 때가 있다.<br />
-Kotlin 언어를 사용할 때 nullable 타입인지 아닌지 구분해서 필드를 만들 수 있는데 이 경우는 예상하지 못하기 때문에 무조건 nullable 형태로 사용해야 한다.<br />
-이렇게 사용하면 뭔가 깔끔하지 못한 느낌이 들어서 다른 해결 방안을 생각해 보았다.</p>
-
-<p>이 문제를 해결한 방법은 gson 생성 시 TypeAdapter 를 커스텀해서 사용하는 방법이었다.</p>
-
-<p>우선 array 배열에 [null] 형식으로 오는 값과 필드(Boolean , Long , String)가 null 로 오는 두 케이스를 다뤘다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GsonHelperTest</span> <span class="o">{</span>
     <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="err">`</span><span class="n">Null</span> <span class="n">to</span> <span class="n">Empty</span> <span class="n">Value</span><span class="err">`</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">jsonString</span> <span class="o">=</span> <span class="s">"{\n"</span> <span class="o">+</span>
-                <span class="s">"\"stringValue\": null,\n"</span> <span class="o">+</span>
-                <span class="s">"\"timestamp\": \"1602158882721\",\n"</span> <span class="o">+</span>
-                <span class="s">"\"longValue\": null,\n"</span> <span class="o">+</span>
-                <span class="s">"\"intValue\": null,\n"</span> <span class="o">+</span>
-                <span class="s">"\"booleanValue\": null,\n"</span> <span class="o">+</span>
-                <span class="s">"\"items\": [null]\n"</span> <span class="o">+</span>
-                <span class="s">"    }"</span>
-
-        <span class="n">val</span> <span class="n">gson</span> <span class="o">=</span> <span class="n">GsonBuilder</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
-                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
-                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
-                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
-                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">create</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="nl">nonNullData:</span> <span class="n">NonNullData</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">jsonString</span><span class="o">,</span> <span class="nl">NonNullData:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
-
-        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
-        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">timestamp</span><span class="o">)</span>
-        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">size</span><span class="o">)</span>
-        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">longValue</span><span class="o">)</span>
-        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">intValue</span><span class="o">)</span>
-        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">booleanValue</span><span class="o">)</span>
-
-        <span class="k">assert</span><span class="o">(</span>
-                <span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span>
-        <span class="o">)</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">box</span>  <span class="o">=</span> <span class="n">Box</span> <span class="o">(</span><span class="mi">1</span><span class="o">)</span>
     <span class="o">}</span>
 
-    <span class="n">data</span> <span class="kd">class</span> <span class="nf">NonNullData</span><span class="o">(</span>
-            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"stringValue"</span><span class="o">)</span>
-            <span class="kt">var</span> <span class="nl">stringValue:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
-            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"timestamp"</span><span class="o">)</span>
-            <span class="kt">var</span> <span class="nl">timestamp:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
-            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"items"</span><span class="o">)</span>
-            <span class="kt">var</span> <span class="nl">items:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(),</span>
-            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"longValue"</span><span class="o">)</span>
-            <span class="kt">var</span> <span class="nl">longValue:</span> <span class="n">Long</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1L</span><span class="o">,</span>
-            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"intValue"</span><span class="o">)</span>
-            <span class="kt">var</span> <span class="nl">intValue:</span> <span class="n">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span>
-            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"booleanValue"</span><span class="o">)</span>
-            <span class="kt">var</span> <span class="nl">booleanValue:</span> <span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
-    <span class="o">)</span>
-<span class="o">}</span>
+    <span class="kd">class</span> <span class="nf">Box</span><span class="o">(</span><span class="kt">var</span> <span class="n">value</span> <span class="o">:</span> <span class="n">Int</span><span class="o">)</span>
 
-<span class="kd">class</span> <span class="nc">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">JsonDeserializer</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
-    <span class="nd">@Throws</span><span class="o">(</span><span class="nl">JsonParseException:</span><span class="o">:</span><span class="kd">class</span><span class="err">)</span>
-    <span class="nc">override</span> <span class="n">fun</span> <span class="nf">deserialize</span><span class="o">(</span><span class="nl">json:</span> <span class="n">JsonElement</span><span class="o">,</span> <span class="nl">typeOfT:</span> <span class="n">Type</span><span class="o">,</span> <span class="nl">context:</span> <span class="n">JsonDeserializationContext</span><span class="o">):</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">json</span> <span class="n">is</span> <span class="n">JsonArray</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">json</span>
-            <span class="n">val</span> <span class="n">size</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">size</span><span class="o">()</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
-            <span class="o">}</span>
-            <span class="n">val</span> <span class="nl">list:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">size</span><span class="o">)</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">val</span> <span class="nl">elementType:</span> <span class="n">Type</span> <span class="o">=</span> <span class="err">`</span><span class="n">$Gson$Types</span><span class="err">`</span><span class="o">.</span><span class="na">getCollectionElementType</span><span class="o">(</span><span class="n">typeOfT</span><span class="o">,</span> <span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
-                <span class="n">val</span> <span class="nl">value:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">deserialize</span><span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">elementType</span><span class="o">)</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value</span><span class="o">)</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-            <span class="k">return</span> <span class="n">list</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test2</span><span class="o">(){</span>
+        <span class="n">val</span> <span class="n">secondBox</span> <span class="o">=</span> <span class="n">SecondBox</span><span class="o">(</span><span class="s">"secondBox"</span><span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">SecondBox</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="kt">var</span> <span class="n">value</span> <span class="o">:</span> <span class="n">T</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Box 클래스는 타입이 Int 인 value 를 가지고 있다.</p>
+
+<p>제네릭을 사용하지 않고 클래스를 선언한 예이다.</p>
+
+<p>여기서는 클래스가 가진 값이 Int 타입으로 고정되어 있어서 Int 값만 받을 수 있다.</p>
+
+<p>다른 타입도 담고 싶은 경우에 SecondBox 처럼 제네릭을 사용하면 해결할 수 있다.</p>
+
+<h3 id="제네릭-함수-선언">제네릭 함수 선언</h3>
+<p>리스트에 포함된 숫자의 합을 구하는 함수라면 타입이 Int나 Double 등이 사용될 것이다.</p>
+
+<p>이럴때는 제네릭의 사용이 적합하지 않지만 모든 타입에 잘 작동하는 함수라면 다르다.</p>
+
+<p>예를 들어 리스트의 첫번째 값을 꺼내오는 함수라면 타입에 관계없이 동작하므로 제네릭을 활용해 일반화 하기 적합하다.</p>
+
+<p>구현 코드는 아래와 같다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">head</span><span class="o">(</span><span class="nl">list:</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;):</span> <span class="n">T</span><span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
+            <span class="k">throw</span> <span class="nf">NoSuchElementException</span><span class="o">()</span>
         <span class="o">}</span>
-        <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-
-<span class="kd">class</span> <span class="nc">StringTypeAdapter</span> <span class="o">:</span> <span class="n">TypeAdapter</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">out:</span> <span class="n">JsonWriter</span><span class="o">,</span> <span class="nl">value:</span> <span class="n">String</span><span class="o">?)</span> <span class="o">{</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">read</span><span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">:</span> <span class="n">JsonReader</span><span class="o">):</span> <span class="n">String</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">===</span> <span class="n">JsonToken</span><span class="o">.</span><span class="na">NULL</span><span class="o">)</span> <span class="o">{</span>
-            <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextNull</span><span class="o">()</span>
-            <span class="k">return</span> <span class="s">""</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextString</span><span class="o">()</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-
-<span class="n">Booelan</span><span class="o">,</span> <span class="n">Long</span> <span class="n">Type</span> <span class="n">Adapter</span> <span class="err">는</span> <span class="err">같은</span> <span class="err">구조라</span> <span class="err">생략</span>
-</code></pre></div></div>
-
-<p>NonNullListDeserializer 를 사용해서 items: [null] 식으로 오는 데이터를 items [] 로 변환 할 수 있고 StringTypeAdapter 를 사용해서 String 으로 보내주는 경우인데 null 값으로 보내주는 경우 null 값이 아닌 “” 빈값 으로 변경 시켜 줄 수 있다.</p>
-
-<p>아래는 테스트 결과 이다.</p>
-
-<figure>
-	<img src="/images/2020-10-11-android-json-response.png" alt="" />
-</figure>
-
-<p>Retrofit 에 적용 시키는 경우에는 아래와 같이 적용하면 된다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">createRetrofitClient</span><span class="o">(</span><span class="nl">okHttpClient:</span> <span class="n">OkHttpClient</span><span class="o">):</span> <span class="n">Retrofit</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">Retrofit</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">baseUrl</span><span class="o">(</span><span class="n">baseUrl</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">addCallAdapterFactory</span><span class="o">(</span><span class="n">rxJava2CallAdapterFactory</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">GsonConverterFactory</span><span class="o">.</span><span class="na">create</span><span class="o">(</span>
-                        <span class="n">GsonBuilder</span><span class="o">().</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
-                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
-                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
-                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
-                                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
-                                <span class="o">.</span><span class="na">create</span><span class="o">())</span>
-                <span class="o">)</span>
-                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">enumConverterFactory</span><span class="o">)</span>
-        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">client</span><span class="o">(</span><span class="n">okHttpClient</span><span class="o">).</span><span class="na">build</span><span class="o">()</span>
-    <span class="o">}</span>
-</code></pre></div></div>
-
-<p>위와 같이 사용하게 되면 데이터 모델을 만들때 NonNull 타입으로 만들어도 해당 필드나 List 가 null 이 되지 않는걸 신뢰할 수 있다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-09-26T00:00:00+09:00"><a href="http://localhost:4000/android/android-communicator-activity-fragments/">September 26, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-communicator-activity-fragments/" rel="bookmark" title="Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유" itemprop="url">Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <p>안드로이드 앱 개발을 하다 보면 Activity 와 Fragment 간의 데이터를 주고 받아야 할 때가 있다.
-기존 방식은 어떤 방식을 사용했고 새로운 방식은 또 어떤 방법으로 하는지 알아보자.</p>
-
-<h4 id="기존-방식">기존 방식</h4>
-
-<ol>
-  <li>
-    <h4 id="activity--fragment">Activity → Fragment</h4>
-    <p>데이터를 넘길 때 Fragment newInstance fuction 을 만들어 Bundle로 데이터를 넘김<br />
-Fragment TAG 를 사용해서 Fragment 를 찾은 다음 Fragment 의 데이터 set</p>
-  </li>
-  <li>
-    <h4 id="fragment--activity">Fragment ←→ Activity</h4>
-    <p>Fragment 가 Activity 에 attach 되는 순간 context 를 통해서 Listener 구현해서 데이터 공유</p>
-  </li>
-  <li>
-    <h4 id="activity-내부-fragments-간의-데이터-공유">Activity 내부 Fragments 간의 데이터 공유</h4>
-    <p>One Fragment → Activity → Two Fragment<br />
-이렇게 공유 했었다.</p>
-  </li>
-</ol>
-
-<h4 id="새로운-방식">새로운 방식</h4>
-<p>ViewModel 을 사용하면 데이터 공유가 더 쉬워 진다.</p>
-
-<p>Activity</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ViewModelProvider</span><span class="o">(</span><span class="k">this</span><span class="o">(</span><span class="err">액티비티</span><span class="o">)).</span><span class="na">get</span><span class="o">(</span><span class="err">액티비티</span> <span class="err">뷰모델명</span><span class="o">::</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
-</code></pre></div></div>
-
-<p>Fragment</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="n">val</span> <span class="n">activityViewModel</span> <span class="n">by</span> <span class="n">lazy</span> <span class="o">{</span>
-        <span class="c1">//Fragment에서 ViewModelProvider을 생성 할 때 Fragment 를 넣는게 아니라 Activity 가 들어 가야 한다.  </span>
-        <span class="n">ViewModelProvider</span><span class="o">(</span><span class="n">requireActivity</span><span class="o">()).</span><span class="na">get</span><span class="o">(</span><span class="err">액티비티</span> <span class="err">뷰모델명</span><span class="o">::</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">list</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
 <span class="o">}</span>
 </code></pre></div></div>
-<p>Fragment 에서 ActivityViewModel 을 사용하기 때문에 데이터 공유가 훨씬 편해진다.<br />
-LiveData 를 사용하면 더 사용하기 좋다.<br />
-LiveData Observe 할 때는  ViewModelProvider 을 생성 할 때와 달리 각각의 라이프사이클에 맞춰서 셋팅 해주면 된다.</p>
 
-<p>Activity → ActivityViewModel<br />
-Fragment in Activity→ ActivityViewModel<br />
-OtherFragment in Activity → ActivityViewModel</p>
-
-<p>위와 같이 ActivityViewModel을 공유하기 때문에 데이터 공유가 자유로워 진다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -750,7 +861,7 @@ OtherFragment in Activity → ActivityViewModel</p>
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -805,7 +916,7 @@ OtherFragment in Activity → ActivityViewModel</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

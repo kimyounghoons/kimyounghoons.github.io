@@ -1,0 +1,470 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Kotlin 변성(Variance) &#8211; 영훈 블로그</title>
+<meta name="description" content="Kotlin 변성(Variance)">
+<meta name="keywords" content="Android, Kotlin">
+
+
+
+<!-- Open Graph -->
+<meta property="og:locale" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin 변성(Variance)">
+<meta property="og:description" content="Kotlin 변성(Variance)">
+<meta property="og:url" content="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-11/">
+<meta property="og:site_name" content="영훈 블로그">
+<meta property="og:image" content="http://localhost:4000/images/images/logo.png">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-11/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="영훈 블로그 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.mmenu.all.css">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/jquery.floating-social-share.min.css">
+<!-- Webfonts -->
+<link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- Load Modernizr -->
+<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/modernizr-2.6.2.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+
+
+
+</head>
+
+<body id="post" >
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+
+
+<div class="header-menu header-menu-top">
+    <ul class="header-item-container">
+      <li class="header-item-title header-toggle "><a href="#menu"><h2><i class="fa fa-bars"></i></h2></a></li>
+      <li class="header-item-title">
+        <a href="http://localhost:4000/">
+          
+            <img class="logo" src="http://localhost:4000/images/logo.png" alt="영훈 블로그">
+          
+          <a href="http://localhost:4000/" class="title"> 영훈 블로그</a>
+        </a>
+      </li>
+      
+        
+        
+
+        
+          <li class="header-item "><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+            <ul class="header-submenu">
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Android">Android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Git">Git</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#Single">Single</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#aac">aac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#android">android</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#blog">blog</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#flag">flag</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#interview">interview</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#java">java</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#mac">mac</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#notification">notification</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#sample">sample</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+              
+                
+                  <li class="sub-item"><a href="http://localhost:4000/categories/#자바">자바</a></li>
+              
+            </ul>
+          </li>
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+            
+        
+      
+        
+        
+
+        
+            
+                <li class="header-item "><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+            
+        
+      
+      <li class="header-item"><a href="http://localhost:4000/search"><h3><i class="fa fa-search"></i></h3></a></li>
+    </ul>
+  </div>
+<div class="entry-header">
+  <div class="header-title">
+    <div class="header-title-wrap">
+      <h1>Kotlin 변성(Variance)</h1>
+      
+        <h2><span class="entry-date date published updated"><time datetime="2021-06-06T00:00:00+09:00">June 06, 2021</time></span></h2>
+      
+
+      
+        <p class="entry-reading-time">
+          <i class="fa fa-clock-o"></i>
+          
+          Reading time ~1 minute
+        </p><!-- /.entry-reading-time -->
+      
+    </div><!-- /.header-title-wrap -->
+  </div><!-- /.header-title -->
+</div><!-- /.entry-header -->
+
+
+<nav id="menu" style="display: none">
+  <ul>
+    
+      
+        <li><a href="http://localhost:4000/"><h3>Home</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/tags"><h3>Tags</h3></a></li>
+      
+    
+      
+        <li><a href="http://localhost:4000/categories"><h3>Categories</h3></a>
+          <ul>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Android">Android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Git">Git</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Kotlin">Kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#RxKotlin">RxKotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#Single">Single</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#SourceTree">SourceTree</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#aac">aac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#android">android</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#applicationInfo">applicationInfo</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#blog">blog</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#firebase">firebase</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#flag">flag</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#interview">interview</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#java">java</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#kotlin">kotlin</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#mac">mac</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#notification">notification</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#sample">sample</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#singleTask">singleTask</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#알고리즘">알고리즘</a></li>
+            
+              
+                <li><a href="http://localhost:4000/categories/#자바">자바</a></li>
+            
+          </ul>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    <div class="entry-content">
+        
+      <h1 class="post-title entry-title">Kotlin 변성(Variance)</h1>
+      <h4 id="변성variance은-자바나-코틀린뿐-아니라-다른-언어에서도-존재하는-개념이다">변성(Variance)은 자바나 코틀린뿐 아니라 다른 언어에서도 존재하는 개념이다.</h4>
+
+<p>변성을 제대로 이해하려면 “타입 S가 T의 하위 타입일 때, Box[S]가 Box[T]의 하위 타입인가? 라는 질문에서 시작 해야 한다.</p>
+
+<p>Box[S]와 Box[T] 는 상속 관계가 없다. (무공변)</p>
+
+<p>Box[S]는 Box[T]의 하위 타입 이다. (공변)</p>
+
+<p>Box[T]는 Box[S]의 하위 타입 이다. (반공변)</p>
+
+<p>타입 S와 T의 관계가 동일한 방향의 상하위 관계이면 공변 아니면 반공변 관계가 없으면 무공변으로 이해하면 된다.</p>
+
+<h4 id="공통으로-사용할-클래스들">공통으로 사용할 클래스들</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="n">open</span> <span class="kd">class</span> <span class="nc">Language</span>
+<span class="n">open</span> <span class="kd">class</span> <span class="nc">JVM</span><span class="o">:</span> <span class="n">Language</span><span class="o">()</span>
+<span class="kd">class</span> <span class="nc">Kotlin</span><span class="o">:</span> <span class="n">JVM</span><span class="o">()</span>
+
+<span class="c1">//Kotlin &lt; JVM &lt; Language 상속 관계로 볼 수 있다.</span>
+
+<span class="n">val</span> <span class="n">languageBox</span> <span class="o">=</span> <span class="n">object</span> <span class="o">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">Language</span><span class="o">&gt;</span> <span class="o">{}</span>
+<span class="n">val</span> <span class="n">jvmBox</span> <span class="o">=</span> <span class="n">object</span> <span class="o">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">JVM</span><span class="o">&gt;{}</span>
+<span class="n">val</span> <span class="n">kotlinBox</span> <span class="o">=</span> <span class="n">object</span> <span class="o">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">Kotlin</span><span class="o">&gt;{}</span>
+</code></pre></div></div>
+
+<h3 id="무공변의-의미와-예시">무공변의 의미와 예시</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">lanuageBox</span><span class="o">)</span> <span class="c1">//컴파일 오류</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">jvmBox</span><span class="o">)</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">kotlinBox</span><span class="o">)</span> <span class="c1">//컴파일 오류</span>
+<span class="o">}</span>
+<span class="n">fun</span> <span class="nf">invariant</span><span class="o">(</span><span class="nl">value:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">JVM</span><span class="o">&gt;){}</span>
+</code></pre></div></div>
+<p>타입이 Box<JVM> 으로 선언 되었기 때문에 jvmBox 외에 매개변수를 받을 수 없다.  
+invariant의 매개변수는 무공변이다.</JVM></p>
+
+<h3 id="공변의-의미와-예시">공변의 의미와 예시</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">lanuageBox</span><span class="o">)</span> <span class="c1">//컴파일 오류</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">jvmBox</span><span class="o">)</span>
+    <span class="n">invariant</span><span class="o">(</span><span class="n">kotlinBox</span><span class="o">)</span>
+<span class="o">}</span>
+<span class="n">fun</span> <span class="nf">invariant</span><span class="o">(</span><span class="nl">value:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">out</span> <span class="n">JVM</span><span class="o">&gt;){}</span>
+</code></pre></div></div>
+<p>타입이 Box<out JVM=""> 으로 선언 되었기 때문에 jvmBox,kotlinBox 매개변수를 받을 수 있다.
+invariant의 매개변수는 공변이다.</out></p>
+
+<h3 id="반공변의-의미와-예시">반공변의 의미와 예시</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="nf">main</span><span class="o">(</span><span class="nl">args:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;){</span>
+    <span class="n">contravariant</span><span class="o">(</span><span class="n">lanuageBox</span><span class="o">)</span>
+    <span class="n">contravariant</span><span class="o">(</span><span class="n">jvmBox</span><span class="o">)</span>
+    <span class="n">contravariant</span><span class="o">(</span><span class="n">kotlinBox</span><span class="o">)</span><span class="c1">//컴파일 오류</span>
+<span class="o">}</span>
+<span class="n">fun</span> <span class="nf">contravariant</span><span class="o">(</span><span class="nl">value:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">in</span> <span class="n">JVM</span><span class="o">&gt;){}</span>
+</code></pre></div></div>
+<p>타입이 Box<out JVM=""> 으로 선언 되었기 때문에 lanuageBox,jvmBox 매개변수를 받을 수 있다.
+contravariant 매개변수는 반공변이다.</out></p>
+
+<h3 id="in-out-키워드를-사용할-때-주의할-점이-있다">in out 키워드를 사용할 때 주의할 점이 있다.</h3>
+
+<p>out 부터 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">Box2</span><span class="o">&lt;</span><span class="n">out</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">read</span><span class="o">():</span> <span class="n">T</span>
+    <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">value:</span> <span class="n">T</span><span class="o">)</span> <span class="c1">// 컴파일 오류</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>T를 읽어서 반환할 때는 어떤 상위 타입에 하위 타입을 할당하는 것이 가능하기 때문에 문제가 없지만 write()함수는 value 값을 받아서 처리 할때 어떤 하위 타입이 들어올지
+알 수 없기 때문에 런타임 오류가 발생할 가능성이 있다.</p>
+
+<p>in 예제를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">interface</span> <span class="nc">Box2</span><span class="o">&lt;</span><span class="n">in</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">read</span><span class="o">():</span> <span class="n">T</span> <span class="c1">//컴파일 오류</span>
+    <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">value:</span> <span class="n">T</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>반공변으로 선언 했을 때는 read함수에서 컴파일 오류가 발생 한다.
+그 이유는 호출자가 선언한 T 타입의 변수에 T보다 상위 타입의 값을 할당하면 런타임 오류가 발생하기 때문이다.</p>
+
+<p>in, out 키워드의 의미는 문자 그대로 이해하면 쉽다.<br />
+in 으로 선언된 타입은 입력값에만 활용(읽기 전용)할 수 있고 
+out으로 선언된 타입은 반환값(출력)의 타입으로만 사용할 수 있다.</p>
+
+<p>그렇게 되면 프로그래머의 의도치 않은 실수를 컴파일 타임에 막을 수 있다.</p>
+
+<p>Kotlin 변성(Variance)에 대해 알아 보았다.</p>
+
+    </div><!-- /.entry-content -->
+    
+  </article>
+</div><!-- /#main -->
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script type="text/javascript" src="http://localhost:4000/assets/js/scripts.min.js"></script>
+<script type="text/javascript" async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+
+<!-- Asynchronous Google Analytics snippet -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-154716591-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+</script>
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://kimyounghoons.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+
+
+<script type="text/javascript">
+    sharing();
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154716591-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-154716591-1');
+</script>
+
+<script id="dsq-count-scr" src="//kimyounghoons.disqus.com/count.js" async></script>
+   <div class="read-more">
+  
+    <div class="read-more-header">
+      <a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-10/" class="read-more-btn">Read More</a>
+    </div><!-- /.read-more-header -->
+    <div class="read-more-content">
+      <h3><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-3-1/" title="재귀">재귀</a></h3>
+      <p>재귀 <a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-3-1/">Continue reading</a></p>
+    </div><!-- /.read-more-content -->
+  
+  <div class="read-more-list">
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/kotlin-functional-programming-2-10/" title="Kotlin Scope functions">Kotlin Scope functions</a></h4>
+        <span>Published on June 06, 2021</span>
+      </div><!-- /.list-item -->
+    
+      <div class="list-item">
+        <h4><a href="http://localhost:4000/android/kotlin/android-constraintlayout-expand/" title="ViewGroup 안에 ConstraintLayout View 추가한 경우 펼치고 접을때 이슈">ViewGroup 안에 ConstraintLayout View 추가한 경우 펼치고 접을때 이슈</a></h4>
+        <span>Published on May 09, 2021</span>
+      </div><!-- /.list-item -->
+    
+  </div><!-- /.read-more-list -->
+</div><!-- /.read-more -->
+</body>
+</html>

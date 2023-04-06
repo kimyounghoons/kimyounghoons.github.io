@@ -288,218 +288,81 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-04-26T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/">April 26, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-11-06T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-save-data-customview/">November 06, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
         
-        Reading time ~3 minutes
+        Reading time ~1 minute
       </span><!-- /.entry-reading-time -->
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-factory-pattern/" rel="bookmark" title="Factory Pattern (디자인 패턴 4장)" itemprop="url">Factory Pattern (디자인 패턴 4장)</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-save-data-customview/" rel="bookmark" title="Save State for CustomView" itemprop="url">Save State for CustomView</a></h1>
     
   </header>
   <div class="entry-content">
-      <h3 id="팩토리-메소드-패턴과-추상-팩토리-패턴">팩토리 메소드 패턴과 추상 팩토리 패턴</h3>
+      <h2 id="커스텀뷰-상태-저장">커스텀뷰 상태 저장</h2>
+<p>커스텀뷰가 그려지고 메모리 부족 등으로 인해 다시 그려지는 순간 데이터를 저장한후 다시 가져와야 화면에 그대로 보여줄수 있다.</p>
 
-<h4 id="팩토리-메소드-정의">팩토리 메소드 정의</h4>
-<p>객체를 생성하기 위한 인터페이스를 정의하는데, 어떤 클래스의 인스턴스를 만들지는 서브클래스에서 결정하게 한다.</p>
+<p>개발자 모드에서 활동 유지 안함을 활성화 한 후 테스트해야 한다.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">FactoryMethodPatternTest</span> <span class="o">{</span>
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">testCreateModel</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">yellowMemo</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Yellow"</span><span class="o">)</span>
-        <span class="n">yellowMemo</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
-        <span class="n">val</span> <span class="n">blueMemo</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Blue"</span><span class="o">)</span>
-        <span class="n">blueMemo</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
-        <span class="n">val</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">ClassFactory</span><span class="o">().</span><span class="na">create</span><span class="o">(</span><span class="s">"Else"</span><span class="o">)</span>
-        <span class="n">empty</span><span class="o">.</span><span class="na">onClick</span><span class="o">()</span>
-    <span class="o">}</span>
+<p>아래는 커스텀뷰 상태 저장을 하지 않은 상태이다.</p>
 
-    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ModelFactory</span> <span class="o">{</span>
-        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">create</span><span class="o">(</span><span class="nl">className:</span> <span class="n">String</span><span class="o">):</span> <span class="n">Model</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">ClassFactory</span> <span class="o">:</span> <span class="n">ModelFactory</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">create</span><span class="o">(</span><span class="nl">className:</span> <span class="n">String</span><span class="o">):</span> <span class="n">Model</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="nf">when</span> <span class="o">(</span><span class="n">className</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">())</span> <span class="o">{</span>
-                <span class="s">"yellow"</span> <span class="o">-&gt;</span> <span class="o">{</span>
-                    <span class="n">YellowMemo</span><span class="o">()</span>
-                <span class="o">}</span>
-                <span class="s">"blue"</span> <span class="o">-&gt;</span> <span class="o">{</span>
-                    <span class="n">BlueMemo</span><span class="o">()</span>
-                <span class="o">}</span>
-                <span class="k">else</span> <span class="o">-&gt;</span> <span class="o">{</span>
-                    <span class="n">Empty</span><span class="o">()</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Model</span> <span class="o">{</span>
-        <span class="kd">abstract</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">YellowMemo</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"YellowMemo 클릭"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">BlueMemo</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"BlueMemo 클릭"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">Empty</span> <span class="o">:</span> <span class="n">Model</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onClick</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Empty 클릭"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-
-</code></pre></div></div>
-
-<p>위의 코드 테스트 결과이미지</p>
 <figure>
-	<img src="/images/2020-04-26-android-factory-pattern-01.png" alt="" />
+    <p align="center">
+	    <img src="/images/2020-11-06-android-save-data-customview-01.gif" alt="" width="200" height="350" />
+	</p>
 </figure>
 
-<p>추상클래스 ModelFactory 의 create fun 추상 메소드를 통해 모델을 만들고 각각을 클릭 했을 때 print 내용은 달라진다.<br />
-모델을 직접 만들지 않고 Factory 를 통해 만들어서 사용하였다.<br />
-하지만 이렇게 되면 create 될때 className 에 의해 모두 모델을 ClassFactory에서 만들어 주어야 한다.<br />
-모델이 셀수 없게 많아지고 해당 모델들을 관리 해야 한다면??<br />
-모든 모델들을 ClassFactory에 추가 해야하기 때문에 비효율적이다.<br />
-위의 문제점을 보완한 아래의 내용을 보자.</p>
+<p>이제부터 데이터 저장을 해보자~!</p>
 
-<h4 id="추상팩토리-정의">추상팩토리 정의</h4>
-<p>추상 팩토리 패턴에서는 인터페이스를 이용하여 서로 연관된 또는 의존하는 객체인 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
-Android Architecture Component 에 있는 ViewModel 을 보자.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">viewModel</span> <span class="o">=</span> <span class="n">ViewModelProviders</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="nl">MemoViewModel:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
-</code></pre></div></div>
-
-<p>ViewModelProviders.of(this) 는 ViewModelProvider 를 반환 하고 get(MemoViewModel::class.java)을 통해 MemoViewModel 을 반환한다.<br />
-ViewModelProvider를 자세히 살펴 보자.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ViewModelProvider</span> <span class="o">{</span>
-
-<span class="nd">@NonNull</span>
-<span class="nd">@MainThread</span>
-<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">get</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">String</span> <span class="n">canonicalName</span> <span class="o">=</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">getCanonicalName</span><span class="o">();</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">canonicalName</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"Local and anonymous classes can not be ViewModels"</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="nf">get</span><span class="o">(</span><span class="n">DEFAULT_KEY</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">canonicalName</span><span class="o">,</span> <span class="n">modelClass</span><span class="o">);</span>
+<p>이때 필요한 메소드는 onSaveInstanceState , onRestoreInstanceState 두개이다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">override</span> <span class="n">fun</span> <span class="nf">onSaveInstanceState</span><span class="o">():</span> <span class="n">Parcelable</span><span class="o">?</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">Bundle</span><span class="o">().</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">putParcelable</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">,</span> <span class="kd">super</span><span class="o">.</span><span class="na">onSaveInstanceState</span><span class="o">())</span>
+            <span class="n">putStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">,</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">textViewArrayList</span><span class="o">.</span><span class="na">map</span> <span class="o">{</span>
+                <span class="n">it</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span>
+            <span class="o">}))</span>
+        <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="nd">@NonNull</span>
-<span class="nd">@MainThread</span>
-<span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">get</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">ViewModel</span> <span class="n">viewModel</span> <span class="o">=</span> <span class="n">mViewModelStore</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
-
-    <span class="k">if</span> <span class="o">(</span><span class="n">modelClass</span><span class="o">.</span><span class="na">isInstance</span><span class="o">(</span><span class="n">viewModel</span><span class="o">))</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">viewModel</span><span class="o">;</span>
-    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">viewModel</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">override</span> <span class="n">fun</span> <span class="nf">onRestoreInstanceState</span><span class="o">(</span><span class="nl">state:</span> <span class="n">Parcelable</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="n">is</span> <span class="n">Bundle</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">KEY_ON_SAVE_INSTANCES_TATE</span><span class="o">)</span> <span class="n">as</span> <span class="n">Parcelable</span><span class="o">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="na">getStringArrayList</span><span class="o">(</span><span class="n">KEY_SAVE_DATA</span><span class="o">)?.</span><span class="na">let</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="n">removeAllViews</span><span class="o">()</span>
+                    <span class="n">it</span><span class="o">.</span><span class="na">filter</span> <span class="o">{</span> <span class="n">originContent</span> <span class="o">-&gt;</span>
+                        <span class="n">originContent</span> <span class="o">!=</span> <span class="s">","</span> <span class="o">&amp;&amp;</span> <span class="n">originContent</span> <span class="o">!=</span> <span class="n">endText</span>
+                    <span class="o">}.</span><span class="na">forEach</span> <span class="o">{</span> <span class="n">filteredContent</span> <span class="o">-&gt;</span>
+                        <span class="n">addText</span><span class="o">(</span><span class="n">filteredContent</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
             <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mFactory</span> <span class="k">instanceof</span> <span class="n">KeyedFactory</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">viewModel</span> <span class="o">=</span> <span class="o">((</span><span class="n">KeyedFactory</span><span class="o">)</span> <span class="o">(</span><span class="n">mFactory</span><span class="o">)).</span><span class="na">create</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">modelClass</span><span class="o">);</span>
         <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="n">viewModel</span> <span class="o">=</span> <span class="o">(</span><span class="n">mFactory</span><span class="o">).</span><span class="na">create</span><span class="o">(</span><span class="n">modelClass</span><span class="o">);</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">onRestoreInstanceState</span><span class="o">(</span><span class="n">state</span><span class="o">)</span>
         <span class="o">}</span>
-        <span class="n">mViewModelStore</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">viewModel</span><span class="o">);</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">viewModel</span><span class="o">;</span>
-    <span class="o">}</span>
-
-<span class="kd">abstract</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">KeyedFactory</span> <span class="kd">implements</span> <span class="n">Factory</span> <span class="o">{</span>
-    <span class="nd">@NonNull</span>
-    <span class="kd">public</span> <span class="kd">abstract</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span>
-            <span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">);</span>
-
-    <span class="nd">@NonNull</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nf">UnsupportedOperationException</span><span class="o">(</span><span class="s">"create(String, Class&lt;?&gt;) must be called on "</span>
-                <span class="o">+</span> <span class="s">"implementaions of KeyedFactory"</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">AndroidViewModelFactory</span> <span class="kd">extends</span> <span class="n">ViewModelProvider</span><span class="o">.</span><span class="na">NewInstanceFactory</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">AndroidViewModelFactory</span> <span class="n">sInstance</span><span class="o">;</span>
-
-    <span class="nd">@NonNull</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">AndroidViewModelFactory</span> <span class="nf">getInstance</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Application</span> <span class="n">application</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">sInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">sInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AndroidViewModelFactory</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">sInstance</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="n">Application</span> <span class="n">mApplication</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">AndroidViewModelFactory</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Application</span> <span class="n">application</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">mApplication</span> <span class="o">=</span> <span class="n">application</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="nd">@NonNull</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">AndroidViewModel</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">modelClass</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">getConstructor</span><span class="o">(</span><span class="n">Application</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">newInstance</span><span class="o">(</span><span class="n">mApplication</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">modelClass</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>	
-
-<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">NewInstanceFactory</span> <span class="kd">implements</span> <span class="n">Factory</span> <span class="o">{</span>
-
-    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"ClassNewInstance"</span><span class="o">)</span>
-    <span class="nd">@NonNull</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">modelClass</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"Cannot create an instance of "</span> <span class="o">+</span> <span class="n">modelClass</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Factory</span> <span class="o">{</span>
-    <span class="nd">@NonNull</span>
-    <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">ViewModel</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">create</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">modelClass</span><span class="o">);</span>
-<span class="o">}</span>
-
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>소스가 좀 길지만 필요한 부분만 편집했다.<br />
-mFactory 는 AndroidViewModelFactory 이다.<br />
-Factory 라는 인터페이스로 인해 구상 클래스를 지정하지 않고도 생성할 수 있다.<br />
-mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 아니면 Factory에 의해 생성되게 된다.</p>
+<p>활동 유지 안함을 하게 되면 Activity 가 종료된 후 다시 생성되게 되는데 이때 뷰의 onSaveInstanceState 가 호출 된다.</p>
 
-<p>간단한 로직의 객체 생성이라면 팩토리 메소드를 사용해도 괜찮을것 같고 Android Architecture Component 처럼 구상 클래스를 지정하고 싶지 않을때는
-추상 팩토리 패턴을 사용하면 좋을것 같다.</p>
+<p>위와같이 StringArrayList 를 onSaveInstanceState 에서 저장하고 다시 생성 될 때 onRestoreInstanceState 가 호출되고 onSaveInstanceState 에서 return 해준 Bundle 이 state 로 넘어온다.</p>
+
+<p>이때 주의 해야하는 점은 super.onRestoreInstanceState()를 호출 해줄 때 super.onSaveInstanceState() 를 저장한 값 그대로 넣어줘야 한다.</p>
+
+<p>아래는 커스텀뷰 상태 저장을 한 상태이다.</p>
+
+<figure>
+    <p align="center">
+	    <img src="/images/2020-11-06-android-save-data-customview-02.gif" alt="" width="200" height="350" />
+	</p>
+</figure>
+
+<p>데이터 상태를 저장 한 후 다시 불러 왔기때문에 금액 입력이 보이지 않고 원래 적었던 금액이 보이게 된다.</p>
+
+<p>완성도 높은 CustomView 를 만들게 되면 이부분은 필수적인 부분이라고 볼 수 있다.</p>
 
       
   </div><!-- /.entry-content -->
@@ -509,7 +372,7 @@ mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 �
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-04-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/">April 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-10-23T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-tosscustomview/">October 23, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -519,256 +382,51 @@ mViewModelStore 에 viewModel 이 있으면 해당 viewModel 을 반환하고 �
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-decorator-pattern/" rel="bookmark" title="Decorator Pattern (디자인 패턴 3장)" itemprop="url">Decorator Pattern (디자인 패턴 3장)</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-tosscustomview/" rel="bookmark" title="토스 금액 입력창 애니메이션 클론 코딩" itemprop="url">토스 금액 입력창 애니메이션 클론 코딩</a></h1>
     
   </header>
   <div class="entry-content">
-      <h4 id="정의">정의</h4>
-<p>주어진 상황 및 용도에 따라 어떤 객체에 책임을 덧붙이는 패턴으로, 기능 확장이 필요할 때 서브클래싱 대신 쓸 수 있는 유연한 대안이 될 수 있다.</p>
-
-<h4 id="디자인-원칙">디자인 원칙</h4>
-<p>확장에는 열려있고 변경에는 닫혀 있어야 한다는 원칙이다.(OCP - Open Close Principle)</p>
-
-<figure>
-	<img src="/images/2020-04-10-android-decorator-pattern.png" alt="" />
+      <figure>
+    <p align="center">
+	    <img src="/images/2020-10-23-android-toss-animation.gif" alt="" width="200" height="350" />
+	</p>
 </figure>
 
-<p>카페에 가면 커피를 주문하고 추가적으로 밀크나 모카 휘핑을 추가 하게 되는데 이부분에서 요금이 추가 된다고 가정한다.<br />
-HouseBlend,DarkRoast,Espresso 의 기본 클래스에 밀크,모카,휘핑 등을 필요할때 추가 해서 요금을 정산 할 수 있다.<br />
-아래의 코드를 보자.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Test
-fun decoratorPatternTest() {
-    val houseBlend = HouseBlend()
-    println("houseBlend 가격 : ${houseBlend.cost()}원")
-    val houseBlendWithWhip = Whip(houseBlend)
-    println("HouseBlend + Whip 가격 : ${houseBlendWithWhip.cost()}원")
-    val houseBlendWithWhipAndMilk = Milk(houseBlendWithWhip)
-    println("HouseBlend + Whip + Milk 가격 : ${houseBlendWithWhipAndMilk.cost()}원")
-}
+<p>토스 금액 입력창 애니메이션을 봤는데 생각보다 더 복잡한 애니메이션이 들어가 있었다.</p>
 
-abstract class Beverage {
-    abstract fun cost(): Long
-}
+<p>애니메이션 종류는 다음과 같았다.</p>
 
-class HouseBlend : Beverage() {
-    override fun cost(): Long {
-        return 5000
-    }
-}
-
-abstract class BeverageDecorator(protected val beverage: Beverage) : Beverage()
-
-class Whip(beverage: Beverage) : BeverageDecorator(beverage) {
-    override fun cost(): Long {
-        return beverage.cost() + 500
-    }
-}
-
-class Milk(beverage: Beverage) : BeverageDecorator(beverage) {
-    override fun cost(): Long {
-        return beverage.cost() + 1000
-    }
-}
-
-</code></pre></div></div>
-<p>Whip 과 Milk 가 Beverage 를 상속 받아서 만들게 되면 Whip과 Milk 가 Beverage 인지 Decorator 인지 바로 알기 힘들다.<br />
-BeverageDecorator 클래스를 만든건 Whip 과 Milk 가 Decorator 를 상속 받아서 장식인걸 바로 알수 있고 HouseBlend 는 Beverage 를 상속 받아 음료 종류 라는걸 바로 알 수 있다.</p>
-
-<p>테스트 결과는 아래 사진과 같다.</p>
-<figure>
-	<img src="/images/2020-04-10-android-decorator-pattern-02.png" alt="" />
-</figure>
-
-<p>밀크가 두번 이상,모카 두번 이상,휘핑 두번 이상이 들어 가더라도 추가적인 객체를 생성하지 않고 기능을 확장해서 사용할 수 있는 장점이 있다.<br />
-하지만 데코레이터가 많아지면 해당 객체를 감싸는 클래스들이 많아지고 디버깅하기가 힘들어 질 수 있는 단점이 있다.<br />
-그리고 실제 마지막 반환 되는 객체가 원래의 HouseBlend , DarkRoast , Espresso 가 아니라 마지막 Decorator 라는 것을 알고 있어야 한다.<br />
-이미지 참조 링크 
-http://nsnotification.blogspot.com/2013/01/decorator-pattern.html</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-25T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-observer-pattern/">March 25, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-observer-pattern/" rel="bookmark" title="Observer Pattern (디자인 패턴 2장)" itemprop="url">Observer Pattern (디자인 패턴 2장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h4 id="정의">정의</h4>
-<p>한 객체의 상태가 바뀌면 그 객체에 의존하는 다른 객체들한테 연락이 가고 자동으로 내용이 갱신되는 방식으로 일대다(one-to-many) 의존성을 정의함.</p>
-
-<h4 id="디자인-원칙">디자인 원칙</h4>
-<p>서로 상호작용을 하는 객체 사이에서는 가능하면 느슨하게 결합하는 디자인을 사용해야 한다.</p>
-
-<figure>
-	<img src="/images/2020-03-25-android-observer-pattern.png" alt="" />
-</figure>
-
-<p>위의 사진은 위키백과에서 가져온 이미지이다.<br />
-Subject 에 Observer를 등록 시키고 Subeject 의 데이터가 변경 되었을때 Observer 에게 알려주는 내용이다.</p>
-
-<p>이번에는 옵저버패턴 예시를 위해 TextView를 살펴 보자.<br />
-전체 소스는 많기 때문에 필요한 부분만 짤라서 요약함.<br />
-Subject 는 TextView 이고 Observer 는 TextWatcher 라고 생각하면 될것 같다.<br />
-아래를 보면 TextView(Subject)에서 Observer 를 관리 하기위해 ArrayList<TextWatcher> 로 가지고 있는걸 볼수 있다.</TextWatcher></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextView</span> <span class="kd">extends</span> <span class="n">View</span> <span class="kd">implements</span> <span class="n">ViewTreeObserver</span><span class="o">.</span><span class="na">OnPreDrawListener</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">mListeners</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">mListeners</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;();</span>
-        <span class="o">}</span>
-        <span class="n">mListeners</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeTextChangedListener</span><span class="o">(</span><span class="n">TextWatcher</span> <span class="n">watcher</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="n">watcher</span><span class="o">);</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">mListeners</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kt">void</span> <span class="nf">sendOnTextChanged</span><span class="o">(</span><span class="n">CharSequence</span> <span class="n">text</span><span class="o">,</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">before</span><span class="o">,</span> <span class="kt">int</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mListeners</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TextWatcher</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">mListeners</span><span class="o">;</span>
-            <span class="kd">final</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="na">onTextChanged</span><span class="o">(</span><span class="n">text</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">mEditor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">mEditor</span><span class="o">.</span><span class="na">sendOnTextChanged</span><span class="o">(</span><span class="n">start</span><span class="o">,</span> <span class="n">before</span><span class="o">,</span> <span class="n">after</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="o">...</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 이다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">LogTextWacher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경후"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경전"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"kyh"</span><span class="o">,</span> <span class="s">"텍스트 변경할때"</span><span class="o">)</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">class</span> <span class="nc">PrintTextWatcher</span> <span class="o">:</span> <span class="n">TextWatcher</span> <span class="o">{</span>
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">afterTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">Editable</span><span class="o">?)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경후"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">beforeTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">after:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경전"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onTextChanged</span><span class="o">(</span><span class="nl">s:</span> <span class="n">CharSequence</span><span class="o">?,</span> <span class="nl">start:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">before:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">count:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"텍스트 변경할때"</span><span class="o">)</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>아래는 LogTextWatcher(옵저버) 와 PrintTextWatcher(옵저버) 를 TextView(Subject)에 등록</p>
-<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">initTextView</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="nc">Context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">val</span> <span class="py">textView</span> <span class="p">=</span> <span class="n">TextView</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
-    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">LogTextWacher</span><span class="p">())</span>
-    <span class="n">textView</span><span class="p">.</span><span class="n">addTextChangedListener</span><span class="p">(</span><span class="n">PrintTextWatcher</span><span class="p">())</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>TextView 의 text 가 변경 될 때마다 Log 와 Print 가 찍히게 된다.<br />
-하지만 유의해야하는것은 같은 옵저버를 두번 등록 하지않게 해야한다.<br />
-두번 등록 하게 될 경우 Log 와 Print 를 한번씩만 호출되길 원하는데 두번씩 호출 될 수 있다.</p>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-15T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/">March 15, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-strategy-pattern/" rel="bookmark" title="Strategy Pattern (디자인 패턴 1장)" itemprop="url">Strategy Pattern (디자인 패턴 1장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="strategy-pattern-에-대해-알아보자">Strategy Pattern 에 대해 알아보자.</h3>
-
-<p>알고리즘군을 정의하고 각각을 캡슐화하여 교환해서 사용할 수 있도록 만든다.<br />
-스트래티지를 활용하면 알고리즘을 사용하는 클라이언트와는 독릭적으로 알고리즘을 변경할 수 있다.</p>
-
-<p>1장에서는 다음과 같은 3가지 디자인 원칙이 나온다.</p>
-
+<h3 id="입력-할-때-애니메이션">입력 할 때 애니메이션</h3>
 <ol>
-  <li>애플리케이션에서 달라지는 부분을 찾아내고, 달라지지 않는 부분으로부터 분리시킨다.</li>
-  <li>구현이 아닌 인터페이스에 맞춰서 프로그래밍한다.</li>
-  <li>상속보다는 구성을 활용한다.</li>
+  <li>위에서 아래로 내려 감</li>
+  <li>위에서 아래로 내려 갈때 투명도 변경</li>
+  <li>금액이기 떄문에 콤마가 찍히는데 콤마는 생길 때 fade in</li>
 </ol>
 
-<p>디자인 패턴책에서는 오리의 예제를 들었는데 안드로이드 부분에서 찾아 보았다.<br />
-얼마전 AppCenter 를 사용하면서 사용된 스트래티지패턴의 예제를 보려고 한다.</p>
+<h3 id="제거-할-때-애니메이션">제거 할 때 애니메이션</h3>
+<ol>
+  <li>원래 위치에서 내려감</li>
+  <li>원래 위치에서 내려갈때 투명도 변경</li>
+  <li>콤마 제거 될 때 fade out</li>
+</ol>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InAppUpdateListener : DistributeListener {
-    override fun onReleaseAvailable(
-        activity: Activity?,
-        releaseDetails: ReleaseDetails
-    ): Boolean {
-        activity?.apply {
-            val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setTitle(R.string.in_app_update)
-            dialogBuilder.setMessage(R.string.msg_download_latest_version)
-            dialogBuilder.setPositiveButton(R.string.common_confirm) { _, _ -&gt;
-                Distribute.notifyUpdateAction(UpdateAction.UPDATE)
-            }
-            dialogBuilder.setCancelable(false)
-            dialogBuilder.create()
-                .show()
-            return true
-        }
-        return false
-    }
-}
+<h3 id="예정-금액-보다-많을-때-진동과-함께-좌우-흔들리는-애니메이션">예정 금액 보다 많을 때 진동과 함께 좌우 흔들리는 애니메이션</h3>
 
-Distribute.setListener(InAppUpdateListener())
-</code></pre></div></div>
+<h3 id="총-7가지-애니메이션이-존재-했다">총 7가지 애니메이션이 존재 했다.</h3>
 
-<p>위의 코드는 업데이트할 버전이 있을때 onReleaseAvailable 가 불려서 다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다.<br />
-Distribute 에는 DistributeListener 인터페이스를 구성했다.</p>
+<p>처음 생각한 방법은 EditText 에서 onDraw 를 커스텀 해서 사용하는 방법이었다.</p>
 
-<p>다이얼로그를 띄우고 확인을 누르게 되면 업데이트를 진행한다. 라는 알고리즘을 캡슐화해서 사용하였고 InAppUpdateListener를 다른 DistributeListener로 교환해서 사용할 수 있다.<br />
-그렇기 때문에 이 코드도 strategy pattern 으로 볼 수 있다.</p>
+<p>onDraw 에서 코드로 모두 그리려고 하니 너무 복잡해지는 것 같아 좀 더 간단한 방법이 없을까 고민을 하기 시작함…</p>
+
+<p>어차피 입력은 오른쪽에서부터 쌓이니까 LinearLayout 으로 ViewGroup 을 만들고 텍스트 하나당 TextView 하나를 LinearLayout 으로 쌓아가는 방식으로 만들고 애니메이션을 각각의 뷰에 먹여주면 어떨까!?라는 생각을 하게 되었다.</p>
+
+<p>이 방법을 사용해보니 좀 더 코드가 깔끔해지고 가독성도 많이 좋아 졌다.</p>
+
+<p>예전부터 오픈소스 라이브러리를 만들어보고 싶었는데 도전!!</p>
+
+<p>아래 링크를 타고 들어가보자~!</p>
+
+<p><a href="https://github.com/kimyounghoons/PriceAnimationTextView">https://github.com/kimyounghoons/PriceAnimationTextView</a></p>
 
       
   </div><!-- /.entry-content -->
@@ -778,7 +436,157 @@ Distribute 에는 DistributeListener 인터페이스를 구성했다.</p>
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-03-12T00:00:00+09:00"><a href="http://localhost:4000/android/android-bottom_navigation_view/">March 12, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-10-11T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/">October 11, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~2 minutes
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-jsonNullToEmptyValue/" rel="bookmark" title="Json field null 에서 empty 값 변경" itemprop="url">Json field null 에서 empty 값 변경</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>서버와 데이터를 주고 받을 때 Json 형식으로 주고 받는데 서버에서 내려주는 데이터 field 가 가끔씩 의도하지 않은 null 값이 내려올 때가 있다.<br />
+Kotlin 언어를 사용할 때 nullable 타입인지 아닌지 구분해서 필드를 만들 수 있는데 이 경우는 예상하지 못하기 때문에 무조건 nullable 형태로 사용해야 한다.<br />
+이렇게 사용하면 뭔가 깔끔하지 못한 느낌이 들어서 다른 해결 방안을 생각해 보았다.</p>
+
+<p>이 문제를 해결한 방법은 gson 생성 시 TypeAdapter 를 커스텀해서 사용하는 방법이었다.</p>
+
+<p>우선 array 배열에 [null] 형식으로 오는 값과 필드(Boolean , Long , String)가 null 로 오는 두 케이스를 다뤘다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">GsonHelperTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="err">`</span><span class="n">Null</span> <span class="n">to</span> <span class="n">Empty</span> <span class="n">Value</span><span class="err">`</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">jsonString</span> <span class="o">=</span> <span class="s">"{\n"</span> <span class="o">+</span>
+                <span class="s">"\"stringValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"timestamp\": \"1602158882721\",\n"</span> <span class="o">+</span>
+                <span class="s">"\"longValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"intValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"booleanValue\": null,\n"</span> <span class="o">+</span>
+                <span class="s">"\"items\": [null]\n"</span> <span class="o">+</span>
+                <span class="s">"    }"</span>
+
+        <span class="n">val</span> <span class="n">gson</span> <span class="o">=</span> <span class="n">GsonBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">create</span><span class="o">()</span>
+
+        <span class="n">val</span> <span class="nl">nonNullData:</span> <span class="n">NonNullData</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">jsonString</span><span class="o">,</span> <span class="nl">NonNullData:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">timestamp</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">size</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">longValue</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">intValue</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">nonNullData</span><span class="o">.</span><span class="na">booleanValue</span><span class="o">)</span>
+
+        <span class="k">assert</span><span class="o">(</span>
+                <span class="n">nonNullData</span><span class="o">.</span><span class="na">stringValue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span>
+        <span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="n">data</span> <span class="kd">class</span> <span class="nf">NonNullData</span><span class="o">(</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"stringValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">stringValue:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"timestamp"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">timestamp:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"items"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">items:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(),</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"longValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">longValue:</span> <span class="n">Long</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1L</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"intValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">intValue:</span> <span class="n">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span>
+            <span class="nd">@SerializedName</span><span class="o">(</span><span class="s">"booleanValue"</span><span class="o">)</span>
+            <span class="kt">var</span> <span class="nl">booleanValue:</span> <span class="n">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="o">)</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">JsonDeserializer</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+    <span class="nd">@Throws</span><span class="o">(</span><span class="nl">JsonParseException:</span><span class="o">:</span><span class="kd">class</span><span class="err">)</span>
+    <span class="nc">override</span> <span class="n">fun</span> <span class="nf">deserialize</span><span class="o">(</span><span class="nl">json:</span> <span class="n">JsonElement</span><span class="o">,</span> <span class="nl">typeOfT:</span> <span class="n">Type</span><span class="o">,</span> <span class="nl">context:</span> <span class="n">JsonDeserializationContext</span><span class="o">):</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">json</span> <span class="n">is</span> <span class="n">JsonArray</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">json</span>
+            <span class="n">val</span> <span class="n">size</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">size</span><span class="o">()</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
+            <span class="o">}</span>
+            <span class="n">val</span> <span class="nl">list:</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">ArrayList</span><span class="o">(</span><span class="n">size</span><span class="o">)</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">val</span> <span class="nl">elementType:</span> <span class="n">Type</span> <span class="o">=</span> <span class="err">`</span><span class="n">$Gson$Types</span><span class="err">`</span><span class="o">.</span><span class="na">getCollectionElementType</span><span class="o">(</span><span class="n">typeOfT</span><span class="o">,</span> <span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+                <span class="n">val</span> <span class="nl">value:</span> <span class="n">T</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">deserialize</span><span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">elementType</span><span class="o">)</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value</span><span class="o">)</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">list</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">arrayListOf</span><span class="o">()</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">StringTypeAdapter</span> <span class="o">:</span> <span class="n">TypeAdapter</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">write</span><span class="o">(</span><span class="nl">out:</span> <span class="n">JsonWriter</span><span class="o">,</span> <span class="nl">value:</span> <span class="n">String</span><span class="o">?)</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">read</span><span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">:</span> <span class="n">JsonReader</span><span class="o">):</span> <span class="n">String</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">===</span> <span class="n">JsonToken</span><span class="o">.</span><span class="na">NULL</span><span class="o">)</span> <span class="o">{</span>
+            <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextNull</span><span class="o">()</span>
+            <span class="k">return</span> <span class="s">""</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="err">`</span><span class="n">in</span><span class="err">`</span><span class="o">.</span><span class="na">nextString</span><span class="o">()</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="n">Booelan</span><span class="o">,</span> <span class="n">Long</span> <span class="n">Type</span> <span class="n">Adapter</span> <span class="err">는</span> <span class="err">같은</span> <span class="err">구조라</span> <span class="err">생략</span>
+</code></pre></div></div>
+
+<p>NonNullListDeserializer 를 사용해서 items: [null] 식으로 오는 데이터를 items [] 로 변환 할 수 있고 StringTypeAdapter 를 사용해서 String 으로 보내주는 경우인데 null 값으로 보내주는 경우 null 값이 아닌 “” 빈값 으로 변경 시켜 줄 수 있다.</p>
+
+<p>아래는 테스트 결과 이다.</p>
+
+<figure>
+	<img src="/images/2020-10-11-android-json-response.png" alt="" />
+</figure>
+
+<p>Retrofit 에 적용 시키는 경우에는 아래와 같이 적용하면 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">private</span> <span class="n">fun</span> <span class="nf">createRetrofitClient</span><span class="o">(</span><span class="nl">okHttpClient:</span> <span class="n">OkHttpClient</span><span class="o">):</span> <span class="n">Retrofit</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">Retrofit</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">baseUrl</span><span class="o">(</span><span class="n">baseUrl</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">addCallAdapterFactory</span><span class="o">(</span><span class="n">rxJava2CallAdapterFactory</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">GsonConverterFactory</span><span class="o">.</span><span class="na">create</span><span class="o">(</span>
+                        <span class="n">GsonBuilder</span><span class="o">().</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">ArrayList:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">NonNullListDeserializer</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">StringTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Long:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">LongTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">registerTypeAdapter</span><span class="o">(</span><span class="nl">Boolean:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">,</span> <span class="n">BooleanTypeAdapter</span><span class="o">())</span>
+                                <span class="o">.</span><span class="na">disableHtmlEscaping</span><span class="o">()</span>
+                                <span class="o">.</span><span class="na">create</span><span class="o">())</span>
+                <span class="o">)</span>
+                <span class="o">.</span><span class="na">addConverterFactory</span><span class="o">(</span><span class="n">enumConverterFactory</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">client</span><span class="o">(</span><span class="n">okHttpClient</span><span class="o">).</span><span class="na">build</span><span class="o">()</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>위와 같이 사용하게 되면 데이터 모델을 만들때 NonNull 타입으로 만들어도 해당 필드나 List 가 null 이 되지 않는걸 신뢰할 수 있다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-09-26T00:00:00+09:00"><a href="http://localhost:4000/android/android-communicator-activity-fragments/">September 26, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -788,64 +596,158 @@ Distribute 에는 DistributeListener 인터페이스를 구성했다.</p>
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/android/android-bottom_navigation_view/" rel="bookmark" title="BottomNavigationView" itemprop="url">BottomNavigationView</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/android-communicator-activity-fragments/" rel="bookmark" title="Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유" itemprop="url">Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유</a></h1>
     
   </header>
   <div class="entry-content">
-      <h3 id="bottomnavigationview-in-design-supportlibrary-">BottomNavigationView in Design SupportLibrary :</h3>
-<p>사용 하기 위해서는 다음과 같은 dependency 가 필요 하다.
-implementation ‘com.android.support:design:28.0.0’
-버전은 현재의 최신 버전으로 설정 했다.</p>
+      <p>안드로이드 앱 개발을 하다 보면 Activity 와 Fragment 간의 데이터를 주고 받아야 할 때가 있다.
+기존 방식은 어떤 방식을 사용했고 새로운 방식은 또 어떤 방법으로 하는지 알아보자.</p>
 
-<p>Badge 기능을 사용하고 싶다면 다음과 같이 사용할 수 있다.</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    private fun setBadge() {
-        val bottomNavigationMenuView: BottomNavigationMenuView = bottomNavigationView.getChildAt(0) as BottomNavigationMenuView
-        val bottomNavigationItemView  = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
+<h4 id="기존-방식">기존 방식</h4>
 
-        val badgeContainer = LayoutInflater.from(this).inflate(R.layout.view_badge, bottomNavigationMenuView, false)
-        val firstBadgeCountText: TextView = badgeContainer.findViewById(R.id.count)
-        firstBadgeCountText.text = "99"
-        bottomNavigationItemView.addView(badgeContainer)
-    }
+<ol>
+  <li>
+    <h4 id="activity--fragment">Activity → Fragment</h4>
+    <p>데이터를 넘길 때 Fragment newInstance fuction 을 만들어 Bundle로 데이터를 넘김<br />
+Fragment TAG 를 사용해서 Fragment 를 찾은 다음 Fragment 의 데이터 set</p>
+  </li>
+  <li>
+    <h4 id="fragment--activity">Fragment ←→ Activity</h4>
+    <p>Fragment 가 Activity 에 attach 되는 순간 context 를 통해서 Listener 구현해서 데이터 공유</p>
+  </li>
+  <li>
+    <h4 id="activity-내부-fragments-간의-데이터-공유">Activity 내부 Fragments 간의 데이터 공유</h4>
+    <p>One Fragment → Activity → Two Fragment<br />
+이렇게 공유 했었다.</p>
+  </li>
+</ol>
+
+<h4 id="새로운-방식">새로운 방식</h4>
+<p>ViewModel 을 사용하면 데이터 공유가 더 쉬워 진다.</p>
+
+<p>Activity</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ViewModelProvider</span><span class="o">(</span><span class="k">this</span><span class="o">(</span><span class="err">액티비티</span><span class="o">)).</span><span class="na">get</span><span class="o">(</span><span class="err">액티비티</span> <span class="err">뷰모델명</span><span class="o">::</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
 </code></pre></div></div>
 
-<p>BottomNavigationView의 getChildAt 0부터 첫번째 BottomNavigationItemView 다.
-inflate 한 view 를 bottomNavigationItemView에 추가해서 사용하면 됨.</p>
+<p>Fragment</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="n">val</span> <span class="n">activityViewModel</span> <span class="n">by</span> <span class="n">lazy</span> <span class="o">{</span>
+        <span class="c1">//Fragment에서 ViewModelProvider을 생성 할 때 Fragment 를 넣는게 아니라 Activity 가 들어 가야 한다.  </span>
+        <span class="n">ViewModelProvider</span><span class="o">(</span><span class="n">requireActivity</span><span class="o">()).</span><span class="na">get</span><span class="o">(</span><span class="err">액티비티</span> <span class="err">뷰모델명</span><span class="o">::</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Fragment 에서 ActivityViewModel 을 사용하기 때문에 데이터 공유가 훨씬 편해진다.<br />
+LiveData 를 사용하면 더 사용하기 좋다.<br />
+LiveData Observe 할 때는  ViewModelProvider 을 생성 할 때와 달리 각각의 라이프사이클에 맞춰서 셋팅 해주면 된다.</p>
 
-<h3 id="bottomnavigationview-in-material-">BottomNavigationView in Material :</h3>
-<p>사용하기 위해서는 다음과 같은 dependency 가 필요 하다.
-implementation ‘com.google.android.material:material:1.1.0-alpha06’</p>
+<p>Activity → ActivityViewModel<br />
+Fragment in Activity→ ActivityViewModel<br />
+OtherFragment in Activity → ActivityViewModel</p>
 
-<p>이 버전에서는 BadgeDrawable 이 BottomNavigationView 안에 구현 되어 있어서 showBadge, removeBadge api를 통해 간편하게 사용 할 수 있다.
-1.1.0-alpha05 이하 버전에서는 BadgeDrawable 이 구현 되어 있지 않아 showBadge, removeBadge 를 사용할 수 없는 걸 확인 했다.</p>
+<p>위와 같이 ActivityViewModel을 공유하기 때문에 데이터 공유가 자유로워 진다.</p>
 
-<p>사용방법은 Badge 구현 빼고는 Support BottomNavigationView 와 비슷했다.</p>
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
-            if (count &lt;= 0) {
-                bottomNavigationView.removeBadge(R.id.title_first);
-            } else {
-                BadgeDrawable badgeDrawable = bottomNavigationView.showBadge(R.id.title_first);
-                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
-                badgeDrawable.setNumber(count);
-            }
-        }
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-09-20T00:00:00+09:00"><a href="http://localhost:4000/kotlin/android-kotlin-koin/">September 20, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/kotlin/android-kotlin-koin/" rel="bookmark" title="Koin (1편)" itemprop="url">Koin (1편)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <h3 id="코인이란">코인이란?</h3>
+<p>코틀린 개발자를 위한 실용적인 경량 종속성 주입 프레임 워크이다.<br />
+코인은 도메인 특화 언어인 DSL(Domain Specific Language) 이다.</p>
+
+<h4 id="koin-dsl">Koin DSL</h4>
+<p>applicationContext : Koin 모듈 생성<br />
+factory : 매번 inject 할때마다 인스턴스를 생성<br />
+single : 싱글톤으로 생성<br />
+bind : 종속시킬 class 나 interface를 주입<br />
+get : 컴포넌트내에 알맞은 의존성 주입</p>
+
+<p>의존성 주입을 하기 위한 라이브러리는 대거2 도 있지만 코인은 좀 더 사용하기 쉽고 가볍게 만들어 졌기 때문에 러닝커브가 낮다고 할 수 있다.</p>
+
+<p>우선 코인을 사용하기 위해 앱 모듈 단에서 dependency를 추가 해준다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="c1">//현재 최신버전인 1.0.2 버전으로 사용하였다.</span>
+    <span class="n">implementation</span> <span class="s">"org.koin:koin-android:1.0.2"</span> 
+<span class="o">}</span>
 </code></pre></div></div>
 
-<p>2020년 03 월 12일 기준 최신 버전
-implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서는 위의 showBade가 사라지고 getOrCreateBadge로 변경 되었다.<br />
-적용하면 아래와 같다.</p>
+<p>다음 예제 코드를 보자.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">TestApplication</span> <span class="o">:</span> <span class="n">Application</span><span class="o">()</span> <span class="o">{</span> <span class="c1">//Application 클래스에서 모듈과 startKoin을 호출 해준다.</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    public void updateFirstBadge(int count) {
-            if (count &lt;= 0) {
-                bottomNavigationView.removeBadge(R.id.title_first);
-            } else {
-                BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.title_first);
-                badgeDrawable.setBackgroundColor(getResources().getColor(R.color.red));
-                badgeDrawable.setNumber(count);
-            }
-        }
+    <span class="kd">private</span> <span class="n">val</span> <span class="n">goodsModule</span> <span class="o">=</span> <span class="n">module</span> <span class="o">{</span>
+        <span class="n">factory</span> <span class="o">{</span> <span class="n">GoodsData</span><span class="o">()</span> <span class="o">}</span> <span class="c1">//상품데이터 생성</span>
+        <span class="n">single</span> <span class="o">{</span> <span class="n">GoodsServiceImpl</span><span class="o">(</span><span class="n">get</span><span class="o">())</span> <span class="n">as</span> <span class="n">GoodsService</span> <span class="o">}</span> 
+        <span class="c1">//GoodsService는 싱글톤으로 생성 되고  get() 은 컴포넌트내에 알맞은 의존성 주입을 해준다.</span>
+        <span class="c1">//get() 은 GoodsData 라고 생각 하면 된다.</span>
+        <span class="n">factory</span> <span class="o">{</span>
+            <span class="c1">//FactoryData 가 생성 될 때마다 변경되는 값을 넣기 위해 현재시간(Long 타입)을 사용</span>
+            <span class="k">return</span><span class="nd">@factory</span> <span class="n">FactoryData</span><span class="o">(</span><span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">timeInMillis</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">()</span>
+        <span class="n">startKoin</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">listOf</span><span class="o">(</span><span class="n">goodsModule</span><span class="o">))</span> <span class="c1">//코인 시작!! listOf 에는 다른 모듈도 정의 한다면 뒤에 더 붙여서 사용</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="c1">//FactoryData 데이터 클래스</span>
+<span class="n">data</span> <span class="kd">class</span> <span class="nf">FactoryData</span><span class="o">(</span><span class="n">val</span> <span class="nl">timeInMillis:</span> <span class="n">Long</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">)</span>
+
+<span class="c1">//GoodsData 데이터 클래스</span>
+<span class="n">data</span> <span class="kd">class</span> <span class="nf">GoodsData</span><span class="o">(</span><span class="kt">var</span> <span class="n">name</span> <span class="o">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">"청바지"</span><span class="o">,</span> <span class="kt">var</span> <span class="n">price</span> <span class="o">:</span> <span class="n">Long</span> <span class="o">=</span> <span class="mi">30000</span><span class="o">)</span>
+
+<span class="kd">interface</span> <span class="nc">GoodsService</span> <span class="o">{</span>
+    <span class="n">fun</span> <span class="nf">getGoodsInfo</span><span class="o">():</span> <span class="n">String</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nf">GoodsServiceImpl</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsData:</span> <span class="n">GoodsData</span><span class="o">)</span> <span class="o">:</span> <span class="n">GoodsService</span> <span class="o">{</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">getGoodsInfo</span><span class="o">():</span> <span class="n">String</span> <span class="o">{</span>
+        <span class="c1">//기본적으로 생성 되는 goodsData 정보는 상품명 청바지 , 가격 30000</span>
+        <span class="k">return</span> <span class="s">"상품명 : "</span> <span class="o">+</span> <span class="n">goodsData</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">"  가격 : "</span> <span class="o">+</span> <span class="n">goodsData</span><span class="o">.</span><span class="na">price</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">MainActivity</span> <span class="o">:</span> <span class="n">AppCompatActivity</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsService:</span> <span class="n">GoodsService</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span>  <span class="c1">//by inject() 를 사용해서 GoodsService 주입</span>
+    <span class="kd">private</span> <span class="n">val</span> <span class="nl">goodsData:</span> <span class="n">GoodsData</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span> <span class="c1">//by inject() 를 사용해서 GoodsData 주입</span>
+    <span class="kd">private</span> <span class="n">val</span> <span class="nl">factoryData:</span> <span class="n">FactoryData</span> <span class="n">by</span> <span class="nf">inject</span><span class="o">()</span> <span class="c1">//by inject() 를 사용해서 FactoryData 주입</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nl">savedInstanceState:</span> <span class="n">Bundle</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">)</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
 </code></pre></div></div>
+
+<h4 id="koin-사용-방법">Koin 사용 방법</h4>
+<ol>
+  <li>Application 부분에서 모듈 정의를 해주고 Application onCreate 시점에서 Startkoin을 호출 해주면서 사용 할 module 을 정의해준다.</li>
+  <li>module을 정의 할 때 데이터를 어떤 방식으로 생성할지 따로 정의를 해준다<br />
+ex) factory , single , bind, get</li>
+  <li>실제 사용 되는 부분에서 주입 하기 위해 by inject() 를 통해 주입한다.</li>
+</ol>
+
+<h3 id="다음-편에서는-android-에서-사용되는-viewmodel에-의존성-주입하는-방법을-알아보자">다음 편에서는 Android 에서 사용되는 ViewModel에 의존성 주입하는 방법을 알아보자.</h3>
 
       
   </div><!-- /.entry-content -->
@@ -914,7 +816,7 @@ implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서�
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -969,7 +871,7 @@ implementation ‘com.google.android.material:material:1.2.0-alpha05’ 에서�
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->

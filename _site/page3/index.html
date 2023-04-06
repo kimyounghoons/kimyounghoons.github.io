@@ -288,7 +288,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-07-13T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-facade-pattern/">July 13, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2021-01-24T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-kotlin-functional-programming-1/">January 24, 2021</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -298,83 +298,126 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-facade-pattern/" rel="bookmark" title="Facade Pattern (디자인 패턴 9장)" itemprop="url">Facade Pattern (디자인 패턴 9장)</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-kotlin-functional-programming-1/" rel="bookmark" title="함수형 프로그래밍 1장" itemprop="url">함수형 프로그래밍 1장</a></h1>
     
   </header>
   <div class="entry-content">
-      <h3 id="퍼사드-패턴-정의">퍼사드 패턴 정의</h3>
-<p>어떤 서브시스템의 일련의 인터페이스에 대한 통합된 인터페이스를 제공합니다.<br />
-퍼사드에서 고수준 인터페이스를 정의하기 때문에 서브시스템을 더 쉽게 사용할 수 있습니다.</p>
+      <p>함수형 프로그래밍 특징</p>
+<ol>
+  <li>불변성(immutable)</li>
+  <li>참조 투명성(referential transparency)</li>
+  <li>일급 함수(first-class-fuction)</li>
+  <li>게으른 평가(lazy evaluation)</li>
+</ol>
 
-<p>디자인 원칙 
-최소 지식 원칙 - 정말 친한 친구하고만 얘기하라.</p>
+<h4 id="불변성immutable-순수-함수에-대해-알아보자">불변성(immutable) 순수 함수에 대해 알아보자.</h4>
+<p>순수한 함수는 동일한 입력에 동일한 결과를 돌려 준다.</p>
 
-<h3 id="퍼사드-패턴-언제-사용할까">퍼사드 패턴 언제 사용할까!?</h3>
-
-<p>아래의 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kd">class</span> <span class="nc">FacadePattern</span> <span class="o">{</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="kt">var</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">10</span>
 
     <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">computerFacade</span> <span class="o">=</span> <span class="n">ComputerFacade</span><span class="o">(</span><span class="n">Monitor</span><span class="o">(),</span> <span class="n">Speaker</span><span class="o">())</span>
-        <span class="n">computerFacade</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="n">println</span><span class="o">(</span><span class="s">"----------------------------------"</span><span class="o">)</span>
-        <span class="n">computerFacade</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
+    <span class="n">fun</span> <span class="nf">fucTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"plus : "</span> <span class="o">+</span> <span class="n">plus</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">))</span> <span class="c1">//5 출력</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"plus2 : "</span> <span class="o">+</span> <span class="n">plus2</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">).</span><span class="na">toString</span><span class="o">())</span> <span class="c1">//15출력</span>
     <span class="o">}</span>
 
-    <span class="kd">class</span> <span class="nf">ComputerFacade</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">monitor:</span> <span class="n">Monitor</span><span class="o">,</span> <span class="kd">private</span> <span class="n">val</span> <span class="nl">speaker:</span> <span class="n">Speaker</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">monitor</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">volume</span> <span class="o">=</span> <span class="mi">5</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">volume</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">speaker</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-            <span class="n">monitor</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
+    <span class="n">fun</span> <span class="nf">plus</span><span class="o">(</span><span class="nl">x:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">y:</span> <span class="n">Int</span><span class="o">):</span> <span class="n">Int</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
     <span class="o">}</span>
 
-    <span class="kd">class</span> <span class="nc">Monitor</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Monitor on"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Monitor off"</span><span class="o">)</span>
-        <span class="o">}</span>
+    <span class="n">fun</span> <span class="nf">plus2</span><span class="o">(</span><span class="nl">x:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">y:</span> <span class="n">Int</span><span class="o">):</span> <span class="n">Int</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
     <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">Speaker</span> <span class="o">{</span>
-        <span class="kt">var</span> <span class="n">volume</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">set</span><span class="o">(</span><span class="n">value</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">println</span><span class="o">(</span><span class="s">"volume set : $value"</span><span class="o">)</span>
-                <span class="n">field</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Speaker on"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Speaker off"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
 <span class="o">}</span>
-
 </code></pre></div></div>
-<p>위의 코드를 보면 클라이언트 입장에서 ComputerFacade 만 알고 있으면 컴퓨터를 키고 끄는데 문제가 없다.<br />
-위의 클래스들은 간단하게 구현 했기때문에 쉽게 보일 수 있지만 컴퓨터가 부팅 되는 과정 까지 모두 포함된 내용을 클라이언트에서 알아야 한다면!?<br />
-클라이언트 입장에서 컴퓨터를 키는 도중에 지쳐서 그만둘지도 모른다.<br />
-이런 과정들을 최소한으로만 알게 하기 위해 퍼사드 패턴을 사용한다.<br />
-아래는 테스트 결과 이다.</p>
+
+<p>첫번째 plus 함수는 어떤 값이 와도 두개의 값을 더해서 값을 돌려줘서 순수 함수라고 볼수 있다.</p>
+
+<p>두번째 plus2 함수는 z 값이 중간에 변경되면 동일 입력 값이라도 결과 값이 변경될 수 있기 때문에 순수한 함수라고 볼 수 없다.</p>
+
+<h4 id="참조-투명성에-대해-알아보자">참조 투명성에 대해 알아보자.</h4>
+
+<p>위의 plus 함수는 x,y 참조 되어 있기 때문에 참조 투명한 함수라고 볼 수 있고 plus2는 z가 추가적으로 참조 되어 있기 때문에 불투명하다.</p>
+
+<p>plus2 를 투명하게 변경한다면 아래와 같이 변경 되어야 한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">fucTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"plus2 : "</span> <span class="o">+</span> <span class="n">plus2</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">).</span><span class="na">toString</span><span class="o">())</span> <span class="c1">//10출력</span>
+    <span class="o">}</span>
+
+    <span class="n">fun</span> <span class="nf">plus2</span><span class="o">(</span><span class="nl">x:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">y:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">z:</span> <span class="n">Int</span><span class="o">):</span> <span class="n">Int</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="일급-함수에-대해-알아보자">일급 함수에 대해 알아보자.</h4>
+<p>일급 함수를 알아보기 전에 일급 객체라 뭔지 알고 가자.</p>
+
+<p>일급 객체란?</p>
+<ol>
+  <li>객체를 함수의 매개변수로 넘길 수 있다.</li>
+  <li>갹체를 함수의 반환값으로 돌려 줄 수 있다.</li>
+  <li>객체를 변수나 자료구조에 담을 수 있다.</li>
+</ol>
+
+<p>코틀린 최상위 개념인 Any는 일급 객체이다.</p>
+
+<p>일급 함수란?</p>
+<ol>
+  <li>함수를 함수의 매개변수로 넘길 수 있다.</li>
+  <li>함수를 함수의 반환값으로 돌려 줄 수 있다.</li>
+  <li>함수를 변수나 자료구조에 담을 수 있다.</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+
+    <span class="kt">var</span> <span class="nl">funcList:</span> <span class="n">List</span><span class="o">&lt;(</span><span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">listOf</span> <span class="o">{</span> <span class="n">value</span> <span class="o">-&gt;</span> <span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">}</span><span class="c1">//함수를 자료구조에 담음</span>
+
+    <span class="n">fun</span> <span class="nf">doSomthing</span><span class="o">(</span><span class="nl">func:</span> <span class="o">(</span><span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">)</span> <span class="o">{</span><span class="c1">//함수를 함수의 매개변수로 넘김</span>
+        <span class="c1">//doSomething</span>
+    <span class="o">}</span>
+
+    <span class="n">fun</span> <span class="nf">doSomething</span><span class="o">():</span> <span class="o">(</span><span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="o">{</span><span class="c1">//함수를 함수의 반환값으로 돌려줌</span>
+        <span class="k">return</span> <span class="o">{</span> <span class="n">value</span> <span class="o">-&gt;</span> <span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="게으른-평가lazy-evaluation-에-대해-알아보자">게으른 평가(lazy evaluation) 에 대해 알아보자</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="n">val</span> <span class="nl">lazyValue:</span> <span class="n">String</span> <span class="n">by</span> <span class="n">lazy</span> <span class="o">{</span>
+        <span class="n">println</span><span class="o">(</span><span class="s">"시간 오래 걸리는 작업"</span><span class="o">)</span>
+        <span class="s">"hi"</span>
+    <span class="o">}</span>
+
+
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">test</span><span class="o">(){</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">lazyValue</span><span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">lazyValue</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
 <figure>
-	<img src="/images/2020-07-13-android-facade-pattern.png" alt="" />
+	<img src="/images/2021-01-24-functinal-programming-01.png" alt="" />
 </figure>
+
+<p>lazy 는 기본적으로 값이 필요한 시점에 평가되기 때문에 프로그래머가 평가 시점을 지정할 수 있다.</p>
+
+<p>시간이 오래 걸리는 작업은 한번만 평가 되고 그다음 호출 되지 않는다.</p>
+
+<p>값이 지속적으로 변경 되는 값인데 lazy를 착각해서 잘못사용하게 되는 경우 잘못된 값을 리턴 받을 수 있다.</p>
+
+<p>함수형 프로그래밍의 기본적인 개념을 알아보는 시간을 가졌다.</p>
+
+<p>11장까지 있으니 올해도 화이팅 ㅎ</p>
 
       
   </div><!-- /.entry-content -->
@@ -384,7 +427,7 @@
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-06-24T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/">June 24, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2021-01-10T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-tojsonstring/">January 10, 2021</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -394,190 +437,205 @@
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-adapter-pattern/" rel="bookmark" title="Adapter Pattern (디자인 패턴 8장)" itemprop="url">Adapter Pattern (디자인 패턴 8장)</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-tojsonstring/" rel="bookmark" title="gson 라이브러리 활용" itemprop="url">gson 라이브러리 활용</a></h1>
     
   </header>
   <div class="entry-content">
-      <h3 id="어댑터-패턴-정의">어댑터 패턴 정의</h3>
+      <p>gson 라이브러리는 json object 를 json string 으로 변환 시켜주거나 json string 을 json object 로 쉽게 변환 할 수 있게 만들어 주는 라이브러리이다.</p>
 
-<p>한 클래스의 인터페이스를 클라이언트에서 사용하고자 하는 다른 인터페이스로 변환합니다.<br />
-어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있습니다.</p>
+<p>라이브러리 추가는 app gradle dependency에 다음과 같이 추가해주면 사용 가능하다.</p>
 
-<h3 id="어댑터-패턴-언제-사용할까">어댑터 패턴 언제 사용할까!?</h3>
-<p>예를 들어 기존 NormalPager 를 사용하고 있는데 LibPager 를 같이 사용해야 하는 상황이 생겼다고 가정 함.<br />
-근데 LibPageListener 는 PageListener 와 다르게 같은 기능인데 다른 메소드명을 가지고 있다.<br />
-그리고 LibPageListener 에는 없는 기능(onDoubleNextPage,onDoublePreviousPage)이 PageListener에는 존재 한다.<br />
-LibPagerAdapter 를 통해서 해결해보자!!</p>
-
-<p>아래의 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="kd">class</span> <span class="nc">AdapterPattern</span> <span class="o">{</span>
-
-    <span class="kd">interface</span> <span class="nc">PageListener</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">NormalPager</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onPreviousPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"NormalPager onNextPage"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">LibPager</span> <span class="o">:</span> <span class="n">LibPageListener</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onPrevious"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"LibPager onNext"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-
-    <span class="kd">interface</span> <span class="nc">LibPageListener</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">onPrevious</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">onNext</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">LibPagerAdapter</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">libPageListener:</span> <span class="n">LibPageListener</span><span class="o">)</span> <span class="o">:</span> <span class="n">PageListener</span> <span class="o">{</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onPreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoublePreviousPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onPrevious</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">onDoubleNextPage</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-            <span class="n">libPageListener</span><span class="o">.</span><span class="na">onNext</span><span class="o">()</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-
-	<span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">normalPager</span> <span class="o">=</span> <span class="n">NormalPager</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
-        <span class="n">normalPager</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="n">libPager</span> <span class="o">=</span> <span class="n">LibPager</span><span class="o">()</span>
-        <span class="n">val</span> <span class="n">libPagerAdapter</span> <span class="o">=</span> <span class="n">LibPagerAdapter</span><span class="o">(</span><span class="n">libPager</span><span class="o">)</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onNextPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onPreviousPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoubleNextPage</span><span class="o">()</span>
-        <span class="n">libPagerAdapter</span><span class="o">.</span><span class="na">onDoublePreviousPage</span><span class="o">()</span>
-    <span class="o">}</span>
-
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
+  <span class="n">implementation</span> <span class="err">'</span><span class="n">com</span><span class="o">.</span><span class="na">google</span><span class="o">.</span><span class="na">code</span><span class="o">.</span><span class="na">gson</span><span class="o">:</span><span class="nl">gson:</span><span class="mf">2.8</span><span class="o">.</span><span class="mi">6</span><span class="err">'</span>
 <span class="o">}</span>
-
 </code></pre></div></div>
-<p>위의 코드를 보면 onDoublePreviousPage,onDoubleNextPage 는 LibPageListener 없지만 같은 기능을 하게 만들어 주었다.</p>
 
-<p>아래의 결과를 보면 동일하다.</p>
+<p>우리는 작업 하다보면 특정 Object 내부 필드를 모두 로그로 보고 싶을 때가 있다.</p>
 
-<figure>
-	<img src="/images/2020-06-24-android-adapter-pattern.png" alt="" />
-</figure>
+<p>그렇게 되면 object 의 toString 를 override 해서 모든 필드에 대해 다시 정의를 해줘야 모두 노출이 가능하다.</p>
 
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
+<p>그리고 필요한 object 마다 toString 을 재정의 해서 번거롭게 사용 해야 한다.</p>
 
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-06-10T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/">June 10, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-iterator_pattern/" rel="bookmark" title="Iterator Pattern (디자인 패턴 7장)" itemprop="url">Iterator Pattern (디자인 패턴 7장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="이터레이터-패턴-정의">이터레이터 패턴 정의</h3>
-<p>컬렉션 구현 방법을 노출시키지 않으면서도 그 집합체 안에 들어있는 모든 항목에 접글할 수 있는 방법을 제공한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">ToJsonStringTest</span> <span class="o">{</span>
 
-<p>컬렉션 종류가 다양하고 항목을 접근하는 방식도 조금씩 다르기 때문에 대응하기가 까다롭거나 코드가 지저분해질 수 있다.<br />
-Iterator 패턴을 사용해서 해결해보자.<br />
-CustomDialogView 라는 임의의 클래스를 만들어서 iterator 매개변수로 받는 생성자를 하나 만들고 printAll 이라는 함수를 만들어서 
-모든 항목에 접근해 print 하도록 만들었다.</p>
-
-<p>아래의 코드를 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">IteratorPatternTest</span> <span class="o">{</span>
     <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">array</span> <span class="o">=</span> <span class="n">arrayOf</span><span class="o">(</span><span class="s">"first"</span><span class="o">,</span> <span class="s">"second"</span><span class="o">,</span> <span class="s">"third"</span><span class="o">)</span>
-        <span class="kt">var</span> <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
-        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="n">arrayListOf</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
-        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">arrayList</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
-        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
-
-        <span class="n">val</span> <span class="n">hashMap</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">(</span>
-            <span class="n">Pair</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"one"</span><span class="o">),</span>
-            <span class="n">Pair</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"two"</span><span class="o">),</span>
-            <span class="n">Pair</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s">"three"</span><span class="o">)</span>
+    <span class="n">fun</span> <span class="nf">toStringTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="o">(</span>
+                <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span>
+                <span class="n">goods</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span>
+                        <span class="n">Goods</span><span class="o">(</span><span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"나나"</span><span class="o">,</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">3000L</span><span class="o">),</span>
+                        <span class="n">Goods</span><span class="o">(</span><span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"다다"</span><span class="o">,</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">4000L</span><span class="o">)</span>
+                <span class="o">)</span>
         <span class="o">)</span>
-        <span class="n">listDialog</span> <span class="o">=</span> <span class="n">CustomDialogView</span><span class="o">(</span><span class="n">hashMap</span><span class="o">.</span><span class="na">iterator</span><span class="o">())</span>
-        <span class="n">listDialog</span><span class="o">.</span><span class="na">printAll</span><span class="o">()</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">order</span><span class="o">.</span><span class="na">toString</span><span class="o">())</span>
     <span class="o">}</span>
 
-    <span class="kd">class</span> <span class="nf">CustomDialogView</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">iterator:</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Any</span><span class="o">&gt;)</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">printAll</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-                <span class="n">val</span> <span class="n">any</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">()</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">any</span> <span class="n">is</span> <span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;*,</span> <span class="o">*&gt;)</span> <span class="o">{</span>
-                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">.</span><span class="na">value</span><span class="o">)</span>
-                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                    <span class="n">println</span><span class="o">(</span><span class="n">any</span><span class="o">)</span>
+    <span class="kd">class</span> <span class="nf">Order</span><span class="o">(</span><span class="n">val</span> <span class="nl">id:</span> <span class="n">Long</span><span class="o">,</span> <span class="n">val</span> <span class="nl">goods:</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Goods</span><span class="o">&gt;)</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">toString</span><span class="o">():</span> <span class="n">String</span> <span class="o">{</span> <span class="c1">//return 을 재정의 해줘야 함.</span>
+            <span class="k">return</span> <span class="s">"id : $id , goods : $goods"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">Goods</span><span class="o">(</span><span class="n">val</span> <span class="nl">id:</span> <span class="n">Long</span><span class="o">,</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">,</span> <span class="n">val</span> <span class="nl">price:</span> <span class="n">Long</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">override</span> <span class="n">fun</span> <span class="nf">toString</span><span class="o">():</span> <span class="n">String</span> <span class="o">{</span><span class="c1">//return 을 재정의 해줘야 함.</span>
+            <span class="k">return</span> <span class="s">"id : $id , name : $name , price : $price"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>아래는 order.toString 의 결과이다.</p>
+<figure>
+	<img src="/images/2021-01-10-tojsonstring-01.png" alt="" />
+</figure>
+
+<p>이부분을 gson 라이브러리를 사용해서 다음과 같이 해결 하였다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun</span> <span class="n">Any</span><span class="o">.</span><span class="na">toJsonString</span><span class="o">(</span><span class="nl">withNull:</span> <span class="n">Boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="o">):</span> <span class="n">String</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">try</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">GsonBuilder</span><span class="o">().</span><span class="na">disableHtmlEscaping</span><span class="o">().</span><span class="na">setPrettyPrinting</span><span class="o">()</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">withNull</span><span class="o">)</span> <span class="n">builder</span><span class="o">.</span><span class="na">serializeNulls</span><span class="o">()</span>
+        <span class="n">builder</span><span class="o">.</span><span class="na">create</span><span class="o">().</span><span class="na">toJson</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nl">e:</span> <span class="n">Exception</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">()</span>
+        <span class="s">"Fail to print toJsonString()"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">ToJsonStringTest</span> <span class="o">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="n">fun</span> <span class="nf">toStringTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">val</span> <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="o">(</span>
+                <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span>
+                <span class="n">goods</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span>
+                        <span class="n">Goods</span><span class="o">(</span><span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"나나"</span><span class="o">,</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">3000L</span><span class="o">),</span>
+                        <span class="n">Goods</span><span class="o">(</span><span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"다다"</span><span class="o">,</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">4000L</span><span class="o">)</span>
+                <span class="o">)</span>
+        <span class="o">)</span>
+        <span class="n">println</span><span class="o">(</span><span class="n">order</span><span class="o">.</span><span class="na">toJsonString</span><span class="o">())</span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nf">Order</span><span class="o">(</span><span class="n">val</span> <span class="nl">id:</span> <span class="n">Long</span><span class="o">,</span> <span class="n">val</span> <span class="nl">goods:</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Goods</span><span class="o">&gt;)</span>
+
+    <span class="kd">class</span> <span class="nf">Goods</span><span class="o">(</span><span class="n">val</span> <span class="nl">id:</span> <span class="n">Long</span><span class="o">,</span> <span class="n">val</span> <span class="nl">name:</span> <span class="n">String</span><span class="o">,</span> <span class="n">val</span> <span class="nl">price:</span> <span class="n">Long</span><span class="o">)</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>아래는 order.toJsonString 의 결과이다.</p>
+<figure>
+	<img src="/images/2021-01-10-tojsonstring-02.png" alt="" />
+</figure>
+
+<p>toString 을 override 하지않고 Gson 을 사용해 Kotlin Extension 으로 만들어 둔 다음 사용하면 된다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-12-20T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-livedata-stateflow/">December 20, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-livedata-stateflow/" rel="bookmark" title="LiveData VS Flow State" itemprop="url">LiveData VS Flow State</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>오늘은 LiveData 와 Flow State 차이점을 알아보자.</p>
+
+<h3 id="livedata">LiveData</h3>
+<ol>
+  <li>Value 가 Nullable
+사용 시 널 체크 또는 liveData.value!! 사용해야함 (번거로움)</li>
+  <li>setValue 와 postValue
+setValue 와 postValue 의 차이점을 알고 있어야 한다.</li>
+</ol>
+
+<p>setValue 는 mainThread 에서 사용 해야한다.</p>
+
+<p>postValue 는 background Thread , mainThread 모두 사용 가능</p>
+
+<p>postValue 와 setValue 여러번 호출될 경우 생각한 대로 데이터 싱크가 맞지 않을 수 있음.</p>
+
+<p>setValue 가 여러번 호출 되는 경우 모두 호출 되지만 postValue 는 연속으로 여러번 호출 되는 경우 최신 값이 호출됨.</p>
+
+<h3 id="stateflow">StateFlow</h3>
+<ol>
+  <li>Value 가 NonNull
+사용 시 널 체크를 할 필요 없이 사용</li>
+  <li>Collect 사용 시 디폴트 값이 그대로 수집됨</li>
+  <li>Value 값이 변경된 값만 수집 됨.</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MainActivity</span> <span class="o">:</span> <span class="n">AppCompatActivity</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">lateinit</span> <span class="kt">var</span> <span class="nl">viewModel:</span> <span class="n">MainActivityViewModel</span>
+
+    <span class="n">override</span> <span class="n">fun</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nl">savedInstanceState:</span> <span class="n">Bundle</span><span class="o">?)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">)</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">)</span>
+        <span class="n">viewModel</span> <span class="o">=</span> <span class="n">ViewModelProvider</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="nl">MainActivityViewModel:</span><span class="o">:</span><span class="kd">class</span><span class="err">.</span><span class="nc">java</span><span class="o">)</span>
+        <span class="n">viewModel</span><span class="o">.</span><span class="na">apply</span> <span class="o">{</span>
+            <span class="n">testLiveData</span><span class="o">.</span><span class="na">observe</span><span class="o">(</span><span class="k">this</span><span class="nd">@MainActivity</span><span class="o">,</span> <span class="n">Observer</span> <span class="o">{</span> <span class="c1">//liveData 데이터 수집</span>
+                <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="s">"kyh!!!"</span><span class="o">,</span> <span class="s">"testLiveData : $it"</span><span class="o">)</span>
+            <span class="o">})</span>
+            <span class="n">lifecycleScope</span><span class="o">.</span><span class="na">launch</span> <span class="o">{</span>
+                <span class="n">testStateFlow</span><span class="o">.</span><span class="na">collect</span> <span class="o">{</span> <span class="c1">//testStateFlow 데이터 수집</span>
+                    <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="s">"kyh!!!"</span><span class="o">,</span> <span class="s">"testStateFlow : $it"</span><span class="o">)</span>
                 <span class="o">}</span>
             <span class="o">}</span>
+
         <span class="o">}</span>
+        <span class="n">tvpostValueLiveData</span><span class="o">.</span><span class="na">setOnClickListener</span> <span class="o">{</span>
+            <span class="n">viewModel</span><span class="o">.</span><span class="na">postValueLiveData</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">tvsetValueLiveData</span><span class="o">.</span><span class="na">setOnClickListener</span> <span class="o">{</span>
+            <span class="n">viewModel</span><span class="o">.</span><span class="na">setValueLiveData</span><span class="o">()</span>
+        <span class="o">}</span>
+        <span class="n">tvFlowState</span><span class="o">.</span><span class="na">setOnClickListener</span> <span class="o">{</span>
+            <span class="n">viewModel</span><span class="o">.</span><span class="na">setValueFlowState</span><span class="o">()</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">MainActivityViewModel</span> <span class="o">:</span> <span class="n">ViewModel</span><span class="o">(){</span>
+    <span class="n">val</span> <span class="n">testLiveData</span> <span class="o">=</span> <span class="n">MutableLiveData</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;()</span>
+    <span class="n">val</span> <span class="n">testStateFlow</span> <span class="o">=</span> <span class="n">MutableStateFlow</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;(</span><span class="kc">false</span><span class="o">)</span> <span class="c1">//false 값이 처음 불림</span>
+
+    <span class="n">fun</span> <span class="nf">setValueLiveData</span><span class="o">()</span> <span class="o">{</span><span class="c1">// setValue 로 호출 했기 때문에 모든 값이 수집 된다.</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="o">}</span>
+
+    <span class="n">fun</span> <span class="nf">postValueLiveData</span><span class="o">()</span> <span class="o">{</span><span class="c1">// postValue 로 호출 했기 때문에 제일 마지막에 호출 한 false 값이 호출 된다.</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">postValue</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">postValue</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">postValue</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+        <span class="n">testLiveData</span><span class="o">.</span><span class="na">postValue</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="n">fun</span> <span class="nf">setValueFlowState</span><span class="o">(){</span><span class="c1">// stateFlow 는 변경된 최신값을 호출한다. 기존 값이 false 였기 때문에 처음 세번은 수집 되지 않고 맨 뒤 true, false 수집 된다.</span>
+        <span class="n">testStateFlow</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">testStateFlow</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">testStateFlow</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">testStateFlow</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="n">testStateFlow</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="kc">false</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
-<p>hasNext 는 더 꺼낼 항목 여부에 따라 boolean 을 return 하고 next 는 해당 항목을 return 한다.
-array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 쉽게 구현할 수 있다.</p>
 
-<p>아래 사진을 보면 모두 이상 없이 프린트 된 결과를 볼 수 있다.</p>
-<figure>
-	<img src="/images/2020-06-10-android-iterator_pattern.png" alt="" />
-</figure>
+<h3 id="주의-">주의 !!</h3>
+<p>A-&gt;B 화면 이동을 위한 LiveData 를 뷰모델에서 만들어서 사용하고 있었는데 그냥 StateFlow 로 변경 하면 화면 열리자 마자 A-&gt;B 화면 이동이 되버림.</p>
 
       
   </div><!-- /.entry-content -->
@@ -587,173 +645,7 @@ array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 �
   <header>
     
     <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-05-27T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-command-pattern/">May 27, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
-      
-      <span class="entry-reading-time">
-        <i class="fa fa-clock-o"></i>
-        
-        Reading time ~1 minute
-      </span><!-- /.entry-reading-time -->
-      
-    </div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-command-pattern/" rel="bookmark" title="Command Pattern (디자인 패턴 6장)" itemprop="url">Command Pattern (디자인 패턴 6장)</a></h1>
-    
-  </header>
-  <div class="entry-content">
-      <h3 id="커맨드-패턴-정의">커맨드 패턴 정의</h3>
-<p>커맨드 패턴을 이용하면 요구 사항을 객체로 캡슐화 할 수 있으며, 매개변수를 써서 여러 가지 다른 요구 사항을 집어넣을 수도 있습니다.<br />
-또한 요청 내역을 큐에 저장하거나 로그로 기록할 수도 있으며, 작업취소 기능도 지원 가능합니다.</p>
-
-<p>아래의 코드를 보자.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">CommandPatternTest</span> <span class="o">{</span>
-
-    <span class="kd">class</span> <span class="nc">RemoteControl</span> <span class="o">{</span>
-        <span class="kd">private</span> <span class="n">val</span> <span class="nl">onCommand:</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">,</span> <span class="n">Command</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">()</span>
-        <span class="kd">private</span> <span class="n">val</span> <span class="nl">offCommand:</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">,</span> <span class="n">Command</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">hashMapOf</span><span class="o">()</span>
-        <span class="kd">private</span> <span class="kt">var</span> <span class="nl">unDoCommand:</span> <span class="n">Command</span><span class="o">?</span> <span class="o">=</span> <span class="kc">null</span>
-
-        <span class="n">fun</span> <span class="nf">addCommand</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">,</span> <span class="nl">onCommand:</span> <span class="n">Command</span><span class="o">,</span> <span class="nl">offCommand:</span> <span class="n">Command</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">onCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]</span> <span class="o">=</span> <span class="n">onCommand</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">offCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]</span> <span class="o">=</span> <span class="n">offCommand</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">onButtonWasPushed</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">onCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]?.</span><span class="na">let</span> <span class="o">{</span>
-                <span class="n">it</span><span class="o">.</span><span class="na">execute</span><span class="o">()</span>
-                <span class="n">unDoCommand</span> <span class="o">=</span> <span class="n">it</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">offButtonWasPushed</span><span class="o">(</span><span class="nl">slot:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">offCommand</span><span class="o">[</span><span class="n">slot</span><span class="o">]?.</span><span class="na">let</span> <span class="o">{</span>
-                <span class="n">it</span><span class="o">.</span><span class="na">execute</span><span class="o">()</span>
-                <span class="n">unDoCommand</span> <span class="o">=</span> <span class="n">it</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">unDoButtonWasPushed</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">unDoCommand</span><span class="o">?.</span><span class="na">let</span> <span class="o">{</span>
-                <span class="n">it</span><span class="o">.</span><span class="na">undo</span><span class="o">()</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">interface</span> <span class="nc">Command</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span>
-        <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">Light</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Light On"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"Light Off"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">LightOffCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">light:</span> <span class="n">Light</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">LightOnCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">light:</span> <span class="n">Light</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nc">KitchenLight</span> <span class="o">{</span>
-        <span class="n">fun</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"KitchenLight On"</span><span class="o">)</span>
-        <span class="o">}</span>
-
-        <span class="n">fun</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">println</span><span class="o">(</span><span class="s">"KitchenLight Off"</span><span class="o">)</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">KitchenOffCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">kitchenLight:</span> <span class="n">KitchenLight</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">class</span> <span class="nf">KitchenOnCommand</span><span class="o">(</span><span class="kd">private</span> <span class="n">val</span> <span class="nl">kitchenLight:</span> <span class="n">KitchenLight</span><span class="o">)</span> <span class="o">:</span> <span class="n">Command</span> <span class="o">{</span>
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">on</span><span class="o">()</span>
-        <span class="o">}</span>
-
-        <span class="n">override</span> <span class="n">fun</span> <span class="nf">undo</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">kitchenLight</span><span class="o">.</span><span class="na">off</span><span class="o">()</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Test</span>
-    <span class="n">fun</span> <span class="nf">testRemoteControl</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">val</span> <span class="n">remoteControl</span> <span class="o">=</span> <span class="n">RemoteControl</span><span class="o">()</span>
-        <span class="n">val</span> <span class="n">light</span> <span class="o">=</span> <span class="n">Light</span><span class="o">()</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">addCommand</span><span class="o">(</span>
-            <span class="n">slot</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span>
-            <span class="n">onCommand</span> <span class="o">=</span> <span class="n">LightOnCommand</span><span class="o">(</span>
-                <span class="n">light</span>
-            <span class="o">),</span>
-            <span class="n">offCommand</span> <span class="o">=</span> <span class="n">LightOffCommand</span><span class="o">(</span>
-                <span class="n">light</span>
-            <span class="o">)</span>
-        <span class="o">)</span>
-
-        <span class="n">val</span> <span class="n">kitchenLight</span> <span class="o">=</span> <span class="n">KitchenLight</span><span class="o">()</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">addCommand</span><span class="o">(</span>
-            <span class="n">slot</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span>
-            <span class="n">onCommand</span> <span class="o">=</span> <span class="n">KitchenOnCommand</span><span class="o">(</span>
-                <span class="n">kitchenLight</span>
-            <span class="o">),</span>
-            <span class="n">offCommand</span> <span class="o">=</span> <span class="n">KitchenOffCommand</span><span class="o">(</span>
-                <span class="n">kitchenLight</span>
-            <span class="o">)</span>
-        <span class="o">)</span>
-
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">onButtonWasPushed</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">offButtonWasPushed</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">onButtonWasPushed</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">offButtonWasPushed</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-        <span class="n">remoteControl</span><span class="o">.</span><span class="na">unDoButtonWasPushed</span><span class="o">()</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-<p>리모트컨트롤에서 Command 를 추가 해서 on,off 버튼을 사용할 수 있고 unDoCommand 를 통해 마지막 실행한 명령을 되돌릴 수 있다.
-아래는 테스트 결과 이미지이다.</p>
-<figure>
-	<img src="/images/2020-05-28-android-command-pattern.png" alt="" />
-</figure>
-
-      
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    
-    <div class="entry-meta">
-      <span class="entry-date date published updated"><time datetime="2020-05-17T00:00:00+09:00"><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/">May 17, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      <span class="entry-date date published updated"><time datetime="2020-12-06T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-rxKotlin-unitTest/">December 06, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
       
       <span class="entry-reading-time">
         <i class="fa fa-clock-o"></i>
@@ -763,110 +655,231 @@ array, arrayList, hashMap 3가지를 사용하지만 iterator 패턴을 통해 �
       
     </div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://localhost:4000/java/kotlin/android-singleton-pattern/" rel="bookmark" title="Singleton Pattern (디자인 패턴 5장)" itemprop="url">Singleton Pattern (디자인 패턴 5장)</a></h1>
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-rxKotlin-unitTest/" rel="bookmark" title="RxKotlin UnitTest" itemprop="url">RxKotlin UnitTest</a></h1>
     
   </header>
   <div class="entry-content">
-      <h3 id="싱글턴-패턴-정의">싱글턴 패턴 정의</h3>
-<p>싱글턴 패턴은 해당 클래스의 인스턴스가 하나만 만들어지고, 어디서든지 그 인스턴스에 접근할 수 있도록 하기 위한 패턴입니다.</p>
+      <p>오늘은 RxKotlin UnitTest 에 대해 알아 보자.</p>
 
-<p>싱글턴 패턴 사용방법은 크게 3가지로 나뉘어진다.</p>
+<p>5가지 케이스로 나누었다.
+다양한 케이스를 통해 어떤식으로 테스트를 진행하는지 알아보자.</p>
 
+<p>1.countDownLatch</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">latch</span> <span class="o">=</span> <span class="n">CountDownLatch</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+<span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()</span>
+   <span class="o">.</span><span class="na">subscribeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">io</span><span class="o">())</span>
+   <span class="o">.</span><span class="na">observeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">newThread</span><span class="o">())</span> <span class="c1">//newThread 로 생성 했기 때문에 latch.await 을 사용 하지 않으면 onSuccess 타지 않고 바로 종료 됨.</span>
+   <span class="o">.</span><span class="na">subscribe</span><span class="o">(</span>
+       <span class="n">object</span> <span class="o">:</span> <span class="n">SingleObserver</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Post</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+           <span class="n">override</span> <span class="n">fun</span> <span class="nf">onSuccess</span><span class="o">(</span><span class="nl">t:</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Post</span><span class="o">&gt;)</span> <span class="o">{</span>
+               <span class="k">assert</span><span class="o">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">posts</span><span class="o">)</span>
+               <span class="n">latch</span><span class="o">.</span><span class="na">countDown</span><span class="o">()</span>
+           <span class="o">}</span>
+
+           <span class="n">override</span> <span class="n">fun</span> <span class="nf">onSubscribe</span><span class="o">(</span><span class="nl">d:</span> <span class="n">Disposable</span><span class="o">)</span> <span class="o">{</span>
+               <span class="n">compositeDisposable</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">)</span>
+           <span class="o">}</span>
+
+           <span class="n">override</span> <span class="n">fun</span> <span class="nf">onError</span><span class="o">(</span><span class="nl">e:</span> <span class="n">Throwable</span><span class="o">)</span> <span class="o">{</span>
+               <span class="n">latch</span><span class="o">.</span><span class="na">countDown</span><span class="o">()</span>
+           <span class="o">}</span>
+       <span class="o">}</span>
+   <span class="o">)</span>
+
+<span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">)</span> <span class="c1">//CountDownLatch count 는 1 로 셋팅 되어서 countDown 이 한번 불리면 종료</span>
+</code></pre></div></div>
+
+<p>2.blocking</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">post</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"포스트"</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+<span class="n">val</span> <span class="n">posts</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span><span class="n">post</span><span class="o">)</span>
+<span class="n">Mockito</span><span class="o">.</span><span class="err">`</span><span class="n">when</span><span class="err">`</span><span class="o">(</span><span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">Single</span><span class="o">.</span><span class="na">create</span> <span class="o">{</span>
+   <span class="n">it</span><span class="o">.</span><span class="na">onSuccess</span><span class="o">(</span><span class="n">posts</span><span class="o">)</span>
+<span class="o">})</span>
+<span class="c1">//blockingGet은 완료 될 때 까지 대기. blockingGet은 내부에서 CountDownLatch 를 사용 한다.</span>
+<span class="n">val</span> <span class="n">resultPosts</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">().</span><span class="na">blockingGet</span><span class="o">()</span>
+<span class="k">assert</span><span class="o">(</span><span class="n">resultPosts</span><span class="o">.</span><span class="na">size</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
+<span class="k">assert</span><span class="o">(</span><span class="n">resultPosts</span> <span class="o">==</span> <span class="n">posts</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>3.TestObserver</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val</span> <span class="n">post</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"포스트"</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+<span class="n">val</span> <span class="n">posts</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span><span class="n">post</span><span class="o">)</span>
+<span class="n">Mockito</span><span class="o">.</span><span class="err">`</span><span class="n">when</span><span class="err">`</span><span class="o">(</span><span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">Single</span><span class="o">.</span><span class="na">create</span> <span class="o">{</span>
+   <span class="n">it</span><span class="o">.</span><span class="na">onSuccess</span><span class="o">(</span><span class="n">posts</span><span class="o">)</span>
+<span class="o">})</span>
+<span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">().</span><span class="na">test</span><span class="o">()</span>
+   <span class="o">.</span><span class="na">assertValueCount</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+   <span class="o">.</span><span class="na">assertSubscribed</span><span class="o">()</span>
+   <span class="o">.</span><span class="na">assertNoErrors</span><span class="o">()</span>
+   <span class="o">.</span><span class="na">assertValues</span><span class="o">(</span><span class="n">posts</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>4.Trampoline</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Before</span>
+<span class="n">fun</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">MockitoAnnotations</span><span class="o">.</span><span class="na">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+  <span class="c1">//Schedulers.trampoline() 을 사용하면 현재 실행되고 있는 Thread 에서 실행 하게 해준다. immediate execution !!</span>
+  <span class="n">RxJavaPlugins</span><span class="o">.</span><span class="na">setIoSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+  <span class="n">RxJavaPlugins</span><span class="o">.</span><span class="na">setComputationSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+  <span class="n">RxJavaPlugins</span><span class="o">.</span><span class="na">setNewThreadSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+  <span class="n">RxAndroidPlugins</span><span class="o">.</span><span class="na">setInitMainThreadSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nd">@Test</span>
+<span class="n">fun</span> <span class="nf">whenGetPosts_thenReturnSuccess</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">val</span> <span class="n">post</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"첫번째 포스트"</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="n">val</span> <span class="n">post2</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"두번째 포스트"</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span>
+  <span class="n">val</span> <span class="n">posts</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span><span class="n">post</span><span class="o">,</span> <span class="n">post2</span><span class="o">)</span>
+  <span class="n">Mockito</span><span class="o">.</span><span class="err">`</span><span class="n">when</span><span class="err">`</span><span class="o">(</span><span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">Single</span><span class="o">.</span><span class="na">create</span> <span class="o">{</span>
+      <span class="n">it</span><span class="o">.</span><span class="na">onSuccess</span><span class="o">(</span><span class="n">posts</span><span class="o">)</span>
+  <span class="o">})</span>
+
+   <span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()</span>
+      <span class="o">.</span><span class="na">subscribeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">newThread</span><span class="o">())</span>
+      <span class="o">.</span><span class="na">observeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">newThread</span><span class="o">())</span>
+      <span class="o">.</span><span class="na">subscribe</span><span class="o">(</span>
+          <span class="n">object</span> <span class="o">:</span> <span class="n">SingleObserver</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Post</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+              <span class="n">override</span> <span class="n">fun</span> <span class="nf">onSuccess</span><span class="o">(</span><span class="nl">t:</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Post</span><span class="o">&gt;)</span> <span class="o">{</span>
+                  <span class="k">assert</span><span class="o">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">posts</span><span class="o">)</span>
+              <span class="o">}</span>
+
+              <span class="n">override</span> <span class="n">fun</span> <span class="nf">onSubscribe</span><span class="o">(</span><span class="nl">d:</span> <span class="n">Disposable</span><span class="o">)</span> <span class="o">{</span>
+                  <span class="n">compositeDisposable</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">d</span><span class="o">)</span>
+              <span class="o">}</span>
+
+              <span class="n">override</span> <span class="n">fun</span> <span class="nf">onError</span><span class="o">(</span><span class="nl">e:</span> <span class="n">Throwable</span><span class="o">)</span> <span class="o">{</span>
+
+              <span class="o">}</span>
+          <span class="o">}</span>
+      <span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>5.ViewModel Unit Test</p>
+<h5 id="scheduler--service-파라미터를-가진-viewmodel">scheduler , service 파라미터를 가진 ViewModel</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Before</span>
+<span class="n">fun</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">MockitoAnnotations</span><span class="o">.</span><span class="na">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+  <span class="n">testScheduler</span> <span class="o">=</span> <span class="n">TestScheduler</span><span class="o">()</span>
+  <span class="n">val</span> <span class="n">schedulerProvider</span> <span class="o">=</span> <span class="n">TestSchedulerProvider</span><span class="o">(</span><span class="n">testScheduler</span><span class="o">)</span>
+  <span class="n">viewModel</span> <span class="o">=</span> <span class="n">SchedulerParamViewModel</span><span class="o">(</span>
+      <span class="n">service</span><span class="o">,</span>
+      <span class="n">schedulerProvider</span>
+  <span class="o">)</span>
+<span class="o">}</span>
+
+<span class="nd">@Test</span>
+<span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">val</span> <span class="n">post</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"첫번째 포스트"</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="n">val</span> <span class="n">post2</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"두번째 포스트"</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="n">val</span> <span class="n">posts</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span><span class="n">post</span><span class="o">,</span> <span class="n">post2</span><span class="o">)</span>
+  <span class="n">Mockito</span><span class="o">.</span><span class="err">`</span><span class="n">when</span><span class="err">`</span><span class="o">(</span><span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">Single</span><span class="o">.</span><span class="na">create</span> <span class="o">{</span>
+      <span class="n">it</span><span class="o">.</span><span class="na">onSuccess</span><span class="o">(</span><span class="n">posts</span><span class="o">)</span>
+  <span class="o">})</span>
+
+  <span class="n">viewModel</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()</span>
+  <span class="n">testScheduler</span><span class="o">.</span><span class="na">triggerActions</span><span class="o">()</span> <span class="c1">//ViewModel 생성 시 주입된 scheduler</span>
+  <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">viewModel</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">value</span><span class="o">!!.</span><span class="na">isNotEmpty</span><span class="o">())</span>
+  <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">viewModel</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">value</span> <span class="o">==</span> <span class="n">posts</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<h5 id="service-파라미터를-가진-viewmodel">service 파라미터를 가진 ViewModel</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Before</span>
+<span class="n">fun</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">MockitoAnnotations</span><span class="o">.</span><span class="na">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+  <span class="n">RxJavaPlugins</span><span class="o">.</span><span class="na">setIoSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+  <span class="n">RxJavaPlugins</span><span class="o">.</span><span class="na">setComputationSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+  <span class="n">RxJavaPlugins</span><span class="o">.</span><span class="na">setNewThreadSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+  <span class="n">RxAndroidPlugins</span><span class="o">.</span><span class="na">setInitMainThreadSchedulerHandler</span> <span class="o">{</span> <span class="n">Schedulers</span><span class="o">.</span><span class="na">trampoline</span><span class="o">()</span> <span class="o">}</span>
+
+  <span class="c1">//Test 코드는 바로 뷰모델을 만들었지만 실제 사용하는 경우 AAC ViewModel 은 파라미터가 있을 경우 ViewModelProvider.Factory 를 Custom 해서 만들면 된다.</span>
+  <span class="n">viewModel</span> <span class="o">=</span> <span class="n">GeneralViewModel</span><span class="o">(</span><span class="n">service</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="nd">@Test</span>
+<span class="n">fun</span> <span class="nf">test</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">val</span> <span class="n">post</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"첫번째 포스트"</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="n">val</span> <span class="n">post2</span> <span class="o">=</span> <span class="n">Post</span><span class="o">(</span><span class="s">"두번째 포스트"</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="n">val</span> <span class="n">posts</span> <span class="o">=</span> <span class="n">listOf</span><span class="o">(</span><span class="n">post</span><span class="o">,</span> <span class="n">post2</span><span class="o">)</span>
+  <span class="n">Mockito</span><span class="o">.</span><span class="err">`</span><span class="n">when</span><span class="err">`</span><span class="o">(</span><span class="n">service</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">Single</span><span class="o">.</span><span class="na">create</span> <span class="o">{</span>
+     <span class="n">it</span><span class="o">.</span><span class="na">onSuccess</span><span class="o">(</span><span class="n">posts</span><span class="o">)</span>
+  <span class="o">})</span>
+
+   <span class="c1">//getPost 내부에서 scheduler 셋팅을 io , mainThread 로 하지만 @Before 에서 셋팅한 스케줄러 값을 따라간다. 그래서 문제 없이 돌아감</span>
+  <span class="n">viewModel</span><span class="o">.</span><span class="na">getPosts</span><span class="o">()</span>
+
+  <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">viewModel</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">value</span><span class="o">!!.</span><span class="na">isNotEmpty</span><span class="o">())</span>
+  <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">viewModel</span><span class="o">.</span><span class="na">items</span><span class="o">.</span><span class="na">value</span> <span class="o">==</span> <span class="n">posts</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>테스트 샘플 프로젝트는 <a href="https://github.com/dealicious-inc/RxKotlinUnitTest">링크</a>를 통해 확인 할 수 있다.</p>
+
+      
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    
+    <div class="entry-meta">
+      <span class="entry-date date published updated"><time datetime="2020-11-22T00:00:00+09:00"><a href="http://localhost:4000/android/kotlin/android-saving-ui-state/">November 22, 2020</a></time></span><span class="author vcard"><span class="fn"><a href="http://localhost:4000/about/" title="About kimyounghoon">kimyounghoon</a></span></span>
+      
+      <span class="entry-reading-time">
+        <i class="fa fa-clock-o"></i>
+        
+        Reading time ~1 minute
+      </span><!-- /.entry-reading-time -->
+      
+    </div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://localhost:4000/android/kotlin/android-saving-ui-state/" rel="bookmark" title="Saving UI States" itemprop="url">Saving UI States</a></h1>
+    
+  </header>
+  <div class="entry-content">
+      <p>오늘은 UI 상태 저장에 대한 조금 더 깊은 이해와 어떤 옵션들이 있는지 그리고 각각의 옵션들의 장단점에 대해서 알아보려고 한다.</p>
+
+<h2 id="ui-상태를-유지-하기-위한-옵션">UI 상태를 유지 하기 위한 옵션</h2>
 <ol>
-  <li>getInstance() 메소드에 synchronized 키워드를 사용</li>
-  <li>인스턴스를 필요할 때 생성하지 말고, 처음부터 만듦</li>
-  <li>DCL(Double-Checking Locking) 을 써서 getInstance()에서 동기화 되는 부분을 줄임</li>
+  <li>ViewModel</li>
+  <li>Saved instance state</li>
+  <li>Persistent storage</li>
 </ol>
 
-<p>첫번째 방법부터 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+<figure>
+	<img src="/images/2020-11-22-save-ui-state.png" alt="" />
+</figure>
 
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span><span class="c1">//생성자를 외부에서 사용하지 못하도록 private 으로 셋팅</span>
-    <span class="o">}</span>
+<h3 id="viewmodel">ViewModel</h3>
+<p>Android Architecture Components 에 속하는 Component 이다.<br />
+메모리에 저장 되고 화면 가로 세로 변경같은 경우 데이터가 저장 되지만 프로세스에 의해 죽고 살아 나는 경우에 데이터는 다시 복구 되지 않는다.<br />
+그리고 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
+데이터 제한은 메모리에 저장 되기 때문에 사용가능한 메모리 내에서 가능하고 속도가 빠르다.</p>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-        <span class="c1">//synchronized 를 사용해 서로 다른 스레드에서 실행 시 하나의 스레드가 끝난 뒤 다른 스레드가 접근 가능</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
-    <span class="o">}</span>
+<h3 id="save-instance-state">Save instance state</h3>
+<p>저번 커스텀 뷰에서 상태 저장을 위한 onSaveInstanceState 를 사용해서 저장하는 방법이다.<br />
+화면 가로 세로 변경 같은 경우, 프로세스 종료 된 이후에도 데이터가 저장 가능 하다.<br />
+하지만 ViewModel 과 마찬가지로 완벽하게 액티비티가 종료 되어 버리거나 사용자가 백버튼을 눌러 종료 하는 경우 데이터를 복구 할 수 없다.<br />
+데이터 제한은 직렬화되어 디스크에 저장 되기 때문에 primitive type 또는 심플하고 작은 object 만 가능 하다.<br />
+직렬화는 데이터를 byte 형태로 변환 하는 것을 말한다.<br />
+디스크에 접근하고 serialization , deserialization 을 거치기 때문에 ViewModel 보다 비교적 느리다.</p>
 
-<span class="o">}</span>
-</code></pre></div></div>
-<p>위의 방법처럼 메소드를 동기화 하게 되면 속도가 100배 정도 저하된다고 한다.
-속도가 크게 중요하지 않은 부분에서 사용하면 괜춘~!</p>
+<h3 id="persistent-storage">Persistent storage</h3>
+<p>Shared preferences,SQLite Database,Realm DB 기타 등등..!
+디스크에 저장 하거나 네트워크 통신을 통해 서버에 저장하는 것을 의미한다.<br />
+이 경우는 모든 경우에 대비해서 데이터를 저장 할 수 있다.<br />
+네트워크 통신을 통해 저장 하는 경우 다른 옵션들 보다 비교적 느리지만 데이터를 영구 저장하기에는 제일 좋다고 볼 수 있다.<br />
+위와 같이 여러 타입의 UI 상태 저장 방법을 알아보고 비교하는 시간을 가져 보았다.</p>
 
-<p>두번째 방법을 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span><span class="c1">//정적 초기화 부분에서 생성</span>
-    
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span>
-    <span class="o">}</span>
+<p>참고 문서
+https://developer.android.com/topic/libraries/architecture/saving-states</p>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-<p>위의 방법처럼 사용하면 JVM에서 Singleton 의 유일한 인스턴스를 생성해준다.
-JVM에서 유일한 인스턴스를 생성하기 전에는 어떤 스레드도 uniqueInstance 에 접근 할 수 없다.</p>
-
-<p>세번째 방법을 보자.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
-    <span class="o">}</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-<p>volatile 키워드를 사용하면 멀티 스레딩을 쓰더라도 uniqueinstance 변수가 Singleton 인스턴스로 초기화 되는 과정이 올바르게 진행되도록 할 수 있다.<br />
-하지만 자바5 보다 전에 나온 버전의 JVM 을 사용해야 한다면 DCL을 사용할 수 없다.</p>
-
-<p>일반적인 변수의 값은 CPU cache 를 통해 가져 오는데 volatile 키워드를 사용하면 CPU cache가 아닌 MainMemory 에서 가져온다.<br />
-그렇기 떄문에 읽고 쓰는 작업을 할 때 제대로 된 값을 읽고 쓸 수 있다.<br />
-하지만 멀티 스레드에서 값을 가져올 때 synchronized 를 사용하지 않고 가져오면 완벽하게 보장 되지 않기 때문에 위의 코드를 보면 volatile uniqueInstance 를 초기화 할때 synchronized 를 사용한 것을 볼 수 있다.<br />
-이렇게 사용함으로써 안전하게 초기화 하고 instance를 가져와서 사용할 수 있다.<br />
-코틀린에서는 아주 간단하게 싱글턴을 만들어 사용한다.</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">object</span> <span class="n">Singleton</span> <span class="o">{</span>
-
-<span class="o">}</span>
-</code></pre></div></div>
-<p>위의 코드가 끝이다.<br />
-해당 코틀린 코드는 자바로 Decompile 했을때 1,2,3 방법 중 어떤 방법으로 만들어 질까 궁금해서 한번 해봤다.<br />
-Android Studio 에서 Menu &gt; Tools &gt; Kotlin &gt; Show Kotlin Bytecode &gt; Decompile !!</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-   <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Singleton</span> <span class="n">INSTANCE</span><span class="o">;</span>
-
-   <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span>
-   <span class="o">}</span>
-
-   <span class="kd">static</span> <span class="o">{</span>
-      <span class="n">Singleton</span> <span class="n">var0</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
-      <span class="n">INSTANCE</span> <span class="o">=</span> <span class="n">var0</span><span class="o">;</span>
-   <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-<p>두번째 방법으로 만들어지는걸 볼 수 있었다.<br />
-이상 싱글턴 패턴에 대해 알아보았다.</p>
-
-<p>참고 URL<br />
-http://tutorials.jenkov.com/java-concurrency/volatile.html</p>
 
       
   </div><!-- /.entry-content -->
@@ -928,7 +941,7 @@ http://tutorials.jenkov.com/java-concurrency/volatile.html</p>
     
 
     
-      <li><a href="http://localhost:4000/page15/">15</a></li>
+      <li><a href="http://localhost:4000/page18/">18</a></li>
     
 
     
@@ -983,7 +996,7 @@ http://tutorials.jenkov.com/java-concurrency/volatile.html</p>
 
 <div class="footer-wrapper">
   <footer role="contentinfo">
-    <span>&copy; 2020 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
+    <span>&copy; 2021 kimyounghoon. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> using the <a href="http://github.com/aron-bordin/neo-hpstr-jekyll-theme" rel="nofollow">Neo-HPSTR Theme</a>.</span>
 
   </footer>
 </div><!-- /.footer-wrapper -->
