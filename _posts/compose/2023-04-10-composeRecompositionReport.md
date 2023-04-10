@@ -1,18 +1,18 @@
 ---
 layout: post
-title: Compose Compiler Metrics Report
-description: "Compose Compiler Metrics Report"
+title: Compose Compiler Metrics Report!?
+description: "Compose Compiler Metrics Report!?"
 modified: 2023-04-07
 tags: [Compose]
 categories: [compose]
 ---
 
-## Compose Compiler Metrics Report?
+Compose Compiler Metrics Report는 Compose Compiler의 성능과 효율성을 측정하고 개선하기 위해 생성되는 보고서입니다.
 
-Compose Compiler Metrics Report는 Compose Compiler의 성능과 효율성을 측정하고 개선하기 위해 생성되는 보고서입니다.</br>
+Compose를 사용하여 개발할 때, 의도치 않은 Recomposition이 발생할 수 있기 때문에 Layout Inspector를 사용하여 RecompositionCount와 SkipCount를 확인할 수 있습니다.
 
-Compose를 사용하여 개발할 때, 의도치 않은 Recomposition이 발생할 수 있기 때문에 Layout Inspector를 사용하여 RecompositionCount와 SkipCount를 확인할 수 있습니다.</br>
-그러나 이 방법은 Composable의 위치는 확인할 수 있지만, 정확히 어떤 부분에서 문제가 발생했는지를 알기 어렵습니다.</br>
+그러나 이 방법은 Composable의 위치는 확인할 수 있지만, 정확히 어떤 부분에서 문제가 발생했는지를 알기 어렵습니다.
+
 이때 Compose Compiler Metrics Report를 사용하면 더 자세하게 문제를 파악할 수 있습니다.
 
 ## 사용 방법
