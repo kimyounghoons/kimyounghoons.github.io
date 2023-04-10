@@ -9,9 +9,11 @@ categories: [compose]
 
 ## Compose Compiler Metrics Report?
 
-Compose Compiler Metrics Report는 Compose Compiler의 성능과 효율성을 측정하고 개선하기 위해 생성되는 보고서입니다. 그리고 개발자들이 Compose Compiler를 개선하고 최적화하는 데 도움을 주는 중요한 도구입니다.
+Compose Compiler Metrics Report는 Compose Compiler의 성능과 효율성을 측정하고 개선하기 위해 생성되는 보고서입니다.</br>
 
-Compose를 사용하여 개발할 때, 의도치 않은 Recomposition이 발생할 수 있기 때문에 Layout Inspector를 사용하여 RecompositionCount와 SkipCount를 확인할 수 있습니다. 그러나 이 방법은 Composable의 위치는 확인할 수 있지만, 정확히 어떤 부분에서 문제가 발생했는지를 알기 어렵습니다. 이때 Compose Compiler Metrics Report를 사용하면 더 자세하게 문제를 파악할 수 있습니다.
+Compose를 사용하여 개발할 때, 의도치 않은 Recomposition이 발생할 수 있기 때문에 Layout Inspector를 사용하여 RecompositionCount와 SkipCount를 확인할 수 있습니다.</br>
+그러나 이 방법은 Composable의 위치는 확인할 수 있지만, 정확히 어떤 부분에서 문제가 발생했는지를 알기 어렵습니다.</br>
+이때 Compose Compiler Metrics Report를 사용하면 더 자세하게 문제를 파악할 수 있습니다.
 
 ## 사용 방법
 
@@ -43,8 +45,7 @@ android{
 	</p>
 </figure>
 
-여기서 주의해서 봐야 하는 점은 unstable 부분 입니다.
-특히 Composable의 파라미터로 들어가게 되는 UiState에는 unstable value 가 들어가는 경우 불필요한 Recomposition 이 발생됩니다.
+Composable의 파라미터로 들어가게 되는 UiState에는 unstable value 가 들어가는 경우 불필요한 Recomposition 이 발생됩니다.
 
 해당 부분의 원인을 찾아 stable 한 상태로 변경 시켜주면 불필요한 recomposition을 막을 수 있습니다.
 
