@@ -104,5 +104,5 @@ titlecase: true
 include: [".htaccess"]
 exclude: ["demo/*", "lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
 plugins: [jekyll-paginate]
-#theme: neo-hpstr-jekyll-theme
-remote_theme: mmistakes/minimal-mistakes
+#theme: neo-hpstr-jekyll-theme mmistakes/minimal-mistakes
+remote_theme: neo-hpstr-jekyll-theme
