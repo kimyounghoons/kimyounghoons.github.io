@@ -5,6 +5,7 @@ description: "resConfig(Build.Gradle)"
 modified: 2019-05-12
 tags: [resConfig]
 categories: [android]
+noindex: true
 ---
 
 ### build.gradle 에서 resConfig

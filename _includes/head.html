@@ -1,9 +1,12 @@
 <meta charset="utf-8">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1531558516642204"
-     crossorigin="anonymous"></script>
+{% unless page.noindex %}<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1531558516642204"
+     crossorigin="anonymous"></script>{% endunless %}
 <title>{% if page.title %}{{ page.title }} &#8211; {% endif %}{{ site.title }}</title>
 <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
 {% if page.tags %}<meta name="keywords" content="{{ page.tags | join: ', ' }}">{% endif %}
+{% if page.noindex %}<meta name="robots" content="noindex, follow">
+{% else %}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{% endif %}
+<meta name="author" content="{{ site.owner.name }}">
 
 {% if site.owner.twitter or site.twitter %}<!-- Twitter Cards -->
 {% if page.image.feature %}<meta name="twitter:card" content="summary_large_image">

@@ -5,6 +5,7 @@ description: "파이어스토어 색인을 이용한 복합쿼리"
 modified: 2018-11-12
 tags: [firestore]
 categories: [android]
+noindex: true
 ---
 
 # 파이어스토어 색인을 이용한 복합쿼리

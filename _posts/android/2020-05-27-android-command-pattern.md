@@ -5,6 +5,7 @@ description: "Command Pattern (디자인 패턴 6장)"
 modified: 2020-05-27
 tags: [Command Pattern]
 categories: [java,kotlin]
+noindex: true
 ---
 
 ### 커맨드 패턴 정의

@@ -5,6 +5,7 @@ description: "selector drawable"
 modified: 2018-10-31
 tags: [android]
 categories: [android]
+noindex: true
 ---
 
 ## selector

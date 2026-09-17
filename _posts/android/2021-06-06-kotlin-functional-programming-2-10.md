@@ -5,6 +5,7 @@ description: Kotlin Scope functions
 modified: 2021-06-06
 tags: [Android, Kotlin]
 categories: [Android, Kotlin]
+noindex: true
 ---
 
 1. apply

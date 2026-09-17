@@ -408,6 +408,22 @@ ul.social-buttons li a:active {
 	}
 }
 
+.footer-links {
+	margin-bottom: .75em;
+	a {
+		display: inline-block;
+		padding: 0 .1em;
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	.footer-sep {
+		padding: 0 .35em;
+		opacity: .5;
+	}
+}
+
 // Social Share
 // --------------------------------------------------
 .socialcount {

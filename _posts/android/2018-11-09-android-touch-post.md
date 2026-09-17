@@ -5,6 +5,7 @@ description: "view setAlpha in OnTouchListener"
 modified: 2018-11-09
 tags: [android]
 categories: [android]
+noindex: true
 ---
 
 view pressed 상태 되었을 때 알파 50% 먹이기

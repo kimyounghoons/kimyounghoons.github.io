@@ -5,6 +5,7 @@ description: "wireless build"
 modified: 2018-11-05
 tags: [android]
 categories: [android]
+noindex: true
 ---
 
 ## 무선으로 빌드 하는 방법

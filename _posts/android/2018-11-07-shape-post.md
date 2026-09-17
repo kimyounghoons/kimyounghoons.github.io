@@ -5,6 +5,7 @@ description: "Shape in xml"
 modified: 2018-11-07
 tags: [shape]
 categories: [android]
+noindex: true
 ---
 
 꼭지점 두루뭉실한 사각형 만들기
