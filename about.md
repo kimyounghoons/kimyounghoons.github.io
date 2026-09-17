@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-description: "안드로이드 개발자 김영훈의 개발 블로그 소개입니다."
+description: "안드로이드 개발자 김영훈이 개발 노하우와 생활 경제 개념을 기록하는 블로그 소개입니다."
 permalink: /about/
 share: true
 ---
@@ -12,14 +12,18 @@ share: true
 검색해도 한국어 자료가 없어 한참 헤맸던 내용, 공식 문서만으로는 감이 안 잡혔던 API,
 실제 서비스에 적용해 보고 나서야 알게 된 것들을 정리해 두고 있습니다.
 
+최근에는 개발 외에도 살면서 한 번쯤 정리해두면 좋은 부동산·주식 기본 개념도 함께 다루고 있습니다.
+
 ## 다루는 주제
 
 - **Android** — Activity/Fragment 생명주기, RecyclerView, WorkManager, Firebase 연동, 빌드 설정(Gradle, buildTypes, resConfig) 등 실무에서 반복해서 만나는 주제
 - **Jetpack Compose** — Recomposition 디버깅, Compose 컴파일러 리포트 분석, Pager·Indicator 같은 UI 구성 요소
 - **Kotlin** — 코루틴, 함수형 프로그래밍, 언어 기능 활용 패턴
 - **개발 환경** — Android Studio, Git, macOS 세팅과 생산성 도구
+- **부동산** — 전세·월세 구조, LTV·DTI·DSR, 청약제도, 등기부등본 보는 법 등 계약 전 알아두면 좋은 개념
+- **주식** — PER·PBR·ROE, 배당, 시가총액, 계좌 종류 등 투자 기본 개념
 
-모든 글은 직접 작성했고, 예제 코드는 실제로 빌드해 동작을 확인한 뒤 올립니다.
+기술 글의 예제 코드는 실제로 빌드해 동작을 확인한 뒤 올리고, 부동산·주식처럼 정책에 따라 수치가 바뀌는 주제는 구체적인 수치보다 개념과 계산 구조 위주로 정리해 최신 기준은 공식 출처에서 확인하도록 안내하고 있습니다.
 
 ## 글을 쓰는 기준
 
