@@ -4,7 +4,8 @@ title: share Intent
 description: "안드로이드 외부 공유"
 modified: 2018-11-13
 tags: [share]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/android-share-post/"
 ---
 
 # 안드로이드 외부 공유

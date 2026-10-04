@@ -3,9 +3,10 @@ layout: post
 title: selector drawable 
 description: "selector drawable"
 modified: 2018-10-31
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
 noindex: true
+permalink: "/android/selector-drawable/"
 ---
 
 ## selector

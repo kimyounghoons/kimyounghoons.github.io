@@ -3,7 +3,8 @@ layout: post
 title: TellMe 이용약관
 description: "TellMe 이용약관"
 modified: 2018-11-28
-categories: [applicationInfo]
+categories: [앱 정책]
+permalink: "/applicationinfo/app-agreement/"
 ---
 안녕하세요?
 

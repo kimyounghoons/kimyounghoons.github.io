@@ -4,7 +4,8 @@ title: 함수형 프로그래밍 2-1장
 description: 함수형 프로그래밍 2-1장
 modified: 2021-02-07
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
+permalink: "/android/kotlin/kotlin-functional-programming-2/"
 ---
 
 ### 코틀린으로 함수형 프로그래밍 시작하기

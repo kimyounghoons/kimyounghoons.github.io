@@ -4,7 +4,8 @@ title:  Decorator Pattern (디자인 패턴 3장)
 description: "Decorator Pattern (디자인 패턴 3장)"
 modified: 2020-04-10
 tags: [Decorator Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-decorator-pattern/"
 ---
 
 #### 정의  

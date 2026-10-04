@@ -4,7 +4,8 @@ title: Saving UI States
 description: UI 상태 저장(Saving UI States)
 modified: 2020-11-22
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-saving-ui-state/"
 ---
 
 오늘은 UI 상태 저장에 대한 조금 더 깊은 이해와 어떤 옵션들이 있는지 그리고 각각의 옵션들의 장단점에 대해서 알아보려고 한다.  

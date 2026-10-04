@@ -3,8 +3,9 @@ layout: post
 title: 알고리즘 문제
 description: "알고리즘 문제"
 modified: 2019-03-11
-tags: [자바,알고리즘]
-categories: [알고리즘,자바]
+tags: [자바, 알고리즘]
+categories: [개발, 알고리즘]
+permalink: "/algorithm/iron-bar/"
 ---
 쇠막대기 알고리즘
 

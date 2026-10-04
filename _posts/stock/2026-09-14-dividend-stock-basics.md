@@ -4,7 +4,8 @@ title: 배당주 투자 기초와 배당수익률 계산법
 description: "배당수익률과 배당성향 계산법, 배당락일 개념, 배당주 투자의 장단점을 정리"
 modified: 2026-09-14
 tags: [주식, 배당, 배당주]
-categories: [stock]
+categories: [재테크, 주식]
+permalink: "/stock/dividend-stock-basics/"
 ---
 
 주가 차익이 아니라 꾸준한 현금 흐름을 목표로 하는 투자자들이 눈여겨보는 것이 배당주다. 개념을 정리해 둔다.

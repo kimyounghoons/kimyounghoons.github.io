@@ -4,7 +4,8 @@ title: Compose Compiler Metrics Report!?
 description: "Compose Compiler Metrics Report!?"
 modified: 2023-04-07
 tags: [Compose]
-categories: [compose]
+categories: [개발, Compose]
+permalink: "/compose/composeRecompositionReport/"
 ---
 
 Compose Compiler Metrics Report는 Compose Compiler의 성능과 효율성을 측정하고 개선하기 위해 생성되는 보고서입니다.

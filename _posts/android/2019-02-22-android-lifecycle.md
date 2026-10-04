@@ -3,8 +3,9 @@ layout: post
 title: Lifecycle
 description: "AAC lifecycle"
 modified: 2019-02-22
-tags: [lifecycle,aac]
-categories: [android,aac]
+tags: [lifecycle, aac]
+categories: [개발, Android]
+permalink: "/android/aac/android-lifecycle/"
 ---
 
 문제점 : 뎁스가 깊어질때 CustomVideoView가 가지고 있는 mediaplayer 메모리가 제대로 해제 되지 않는 문제

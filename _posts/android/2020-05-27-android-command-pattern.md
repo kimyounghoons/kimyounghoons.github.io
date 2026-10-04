@@ -4,8 +4,9 @@ title:  Command Pattern (디자인 패턴 6장)
 description: "Command Pattern (디자인 패턴 6장)"
 modified: 2020-05-27
 tags: [Command Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
 noindex: true
+permalink: "/java/kotlin/android-command-pattern/"
 ---
 
 ### 커맨드 패턴 정의

@@ -3,9 +3,10 @@ layout: post
 title: view setAlpha in OnTouchListener
 description: "view setAlpha in OnTouchListener"
 modified: 2018-11-09
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
 noindex: true
+permalink: "/android/android-touch-post/"
 ---
 
 view pressed 상태 되었을 때 알파 50% 먹이기

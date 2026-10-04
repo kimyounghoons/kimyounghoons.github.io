@@ -4,7 +4,8 @@ title:  Custom Compose Horizontal Indicator
 description: "Custom Compose Horizontal Indicator"
 modified: 2023-04-07
 tags: [Compose]
-categories: [compose,kotlin]
+categories: [개발, Compose]
+permalink: "/compose/kotlin/horizontalPagerIndicator/"
 ---
 
 Pager 를 사용하는 경우 Indicator 를 함께 보여주는 UI를 개발하는 경우가 종종 있다.

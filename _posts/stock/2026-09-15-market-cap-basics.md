@@ -4,7 +4,8 @@ title: 시가총액이란 무엇인가
 description: "시가총액 계산법과 대형주·중형주·소형주 구분, 시가총액과 기업가치가 다를 수 있는 이유"
 modified: 2026-09-15
 tags: [주식, 시가총액]
-categories: [stock]
+categories: [재테크, 주식]
+permalink: "/stock/market-cap-basics/"
 ---
 
 뉴스에서 "시가총액 1위 기업"이라는 표현을 자주 접한다. 시가총액이 정확히 무엇을 뜻하는지, 그리고 왜 이 숫자가 기업 규모를 가늠하는 기준으로 쓰이는지 정리한다.

@@ -3,7 +3,8 @@ layout: post
 title: TellMe 개인정보 취급방침 
 description: "TellMe 개인정보 취급방침"
 modified: 2018-11-28
-categories: [applicationInfo]
+categories: [앱 정책]
+permalink: "/applicationinfo/app-privacy-policy/"
 ---
 
 TellMe는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법,사업법 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하겠습니다.

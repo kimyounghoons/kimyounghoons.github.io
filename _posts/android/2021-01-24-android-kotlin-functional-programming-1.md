@@ -4,7 +4,8 @@ title: 함수형 프로그래밍 1장
 description: 함수형 프로그래밍 1장
 modified: 2021-01-24
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
+permalink: "/android/kotlin/android-kotlin-functional-programming-1/"
 ---
 
 함수형 프로그래밍 특징

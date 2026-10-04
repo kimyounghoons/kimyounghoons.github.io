@@ -4,7 +4,8 @@ title:  Singleton Pattern (디자인 패턴 5장)
 description: "Singleton Pattern (디자인 패턴 5장)"
 modified: 2020-05-17
 tags: [Singleton Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-singleton-pattern/"
 ---
 
 ### 싱글턴 패턴 정의

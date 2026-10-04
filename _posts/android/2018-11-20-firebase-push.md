@@ -4,8 +4,9 @@ title: Firebase Push Test in Postman
 description: "파이어베이스 푸시"
 modified: 2018-11-20
 tags: [firebase]
-categories: [firebase]
+categories: [개발, Android]
 noindex: true
+permalink: "/firebase/firebase-push/"
 ---
 
 # 포스트맨에서 파이어베이스 푸시 테스트!!

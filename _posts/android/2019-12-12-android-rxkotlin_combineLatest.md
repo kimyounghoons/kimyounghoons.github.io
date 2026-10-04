@@ -4,7 +4,8 @@ title: RxKotlin combineLatest
 description: "RxKotlin combineLatest"
 modified: 2019-12-12
 tags: [RxKotlin]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/android-rxkotlin_combineLatest/"
 ---
 
 집에 와서 안드로이드 단톡방 쭉쭉 보다가 어떤 분이 질문 올린 글을 봤다.  

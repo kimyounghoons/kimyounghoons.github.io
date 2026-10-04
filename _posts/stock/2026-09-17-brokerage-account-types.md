@@ -4,7 +4,8 @@ title: 증권계좌 종류 비교 — 일반계좌·ISA·연금저축·IRP
 description: "일반위탁계좌, ISA, 연금저축계좌, IRP의 세제 혜택과 특징을 비교하고 목적별로 어떤 계좌가 맞는지 정리"
 modified: 2026-09-17
 tags: [주식, 증권계좌, ISA, 연금저축]
-categories: [stock]
+categories: [재테크, 주식]
+permalink: "/stock/brokerage-account-types/"
 ---
 
 증권사에서 계좌를 개설하려고 보면 일반계좌 말고도 ISA, 연금저축, IRP 등 여러 이름이 등장한다. 이름만 보면 비슷해 보이지만 세제 혜택과 자금 묶이는 기간이 전혀 다르다. 목적에 따라 어떤 계좌를 쓸지 정리해 둔다.

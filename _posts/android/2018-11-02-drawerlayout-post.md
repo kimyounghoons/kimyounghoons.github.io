@@ -3,8 +3,9 @@ layout: post
 title: drawerlayout navigationView 클릭 먹통
 description: "drawerlayout navigationView 클릭 먹통"
 modified: 2018-11-02
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
+permalink: "/android/drawerlayout-post/"
 ---
 
 딤처리 된 팝업을 추가 할 일이 생겨 아래의 구조로 작성함

@@ -3,8 +3,9 @@ layout: post
 title: Locale 
 description: "안드로이드 언어 및 지역"
 modified: 2018-12-04
-tags: [lanuage,country]
-categories: [android]
+tags: [lanuage, country]
+categories: [개발, Android]
+permalink: "/android/android-locale/"
 ---
 
 문제점 : 다국어 지원 앱

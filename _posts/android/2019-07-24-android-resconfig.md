@@ -4,8 +4,9 @@ title: resConfig(Build.Gradle)
 description: "resConfig(Build.Gradle)"
 modified: 2019-05-12
 tags: [resConfig]
-categories: [android]
+categories: [개발, Android]
 noindex: true
+permalink: "/android/android-resconfig/"
 ---
 
 ### build.gradle 에서 resConfig

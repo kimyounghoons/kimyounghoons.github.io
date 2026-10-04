@@ -4,7 +4,8 @@ title: gson 라이브러리 활용
 description: gson 라이브러리 활용
 modified: 2021-01-10
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-tojsonstring/"
 ---
 
 gson 라이브러리는 json object 를 json string 으로 변환 시켜주거나 json string 을 json object 로 쉽게 변환 할 수 있게 만들어 주는 라이브러리이다.

@@ -4,7 +4,8 @@ title: 인텐트 사용해서 다른 액티비티로 데이터 넘기기
 description: "인텐트 사용해서 다른 액티비티로 데이터 넘기기"
 modified: 2020-02-10
 tags: [intent]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/android-intent/"
 ---
 
 StartActivity 에서 DestActivity 로 String 데이터를 넘긴다고 가정하면 다음과같이 일반적으로 사용한다.

@@ -4,7 +4,8 @@ title: RxKotlin UnitTest
 description: RxKotlin UnitTest
 modified: 2020-12-06
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-rxKotlin-unitTest/"
 ---
 
 오늘은 RxKotlin UnitTest 에 대해 알아 보자.

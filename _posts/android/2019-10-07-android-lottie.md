@@ -3,8 +3,9 @@ layout: post
 title: 애니메이션 UI 대응 로티 라이브러리
 description: "애니메이션 UI 대응 로티 라이브러리"
 modified: 2019-10-07
-tags: [animation,lottie]
-categories: [android]
+tags: [animation, lottie]
+categories: [개발, Android]
+permalink: "/android/android-lottie/"
 ---
 UI 작업을 하다보면 애니메이션 효과는 피할래야 피할수 없다.  
 하지만 처음 디자인팀으로부터 전달 받는 경우 여러 효과가 있을 때 각 효과에 대해 정확한 데이터를 받는 경우는 드물다.  

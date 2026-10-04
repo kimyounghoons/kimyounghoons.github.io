@@ -4,7 +4,8 @@ title: LTV·DTI·DSR, 대출 한도를 결정하는 세 가지 지표
 description: "주택담보대출 한도를 좌우하는 LTV, DTI, DSR의 정의와 계산 구조, 왜 세 지표를 함께 보는지 정리"
 modified: 2026-09-03
 tags: [부동산, 대출, LTV, DTI, DSR]
-categories: [realestate]
+categories: [재테크, 부동산]
+permalink: "/realestate/ltv-dti-dsr/"
 ---
 
 주택담보대출을 알아보다 보면 LTV, DTI, DSR이라는 세 가지 약어를 계속 마주친다. 셋 다 "얼마까지 빌릴 수 있는가"를 정하는 지표지만, 보는 관점이 서로 다르다. 하나씩 정리한다.

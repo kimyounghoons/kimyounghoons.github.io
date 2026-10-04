@@ -3,8 +3,9 @@ layout: post
 title: 안드로이드 다중 클릭 방지(Prevent Multiple Click)
 description: "안드로이드 다중 클릭 방지(Prevent Multiple Click)"
 modified: 2020-02-27
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
+permalink: "/android/android-throttle_first_click/"
 ---
 
 화면 이동이나 특정 API 호출을 할 때 안드로이드 자체에서 다중 클릭을 막아 주지 않기 때문에 따로 처리가 필요하다.  

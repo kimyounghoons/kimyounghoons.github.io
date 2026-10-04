@@ -3,10 +3,7 @@ layout: page
 title: 개인정보처리방침
 description: "영훈 블로그의 개인정보 수집·이용 및 쿠키 사용에 관한 안내입니다."
 permalink: /privacy/
-share: false
 ---
-
-# 개인정보처리방침
 
 영훈 블로그(https://kimyounghoons.github.io, 이하 "본 사이트")는 방문자의 개인정보를 소중히 여기며,
 어떤 정보가 어떤 목적으로 수집·이용되는지 아래와 같이 안내합니다.
@@ -44,7 +41,7 @@ share: false
 - Google을 포함한 제3자 광고 제공업체는 쿠키를 사용하여, 방문자가 본 사이트 및 다른 웹사이트를 방문한 기록을 바탕으로 광고를 게재합니다.
 - Google은 광고 쿠키를 사용함으로써 사용자가 해당 웹사이트나 인터넷상의 다른 사이트에 방문했던 기록에 기반하여 광고를 제공할 수 있습니다.
 - 방문자는 [Google 광고 설정](https://adssettings.google.com/)에서 맞춤 광고를 사용 중지할 수 있습니다.
-- 제3자 공급업체의 맞춤 광고는 [www.aboutads.info](http://www.aboutads.info/choices/)에서 일괄 사용 중지할 수 있습니다.
+- 제3자 공급업체의 맞춤 광고는 [www.aboutads.info](https://www.aboutads.info/choices/)에서 일괄 사용 중지할 수 있습니다.
 
 자세한 내용은 [Google 광고에서의 데이터 사용 방식](https://policies.google.com/technologies/partner-sites)을 참고하시기 바랍니다.
 

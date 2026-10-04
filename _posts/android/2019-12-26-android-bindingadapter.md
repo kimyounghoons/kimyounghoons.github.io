@@ -3,8 +3,9 @@ layout: post
 title: DataBidning , BindingAdapter
 description: "DataBidning , BindingAdapter"
 modified: 2019-12-26
-tags: [DataBinding,BindingAdapter]
-categories: [android]
+tags: [DataBinding, BindingAdapter]
+categories: [개발, Android]
+permalink: "/android/android-bindingadapter/"
 ---
 
 데이터 바인딩라이브러리는 레이아웃의 UI 구성 요소를 프로그래밍 방식이 아닌 선언적 형식을 사용하여 앱의 데이터 소스에 바인딩 할 수있는 지원 라이브러리다.  

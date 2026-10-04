@@ -3,8 +3,9 @@ layout: post
 title: 알고리즘 문제
 description: "알고리즘 문제"
 modified: 2019-03-16
-tags: [자바,알고리즘]
-categories: [알고리즘,자바]
+tags: [자바, 알고리즘]
+categories: [개발, 알고리즘]
+permalink: "/알고리즘/자바/algorithm-post/"
 ---
 직사각형 나머지 한 좌표 구하기 !!
 

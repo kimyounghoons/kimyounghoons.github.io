@@ -4,7 +4,8 @@ title:  토스 금액 입력창 애니메이션 클론 코딩
 description: 토스 금액 입력창 애니메이션 클론 코딩
 modified: 2020-10-23
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-tosscustomview/"
 ---
 <figure>
     <p align="center">

@@ -3,8 +3,9 @@ layout: post
 title: notifyDataSetChanged()
 description: "notifyDataSetChanged()"
 modified: 2019-10-15
-tags: [recyclerview,notifyDataSetChanged]
-categories: [android]
+tags: [RecyclerView, notifyDataSetChanged]
+categories: [개발, Android]
+permalink: "/android/android-notifyDataSetChanged/"
 ---
 
 ## 문제

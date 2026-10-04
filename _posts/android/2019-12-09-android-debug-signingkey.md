@@ -3,8 +3,9 @@ layout: post
 title: 디버그 용 서명 키 만들기
 description: "디버그 용 서명 키 만들기"
 modified: 2019-12-09
-tags: [SigningKey,DebugStore]
-categories: [android]
+tags: [SigningKey, DebugStore]
+categories: [개발, Android]
+permalink: "/android/android-debug-signingkey/"
 ---
 
 기본적으로 Android Studio 에서 프로젝트를 만들게 되면 기본적으로 Build Variants가 Debug 로 셋팅 되어 있다.  

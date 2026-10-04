@@ -4,7 +4,8 @@ title: 액티비티 이동 및 데이터 전달
 description: 액티비티 이동 및 데이터 전달
 modified: 2021-02-19
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-kotlin-activity-intent/"
 ---
 
 #### A 액티비티 → B 액티비티 이동

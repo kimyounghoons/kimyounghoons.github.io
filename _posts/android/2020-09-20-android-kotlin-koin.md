@@ -4,7 +4,8 @@ title:  Koin (1편)
 description: Koin (1편)
 modified: 2020-09-20
 tags: [Koin]
-categories: [kotlin]
+categories: [개발, Android]
+permalink: "/kotlin/android-kotlin-koin/"
 ---
 
 ### 코인이란?

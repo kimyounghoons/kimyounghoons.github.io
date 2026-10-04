@@ -4,7 +4,8 @@ title: Center Loading Progress
 description: "Center Loading Progress"
 modified: 2020-01-10
 tags: [Center Loading Progress]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/android-centerLoadingProgress/"
 ---
 API 호출 할 때 다른 터치를 막기 위해 센터 프로그레스를 보여주는 경우 여러 가지 방법이 있지만 그중 progressDialog 를 사용해보자~!  
 

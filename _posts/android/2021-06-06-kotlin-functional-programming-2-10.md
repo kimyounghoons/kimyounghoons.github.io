@@ -4,8 +4,9 @@ title: Kotlin Scope functions
 description: Kotlin Scope functions
 modified: 2021-06-06
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
 noindex: true
+permalink: "/android/kotlin/kotlin-functional-programming-2-10/"
 ---
 
 1. apply

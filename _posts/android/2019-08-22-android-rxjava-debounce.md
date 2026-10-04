@@ -3,8 +3,9 @@ layout: post
 title: 카운트 연속 클릭 시 마지막 카운트 api 호출 상황 
 description: "카운트 연속 클릭 시 마지막 카운트 api 호출 상황"
 modified: 2019-08-22
-tags: [rxJava2,rxAndroid,rxKotlin,debounce]
-categories: [android]
+tags: [rxJava2, rxAndroid, RxKotlin, debounce]
+categories: [개발, Android]
+permalink: "/android/android-rxjava-debounce/"
 ---
 RxKotlin을 사용하지 않고 처리하려면 까다로운 처리인데...  
 RxKotlin을 사용하면 간단하게 처리 할 수 있다.  

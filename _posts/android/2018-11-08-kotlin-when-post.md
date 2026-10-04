@@ -3,8 +3,9 @@ layout: post
 title: how to use `when` in kotlin
 description: "how to use `when` in kotlin"
 modified: 2018-11-08
-tags: [kotlin]
-categories: [kotlin]
+tags: [Kotlin]
+categories: [개발, Kotlin]
+permalink: "/kotlin/kotlin-when-post/"
 ---
 
 우선 자바 소스

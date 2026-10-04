@@ -4,7 +4,8 @@ title: 공매도란 무엇이고 왜 논란이 될까
 description: "공매도의 기본 구조, 목적, 손실 위험이 이론상 무제한인 이유와 숏스퀴즈 개념 정리"
 modified: 2026-09-16
 tags: [주식, 공매도]
-categories: [stock]
+categories: [재테크, 주식]
+permalink: "/stock/short-selling-basics/"
 ---
 
 주가가 오르면 이익을 보는 일반적인 매수와 반대로, **주가가 떨어져야 이익을 보는** 거래 방식이 공매도다. 개념 자체는 간단하지만 왜 늘 논란의 대상이 되는지, 구조를 알아야 이해가 된다.

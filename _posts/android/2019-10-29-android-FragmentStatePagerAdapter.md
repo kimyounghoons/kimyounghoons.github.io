@@ -3,8 +3,9 @@ layout: post
 title: FragmentStatePagerAdapter 
 description: "FragmentStatePagerAdapter BEHAVIOR_SET_USER_VISIBLE_HINT, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT"
 modified: 2019-10-29
-tags: [FragmentStatePagerAdapter,setUserVisibleHint,onResume]
-categories: [android]
+tags: [FragmentStatePagerAdapter, setUserVisibleHint, onResume]
+categories: [개발, Android]
+permalink: "/android/android-FragmentStatePagerAdapter/"
 ---
 
 FragmentStatePagerAdapter 안에서 사용 되는 Fragment 의 경우 현재 보여지는 Fragment 를 인식 하기 위해 

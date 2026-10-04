@@ -3,8 +3,9 @@ layout: post
 title: 다중 매니페스트 파일 병합
 description: "다중 매니페스트 파일 병합"
 modified: 2018-10-30
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
+permalink: "/android/manifest-merge/"
 ---
 
 ## tools:replace="attr,..."

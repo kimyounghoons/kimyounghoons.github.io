@@ -3,8 +3,9 @@ layout: post
 title: ActionBar Menu in Fragment 
 description: "ActionBar Menu in Fragment"
 modified: 2018-11-06
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
+permalink: "/android/actionbar_menu-post/"
 ---
 
 메뉴 아이템을 res/menu 아래에 만들어 주면 된다. menu는 기본적으로 없어서 만들어 줘야함.

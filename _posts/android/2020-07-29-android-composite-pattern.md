@@ -4,7 +4,8 @@ title:  Composite Pattern (디자인 패턴 11장)
 description: "Composite Pattern (디자인 패턴 11장)"
 modified: 2020-07-29
 tags: [Composite Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-composite-pattern/"
 ---
 
 ### 컴포지트 패턴 정의

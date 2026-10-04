@@ -3,9 +3,10 @@ layout: post
 title: 코틀린 람다 콜렉션(kotlin lambda collection)
 description: "코틀린 람다 콜렉션 사용(kotlin lambda collection)"
 modified: 2020-01-28
-tags: [intent,kotlin lambda collection]
-categories: [android]
+tags: [intent, kotlin lambda collection]
+categories: [개발, Kotlin]
 noindex: true
+permalink: "/android/android-collections/"
 ---
 
 ### TODO : 선택된 아이템 알파벳들을 콤마로 구분해서 String 으로 만들기

@@ -4,7 +4,8 @@ title: 안드로이드 10(29) 블루투스 연결 대응
 description: "안드로이드 10(29) 블루투스 연결 대응"
 modified: 2020-01-16
 tags: [안드로이드 10(29) 블루투스 연결 대응]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/android-bluetooth-android10/"
 ---
 
 # 문제점 

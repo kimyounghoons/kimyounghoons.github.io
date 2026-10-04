@@ -4,7 +4,8 @@ title:  Strategy Pattern (디자인 패턴 1장)
 description: "Strategy Pattern (디자인 패턴 1장)"
 modified: 2020-03-16
 tags: [Strategy Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-strategy-pattern/"
 ---
 
 ### Strategy Pattern 에 대해 알아보자.

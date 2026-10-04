@@ -3,8 +3,9 @@ layout: post
 title: 키보드 내려갈 때 특정 처리 하기
 description: "키보드 내려갈 때 특정 처리 하기"
 modified: 2019-08-20
-tags: [editText,keyboard]
-categories: [android]
+tags: [editText, keyboard]
+categories: [개발, Android]
+permalink: "/android/android-keyboard/"
 ---
 
 ### 키보드 내려갈 때 포커스 클리어 처리 하기

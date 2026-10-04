@@ -4,7 +4,8 @@ title:  Observer Pattern (디자인 패턴 2장)
 description: "Observer Pattern (디자인 패턴 2장)"
 modified: 2020-03-25
 tags: [Observer Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-observer-pattern/"
 ---
 
 #### 정의  

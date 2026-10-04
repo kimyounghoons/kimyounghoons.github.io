@@ -4,7 +4,8 @@ title: 재귀
 description: 재귀
 modified: 2021-06-20
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
+permalink: "/android/kotlin/kotlin-functional-programming-3-1/"
 ---
 
 함수형 프로그래밍에서는 명령문을 반복할 때 루프 대신에 재귀를 사용 한다.

@@ -3,8 +3,9 @@ layout: post
 title: app build 문제 
 description: "app build 문제"
 modified: 2018-11-01
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
+permalink: "/android/android-post/"
 ---
 
 <div class ="errBlock">    

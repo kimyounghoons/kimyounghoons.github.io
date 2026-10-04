@@ -4,7 +4,8 @@ title:  Facade Pattern (디자인 패턴 9장)
 description: "Facade Pattern (디자인 패턴 9장)"
 modified: 2020-07-13
 tags: [Facade Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-facade-pattern/"
 ---
 
 ### 퍼사드 패턴 정의

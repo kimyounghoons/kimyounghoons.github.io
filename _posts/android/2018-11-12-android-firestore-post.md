@@ -4,8 +4,9 @@ title: index in firestore
 description: "파이어스토어 색인을 이용한 복합쿼리"
 modified: 2018-11-12
 tags: [firestore]
-categories: [android]
+categories: [개발, Android]
 noindex: true
+permalink: "/android/android-firestore-post/"
 ---
 
 # 파이어스토어 색인을 이용한 복합쿼리

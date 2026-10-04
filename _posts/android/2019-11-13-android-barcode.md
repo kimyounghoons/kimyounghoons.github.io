@@ -3,8 +3,9 @@ layout: post
 title: DS6 Barcode (Android 7.1 Nougat) 
 description: "DS6 Barcode"
 modified: 2019-11-13
-tags: [barcode,DS6,바코드]
-categories: [android]
+tags: [barcode, DS6, 바코드]
+categories: [개발, Android]
+permalink: "/android/android-barcode/"
 ---
 
 ### 기기명 : DS6 (Android 7.1 Nougat) 

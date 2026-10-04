@@ -4,7 +4,8 @@ title: Build Type String
 description: "빌드 타입별 스트링 관리"
 modified: 2018-11-19
 tags: [buildType]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/android-buildtypestring-post/"
 ---
 
 # 빌드 타입 별 스트링 관리

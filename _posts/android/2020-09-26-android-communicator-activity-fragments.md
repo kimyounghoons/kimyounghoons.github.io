@@ -4,7 +4,8 @@ title:  Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유
 description: Activity 와 Fragment 간의 ViewModel 을 통한 데이터 공유
 modified: 2020-09-26
 tags: [Android]
-categories: [Android]
+categories: [개발, Android]
+permalink: "/android/android-communicator-activity-fragments/"
 ---
 
 안드로이드 앱 개발을 하다 보면 Activity 와 Fragment 간의 데이터를 주고 받아야 할 때가 있다.

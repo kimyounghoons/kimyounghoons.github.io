@@ -4,7 +4,8 @@ title: 함수형 프로그래밍 2-5장
 description: 함수형 프로그래밍 2-5장
 modified: 2021-03-07
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
+permalink: "/android/kotlin/kotlin-functional-programming-2-5/"
 ---
 
 ### 클래스와 프로퍼티

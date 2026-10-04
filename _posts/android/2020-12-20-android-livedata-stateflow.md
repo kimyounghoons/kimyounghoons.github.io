@@ -4,7 +4,8 @@ title: LiveData VS Flow State
 description: LiveData VS Flow State
 modified: 2020-12-20
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-livedata-stateflow/"
 ---
 
 오늘은 LiveData 와 Flow State 차이점을 알아보자.

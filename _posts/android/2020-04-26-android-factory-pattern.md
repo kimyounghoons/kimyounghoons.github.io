@@ -4,7 +4,8 @@ title:  Factory Pattern (디자인 패턴 4장)
 description: "Factory Pattern (디자인 패턴 4장)"
 modified: 2020-04-26
 tags: [Factory Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-factory-pattern/"
 ---
 
 ### 팩토리 메소드 패턴과 추상 팩토리 패턴

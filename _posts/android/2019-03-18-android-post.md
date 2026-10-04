@@ -3,8 +3,9 @@ layout: post
 title: singleTask Activity 사용 시 이슈
 description: "singleTask Activity 사용 시 이슈"
 modified: 2019-03-18
-tags: [SingleTask,Flag]
-categories: [android,singleTask,flag]
+tags: [SingleTask, Flag]
+categories: [개발, Android]
+permalink: "/android/singletask/flag/android-post/"
 ---
 
 ### 문제점 : 

@@ -4,7 +4,8 @@ title: Notification
 description: "안드로이드 푸시 팝업"
 modified: 2018-11-27
 tags: [notification]
-categories: [android,notification]
+categories: [개발, Android]
+permalink: "/android/notification/android-notification/"
 ---
 
 # 안드로이드 푸시 팝업

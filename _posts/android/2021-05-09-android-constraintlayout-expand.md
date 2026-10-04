@@ -4,7 +4,8 @@ title: ViewGroup 안에 ConstraintLayout View 추가한 경우 펼치고 접을�
 description: ViewGroup 안에 ConstraintLayout View 추가한 경우 펼치고 접을때 이슈
 modified: 2021-05-09
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-constraintlayout-expand/"
 ---
 
 해당 이슈를 영상으로 우선 보자.

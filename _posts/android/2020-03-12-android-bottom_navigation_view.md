@@ -4,7 +4,8 @@ title: BottomNavigationView
 description: "BottomNavigationView"
 modified: 2020-03-12
 tags: [BottomNavigationView]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/android-bottom_navigation_view/"
 ---
 
 ### BottomNavigationView in Design SupportLibrary : 

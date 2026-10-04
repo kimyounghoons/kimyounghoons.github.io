@@ -3,8 +3,9 @@ layout: post
 title: AppCenter Distribute
 description: "AppCenter Distribute"
 modified: 2020-03-03
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
+permalink: "/android/android-appcenter/"
 ---
 
 Firebase Distribute 를 사용하다가 배포된 apk 앱에서 최신 버전 유지가 필요해서 인앱업데이트 기능이 필요했다.  

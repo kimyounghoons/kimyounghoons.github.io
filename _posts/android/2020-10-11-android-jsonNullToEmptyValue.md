@@ -4,7 +4,8 @@ title:  Json field null 에서 empty 값 변경
 description: Json field null 에서 empty 값 변경
 modified: 2020-10-11
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-jsonNullToEmptyValue/"
 ---
 
 서버와 데이터를 주고 받을 때 Json 형식으로 주고 받는데 서버에서 내려주는 데이터 field 가 가끔씩 의도하지 않은 null 값이 내려올 때가 있다.  

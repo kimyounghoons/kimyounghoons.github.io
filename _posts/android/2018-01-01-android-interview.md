@@ -3,8 +3,9 @@ layout: post
 title: 안드로이드 면접 관련 질문 
 description: "안드로이드 면접 관련 질문"
 modified: 2018-01-01
-tags: [android,interview]
-categories: [android,interview]
+tags: [Android, interview]
+categories: [개발, Android]
+permalink: "/android/interview/android-interview/"
 ---
 
 ## 면접 보면서 느낀점 : 

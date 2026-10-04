@@ -4,7 +4,8 @@ title: 함수형 프로그래밍 2-6~2-7
 description: 함수형 프로그래밍 2-6~2-7
 modified: 2021-03-21
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
+permalink: "/android/kotlin/kotlin-functional-programming-2-6/"
 ---
 
 ### 2-6 패턴 매칭

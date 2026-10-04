@@ -4,7 +4,8 @@ title: 함수형 프로그래밍 2-8
 description: 함수형 프로그래밍 2-8
 modified: 2021-04-11
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
+permalink: "/android/kotlin/kotlin-functional-programming-2-8/"
 ---
 
 ### 컬렉션

@@ -3,9 +3,10 @@ layout: post
 title: EditText 금액 콤마 표시 Typing 할 때 느려지는 현상
 description: "EditText 금액 콤마 표시 Typing 할 때 느려지는 현상"
 modified: 2019-05-12
-tags: [editText,textWatcher]
-categories: [android]
+tags: [editText, textWatcher]
+categories: [개발, Android]
 noindex: true
+permalink: "/android/android-edittext_typing_slow/"
 ---
 
 ### EditText 금액 콤마 표시 Typing 할 때 느려지는 현상

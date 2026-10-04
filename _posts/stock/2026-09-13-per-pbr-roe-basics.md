@@ -4,7 +4,8 @@ title: PER·PBR·ROE, 주식 투자 기본 지표 정리
 description: "PER, PBR, ROE의 정의와 계산법, 그리고 저PER이 곧 저평가를 의미하지 않는 이유"
 modified: 2026-09-13
 tags: [주식, PER, PBR, ROE]
-categories: [stock]
+categories: [재테크, 주식]
+permalink: "/stock/per-pbr-roe-basics/"
 ---
 
 주식을 볼 때 가장 먼저 마주치는 지표가 PER, PBR, ROE다. 셋 다 "이 회사 주식이 비싼가 싼가, 돈을 잘 버는가"를 판단하는 도구지만 보는 각도가 다르다.

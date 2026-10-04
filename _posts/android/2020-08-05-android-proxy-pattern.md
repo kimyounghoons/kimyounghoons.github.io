@@ -4,7 +4,8 @@ title:  Proxy Pattern (디자인 패턴 13장)
 description: "Proxy Pattern (디자인 패턴 13장)"
 modified: 2020-08-05
 tags: [Proxy Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-proxy-pattern/"
 ---
 
 ### 프록시 패턴 정의

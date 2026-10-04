@@ -3,9 +3,10 @@ layout: post
 title: wireless build
 description: "wireless build"
 modified: 2018-11-05
-tags: [android]
-categories: [android]
+tags: [Android]
+categories: [개발, Android]
 noindex: true
+permalink: "/android/wirelessbuild-post/"
 ---
 
 ## 무선으로 빌드 하는 방법

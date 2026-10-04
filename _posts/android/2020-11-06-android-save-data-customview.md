@@ -4,7 +4,8 @@ title: Save State for CustomView
 description: 커스텀뷰 상태 저장(Save State for CustomView)
 modified: 2020-11-06
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Android]
+permalink: "/android/kotlin/android-save-data-customview/"
 ---
 
 ## 커스텀뷰 상태 저장

@@ -4,7 +4,8 @@ title: 등기부등본 보는 법 — 갑구·을구·근저당 확인하기
 description: "등기부등본의 표제부·갑구·을구 구성과 근저당권, 채권최고액 등 계약 전 반드시 확인해야 할 항목 정리"
 modified: 2026-09-09
 tags: [부동산, 등기부등본, 계약]
-categories: [realestate]
+categories: [재테크, 부동산]
+permalink: "/realestate/register-document-guide/"
 ---
 
 전세든 매매든 계약서에 도장을 찍기 전에 반드시 확인해야 하는 문서가 등기부등본이다. 처음 보면 표와 용어가 낯설지만, 구조를 알면 몇 분이면 핵심을 파악할 수 있다.

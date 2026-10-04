@@ -4,7 +4,8 @@ title: ConstraintLayout 사용
 description: "ConstraintLayout 사용"
 modified: 2018-12-18
 tags: [constraintLayout]
-categories: [android]
+categories: [개발, Android]
+permalink: "/android/constraintlayout-post/"
 ---
 
 ConstraintLayout 의 강점을 살려보자.

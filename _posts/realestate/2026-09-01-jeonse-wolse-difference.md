@@ -4,7 +4,8 @@ title: 전세와 월세, 무엇이 다를까
 description: "전세와 월세의 구조적 차이, 반전세 개념, 전월세전환율 계산법과 전세사기 예방 체크리스트 정리"
 modified: 2026-09-01
 tags: [부동산, 전세, 월세]
-categories: [realestate]
+categories: [재테크, 부동산]
+permalink: "/realestate/jeonse-wolse-difference/"
 ---
 
 집을 구할 때 가장 먼저 마주치는 선택이 전세로 할지 월세로 할지다. 두 방식은 단순히 "목돈이냐 매달이냐"의 차이가 아니라 돈이 움직이는 구조 자체가 다르다. 개념을 정리해 둔다.

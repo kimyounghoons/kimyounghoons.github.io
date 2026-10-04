@@ -4,7 +4,8 @@ title:  State Pattern (디자인 패턴 12장)
 description: "State Pattern (디자인 패턴 12장)"
 modified: 2020-08-03
 tags: [State Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-state-pattern/"
 ---
 
 ### 스테이트 패턴 정의

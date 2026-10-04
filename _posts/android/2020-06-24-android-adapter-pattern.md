@@ -4,7 +4,8 @@ title:  Adapter Pattern (디자인 패턴 8장)
 description: "Adapter Pattern (디자인 패턴 8장)"
 modified: 2020-06-24
 tags: [Adapter Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-adapter-pattern/"
 ---
 
 ### 어댑터 패턴 정의

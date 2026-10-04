@@ -4,7 +4,8 @@ title:  Template Pattern (디자인 패턴 10장)
 description: "Template Pattern (디자인 패턴 10장)"
 modified: 2020-07-15
 tags: [Template Method Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-template-method-pattern/"
 ---
 
 ### 템플릿 메소드 패턴 정의

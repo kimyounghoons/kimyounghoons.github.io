@@ -4,7 +4,8 @@ title: Kotlin 변성(Variance)
 description: Kotlin 변성(Variance)
 modified: 2021-06-06
 tags: [Android, Kotlin]
-categories: [Android, Kotlin]
+categories: [개발, Kotlin]
+permalink: "/android/kotlin/kotlin-functional-programming-2-11/"
 ---
 
 #### 변성(Variance)은 자바나 코틀린뿐 아니라 다른 언어에서도 존재하는 개념이다.

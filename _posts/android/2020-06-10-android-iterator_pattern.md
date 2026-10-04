@@ -4,7 +4,8 @@ title:  Iterator Pattern (디자인 패턴 7장)
 description: "Iterator Pattern (디자인 패턴 7장)"
 modified: 2020-06-10
 tags: [Iterator Pattern]
-categories: [java,kotlin]
+categories: [개발, 디자인 패턴]
+permalink: "/java/kotlin/android-iterator_pattern/"
 ---
 
 ### 이터레이터 패턴 정의

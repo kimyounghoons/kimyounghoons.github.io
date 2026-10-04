@@ -3,8 +3,9 @@ layout: post
 title: RecyclerView DiffUtil 
 description: "RecyclerView DiffUtil "
 modified: 2019-11-27
-tags: [DiffUtil,RecyclerView]
-categories: [android]
+tags: [DiffUtil, RecyclerView]
+categories: [개발, Android]
+permalink: "/android/android-diffUtil/"
 ---
 
 oldList 와 newList 리스트의 차이를 계산하고 oldList를 newList로 변환하는 업데이트 작업 목록을 출력 할 수있는 유틸리티 클래스이다.  

@@ -4,7 +4,8 @@ title: 주택청약제도 기본 개념 정리
 description: "청약통장, 가점제와 추첨제의 차이, 청약 가점 항목, 특별공급 종류까지 주택청약제도의 기본 구조 정리"
 modified: 2026-09-06
 tags: [부동산, 청약, 청약통장]
-categories: [realestate]
+categories: [재테크, 부동산]
+permalink: "/realestate/jucheok-cheongyak-basics/"
 ---
 
 새 아파트를 분양받는 가장 일반적인 경로가 청약이다. 제도가 자주 바뀌다 보니 세부 조건은 계속 달라지지만, 큰 뼈대는 오래 유지되고 있다. 기본 구조를 정리한다.

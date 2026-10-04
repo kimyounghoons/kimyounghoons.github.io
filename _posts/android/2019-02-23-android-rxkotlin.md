@@ -3,9 +3,10 @@ layout: post
 title: RxKotlin Single
 description: "RxKotlin Single"
 modified: 2019-02-22
-tags: [RxKotlin,Single]
-categories: [RxKotlin,Single]
+tags: [RxKotlin, Single]
+categories: [개발, Android]
 noindex: true
+permalink: "/rxkotlin/single/android-rxkotlin/"
 ---
 
 Rx 공부한지 별로 되진않았지만 확실히 매력있는 친구다.ㅎㅎ
